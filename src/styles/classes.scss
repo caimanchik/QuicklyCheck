@@ -1,0 +1,22 @@
+%grad {
+  background: linear-gradient(270deg, #4653D2 0%, #E93AD2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+%button {
+  border-radius: 100px;
+  background: linear-gradient(315deg, rgba(70, 83, 210, 0.99) 3.46%, #E93AD2 92.67%);
+  box-shadow: 0px 0px 17px 0px rgba(223, 40, 255, 0.35) inset, 0px 0px 30px 0px rgba(60, 0, 128, 0.15);
+  color: white;
+  text-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.10);
+  text-transform: uppercase;
+}
+
+%spacing {
+  font-size: 1.14rem;
+  letter-spacing: 0.05em;
+}

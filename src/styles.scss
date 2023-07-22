@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import "styles/nullstyle";
+@import "styles/vars";
+@import "styles/classes";
+
+html {
+  font-family: $ff;
+  font-size: $fontsize;
+  background-color: $bgcolor;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  color: #323232;
+}
+
+.container {
+  max-width: $mw;
+  margin: 0 auto;
+}
+
+.test {
+  @extend %grad;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.grad {
+  @extend %grad;
+}
