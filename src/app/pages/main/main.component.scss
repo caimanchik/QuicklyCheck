@@ -97,6 +97,7 @@
   &__wrapper {
     margin-top: 2.5rem;
     display: flex;
+    justify-content: space-between;
   }
 
   &__cards {
@@ -112,7 +113,7 @@
   }
 
   &__content {
-    flex: 0 0 33%;
+    flex: 0 0 32%;
   }
 }
 
@@ -141,6 +142,7 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
+    //font-family: $roboto;
   }
 }
 
@@ -156,13 +158,14 @@
     margin-top: 1.4rem;
     font-size: 1.4rem;
     line-height: 1.45;
+    font-family: $roboto;
   }
 
   &__login {
     @extend %grad;
     margin-top: 2rem;
     display: inline-block;
-    font-size: 2.14rem;
+    font-size: 1.8rem;
     text-transform: uppercase;
 
     position: relative;

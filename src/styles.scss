@@ -1,6 +1,6 @@
-@import "styles/nullstyle";
-@import "styles/vars";
-@import "styles/classes";
+@import "nullstyle";
+@import "vars";
+@import "classes";
 
 html {
   font-family: $ff;
@@ -10,7 +10,7 @@ html {
 
 body {
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
   color: #323232;
 }
 
