@@ -1,4 +1,4 @@
-<main class="main">
+<main class="main" @appear>
     <div class="container">
 
         <div class="main__about main-about">
@@ -23,7 +23,7 @@
             </div>
 
             <div class="main-about__image">
-                <img src="assets/images/main/woman.svg" alt="">
+                <img ngSrc="assets/images/main/woman.svg" alt="" height="578" width="656" priority>
             </div>
         </div>
 
@@ -105,7 +105,7 @@
                         Чтобы получить доступ ко всем сервисам, войдите в аккаунт
                     </div>
 
-                    <a href="" class="main-choose-content__login" routerLink="">
+                    <a href="" class="main-choose-content__login" routerLink="./login">
                         Войти
                     </a>
 

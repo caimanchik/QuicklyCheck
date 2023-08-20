@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { LoginComponent } from './login.component';
-import {RouterModule, Routes} from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
+import { ActiveDirective } from "../../shared/directives/active.directive";
 
 const routes: Routes = [
   {
@@ -15,7 +16,9 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgOptimizedImage,
+    ActiveDirective,
   ],
   exports: [
     RouterModule

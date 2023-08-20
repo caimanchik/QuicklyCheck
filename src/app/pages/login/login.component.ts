@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {transition, trigger, useAnimation} from "@angular/animations";
-import {opacity} from "../../shared/animations/opacity";
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { opacity } from "../../shared/animations/opacity";
 
 @Component({
   selector: 'app-login',
@@ -27,11 +27,11 @@ import {opacity} from "../../shared/animations/opacity";
 })
 export class LoginComponent implements OnInit {
 
-  protected login: boolean = true
+  protected login: boolean = false
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
   }
 
+  public ngOnInit(): void {
+  }
 }

@@ -77,12 +77,37 @@
   }
   
   &__item {
+    &::after {
+      content: '';
+      position: absolute;
+      height: 50%;
+      aspect-ratio: 2 / 3;
+      background: url("/assets/images/icons/border-button.svg") no-repeat;
+      opacity: 0;
+      transition: all ease .2s;
+    }
+
     &:first-child {
       flex: 0 0 44%;
+      position: relative;
+
+      &::after {
+        right: -1px;
+        top: -1px;
+        transform: scale(1, -1) translateX(100%);
+      }
+
+      &.loginMode {
+        &::after {
+          opacity: 1;
+          transform: scale(1, -1) translateX(0);
+        }
+      }
     }
     &:last-child {
       flex: 0 0 56%;
       background-color: #FBFAFB;
+      position: relative;
 
       .login-buttons__button {
         & span {
@@ -90,14 +115,28 @@
         }
       }
 
+      &::after {
+        left: 0px;
+        bottom: -1px;
+        transform: translateX(-100%);
+        opacity: 1;
+      }
+
       transition: all ease .3s;
 
       border-bottom-left-radius: 0;
-      border-top-left-radius: 1rem;
+      border-top-left-radius: 20px;
 
       &.loginMode {
-        border-bottom-left-radius: 1rem;
+        border-bottom-left-radius: 20px;
         border-top-left-radius: 0;
+
+        &.loginMode {
+          &::after {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+        }
       }
     }
 
@@ -189,6 +228,14 @@
       width: 140%;
       transform: translate(0, 1px);
       background: url("/assets/images/icons/ok.svg") 100%/100% no-repeat;
+      opacity: 0;
+      transition: all ease .3s;
+    }
+
+    &.active {
+      &::after {
+        opacity: 1;
+      }
     }
   }
 

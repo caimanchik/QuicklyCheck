@@ -7,7 +7,7 @@
             <div class="login__wrapper">
 
                 <ul class="login__buttons login-buttons">
-                    <li class="login-buttons__item" [ngClass]="{loginMode: login}">
+                    <li class="login-buttons__item active" [ngClass]="{loginMode: login}">
                         <button
                                 class="login-buttons__button login-buttons__button_login"
                                 (click)="login = true"
@@ -15,7 +15,7 @@
                             войти
                         </button>
                     </li>
-                    <li class="login-buttons__item" [ngClass]="{loginMode: login}">
+                    <li class="login-buttons__item" [ngClass]="{loginMode: login}" appActive>
                         <button
                                 class="login-buttons__button login-buttons__button_registration"
                                 (click)="login = false"
@@ -40,7 +40,7 @@
                                 <div class="login-form__field">
                                     <input type="password" class="login-form__input" placeholder="Пароль">
                                     <div class="login-form__hide">
-                                        <img src="assets/images/icons/hide.svg" alt="">
+                                        <img ngSrc="assets/images/icons/hide.svg" alt="" height="10" width="17">
                                     </div>
                                 </div>
 
@@ -78,7 +78,7 @@
 
                                 <div class="login-form__field">
                                     <input id="agree" type="checkbox" class="login-form__agree">
-                                    <label for="agree" class="login-form__label"></label>
+                                    <label for="agree" class="login-form__label" appActive></label>
                                     <div class="login-form__text">
                                         Я согласен на
                                         <a href="https://www.google.ru/" target="_blank" class="login-form__underline">
