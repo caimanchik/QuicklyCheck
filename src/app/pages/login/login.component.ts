@@ -22,12 +22,21 @@ import { opacity } from "../../shared/animations/opacity";
             oEnd: 0,
           }
         })
+    ]),
+    trigger('appearOnly', [
+      transition(':enter',
+        useAnimation(opacity), {
+          params: {
+            oStart: 0,
+            oEnd: 1,
+          }
+        }),
     ])
   ]
 })
 export class LoginComponent implements OnInit {
 
-  protected login: boolean = false
+  protected login: boolean = true
 
   constructor() {
   }

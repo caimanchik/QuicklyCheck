@@ -31,7 +31,7 @@
 
                         <ng-container *ngIf="login; else registration">
 
-                            <div class="login-form__wrapper" @appear>
+                            <div class="login-form__wrapper" @appearOnly>
 
                                 <div class="login-form__field">
                                     <input type="email" class="login-form__input" placeholder="Почта">
@@ -56,7 +56,7 @@
 
                         <ng-template #registration>
 
-                            <div class="login-form__wrapper" @appear>
+                            <div class="login-form__wrapper" @appearOnly>
 
                                 <div class="login-form__field">
                                     <input type="email" class="login-form__input" placeholder="Почта">
