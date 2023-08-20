@@ -1,0 +1,110 @@
+<section class="login" @appear>
+
+    <div class="container login__container">
+
+        <div class="login__bg">
+
+            <div class="login__wrapper">
+
+                <ul class="login__buttons login-buttons">
+                    <li class="login-buttons__item" [ngClass]="{loginMode: login}">
+                        <button
+                                class="login-buttons__button login-buttons__button_login"
+                                (click)="login = true"
+                        >
+                            войти
+                        </button>
+                    </li>
+                    <li class="login-buttons__item" [ngClass]="{loginMode: login}">
+                        <button
+                                class="login-buttons__button login-buttons__button_registration"
+                                (click)="login = false"
+                        >
+                            <span>регистрация</span>
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="login__content" [ngClass]="{loginMode: login}">
+
+                    <form action="" class="login__form login-form" [ngClass]="{loginMode: login}">
+
+                        <ng-container *ngIf="login; else registration">
+
+                            <div class="login-form__wrapper" @appear>
+
+                                <div class="login-form__field">
+                                    <input type="email" class="login-form__input" placeholder="Почта">
+                                </div>
+
+                                <div class="login-form__field">
+                                    <input type="password" class="login-form__input" placeholder="Пароль">
+                                    <div class="login-form__hide">
+                                        <img src="assets/images/icons/hide.svg" alt="">
+                                    </div>
+                                </div>
+
+                                <div class="login-form__submit">
+                                    <button class="login-form__button">
+                                        войти
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </ng-container>
+
+                        <ng-template #registration>
+
+                            <div class="login-form__wrapper" @appear>
+
+                                <div class="login-form__field">
+                                    <input type="email" class="login-form__input" placeholder="Почта">
+                                </div>
+
+                                <div class="login-form__field">
+                                    <input type="password" class="login-form__input" placeholder="Пароль">
+                                    <div class="login-form__hide">
+                                        <img src="assets/images/icons/hide.svg" alt="">
+                                    </div>
+                                </div>
+
+                                <div class="login-form__field">
+                                    <input type="password" class="login-form__input"  placeholder="Подтвердите пароль">
+                                    <div class="login-form__hide">
+                                        <img src="assets/images/icons/hide.svg" alt="">
+                                    </div>
+                                </div>
+
+                                <div class="login-form__field">
+                                    <input id="agree" type="checkbox" class="login-form__agree">
+                                    <label for="agree" class="login-form__label"></label>
+                                    <div class="login-form__text">
+                                        Я согласен на
+                                        <a href="https://www.google.ru/" target="_blank" class="login-form__underline">
+                                            обработку персональных данных
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="login-form__submit">
+                                    <button class="login-form__button">
+                                        зарегистрироваться
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </ng-template>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

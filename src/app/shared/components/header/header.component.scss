@@ -32,9 +32,6 @@
   }
 }
 
-.container {
-}
-
 .header-logo {
   &__img {
     height: 3.64rem;
@@ -80,16 +77,16 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      bottom: -3px;
+      bottom: -4px;
       width: 0%;
-      height: 2px;
+      height: 3px;
       background: $violet;
       transition: all ease .4s;
     }
 
     &:hover {
       &::after{
-        width: 98%;
+        width: 99%;
       }
     }
   }

@@ -1,0 +1,240 @@
+@import "vars";
+@import "classes";
+
+.login {
+  height: 100%;
+  min-height: 100%;
+  padding: 2rem 0;
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__bg {
+    box-shadow: 3.5856223106384277px 5.019871234893799px 13.625364303588867px 0px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(315deg, rgba(70, 83, 210, 0.99) 3.46%, #E93AD2 92.67%);
+    border-radius: 34px;
+    padding: .2rem;
+    height: 31.7rem;
+    width: 700px;
+  }
+
+  &__wrapper {
+    border-radius: 32px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__buttons {
+    flex: 0 0 auto;
+    display: flex;
+  }
+
+  &__content {
+    flex: 1 0 auto;
+    display: flex;
+
+    transition: all ease .3s;
+
+    &.loginMode {
+      padding: 2.85rem 4rem 3rem;
+    }
+  }
+
+  &__form {
+    background-color: #fff;
+    flex-grow: 1;
+
+    transition: all ease .3s;
+
+    &.loginMode {
+      border-radius: 1rem;
+    }
+
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+  }
+}
+
+
+.login-buttons {
+
+  &__button {
+    font-weight: 700;
+    text-shadow: 0px 2.868497848510742px 7.1712446212768555px 0px rgba(0, 0, 0, 0.10);
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  &__item {
+    &:first-child {
+      flex: 0 0 44%;
+    }
+    &:last-child {
+      flex: 0 0 56%;
+      background-color: #FBFAFB;
+
+      .login-buttons__button {
+        & span {
+          @extend %grad;
+        }
+      }
+
+      transition: all ease .3s;
+
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 1rem;
+
+      &.loginMode {
+        border-bottom-left-radius: 1rem;
+        border-top-left-radius: 0;
+      }
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.login-form {
+  position: relative;
+
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__field {
+    &:not(:first-child) {
+      margin-top: 1.2rem;
+    }
+
+    position: relative;
+    width: $field;
+    margin: 0 auto;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+  }
+
+  &__input {
+    border-radius: 7.171px;
+    border: 1.434px solid rgba(233, 58, 210, 0.75);
+    box-shadow: 0px 1.434248924255371px 4.302746772766113px 0px rgba(0, 0, 0, 0.31);
+
+    padding: .7rem 2rem .7rem 1.7rem;
+    font-size: 1.14rem;
+    transition: all ease .3s;
+    width: 100%;
+
+    &::placeholder {
+      color: #B8BAC1;
+    }
+
+    &:focus, &:active {
+      box-shadow: 0px 1.434248924255371px 4.302746772766113px 0px rgba(0, 0, 0, 1);
+    }
+  }
+
+  &__hide {
+    position: absolute;
+    right: .8rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    cursor: pointer;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__agree {
+    display: none;
+  }
+  
+  &__label {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 2.151px solid rgba(70, 83, 210, 0.75);
+    box-shadow: 0px 1.434248924255371px 4.302746772766113px 0px rgba(0, 0, 0, 0.02);
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: -1px;
+      bottom: 0;
+      height: 130%;
+      width: 140%;
+      transform: translate(0, 1px);
+      background: url("/assets/images/icons/ok.svg") 100%/100% no-repeat;
+    }
+  }
+
+  &__text {
+    color: $blue;
+    font-size: 1rem;
+  }
+
+  &__underline {
+    display: inline-block;
+    position: relative;
+    transition: all ease .3s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0px;
+      bottom: -2px;
+      width: 100%;
+      height: 1px;
+      background-color: $blue;
+      transition: all ease .3s;
+    }
+
+    &:hover {
+      color: darken($blue, 20%);
+
+      &::after {
+        background-color: darken($blue, 20%);
+      }
+    }
+  }
+
+  &__submit {
+    width: $field;
+    display: flex;
+    justify-content: flex-end;
+    margin: 3.5rem auto 0;
+  }
+
+  &__button {
+    @extend %button;
+    padding: .65rem 3rem;
+    font-size: 1.1rem;
+    text-shadow: 0px 2.868497848510742px 7.1712446212768555px 0px rgba(0, 0, 0, 0.10);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+}

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {transition, trigger, useAnimation} from "@angular/animations";
-import {opacity} from "../../animations/opacity";
+import {opacity} from "../../shared/animations/opacity";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   animations: [
     trigger('appear', [
       transition(':enter',
@@ -25,7 +25,9 @@ import {opacity} from "../../animations/opacity";
     ])
   ]
 })
-export class HeaderComponent implements OnInit {
+export class LoginComponent implements OnInit {
+
+  protected login: boolean = true
 
   constructor() { }
 
