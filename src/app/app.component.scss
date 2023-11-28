@@ -1,6 +1,6 @@
 .wrapper {
-  display: grid;
-  grid-template-rows: auto 0 1fr auto;
+  display: flex;
+  flex-direction: column;
   min-height: 100%;
   width: 100%;
 }

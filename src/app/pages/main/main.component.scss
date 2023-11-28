@@ -1,6 +1,10 @@
 @import "vars";
 @import "classes";
 
+:host {
+  flex-grow: 1;
+}
+
 .main {
   padding: 6.3rem 0 4.6rem;
 
@@ -189,3 +193,270 @@
     }
   }
 }
+
+.main-howto {
+  margin-top: 4.6rem;
+
+
+  &__content {
+  }
+
+  &__title {
+    @extend %grad;
+
+    font-size: 2.14rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-align: center;
+    width: 100%;
+  }
+
+  &__slider {
+    margin-top: 2.4rem;
+  }
+}
+
+.main-howto-slider {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__controls {
+  }
+
+  &__content {
+    padding: 4rem 0;
+    width: 870px;
+
+    border-radius: 45px;
+    border: 4px solid rgba(233, 58, 210, 0.75);
+    background: #FBFAFB;
+    box-shadow: 8.22692px 11.51768px 31.26229px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &__slides {
+    position: relative;
+    height: 2.14rem;
+  }
+
+  &__slide {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: all ease .3s;
+    pointer-events: none;
+
+    color: $pink;
+    font-size: 2.14rem;
+    font-weight: 700;
+
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  &__link {
+    color: $violet;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0px;
+      bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background-color: $violet;
+      pointer-events: none;
+      transition: all ease .2s;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        &::after {
+          bottom: -1px;
+        }
+      }
+    }
+  }
+
+  &__progress {
+    margin-top: 4.3rem;
+  }
+}
+
+.main-howto-slider-progress {
+  height: 2.6rem;
+
+
+  &__wrapper {
+    width: 390px;
+    margin: 0 auto;
+    height: 2.6rem;
+    position: relative;
+  }
+
+  &__progress {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__bar {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(270deg, #4653D2 0%, #E93AD2 100%);
+  }
+
+  &__grey {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    overflow: hidden;
+    transition: all ease .3s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      background: linear-gradient(90deg, rgba(184, 186, 193, 5%) 0%, $grey 6%, $grey 100%);;
+    }
+
+    &.active1 {
+      &:after {
+        left: 7.5%;
+      }
+    }
+
+    &.active2 {
+      &:after {
+        left: 32.5%;
+      }
+    }
+
+    &.active3 {
+      &:after {
+        left: 57.5%;
+      }
+    }
+
+    &.active4 {
+      &:after {
+        left: 82.5%;
+      }
+    }
+
+    &.active5 {
+      &:after {
+        left: 100%;
+      }
+    }
+  }
+
+  &__numbers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__number {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 2.6rem;
+    width: 2.6rem;
+    border-radius: 50%;
+    border: 3px solid $grey;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $grey;
+    background: #FBFAFB;
+    transition: all ease .3s;
+
+    &:nth-child(1) {
+      left: 0;
+
+      &.active {
+        color: $pink;
+        border-color: $pink;
+      }
+    }
+
+    &:nth-child(2) {
+      left: 25%;
+
+      &.active {
+        color: rgb(203, 76, 204);
+        border-color: rgb(203, 76, 204);
+      }
+    }
+
+    &:nth-child(3) {
+      left: 50%;
+
+      &.active {
+        color: rgb(141, 83, 201);
+        border-color: rgb(141, 83, 201);
+      }
+    }
+
+    &:nth-child(4) {
+      left: 75%;
+
+      &.active {
+        color: rgb(107, 88, 203);
+        border-color: rgb(107, 88, 203);
+      }
+    }
+
+    &:nth-child(5) {
+      left: 100%;
+
+      &.active {
+        color: rgb(73, 91, 205);
+        border-color: rgb(73, 91, 205);
+      }
+    }
+  }
+}
+
+.main-howto-slider-controls {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  &__arrow {
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    top: 50%;
+
+
+    &:first-child {
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    &:last-child {
+      right: 0;
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+}
+
