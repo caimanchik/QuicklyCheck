@@ -70,7 +70,7 @@
                                 </div>
 
                                 <div class="login-form__field">
-                                    <input type="password" class="login-form__input"  placeholder="Подтвердите пароль">
+                                    <input type="password" class="login-form__input" placeholder="Подтвердите пароль">
                                     <div class="login-form__hide">
                                         <img src="assets/images/icons/hide.svg" alt="">
                                     </div>
@@ -78,13 +78,13 @@
 
                                 <div class="login-form__field">
                                     <input id="agree" type="checkbox" class="login-form__agree">
-                                    <label for="agree" class="login-form__label" appActive></label>
-                                    <div class="login-form__text">
+                                    <label for="agree" class="login-form__label" appActive #label></label>
+                                    <label class="login-form__text" (click)="label.click()">
                                         Я согласен на
                                         <a href="https://www.google.ru/" target="_blank" class="login-form__underline">
                                             обработку персональных данных
                                         </a>
-                                    </div>
+                                    </label>
                                 </div>
 
                                 <div class="login-form__submit">

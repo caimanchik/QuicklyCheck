@@ -447,7 +447,7 @@
     width: 2.5rem;
     height: 2.5rem;
     top: 50%;
-
+    transition: all ease .1s;
 
     &:first-child {
       left: 0;
@@ -457,6 +457,21 @@
     &:last-child {
       right: 0;
       transform: translateY(-50%) rotate(180deg);
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        width: 2.3rem;
+        height: 2.3rem;
+
+        &:first-child {
+          left: .1rem;
+        }
+
+        &:last-child {
+          right: .1rem;
+        }
+      }
     }
   }
 }

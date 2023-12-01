@@ -46,6 +46,25 @@
 
 .footer-item-logo {
   &__img {
+    width: 3.9rem;
+    height: 3.6rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0px;
+      bottom: 0;
+      width: 85%;
+      height: 90%;
+      border-radius: 9px;
+      box-shadow: 0px 4px 17px 0px rgba(39, 39, 39, 0.65);
+      background-color: #4c4a4a;
+    }
+
+    & img {
+      z-index: 2;
+    }
   }
 
   &__text {
