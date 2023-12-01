@@ -105,7 +105,7 @@
   }
 
   &__cards {
-    flex: 0 0 67%;
+    flex: 0 0 65%;
     display: flex;
     flex-wrap: wrap;
     margin: -1rem;
@@ -117,7 +117,7 @@
   }
 
   &__content {
-    flex: 0 0 32%;
+    flex: 0 0 35%;
   }
 }
 
@@ -254,6 +254,7 @@
     color: $pink;
     font-size: 2.14rem;
     font-weight: 700;
+    letter-spacing: .03em;
 
     &.active {
       opacity: 1;

@@ -1,0 +1,113 @@
+@import "vars";
+@import "classes";
+
+:host {
+  flex-grow: 1;
+}
+
+
+.blank {
+  margin-top: 4.6rem;
+
+  &__wrapper {
+  }
+
+  &__columns {
+    display: flex;
+  }
+
+  &__column {
+    &:first-child {
+      flex: 0 0 35%;
+    }
+    &:last-child {
+      flex: 0 0 65%;
+    }
+  }
+
+  &__image {
+    width: 100%;
+
+    & img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__content {
+    padding-left: 2.9rem;
+  }
+
+  &__title {
+    @extend %grad;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-size: 2.14rem;
+  }
+
+  &__subtitle {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-top: 1.5rem;
+  }
+
+  &__instruction {
+    margin-top: 1.3rem;
+    color: $darkGrey;
+    font-size: 1.14rem;
+  }
+
+  &__list {
+    margin-top: 2.9rem;
+  }
+
+  &__item {
+    margin-top: 1.5rem;
+
+    :first-child {
+      margin-top: 0;
+    }
+
+    display: flex;
+  }
+
+  &__number {
+    flex: 0 0 2.14rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: $violet;
+    position: relative;
+    top: 4px;
+    left: 0;
+  }
+
+  &__text {
+    font-size: 1.4rem;
+    line-height: 1.4em;
+
+    & a {
+      color: $violet;
+      display: inline-block;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0px;
+        bottom: -2px;
+        width: 100%;
+        height: 2px;
+        background-color: $violet;
+      }
+    }
+  }
+
+  &__button {
+    margin-top: 2.8rem;
+    @extend %button;
+    padding: 0.8rem 3.3rem;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+  }
+}
