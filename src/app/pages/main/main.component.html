@@ -4,16 +4,16 @@
         <div class="main__about main-about">
             <div class="main-about__content">
 
-                <h1 class="main-about__title">
+                <h1 class="main-about__title" [appScroll]="30">
                     <span>Мы <span class="grad">экономим</span></span> <span>ваше время и силы</span>
                 </h1>
 
-                <div class="main-about__text">
+                <div class="main-about__text" [appScroll]="30">
                     Сервис для быстрой проверки тестовых работ
                 </div>
 
                 <button class="main-about__button">
-                    <span>инструкция</span> <span>по проверке</span>
+                    <span [appScroll]="30">инструкция</span> <span [appScroll]="30">по проверке</span>
                 </button>
 
                 <div class="main-about__arrow">
@@ -40,12 +40,14 @@
                     <div class="main-choose__card main-choose-card">
 
                         <div class="main-choose-card__wrapper">
-                            <h3 class="main-choose-card__title">
-                                Мгновенная проверка
-                            </h3>
+                            <div [appScroll]="20">
+                                <h3 class="main-choose-card__title">
+                                    Мгновенная проверка
+                                </h3>
 
-                            <div class="main-choose-card__text">
-                                Сэкономьте свое время на проверке тестовых работ. Наш сервис позволит сделать это за несколько минут.
+                                <div class="main-choose-card__text">
+                                    Сэкономьте свое время на проверке тестовых работ. Наш сервис позволит сделать это за несколько минут.
+                                </div>
                             </div>
                         </div>
 
@@ -54,12 +56,14 @@
                     <div class="main-choose__card main-choose-card">
 
                         <div class="main-choose-card__wrapper">
-                            <h3 class="main-choose-card__title">
-                                Сохраняйте работы
-                            </h3>
+                            <div [appScroll]="20">
+                                <h3 class="main-choose-card__title">
+                                    Сохраняйте работы
+                                </h3>
 
-                            <div class="main-choose-card__text">
-                                Сохраняйте проверенные работы, чтобы получить доступ к ним в любую минуту, находясь даже не на работе.
+                                <div class="main-choose-card__text">
+                                    Сохраняйте проверенные работы, чтобы получить доступ к ним в любую минуту, находясь даже не на работе.
+                                </div>
                             </div>
                         </div>
 
@@ -68,12 +72,14 @@
                     <div class="main-choose__card main-choose-card">
 
                         <div class="main-choose-card__wrapper">
-                            <h3 class="main-choose-card__title">
-                                Проводите анализ
-                            </h3>
+                            <div [appScroll]="20">
+                                <h3 class="main-choose-card__title">
+                                    Проводите анализ
+                                </h3>
 
-                            <div class="main-choose-card__text">
-                                Мы даем возможность быстро проанализировать выполненные работы и выявить пробелы в знаниях
+                                <div class="main-choose-card__text">
+                                    Мы даем возможность быстро проанализировать выполненные работы и выявить пробелы в знаниях
+                                </div>
                             </div>
                         </div>
 
@@ -82,12 +88,14 @@
                     <div class="main-choose__card main-choose-card">
 
                         <div class="main-choose-card__wrapper">
-                            <h3 class="main-choose-card__title">
-                                Легко отправляйте результаты
-                            </h3>
+                            <div [appScroll]="20">
+                                <h3 class="main-choose-card__title">
+                                    Легко отправляйте результаты
+                                </h3>
 
-                            <div class="main-choose-card__text">
-                                Чтобы поделиться результатами работы, нужно всего лишь скопировать ссылку и отправить ученикам!
+                                <div class="main-choose-card__text">
+                                    Чтобы поделиться результатами работы, нужно всего лишь скопировать ссылку и отправить ученикам!
+                                </div>
                             </div>
                         </div>
 
@@ -95,7 +103,7 @@
 
                 </div>
 
-                <div class="main-choose__content main-choose-content">
+                <div class="main-choose__content main-choose-content" [appScroll]="0">
 
                     <h3 class="main-choose-content__title">
                         Открывайте для себя преимущества онлайн проверки тестовых заданий

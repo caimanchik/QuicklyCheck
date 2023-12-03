@@ -6,9 +6,9 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import {transition, trigger, useAnimation} from "@angular/animations";
-import {opacity} from "../../shared/animations/opacity";
-import {transformOpacity} from "../../shared/animations/transform-opacity";
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { opacity } from "../../shared/animations/opacity";
+import { transformOpacity } from "../../shared/animations/transform-opacity";
 
 @Component({
   selector: 'app-main',
@@ -36,16 +36,17 @@ import {transformOpacity} from "../../shared/animations/transform-opacity";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainComponent implements  AfterViewInit {
+export class MainComponent implements AfterViewInit {
   @ViewChildren('slide', {read: ElementRef}) private _slides!: ElementRef[]
   @ViewChildren('number', {read: ElementRef}) private _numbers!: ElementRef[]
   @ViewChild('progressGreyBar', {read: ElementRef}) private _progressGreyBar!: ElementRef
 
   private _currentSlide = 1
 
-  constructor() { }
+  constructor(
+  ) { }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.initSlide(0)
   }
 
