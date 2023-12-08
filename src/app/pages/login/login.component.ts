@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { transition, trigger, useAnimation } from "@angular/animations";
-import { opacity } from "../../shared/animations/opacity";
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {transition, trigger, useAnimation} from "@angular/animations";
+import {opacity} from "../../shared/animations/opacity";
 import {transformOpacity} from "../../shared/animations/transform-opacity";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ILoginForm} from "../../shared/interfaces/forms/ILoginForm";
+import {AuthService} from "../../shared/services/auth.service";
+import {take} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -37,15 +42,45 @@ import {transformOpacity} from "../../shared/animations/transform-opacity";
           }
         }),
     ])
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
 
-  protected login: boolean = true
+  protected isLogin: boolean = true
+  protected loginForm!: FormGroup<ILoginForm>
 
-  constructor() {
+  constructor(
+    private _auth: AuthService,
+    private _router: Router
+  ) {
   }
 
   public ngOnInit(): void {
+    this.loginForm = new FormGroup<ILoginForm>({
+      email: new FormControl<string>("", {
+        validators: [
+          Validators.required,
+          Validators.email,
+        ],
+        nonNullable: true
+      }),
+      password: new FormControl<string>("",{
+        validators: [
+          Validators.minLength(6),
+        ],
+        nonNullable: true
+      })
+    })
+  }
+
+  protected login() {
+    this._auth.login()
+      .pipe(take(1))
+      .subscribe(successful => {
+        if (successful) {
+          this._router.navigate(['']);
+        }
+      })
   }
 }

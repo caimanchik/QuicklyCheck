@@ -16,10 +16,15 @@
                 </a>
 
                 <nav class="header__links header-links">
-                    <a href="" class="header-links__item" routerLink="getBlank">
+                    <ng-container *ngIf="_auth.isLogged$ | async">
+                        <a class="header-links__item" routerLink="getBlank">
+                            мои классы
+                        </a>
+                    </ng-container>
+                    <a class="header-links__item" routerLink="getBlank">
                         скачать бланк
                     </a>
-                    <a href="" class="header-links__item" routerLink="">
+                    <a class="header-links__item" routerLink="">
                         проверить тест
                     </a>
                 </nav>
@@ -28,9 +33,17 @@
 
             <div class="header__item">
 
-                <a class="header__button" routerLink="./login">
-                    войти
-                </a>
+                <ng-container *ngIf="_auth.isLogged$ | async; else login">
+                    <a class="header-links__account" routerLink="getBlank">
+                        <img src="assets/images/icons/account.svg">
+                    </a>
+                </ng-container>
+
+                <ng-template #login>
+                    <a class="header__button" routerLink="./login">
+                        войти
+                    </a>
+                </ng-template>
 
             </div>
 

@@ -7,40 +7,76 @@
             <div class="login__wrapper">
 
                 <ul class="login__buttons login-buttons">
-                    <li class="login-buttons__item active" [ngClass]="{loginMode: login}">
+                    <li class="login-buttons__item active" [ngClass]="{loginMode: isLogin}">
                         <button
                                 class="login-buttons__button login-buttons__button_login"
-                                (click)="login = true"
+                                (click)="isLogin = true"
                         >
                             войти
                         </button>
                     </li>
-                    <li class="login-buttons__item" [ngClass]="{loginMode: login}" appActive>
+                    <li class="login-buttons__item" [ngClass]="{loginMode: isLogin}" appActive>
                         <button
                                 class="login-buttons__button login-buttons__button_registration"
-                                (click)="login = false"
+                                (click)="isLogin = false"
                         >
                             <span>регистрация</span>
                         </button>
                     </li>
                 </ul>
 
-                <div class="login__content" [ngClass]="{loginMode: login}">
-
-                    <form action="" class="login__form login-form" [ngClass]="{loginMode: login}">
-
-                        <ng-container *ngIf="login; else registration">
-
+                <div class="login__content" [ngClass]="{loginMode: isLogin}">
+                    <form
+                            action=""
+                            class="login__form login-form"
+                            [ngClass]="{loginMode: isLogin}"
+                            [formGroup]="isLogin ? loginForm : loginForm"
+                            (ngSubmit)="isLogin ? login() : login()"
+                    >
+                        <ng-container *ngIf="isLogin; else registration">
                             <div class="login-form__wrapper" @appearOnly>
 
-                                <div class="login-form__field">
-                                    <input type="email" class="login-form__input" placeholder="Почта">
-                                </div>
+                                <ng-container *ngIf="loginForm.dirty && loginForm.invalid">
+                                    <div class="login__error login-error" @appear>
+                                        <div class="login-error__wrapper">
+                                            <div class="login-error__image">
+                                                <img ngSrc="assets/images/icons/attention.svg" alt="" fill priority="true">
+                                            </div>
 
-                                <div class="login-form__field">
-                                    <input type="password" class="login-form__input" placeholder="Пароль">
-                                    <div class="login-form__hide">
-                                        <img ngSrc="assets/images/icons/hide.svg" alt="" height="10" width="17">
+                                            <div class="login-error__text">
+                                                <ng-container *ngIf="loginForm.controls.email.invalid; else passwordLogin">
+                                                    Введите корректный email
+                                                </ng-container>
+                                                <ng-template #passwordLogin>
+                                                    <ng-container *ngIf="loginForm.controls.password.errors?.['minlength']">
+                                                        Пароль должен содержать минимум 6 символов
+                                                    </ng-container>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <div class="login-form__fields">
+                                    <div class="login-form__field">
+                                        <input
+                                                type="email"
+                                                class="login-form__input"
+                                                placeholder="Почта"
+                                                [formControl]="loginForm.controls.email"
+                                        >
+                                    </div>
+
+                                    <div class="login-form__field">
+                                        <input
+                                                type="password"
+                                                class="login-form__input"
+                                                placeholder="Пароль"
+                                                [formControl]="loginForm.controls.password"
+                                        >
+                                        <div class="login-form__hide">
+                                            <img ngSrc="assets/images/icons/hide.svg" alt="" height="10" width="17">
+                                        </div>
                                     </div>
                                 </div>
 
