@@ -1,14 +1,10 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  ViewChild,
-  ViewChildren
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild, ViewChildren } from "@angular/core";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { opacity } from "../../shared/animations/opacity";
 import { transformOpacity } from "../../shared/animations/transform-opacity";
+import { opacity } from "../../shared/animations/opacity";
+import { AuthService } from "../../shared/services/auth.service";
+import { take } from "rxjs";
+
 
 @Component({
   selector: 'app-main',
@@ -44,10 +40,17 @@ export class MainComponent implements AfterViewInit {
   private _currentSlide = 1
 
   constructor(
+    protected _auth: AuthService
   ) { }
 
   public ngAfterViewInit(): void {
-    this.initSlide(0)
+    this._auth.isLogged$
+      .pipe(take(1))
+      .subscribe(r => {
+        if (!r)
+          this.initSlide(0)
+      })
+
   }
 
   protected initSlide(slide: number): void {

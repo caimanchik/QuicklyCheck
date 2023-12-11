@@ -123,63 +123,65 @@
 
         </div>
 
-        <div class="main__howto main-howto">
-            <div class="main-howto__content">
-                <h2 class="main-howto__title">
-                    Как проверить тест, если вы не зарегистрированы?
-                </h2>
+        <ng-container *ngIf="(_auth.isLogged$ | async) === false">
+            <div class="main__howto main-howto">
+                <div class="main-howto__content">
+                    <h2 class="main-howto__title">
+                        Как проверить тест, если вы не зарегистрированы?
+                    </h2>
 
-                <div class="main-howto__slider main-howto-slider">
-                    <div class="main-howto-slider__wrapper">
-                        <div class="main-howto-slider__controls main-howto-slider-controls">
-                            <button type="button" class="main-howto-slider-controls__arrow" (click)="movePrevSlide()">
-                                <img ngSrc="assets/images/icons/arrow_pink.svg" alt="" loading="eager" fill>
-                            </button>
-                            <button type="button" class="main-howto-slider-controls__arrow" (click)="moveNextSlide()">
-                                <img ngSrc="assets/images/icons/arrow_pink.svg" alt="" loading="eager" fill>
-                            </button>
-                        </div>
-                        <div class="main-howto-slider__content">
-                            <div class="main-howto-slider__slides">
-                                <div class="main-howto-slider__slide active" #slide>
-                                    Перейдите в раздел <a routerLink="getBlank" class="main-howto-slider__link">Скачать бланк</a>
-                                </div>
-
-                                <div class="main-howto-slider__slide" #slide>
-                                    Следуйте шагам в инструкции на странице
-                                </div>
-
-                                <div class="main-howto-slider__slide" #slide>
-                                    Перейдите в раздел <a routerLink="" class="main-howto-slider__link">Проверить тест</a>
-                                </div>
-
-                                <div class="main-howto-slider__slide" #slide>
-                                    Следуйте шагам в инструкции на странице
-                                </div>
-
-                                <div class="main-howto-slider__slide" #slide>
-                                    Готово! Тест проверен!
-                                </div>
+                    <div class="main-howto__slider main-howto-slider">
+                        <div class="main-howto-slider__wrapper">
+                            <div class="main-howto-slider__controls main-howto-slider-controls">
+                                <button type="button" class="main-howto-slider-controls__arrow" (click)="movePrevSlide()">
+                                    <img ngSrc="assets/images/icons/arrow_pink.svg" alt="" loading="eager" fill>
+                                </button>
+                                <button type="button" class="main-howto-slider-controls__arrow" (click)="moveNextSlide()">
+                                    <img ngSrc="assets/images/icons/arrow_pink.svg" alt="" loading="eager" fill>
+                                </button>
                             </div>
-
-                            <div class="main-howto-slider__progress main-howto-slider-progress">
-                                <div class="main-howto-slider-progress__wrapper">
-                                    <div class="main-howto-slider-progress__progress">
-                                        <div class="main-howto-slider-progress__bar"></div>
-                                        <div class="main-howto-slider-progress__grey active1" #progressGreyBar></div>
+                            <div class="main-howto-slider__content">
+                                <div class="main-howto-slider__slides">
+                                    <div class="main-howto-slider__slide active" #slide>
+                                        Перейдите в раздел <a routerLink="getBlank" class="main-howto-slider__link">Скачать бланк</a>
                                     </div>
 
-                                    <div class="main-howto-slider-progress__numbers">
-                                        <ng-container *ngFor="let i of [0, 1, 2, 3, 4]">
-                                            <button
-                                                    type="button"
-                                                    class="main-howto-slider-progress__number"
-                                                    #number
-                                                    (click)="initSlide(i)"
-                                            >
-                                                {{ i + 1 }}
-                                            </button>
-                                        </ng-container>
+                                    <div class="main-howto-slider__slide" #slide>
+                                        Следуйте шагам в инструкции на странице
+                                    </div>
+
+                                    <div class="main-howto-slider__slide" #slide>
+                                        Перейдите в раздел <a routerLink="" class="main-howto-slider__link">Проверить тест</a>
+                                    </div>
+
+                                    <div class="main-howto-slider__slide" #slide>
+                                        Следуйте шагам в инструкции на странице
+                                    </div>
+
+                                    <div class="main-howto-slider__slide" #slide>
+                                        Готово! Тест проверен!
+                                    </div>
+                                </div>
+
+                                <div class="main-howto-slider__progress main-howto-slider-progress">
+                                    <div class="main-howto-slider-progress__wrapper">
+                                        <div class="main-howto-slider-progress__progress">
+                                            <div class="main-howto-slider-progress__bar"></div>
+                                            <div class="main-howto-slider-progress__grey active1" #progressGreyBar></div>
+                                        </div>
+
+                                        <div class="main-howto-slider-progress__numbers">
+                                            <ng-container *ngFor="let i of [0, 1, 2, 3, 4]">
+                                                <button
+                                                        type="button"
+                                                        class="main-howto-slider-progress__number"
+                                                        #number
+                                                        (click)="initSlide(i)"
+                                                >
+                                                    {{ i + 1 }}
+                                                </button>
+                                            </ng-container>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +189,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
 
     </div>
 </main>

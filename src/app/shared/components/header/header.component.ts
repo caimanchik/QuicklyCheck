@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {transition, trigger, useAnimation} from "@angular/animations";
-import {opacity} from "../../animations/opacity";
-import {AuthService} from "../../services/auth.service";
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { Component } from "@angular/core";
+import { opacity } from "../../animations/opacity";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -27,13 +27,8 @@ import {AuthService} from "../../services/auth.service";
   ],
 
 })
-export class HeaderComponent implements OnInit {
-
+export class HeaderComponent {
   constructor(
     protected _auth: AuthService
   ) { }
-
-  ngOnInit(): void {
-  }
-
 }

@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { ScrollService } from "./shared/services/infrastructure/scroll.service";
+import { AuthService } from "./shared/services/auth.service";
+import { take } from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -7,12 +9,19 @@ import { ScrollService } from "./shared/services/infrastructure/scroll.service";
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'QuicklyCheck';
 
   constructor(
-    private _scrollService: ScrollService
+    private _scrollService: ScrollService,
+    private _auth: AuthService
   ) { }
+
+  public ngOnInit() {
+    this._auth.isLogged()
+      .pipe(take(1))
+      .subscribe()
+  }
 
   @HostListener('document:scroll', ['$event'])
   public onScroll(e: Event): void {

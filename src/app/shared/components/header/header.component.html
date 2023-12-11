@@ -34,8 +34,8 @@
             <div class="header__item">
 
                 <ng-container *ngIf="_auth.isLogged$ | async; else login">
-                    <a class="header-links__account" routerLink="getBlank">
-                        <img src="assets/images/icons/account.svg">
+                    <a class="header-links__account" routerLink="/">
+                        <img src="assets/images/icons/account.svg" alt="Перейти в аккаунт">
                     </a>
                 </ng-container>
 

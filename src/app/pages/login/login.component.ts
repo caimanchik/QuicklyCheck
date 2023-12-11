@@ -1,12 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {transition, trigger, useAnimation} from "@angular/animations";
-import {opacity} from "../../shared/animations/opacity";
-import {transformOpacity} from "../../shared/animations/transform-opacity";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ILoginForm} from "../../shared/interfaces/forms/ILoginForm";
-import {AuthService} from "../../shared/services/auth.service";
-import {take} from "rxjs";
-import {Router} from "@angular/router";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { transformOpacity } from "../../shared/animations/transform-opacity";
+import { opacity } from "../../shared/animations/opacity";
+import { FormControl, FormGroup } from "@angular/forms";
+import { ILoginForm } from "../../shared/interfaces/forms/ILoginForm";
+import { AuthService } from "../../shared/services/auth.service";
+import { Router } from "@angular/router";
+import { take } from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -59,23 +59,26 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     this.loginForm = new FormGroup<ILoginForm>({
       email: new FormControl<string>("", {
-        validators: [
-          Validators.required,
-          Validators.email,
-        ],
+        // validators: [
+        //   Validators.required,
+        //   Validators.email,
+        // ],
         nonNullable: true
       }),
       password: new FormControl<string>("",{
-        validators: [
-          Validators.minLength(6),
-        ],
+        // validators: [
+        //   Validators.minLength(6),
+        // ],
         nonNullable: true
       })
     })
   }
 
   protected login() {
-    this._auth.login()
+    this._auth.login({
+      username: this.loginForm.controls.email.value,
+      password: this.loginForm.controls.password.value
+    })
       .pipe(take(1))
       .subscribe(successful => {
         if (successful) {
