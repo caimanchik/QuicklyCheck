@@ -7,6 +7,7 @@ import { ILoginForm } from "../../shared/interfaces/forms/ILoginForm";
 import { AuthService } from "../../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { take } from "rxjs";
+import { UrlService } from "../../shared/services/infrastructure/url.service";
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _auth: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _url: UrlService
   ) {
   }
 
@@ -82,7 +84,7 @@ export class LoginComponent implements OnInit {
       .pipe(take(1))
       .subscribe(successful => {
         if (successful) {
-          this._router.navigate(['']);
+          this._router.navigate(this._url.getPreviousUrl().split('/'));
         }
       })
   }

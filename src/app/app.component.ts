@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angul
 import { ScrollService } from "./shared/services/infrastructure/scroll.service";
 import { AuthService } from "./shared/services/auth.service";
 import { take } from "rxjs";
+import { UrlService } from "./shared/services/infrastructure/url.service";
 
 @Component({
   selector: 'app-root',
@@ -14,11 +15,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private _scrollService: ScrollService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _url: UrlService
   ) { }
 
   public ngOnInit() {
-    this._auth.isLogged()
+    this._auth.refresh()
       .pipe(take(1))
       .subscribe()
   }

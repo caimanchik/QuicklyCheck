@@ -6,6 +6,7 @@ import { HttpService } from "./infrastructure/http.service";
 import { Injectable } from "@angular/core";
 import { RefreshToken } from "../interfaces/Tokens/RefreshToken";
 import { AccessToken } from "../interfaces/Tokens/AccessToken";
+import { IsTokenPair } from "../interceptors/IsTokenPair";
 
 
 @Injectable({
@@ -14,8 +15,13 @@ import { AccessToken } from "../interfaces/Tokens/AccessToken";
 export class AuthService {
   constructor(
     private _http: HttpService,
-    private _cookie: CookieService
-  ) { }
+    private _cookie: CookieService,
+  ) {
+    // let access = this._cookie.getCookie('access')
+    //
+    // if (access)
+    //   this.isLogged$.next(true)
+  }
 
   public isLogged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -23,7 +29,7 @@ export class AuthService {
     return this._http.Post<User, TokenPair>('token/', user, {withCredentials: false}, false)
       .pipe(
         map(pair => {
-          this._cookie.saveToken(pair)
+          this.saveToken(pair)
 
           this.isLogged$.next(true);
           return true;
@@ -36,14 +42,7 @@ export class AuthService {
       )
   }
 
-  public isLogged(): Observable<boolean> {
-    let access = this._cookie.getCookie('access')
-
-    if (access) {
-      this.isLogged$.next(true)
-      return of(true)
-    }
-
+  public refresh(): Observable<boolean> {
     let refresh = this._cookie.getCookie('refresh')
 
     if (!refresh) {
@@ -58,7 +57,7 @@ export class AuthService {
       false)
       .pipe(
         map(token => {
-          this._cookie.saveToken(token)
+          this.saveToken(token)
           this.isLogged$.next(true)
 
           return true;
@@ -69,5 +68,26 @@ export class AuthService {
           return of(false)
         }),
       )
+  }
+
+  public saveToken(token: TokenPair | AccessToken) {
+    if (IsTokenPair(token))
+      this._cookie.setCookie({
+        name: "refresh",
+        value: token.refresh,
+        maxAge: {
+          days: 1,
+          minutes: 0
+        }
+      })
+
+    this._cookie.setCookie({
+      name: "access",
+      value: token.access,
+      maxAge: {
+        days: 0,
+        minutes: 5
+      }
+    })
   }
 }
