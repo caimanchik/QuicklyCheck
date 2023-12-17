@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {transition, trigger, useAnimation} from "@angular/animations";
-import {opacity} from "../../animations/opacity";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { opacity } from "../../animations/opacity";
 
 @Component({
   selector: 'app-footer',
@@ -23,7 +23,8 @@ import {opacity} from "../../animations/opacity";
           }
         })
     ])
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent implements OnInit {
 

@@ -1,0 +1,40 @@
+@import "vars";
+@import "classes";
+
+:host {
+  display: inline-block;
+}
+
+.button {
+  display: inline-block;
+  @extend %button;
+  padding: 3px;
+
+  &__wrap {
+    border-radius: 100px;
+    background-color: #fff;
+    padding: .5rem 3rem;
+  }
+  
+  &__button {
+    @extend %grad;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+  }
+
+  &.filled {
+    .button {
+      &__wrap {
+        background: transparent;
+      }
+
+      &__button {
+        color: white;
+        -webkit-text-fill-color: white;
+        background: transparent;
+      }
+    }
+  }
+}

@@ -13,7 +13,11 @@ const routes: Routes = [
   {
     path: 'getBlank',
     loadChildren: () => import('./pages/get-blank/get-blank.module').then(m => m.GetBlankModule),
-  }
+  },
+  {
+    path: 'classes',
+    loadChildren: () => import('./pages/classes/classes.module').then(m => m.ClassesModule),
+  },
 ];
 
 @NgModule({

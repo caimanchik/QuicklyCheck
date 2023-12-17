@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card__wrapper">
+
+        <div class="card__row">
+
+            <h2 class="card__title">
+                <ng-content select="[title]"></ng-content>
+            </h2>
+
+            <div class="card__buttons">
+
+                <div class="card__button">
+                    <ng-content select="[button1]"></ng-content>
+                </div>
+
+                <div class="card__button">
+                    <ng-content select="[button2]"></ng-content>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

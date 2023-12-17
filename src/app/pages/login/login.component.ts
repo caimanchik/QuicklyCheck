@@ -3,7 +3,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../shared/animations/transform-opacity";
 import { opacity } from "../../shared/animations/opacity";
 import { FormControl, FormGroup } from "@angular/forms";
-import { ILoginForm } from "../../shared/interfaces/forms/ILoginForm";
+import { ILoginForm } from "../../shared/interfaces/Forms/ILoginForm";
 import { AuthService } from "../../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { take } from "rxjs";

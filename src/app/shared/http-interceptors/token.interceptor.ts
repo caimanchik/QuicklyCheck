@@ -19,7 +19,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
     let newReq = this.cloneWithAccessToken(request, this._cookie.getCookie('access') ?? "");
-    console.log(true)
 
     return next.handle(newReq)
       .pipe(
@@ -35,7 +34,8 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private cloneWithAccessToken(request: HttpRequest<unknown>, access: string) : HttpRequest<unknown> {
     return request.clone({
-      headers: request.headers.append("Authorization", `Bearer ${access}`)
+      headers: request.headers.set("Authorization", `Bearer ${access}`),
+      withCredentials: false
     });
   }
 
@@ -44,7 +44,7 @@ export class TokenInterceptor implements HttpInterceptor {
       .pipe(
         switchMap(isLogged => {
           if (isLogged)
-            return next.handle(request)
+            return this.intercept(request, next)
 
           return throwError(() => e);
         })

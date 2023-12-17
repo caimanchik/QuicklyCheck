@@ -113,9 +113,17 @@
                         Чтобы получить доступ ко всем сервисам, войдите в аккаунт
                     </div>
 
-                    <a href="" class="main-choose-content__login" routerLink="./login">
-                        Войти
-                    </a>
+                    <ng-container *ngIf="(_auth.isLogged$ | async) === false; else createClass">
+                        <a href="" class="main-choose-content__login" routerLink="./login">
+                            Войти
+                        </a>
+                    </ng-container>
+
+                    <ng-template #createClass>
+                        <a href="" class="main-choose-content__login" routerLink="/">
+                            Создать класс
+                        </a>
+                    </ng-template>
 
                 </div>
 

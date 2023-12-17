@@ -1,5 +1,5 @@
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { opacity } from "../../animations/opacity";
 import { AuthService } from "../../services/auth.service";
 
@@ -25,7 +25,7 @@ import { AuthService } from "../../services/auth.service";
         })
     ])
   ],
-
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
   constructor(
