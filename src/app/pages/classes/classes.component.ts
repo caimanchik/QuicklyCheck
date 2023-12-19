@@ -4,6 +4,7 @@ import { transformOpacity } from "../../shared/animations/transform-opacity";
 import { ClassesService } from "../../shared/services/classes.service";
 import { DestroyService } from "../../shared/services/infrastructure/destroy.service";
 import { Class } from "../../shared/interfaces/Classes/Class";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-classes',
@@ -34,10 +35,11 @@ export class ClassesComponent implements OnInit {
   constructor(
     private _classes: ClassesService,
     private _destroy: DestroyService,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _router: Router
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._classes.getClasses()
       .pipe(this._destroy.takeUntilDestroy)
       .subscribe(classes => {
@@ -48,5 +50,9 @@ export class ClassesComponent implements OnInit {
 
   test(id: number = 0) {
     console.log(id)
+  }
+
+  protected openClass(id: number) {
+    this._router.navigate(["classes", id])
   }
 }

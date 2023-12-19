@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { map, Observable } from "rxjs";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
+import { catchError, map, Observable, throwError } from "rxjs";
 import { environment } from "../../../../environments/environment";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class HttpService {
 
   constructor(
     private _httpClient: HttpClient,
+    private _router: Router
   ) { }
 
   public Get<TGet>(
@@ -30,6 +32,7 @@ export class HttpService {
       ...options,
       observe: 'response'
     }).pipe(
+      catchError(e => this.handleError.bind(this)(e)),
       map(r => r.body as TGet)
     )
   }
@@ -54,10 +57,16 @@ export class HttpService {
       ...options,
       observe: 'response'
     }).pipe(
+      catchError(e => this.handleError.bind(this)(e)),
       map(r => r.body as TGet)
     )
-      // .pipe(
-      //   catchError(e => this.handleError.bind(this)(e))
-      // )
+  }
+
+  private handleError(e: HttpErrorResponse) {
+    if (e.status === 401 && !e.url?.includes("token")) {
+      this._router.navigate(['login'])
+    }
+
+    return throwError(() => e)
   }
 }
