@@ -1,6 +1,5 @@
-
 <ng-container *ngIf="patterns">
-    <div class="pattern">
+    <div class="pattern" @appear>
         <div class="pattern__wrapper">
 
             <div class="pattern__title">
@@ -11,12 +10,12 @@
 
                 <div class="pattern-vars__list">
 
-                    <ng-container *ngFor="let varI of varIs">
+                    <ng-container *ngFor="let varI of [1, 2, 3, 4, 5, 6, 7, 8]">
                         <button
                                 type="button"
                                 class="pattern-vars__item"
                                 (click)="changePattern(varI)"
-                                [ngClass]="{active: selected + 1 === varI}"
+                                [ngClass]="{active: selected + 1 === varI, filled: filled[varI - 1]}"
                         >
                             <div class="pattern-vars__item-wrap">
                                 <span>{{ varI }}</span>
@@ -47,7 +46,7 @@
                             </div>
                         </div>
 
-                        <ng-container *ngFor="let answer of patterns[0].pattern.slice(0, 20); let i = index">
+                        <ng-container *ngFor="let answer of patterns[selected].pattern.slice(0, 20); let i = index">
 
                             <div class="pattern-blank__row">
                                 <div class="pattern-blank__item pattern-blank__item_left">
@@ -55,8 +54,17 @@
                                 </div>
                                 <div class="pattern-blank__item pattern-blank__item_right">
                                     <ng-container *ngFor="let j of [1, 2, 3, 4, 5]">
-                                        <input type="radio" [id]="'r' + i + j" [name]="'answer' + i">
-                                        <label [for]="'r' + i + j">
+                                        <input
+                                                type="radio"
+                                                [id]="'r' + i + j"
+                                                [name]="'answer' + i"
+                                                [checked]="answer === j"
+                                        >
+                                        <label
+                                                [for]="'r' + i + j"
+                                                (click)="addAnswer(i, j)"
+                                                [ngClass]="{active: j === answer}"
+                                        >
                                             {{ j }}
                                         </label>
                                     </ng-container>
@@ -86,8 +94,17 @@
                                 </div>
                                 <div class="pattern-blank__item pattern-blank__item_right">
                                     <ng-container *ngFor="let j of [1, 2, 3, 4, 5]">
-                                        <input type="radio" [id]="'r' + (20 + i) + j" [name]="'answer' + (i + 20)">
-                                        <label [for]="'r' + (20 + i) + j">
+                                        <input
+                                                type="radio"
+                                                [id]="'r' + (20 + i) + j"
+                                                [name]="'answer' + (i + 20)"
+                                                [checked]="answer === j"
+                                        >
+                                        <label
+                                                [for]="'r' + (20 + i) + j"
+                                                (click)="addAnswer(i + 20, j)"
+                                                [ngClass]="{active: j === answer}"
+                                        >
                                             {{ j }}
                                         </label>
                                     </ng-container>
@@ -100,6 +117,16 @@
 
                 </div>
 
+            </div>
+
+            <div class="pattern__button-wrap">
+                <button
+                        type="button"
+                        class="pattern__button"
+                        (click)="clickButton()"
+                >
+                    Далее
+                </button>
             </div>
 
         </div>

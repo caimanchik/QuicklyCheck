@@ -20,6 +20,18 @@
 
   &__title {
   }
+
+  &__button {
+    color: rgba(237, 106, 220, 0.60);
+    font-size: 1.8rem;
+    font-family: "Comic Sans MS";
+    text-align: right;
+  }
+  
+  &__button-wrap {
+    margin-top: 3rem;
+    text-align: right;
+  }
 }
 
 .pattern-vars {
@@ -39,6 +51,16 @@
       .pattern-vars {
         &__item-wrap {
           background: rgba(255, 207, 249, 0.99);
+          & span {
+            @extend %grad;
+          }
+        }
+      }
+    }
+
+    &.filled {
+      .pattern-vars {
+        &__item-wrap {
           & span {
             @extend %grad;
           }
@@ -137,9 +159,9 @@
       display: none;
       appearance: none;
 
-      &:checked + label {
-        background: rgba(255, 207, 249, 0.99);
-      }
+      //&:checked + label {
+      //  background: rgba(255, 207, 249, 0.99);
+      //}
     }
 
     & label {
@@ -153,6 +175,7 @@
       align-items: center;
       justify-content: center;
       color: rgba(0, 0, 0, 0.40);
+
       transition: all ease .2s;
 
       margin-left: .4rem;
@@ -160,6 +183,10 @@
       //&:nth-child(2) {
       //  margin-left: 0;
       //}
+
+      &.active {
+        background: rgba(255, 207, 249, 0.99);
+      }
     }
   }
 
