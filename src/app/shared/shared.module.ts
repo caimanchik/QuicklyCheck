@@ -6,6 +6,7 @@ import { RouterLinkWithHref } from "@angular/router";
 import { CardComponent } from './components/card/card.component';
 import { ButtonComponent } from './components/button/button.component';
 import { TitleComponent } from './components/title/title.component';
+import { PatternComponent } from './components/pattern/pattern.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { TitleComponent } from './components/title/title.component';
     CardComponent,
     ButtonComponent,
     TitleComponent,
+    PatternComponent,
   ],
   exports: [
     FooterComponent,
@@ -22,6 +24,7 @@ import { TitleComponent } from './components/title/title.component';
     CardComponent,
     ButtonComponent,
     TitleComponent,
+    PatternComponent,
   ],
   imports: [
     CommonModule,

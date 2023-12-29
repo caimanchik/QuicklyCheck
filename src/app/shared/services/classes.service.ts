@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, map, Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { Class } from "../interfaces/Classes/Class";
 import { HttpService } from "./infrastructure/http.service";
 import { Student } from "../interfaces/Students/Student";
@@ -22,7 +22,7 @@ export class ClassesService {
             id: i + 1
           }))
         }),
-        // delay(1000)
+        // delay(400)
       )
   }
 
@@ -33,13 +33,14 @@ export class ClassesService {
           ...classInfo,
           id
         })),
-        delay(1000)
+        // delay(400)
       )
   }
 
   public getClassStudents(id: number) : Observable<Student[]> {
     return this._http.Get<Student[]>(`class/${id}/students`)
       .pipe(
+        // delay(400),
         map(students => {
           return students.map((e, i) => ({
             ...e,

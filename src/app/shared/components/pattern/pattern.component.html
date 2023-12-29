@@ -1,0 +1,108 @@
+
+<ng-container *ngIf="patterns">
+    <div class="pattern">
+        <div class="pattern__wrapper">
+
+            <div class="pattern__title">
+                <app-title>Варианты</app-title>
+            </div>
+
+            <div class="pattern__vars pattern-vars">
+
+                <div class="pattern-vars__list">
+
+                    <ng-container *ngFor="let varI of varIs">
+                        <button
+                                type="button"
+                                class="pattern-vars__item"
+                                (click)="changePattern(varI)"
+                                [ngClass]="{active: selected + 1 === varI}"
+                        >
+                            <div class="pattern-vars__item-wrap">
+                                <span>{{ varI }}</span>
+                            </div>
+                        </button>
+                    </ng-container>
+
+                </div>
+
+                <div class="pattern-vars__text">
+                    Ответы сохраняются автоматически
+                </div>
+
+            </div>
+
+            <div class="pattern__blank pattern-blank">
+
+                <div class="pattern-blank__columns">
+
+                    <div class="pattern-blank__column">
+
+                        <div class="pattern-blank__row pattern-blank__row_header">
+                            <div class="pattern-blank__title pattern-blank__item pattern-blank__item_left">
+                                <span>№</span>
+                            </div>
+                            <div class="pattern-blank__subtitle pattern-blank__item pattern-blank__item_right">
+                                поля ответов
+                            </div>
+                        </div>
+
+                        <ng-container *ngFor="let answer of patterns[0].pattern.slice(0, 20); let i = index">
+
+                            <div class="pattern-blank__row">
+                                <div class="pattern-blank__item pattern-blank__item_left">
+                                    {{ i + 1 }}
+                                </div>
+                                <div class="pattern-blank__item pattern-blank__item_right">
+                                    <ng-container *ngFor="let j of [1, 2, 3, 4, 5]">
+                                        <input type="radio" [id]="'r' + i + j" [name]="'answer' + i">
+                                        <label [for]="'r' + i + j">
+                                            {{ j }}
+                                        </label>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                        </ng-container>
+
+                    </div>
+
+                    <div class="pattern-blank__column">
+
+                        <div class="pattern-blank__row pattern-blank__row_header">
+                            <div class="pattern-blank__title pattern-blank__item pattern-blank__item_left">
+                                <span>№</span>
+                            </div>
+                            <div class="pattern-blank__subtitle pattern-blank__item pattern-blank__item_right">
+                                поля ответов
+                            </div>
+                        </div>
+
+                        <ng-container *ngFor="let answer of patterns[0].pattern.slice(20, 40); let i = index">
+
+                            <div class="pattern-blank__row">
+                                <div class="pattern-blank__item pattern-blank__item_left">
+                                    {{ i + 21 }}
+                                </div>
+                                <div class="pattern-blank__item pattern-blank__item_right">
+                                    <ng-container *ngFor="let j of [1, 2, 3, 4, 5]">
+                                        <input type="radio" [id]="'r' + (20 + i) + j" [name]="'answer' + (i + 20)">
+                                        <label [for]="'r' + (20 + i) + j">
+                                            {{ j }}
+                                        </label>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                        </ng-container>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</ng-container>
+

@@ -1,0 +1,169 @@
+@import "vars";
+@import "classes";
+
+.pattern {
+  display: flex;
+  &__wrapper {
+    padding: 3rem 3.35rem;
+
+    border-radius: 42px;
+    border: 4.437px solid rgba(233, 58, 210, 0.75);
+    background: #FBFAFB;
+    box-shadow: 4.437px 6.212px 16.861px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &__vars {
+  }
+
+  &__blank {
+  }
+
+  &__title {
+  }
+}
+
+.pattern-vars {
+  &__list {
+    display: flex;
+    margin-top: .8rem;
+  }
+
+  &__item {
+    width: 3rem;
+    height: 3rem;
+    padding: 3px;
+    background: linear-gradient(315deg, rgba(70, 83, 210, 0.99) 3.46%, #E93AD2 92.67%);
+    border-radius: 50%;
+
+    &.active {
+      .pattern-vars {
+        &__item-wrap {
+          background: rgba(255, 207, 249, 0.99);
+          & span {
+            @extend %grad;
+          }
+        }
+      }
+    }
+
+    margin-left: .8rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  &__item-wrap {
+    background-color: $bgcolor;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-family: $roboto;
+    color: rgba(0, 0, 0, 0.40);
+    transition: all ease .2s;
+
+    & span {
+      position: relative;
+      top: 2px;
+      left: 0;
+    }
+  }
+
+  &__text {
+    color: rgba(237, 106, 220, 0.60);
+    font-size: 1.14rem;
+    margin-top: .6rem;
+  }
+}
+
+.pattern-blank {
+  margin-top: 2.3rem;
+  padding: 0 4rem;
+  &__columns {
+    display: flex;
+  }
+
+  &__column {
+    &:last-child {
+      margin-left: 3.4rem;
+    }
+  }
+
+  &__row {
+    height: 2.4rem;
+    &_header {
+      font-weight: 500;
+      border-bottom: 2px solid black;
+    }
+
+    display: flex;
+  }
+
+  &__title {
+    font-size: 1.6rem;
+
+    & span {
+      position: relative;
+      left: 2px;
+      top: 0;
+    }
+  }
+
+  &__item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &_left {
+      width: 4.6rem;
+      border-right: 2px solid black;
+      font-weight: 500;
+      font-size: 1.36rem;
+    }
+
+    &_right {
+      width: 11.4rem;
+    }
+
+    color: #000;
+    font-family: $roboto;
+
+    & input {
+      display: none;
+      appearance: none;
+
+      &:checked + label {
+        background: rgba(255, 207, 249, 0.99);
+      }
+    }
+
+    & label {
+      width: 1.6rem;
+      height: 1.6rem;
+      font-size: 1rem;
+      border: 1px solid black;
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0, 0, 0, 0.40);
+      transition: all ease .2s;
+
+      margin-left: .4rem;
+
+      //&:nth-child(2) {
+      //  margin-left: 0;
+      //}
+    }
+  }
+
+  &__subtitle {
+    font-size: 1.3rem;
+  }
+}

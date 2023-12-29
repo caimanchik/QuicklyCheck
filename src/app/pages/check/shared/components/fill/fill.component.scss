@@ -1,0 +1,17 @@
+@import "vars";
+@import "classes";
+
+:host {
+  flex-grow: 1;
+}
+
+.fill {
+  padding: 3rem 0;
+  &__container {
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
