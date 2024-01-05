@@ -1,0 +1,61 @@
+@import "vars";
+@import "classes";
+
+:host {
+  flex-grow: 1;
+}
+
+.check {
+
+  &__container {
+  }
+
+  &__wrapper {
+    padding: 5rem 0;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  &__content {
+    flex: 0 0 50rem;
+    border-radius: 42px;
+    border: 4.437px solid rgba(233, 58, 210, 0.75);
+    background: #FBFAFB;
+    box-shadow: 4.437px 6.212px 16.861px 0px rgba(0, 0, 0, 0.25);
+    padding: 2.4rem 2.4rem 2.4rem 3.4rem;
+    display: flex;
+    position: relative;
+  }
+
+  &__columns {
+    flex-grow: 1;
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+  }
+
+  &__column {
+    &:first-child {
+      padding: 2.1rem 0 2.6rem;
+      flex-grow: 0;
+    }
+
+    &:last-child {
+      display: flex;
+      flex-grow: 1;
+      height: 100%;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+  }
+
+  &__decor {
+    position: absolute;
+    right: 3.5rem;
+    top: 0;
+  }
+}
+
+.container {
+}

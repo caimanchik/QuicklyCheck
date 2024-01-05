@@ -7,6 +7,7 @@ import { CardComponent } from './components/card/card.component';
 import { ButtonComponent } from './components/button/button.component';
 import { TitleComponent } from './components/title/title.component';
 import { PatternComponent } from './components/pattern/pattern.component';
+import { PhotoComponent } from './components/photo/photo.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { PatternComponent } from './components/pattern/pattern.component';
     ButtonComponent,
     TitleComponent,
     PatternComponent,
+    PhotoComponent,
   ],
   exports: [
     FooterComponent,
@@ -25,6 +27,7 @@ import { PatternComponent } from './components/pattern/pattern.component';
     ButtonComponent,
     TitleComponent,
     PatternComponent,
+    PhotoComponent,
   ],
   imports: [
     CommonModule,

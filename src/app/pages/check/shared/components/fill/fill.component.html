@@ -1,11 +1,19 @@
+
 <section class="fill">
 
     <div class="fill__container container">
         <div class="fill__wrapper">
-            <app-pattern [patterns]="patterns"></app-pattern>
+            <app-pattern
+                    (nextClicked)="clickEvent()"
+                    [patterns]="patterns"
+            ></app-pattern>
         </div>
+
     </div>
 
 </section>
+
+
+
 
 

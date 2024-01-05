@@ -1,0 +1,13 @@
+<section class="upload" @appear>
+    <div class="upload__container container">
+
+        <app-photo
+                (uploadEvent)="uploadImages($event)"
+                (checkEvent)="check()"
+                (deleteEvent)="deleteImage($event)"
+                [previews]="previews"
+        ></app-photo>
+
+    </div>
+</section>
+

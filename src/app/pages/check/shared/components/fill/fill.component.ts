@@ -5,6 +5,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { mergeMap } from "rxjs";
 import { PatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/PatternParsed";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-fill',
@@ -34,7 +35,9 @@ export class FillComponent implements OnInit {
     private _testService: TestService,
     private _cd: ChangeDetectorRef,
     private _destroy: DestroyService,
-  ) { }
+    private _router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this._testService.getTests()
@@ -49,4 +52,7 @@ export class FillComponent implements OnInit {
       })
   }
 
+  protected clickEvent() {
+    this._router.navigate(['check', 'upload'])
+  }
 }

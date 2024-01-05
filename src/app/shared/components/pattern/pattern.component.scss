@@ -21,6 +21,19 @@
   &__title {
   }
 
+  &__less {
+    color: rgba(237, 106, 220, 0.60);
+    font-size: 1.14rem;
+    margin-top: 1rem;
+
+    display: flex;
+    justify-content: center;
+
+    & span {
+      flex: 0 0 26rem;
+    }
+  }
+
   &__button {
     color: rgba(237, 106, 220, 0.60);
     font-size: 1.8rem;
@@ -98,7 +111,7 @@
   &__text {
     color: rgba(237, 106, 220, 0.60);
     font-size: 1.14rem;
-    margin-top: .6rem;
+    margin-top: 1rem;
   }
 }
 

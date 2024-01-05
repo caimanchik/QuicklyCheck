@@ -32,7 +32,7 @@ export class PatternComponent implements AfterViewChecked {
 
   constructor() { }
 
-  ngAfterViewChecked(): void {
+  public ngAfterViewChecked(): void {
     this.updateFilling()
   }
 

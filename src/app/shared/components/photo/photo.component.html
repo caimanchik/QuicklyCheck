@@ -1,0 +1,51 @@
+<div class="photo">
+    <div class="photo__wrapper">
+        <div class="photo__container">
+
+            <div class="photo__title">
+                <app-title>Загрузите одно или несколько изображений бланка на проверку</app-title>
+            </div>
+
+            <div class="photo__upload">
+                <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        (change)="uploadImages($event)"
+                        #photoInput
+                >
+                <label>
+                    <app-button (clickEvent)="clickInput()">Загрузить</app-button>
+                </label>
+            </div>
+
+            <ng-container *ngIf="previews && previews.length > 0">
+                <ul class="photo__list photo-list" @appear>
+                    <ng-container *ngFor="let preview of previews; let i = index">
+                        <li class="photo-list__item">
+                            <div class="photo-list__item-wrap">
+                                <img [src]="preview" [alt]="'Фото' + (i + 1)">
+                                <div
+                                        class="photo-list__delete"
+                                        (click)="deletePhoto(i)"
+                                >
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ng-container>
+                </ul>
+
+                <div class="photo__check" @appear>
+                    <app-button
+                            [filled]="true" 
+                            (clickEvent)="generateCheckEvent()"
+                    >
+                        Проверить
+                    </app-button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
