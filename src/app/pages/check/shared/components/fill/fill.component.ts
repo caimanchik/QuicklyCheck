@@ -3,7 +3,7 @@ import { TestService } from "../../../../../shared/services/test.service";
 import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
-import { mergeMap } from "rxjs";
+import { mergeMap, take } from "rxjs";
 import { PatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/PatternParsed";
 import { Router } from "@angular/router";
 
@@ -30,6 +30,7 @@ import { Router } from "@angular/router";
 export class FillComponent implements OnInit {
 
   protected patterns!: PatternParsed[]
+  private pkTest!: number
 
   constructor(
     private _testService: TestService,
@@ -42,7 +43,10 @@ export class FillComponent implements OnInit {
   ngOnInit(): void {
     this._testService.getTests()
       .pipe(
-        mergeMap(tests => this._testService.getPatterns(tests[tests.length - 1].pk)),
+        mergeMap(tests => {
+          this.pkTest = tests[tests.length - 1].pk
+          return this._testService.getPatterns(this.pkTest)
+        }),
         this._destroy.takeUntilDestroy
       )
       .subscribe(patterns => {
@@ -54,5 +58,11 @@ export class FillComponent implements OnInit {
 
   protected clickEvent() {
     this._router.navigate(['check', 'upload'])
+  }
+
+  protected updatePatterns(pattern: PatternParsed) {
+    this._testService.updatePattern(pattern, this.pkTest)
+      .pipe(take(1))
+      .subscribe(e => console.log(e))
   }
 }

@@ -22,12 +22,6 @@ export class HttpService {
       withCredentials?: boolean;
     } = {withCredentials: true}
   ): Observable<TGet> {
-    if (options.withCredentials) {
-      options.headers = options.headers?.append('Authorization', `Bearer`) ?? new HttpHeaders({
-        'Authorization': `Bearer`
-      })
-    }
-
     return this._httpClient.get<TGet>(environment.backendUrl + uri, {
       ...options,
       observe: 'response'
@@ -47,13 +41,44 @@ export class HttpService {
     } = {withCredentials: true},
     handleAuth = true
   ): Observable<TGet> {
-    if (options.withCredentials) {
-      options.headers = options.headers?.append('Authorization', `Bearer`) ?? new HttpHeaders({
-        'Authorization': `Bearer`
-      })
-    }
-
     return this._httpClient.post<TGet>(environment.backendUrl + uri, data, {
+      ...options,
+      observe: 'response'
+    }).pipe(
+      catchError(e => this.handleError.bind(this)(e)),
+      map(r => r.body as TGet)
+    )
+  }
+
+  public Put<TPost, TGet>(
+    uri: string,
+    data: TPost,
+    options: {
+      headers?: HttpHeaders,
+      params?: HttpParams,
+      withCredentials?: boolean;
+    } = {withCredentials: true},
+    handleAuth = true
+  ): Observable<TGet> {
+    return this._httpClient.put<TGet>(environment.backendUrl + uri, data, {
+      ...options,
+      observe: 'response'
+    }).pipe(
+      catchError(e => this.handleError.bind(this)(e)),
+      map(r => r.body as TGet)
+    )
+  }
+
+  public Delete<TGet>(
+    uri: string,
+    options: {
+      headers?: HttpHeaders,
+      params?: HttpParams,
+      withCredentials?: boolean;
+    } = {withCredentials: true},
+    handleAuth = true
+  ): Observable<TGet> {
+    return this._httpClient.delete<TGet>(environment.backendUrl + uri, {
       ...options,
       observe: 'response'
     }).pipe(
