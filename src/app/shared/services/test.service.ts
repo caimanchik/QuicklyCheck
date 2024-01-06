@@ -48,9 +48,9 @@ export class TestService {
         return this._http.Delete<null>(`pattern/${pattern.pk}`)
           .pipe(map(() => this.getEmptyPattern(pkTest, pattern.num)))
     }
-    else
-      return this._http.Post<PatternResponse, PatternResponse>(`test/${pkTest}/patterns`, this.translatePatternToResponse(pattern))
-        .pipe(map(resp => this.translatePatternFromResponse(resp)))
+
+    return this._http.Post<PatternResponse, PatternResponse>(`test/${pkTest}/patterns`, this.translatePatternToResponse(pattern))
+      .pipe(map(resp => this.translatePatternFromResponse(resp)))
   }
 
   private translatePatternToResponse(pattern: PatternParsed): PatternResponse {

@@ -2,6 +2,7 @@ import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Inp
 import { PatternParsed } from "../../interfaces/Tests/Patterns/PatternParsed";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../animations/transform-opacity";
+import { ErrorService } from "../../services/infrastructure/error.service";
 
 @Component({
   selector: 'app-pattern',
@@ -30,7 +31,9 @@ export class PatternComponent implements AfterViewChecked {
   protected selected = 0
   protected filled = [false, false, false, false, false, false, false, false]
 
-  constructor() { }
+  constructor(
+    private _error: ErrorService
+  ) { }
 
   public ngAfterViewChecked(): void {
     this.updateFilling()
@@ -54,13 +57,18 @@ export class PatternComponent implements AfterViewChecked {
   }
 
   protected addAnswer(question: number, value: number) {
-    if (question > 0 && this.patterns[this.selected].pattern[question - 1] === -1)
+    if (question > 0 && this.patterns[this.selected].pattern[question - 1] === -1) {
+      this._error.createError('Нельзя оставлять пробелы')
       return
+    }
 
-    if (this.patterns[this.selected].pattern[question] === value
-      && (question != 39 && this.patterns[this.selected].pattern[question + 1] === -1 || question === 39)
-    )
+    if (this.patterns[this.selected].pattern[question] === value) {
+      if (question !== 39 && this.patterns[this.selected].pattern[question + 1] !== -1) {
+        this._error.createError('Нельзя оставлять пробелы')
+        return
+      }
       value = -1
+    }
 
     this.patterns[this.selected].pattern[question] = value
 

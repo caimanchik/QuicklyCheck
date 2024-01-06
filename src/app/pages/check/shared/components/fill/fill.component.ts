@@ -6,6 +6,7 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
 import { mergeMap, take } from "rxjs";
 import { PatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/PatternParsed";
 import { Router } from "@angular/router";
+import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 
 @Component({
   selector: 'app-fill',
@@ -36,7 +37,8 @@ export class FillComponent implements OnInit {
     private _testService: TestService,
     private _cd: ChangeDetectorRef,
     private _destroy: DestroyService,
-    private _router: Router
+    private _router: Router,
+    private _error: ErrorService
   ) {
   }
 
@@ -56,7 +58,11 @@ export class FillComponent implements OnInit {
   }
 
   protected clickEvent() {
-    this._router.navigate(['check', 'upload'])
+    if (this.patterns.filter(pattern => pattern.pattern.filter(q => q >= 0).length > 0).length > 0) {
+      this._router.navigate(['check', 'upload'])
+    }
+    else
+      this._error.createError('Заполните хотя бы один вариант')
   }
 
   protected updatePattern(pattern: PatternParsed) {
