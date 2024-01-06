@@ -50,7 +50,6 @@ export class FillComponent implements OnInit {
         this._destroy.takeUntilDestroy
       )
       .subscribe(patterns => {
-        console.log(patterns)
         this.patterns = patterns
         this._cd.markForCheck()
       })
@@ -60,9 +59,12 @@ export class FillComponent implements OnInit {
     this._router.navigate(['check', 'upload'])
   }
 
-  protected updatePatterns(pattern: PatternParsed) {
+  protected updatePattern(pattern: PatternParsed) {
     this._testService.updatePattern(pattern, this.pkTest)
       .pipe(take(1))
-      .subscribe(e => console.log(e))
+      .subscribe(newPattern => {
+        this.patterns[newPattern.num - 1] = newPattern
+        this._cd.markForCheck()
+      })
   }
 }

@@ -33,34 +33,24 @@ export class TestService {
   public getPatterns(pkTest: number) : Observable<PatternParsed[]> {
     return this._http.Get<PatternResponse[]>(`test/${pkTest}/patterns`)
       .pipe(
-        map(patterns => this.translatePatternsFromResponse(patterns, pkTest)
-        //   patterns.map(pattern => {
-        //   let elements = pattern.pattern.split(',');
-        //
-        //   let parsed: PatternParsed = {
-        //     ...pattern,
-        //     pattern: elements
-        //       .map(e => parseInt(e === '' ? '0' : e))
-        //       .concat(Array<number>(40 - elements.length).fill(-1))
-        //   }
-        //
-        //   return parsed
-        // })
-        )
+        map(patterns => this.translatePatternsFromResponse(patterns, pkTest))
       )
   }
 
-  public updatePattern(pattern: PatternParsed, pkTest: number): Observable<PatternResponse> {
+  public updatePattern(pattern: PatternParsed, pkTest: number): Observable<PatternParsed> {
     if (pattern.pk) {
       const patternResponse = this.translatePatternToResponse(pattern)
 
       if (patternResponse.pattern.length !== 0)
         return this._http.Put<PatternResponse, PatternResponse>(`pattern/${pattern.pk}`, this.translatePatternToResponse(pattern))
+          .pipe(map(resp => this.translatePatternFromResponse(resp)))
       else
-        return this._http.Delete<any>(`pattern/${pattern.pk}`)
+        return this._http.Delete<null>(`pattern/${pattern.pk}`)
+          .pipe(map(() => this.getEmptyPattern(pkTest, pattern.num)))
     }
     else
       return this._http.Post<PatternResponse, PatternResponse>(`test/${pkTest}/patterns`, this.translatePatternToResponse(pattern))
+        .pipe(map(resp => this.translatePatternFromResponse(resp)))
   }
 
   private translatePatternToResponse(pattern: PatternParsed): PatternResponse {
@@ -74,23 +64,29 @@ export class TestService {
     const result = Array<PatternParsed>(8)
 
     for (let i = 0; i < 8; i++)
-      result[i] = {
-        test: pkTest,
-        num: i + 1,
-        pattern: Array<number>(40).fill(-1)
-      }
+      result[i] = this.getEmptyPattern(pkTest, i + 1)
 
-    patterns.forEach(pattern => {
-      const elements = pattern.pattern.split(',');
-
-      result[pattern.num - 1] = {
-      ...pattern,
-        pattern: elements
-        .map(e => parseInt(e === '' ? '0' : e))
-        .concat(Array<number>(40 - elements.length).fill(-1))
-      }
-    })
+    patterns.forEach(pattern => result[pattern.num - 1] = this.translatePatternFromResponse(pattern))
 
     return result
+  }
+
+  private translatePatternFromResponse(pattern: PatternResponse): PatternParsed {
+    const elements = pattern.pattern.split(',');
+
+    return {
+      ...pattern,
+      pattern: elements
+        .map(e => parseInt(e === '' ? '0' : e))
+        .concat(Array<number>(40 - elements.length).fill(-1))
+    }
+  }
+
+  private getEmptyPattern(test: number, num: number): PatternParsed {
+    return {
+      test,
+      num,
+      pattern: Array<number>(40).fill(-1)
+    }
   }
 }
