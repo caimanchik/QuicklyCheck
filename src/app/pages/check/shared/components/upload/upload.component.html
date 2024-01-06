@@ -4,6 +4,7 @@
         <app-photo
                 (uploadEvent)="uploadImages($event)"
                 (checkEvent)="check()"
+                (backEvent)="goToFill()"
                 (deleteEvent)="deleteImage($event)"
                 [previews]="previews"
         ></app-photo>

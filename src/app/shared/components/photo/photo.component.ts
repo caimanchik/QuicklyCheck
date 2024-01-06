@@ -35,6 +35,7 @@ export class PhotoComponent {
 
   @Output() public uploadEvent = new EventEmitter<FileList>()
   @Output() public checkEvent = new EventEmitter<void>()
+  @Output() public backEvent = new EventEmitter<void>()
   @Output() public deleteEvent = new EventEmitter<number>()
 
   @ViewChild("photoInput", {read: ElementRef}) private photoInput!: ElementRef
@@ -56,5 +57,9 @@ export class PhotoComponent {
 
   protected deletePhoto(i: number) {
     this.deleteEvent.next(i)
+  }
+
+  protected backClicked() {
+    this.backEvent.next()
   }
 }

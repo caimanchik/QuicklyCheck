@@ -43,4 +43,8 @@ export class UploadService {
     this.previews.splice(i, 1)
     return this.previews
   }
+
+  public clearStorage() {
+    this.previews = []
+  }
 }
