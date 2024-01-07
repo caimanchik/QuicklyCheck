@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { map, Observable, of, zip } from "rxjs";
+import { HttpService } from "./infrastructure/http.service";
 
 @Injectable()
-export class UploadService {
+export class CheckService {
   private previews: string[] = []
-  private images: File[] = []
+  private blanks: File[] = []
 
-  constructor() { }
+  constructor(
+    private _http: HttpService
+  ) { }
 
-  public addImages(images: FileList): Observable<string[]> {
+  public addBlanks(images: FileList): Observable<string[]> {
     if (images && images[0]) {
       const previewsStreams: Observable<string>[] = [];
       for (let i = 0; i < images.length; i++) {
-        this.images.push(images[i])
+        this.blanks.push(images[i])
 
         const reader = new FileReader()
         reader.readAsDataURL(images[i])
@@ -39,12 +42,17 @@ export class UploadService {
     return of([])
   }
 
-  public deleteImage(i: number): string[] {
+  public deleteBlank(i: number): string[] {
     this.previews.splice(i, 1)
     return this.previews
   }
 
-  public clearStorage() {
+  public clearBlanks() {
     this.previews = []
+  }
+
+  public checkBlanks(): Observable<any> {
+    // const bal
+    return this._http.Post<File[], any>(`test/${3}/blanks/`, this.blanks)
   }
 }

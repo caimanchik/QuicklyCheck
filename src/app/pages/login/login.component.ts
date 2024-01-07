@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
 
   protected login() {
     this._auth.login({
-      username: this.loginForm.controls.email.value,
+      email: this.loginForm.controls.email.value,
       password: this.loginForm.controls.password.value
     })
       .pipe(take(1))

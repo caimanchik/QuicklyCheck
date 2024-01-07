@@ -7,8 +7,7 @@
                 <div class="blank__column">
 
                     <div class="blank__image">
-                        <img ngSrc="assets/images/getBlank/blank.jpg" alt="Изображение бланка" height="529"
-                             width="379">
+                        <img ngSrc="assets/images/getBlank/blank.jpg" alt="Изображение бланка" height="1280" width="988">
                     </div>
 
                 </div>
@@ -23,7 +22,7 @@
                             Чтобы сервис проверил тестовую работу, необходимо вносить ответы на специальный бланк.
                         </h2>
                         <div class="blank__instruction">
-                            <a routerLink="">Инструкция по работе с бланком</a>
+                            Инструкция по работе с бланком
                         </div>
                         <ul class="blank__list">
                             <li class="blank__item">
@@ -69,9 +68,11 @@
                             </li>
                         </ul>
 
-                        <button class="blank__button">
-                            Скачать бланк
-                        </button>
+                        <div class="blank__download">
+                            <a href="assets/images/getBlank/blank.jpg" download>
+                                <app-button [filled]="true">Скачать бланк</app-button>
+                            </a>
+                        </div>
                     </div>
                 </div>
 

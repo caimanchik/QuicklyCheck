@@ -1,4 +1,5 @@
-export interface User {
-  username: string,
-  password: string,
+import { UserMainInfo } from "./UserMainInfo";
+
+export interface User extends UserMainInfo{
+  password?: string,
 }

@@ -4,9 +4,10 @@ import { CheckComponent } from './check.component';
 import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../../shared/shared.module";
 import { FillComponent } from './shared/components/fill/fill.component';
-import { UploadService } from "../../shared/services/upload.service";
+import { CheckService } from "../../shared/services/check.service";
 import { MainCheckComponent } from "./shared/components/main-check/main-check.component";
 import { UploadComponent } from './shared/components/upload/upload.component';
+import { ResultComponent } from './shared/components/result/result.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,9 @@ const routes: Routes = [
       {
         path: 'upload', component: UploadComponent, pathMatch: 'full'
       },
+      {
+        path: 'result', component: ResultComponent, pathMatch: 'full'
+      },
     ]
   },
 ]
@@ -30,7 +34,8 @@ const routes: Routes = [
     CheckComponent,
     FillComponent,
     MainCheckComponent,
-    UploadComponent
+    UploadComponent,
+    ResultComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +47,7 @@ const routes: Routes = [
     RouterModule
   ],
   providers: [
-    UploadService
+    CheckService
   ]
 })
 export class CheckModule { }

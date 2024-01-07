@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { UploadService } from "../../../../../shared/services/upload.service";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { CheckService } from "../../../../../shared/services/check.service";
 import { take } from "rxjs";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
       transition(':enter',
@@ -28,18 +29,18 @@ export class UploadComponent implements OnDestroy{
   private needsClear = true
 
   constructor(
-    protected _uploadService: UploadService,
+    protected _checkService: CheckService,
     private _cd: ChangeDetectorRef,
     private _router: Router
   ) { }
 
   public ngOnDestroy(): void {
     if (this.needsClear)
-      this._uploadService.clearStorage()
+      this._checkService.clearBlanks()
   }
 
   protected uploadImages(images: FileList) {
-    this._uploadService.addImages(images)
+    this._checkService.addBlanks(images)
       .pipe(take(1))
       .subscribe(previews => {
         this.previews = previews
@@ -49,10 +50,11 @@ export class UploadComponent implements OnDestroy{
 
   protected check() {
     this.needsClear = false
+    this._router.navigate(['check', 'result'])
   }
 
   protected deleteImage(i: number) {
-    this.previews = this._uploadService.deleteImage(i)
+    this.previews = this._checkService.deleteBlank(i)
     this._cd.markForCheck()
   }
 

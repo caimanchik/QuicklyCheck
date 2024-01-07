@@ -102,12 +102,20 @@
     }
   }
 
-  &__button {
+  &/*__button {
     margin-top: 2.8rem;
     @extend %button;
     padding: 0.8rem 3.3rem;
     font-weight: 700;
     font-size: 1.4rem;
     letter-spacing: 0.04em;
+  }*/
+
+  &__download {
+    margin-top: 2.8rem;
+
+    & a {
+      display: inline-block;
+    }
   }
 }

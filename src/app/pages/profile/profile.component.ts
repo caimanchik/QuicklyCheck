@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UserService } from "../../shared/services/user.service";
-import { User } from "../../shared/interfaces/User/User";
 
 @Component({
   selector: 'app-profile',
@@ -10,9 +8,5 @@ import { User } from "../../shared/interfaces/User/User";
 })
 export class ProfileComponent {
 
-  protected _user!: User
-
-  constructor(
-    private _userService: UserService
-  ) { }
+  constructor() { }
 }
