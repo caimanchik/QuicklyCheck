@@ -20,6 +20,7 @@ const routes: Routes = [
   {
     path: 'classes',
     loadChildren: () => import('./pages/classes/classes.module').then(m => m.ClassesModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',

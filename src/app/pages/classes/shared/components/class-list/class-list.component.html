@@ -6,7 +6,7 @@
             <app-title>
                 Мои классы и группы
             </app-title>
-            <app-button (clickEvent)="test()">
+            <app-button (clickEvent)="createClass()">
                 Добавить
             </app-button>
         </div>
@@ -23,13 +23,13 @@
                                 </ng-container>
 
                                 <ng-container button1>
-                                    <app-button [filled]="true" (clickEvent)="openClass(item.id)" >
+                                    <app-button [filled]="true" (clickEvent)="openClass(item.pk)" >
                                         Открыть
                                     </app-button>
                                 </ng-container>
 
                                 <ng-container button2>
-                                    <app-button (clickEvent)="test(item.id)">
+                                    <app-button (clickEvent)="createClass(item.pk)">
                                         Удалить
                                     </app-button>
                                 </ng-container>

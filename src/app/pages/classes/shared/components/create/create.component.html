@@ -1,0 +1,68 @@
+<div class="create" @appear>
+    <div class="create__wrapper">
+
+        <div class="create__logo">
+            <img ngSrc="assets/images/icons/logoSmall.svg" alt="" height="104" width="109">
+        </div>
+
+        <div class="create__title">
+            <app-title>Добавление класса</app-title>
+        </div>
+
+        <div
+                class="create__form create-form"
+        >
+            <ng-container *ngIf="!letterCorrect || !numberCorrect">
+                <div @appear class="create-form__wrong create-form-wrong">
+                    <div class="create-form-wrong__wrapper">
+                        <div class="create-form-wrong__image">
+                            <img ngSrc="assets/images/icons/attention.svg" alt="" height="26" width="29">
+                        </div>
+
+                        <ng-container *ngIf="!numberCorrect">
+                            <div class="create-form-wrong__text">
+                                Введите цифру от 1 до 11
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="!letterCorrect && numberCorrect">
+                            <div class="create-form-wrong__text">
+                                Введите 1 русскую букву
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="create-form__fields">
+                <div class="create-form__field">
+                    <div class="create-form__input">
+                        <input
+                                type="text"
+                                placeholder="Введите цифру класса"
+                                [formControl]="createForm.controls.number"
+                        >
+                    </div>
+                </div>
+                 <div class="create-form__field">
+                    <div class="create-form__input">
+                        <input
+                                type="text"
+                                placeholder="Введите букву класса"
+                                [formControl]="createForm.controls.letter"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="create-form__create">
+                <app-button
+                        [filled]="true"
+                        (clickEvent)="create()"
+                >добавить</app-button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

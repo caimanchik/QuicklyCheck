@@ -3,6 +3,7 @@ import { map, Observable } from "rxjs";
 import { Class } from "../interfaces/Classes/Class";
 import { HttpService } from "./infrastructure/http.service";
 import { Student } from "../interfaces/Students/Student";
+import { ClassBase } from "../interfaces/Classes/ClassBase";
 
 @Injectable({
   providedIn: 'root'
@@ -15,26 +16,26 @@ export class ClassesService {
 
   public getClasses(): Observable<Class[]> {
     return this._http.Get<Class[]>("classes")
-      .pipe(
-        map(classes => {
-          return classes.map((e, i) => ({
-            ...e,
-            id: i + 1
-          }))
-        }),
-        // delay(400)
-      )
+      // .pipe(
+      //   map(classes => {
+      //     return classes.map((e, i) => ({
+      //       ...e,
+      //       pk: i + 1
+      //     }))
+      //   }),
+      //   // delay(400)
+      // )
   }
 
-  public getClassInfo(id: number) {
+  public getClassInfo(id: number): Observable<Class> {
     return this._http.Get<Class>(`class/${id}`)
-      .pipe(
-        map(classInfo => ({
-          ...classInfo,
-          id
-        })),
-        // delay(400)
-      )
+      // .pipe(
+      //   map(classInfo => ({
+      //     ...classInfo,
+      //     id
+      //   })),
+      //   // delay(400)
+      // )
   }
 
   public getClassStudents(id: number) : Observable<Student[]> {
@@ -48,5 +49,9 @@ export class ClassesService {
           }))
         })
       )
+  }
+
+  public createClass(classInfo: ClassBase): Observable<Class> {
+    return this._http.Post<ClassBase, Class>(`classes/`, classInfo)
   }
 }

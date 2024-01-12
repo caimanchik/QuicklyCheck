@@ -36,7 +36,9 @@ export class ClassComponent implements OnInit {
     private _destroy: DestroyService,
     private _cd: ChangeDetectorRef,
     private _router: Router
-  ) { }
+  ) {
+    console.log(true)
+  }
 
   public ngOnInit(): void {
     this._classes.getClassInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
@@ -48,7 +50,7 @@ export class ClassComponent implements OnInit {
   }
 
   protected openStudents() {
-    this._router.navigate(['classes', this.classInfo.id, "students"], {
+    this._router.navigate(['classes', this.classInfo.pk, "students"], {
       state: {
         classInfo: this.classInfo
       }

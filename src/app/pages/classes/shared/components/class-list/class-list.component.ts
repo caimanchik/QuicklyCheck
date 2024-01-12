@@ -44,8 +44,8 @@ export class ClassListComponent implements OnInit {
       })
   }
 
-  test(id: number = 0) {
-    console.log(id)
+  protected createClass(id: number = 0) {
+    this._router.navigate(['classes', 'create'])
   }
 
   protected openClass(id: number) {
