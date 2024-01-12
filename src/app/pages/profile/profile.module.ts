@@ -4,7 +4,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { ProfileComponent } from './profile.component';
 import { ProfileMainComponent } from './shared/components/profile-main/profile-main.component';
 import { SharedModule } from "../../shared/shared.module";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PasswordComponent } from './shared/components/password/password.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,9 @@ const routes: Routes = [
       {
         path: '', component: ProfileMainComponent, pathMatch: 'full'
       },
+      {
+        path: 'password', component: PasswordComponent, pathMatch: 'full'
+      },
     ]
   },
 ]
@@ -20,13 +24,15 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ProfileComponent,
-    ProfileMainComponent
+    ProfileMainComponent,
+    PasswordComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     RouterModule

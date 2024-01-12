@@ -29,4 +29,8 @@ export class UrlService {
   public getPreviousUrl() {
     return this.previousUrl === '/' ? '' : this.previousUrl;
   }
+
+  public setNowUrl(url: string) {
+    this.currentUrl = url;
+  }
 }

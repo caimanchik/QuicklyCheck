@@ -12,16 +12,12 @@ export class UserService {
     private _http: HttpService
   ) { }
 
-  // public getUserInfo(): Observable<User> {
-  //   return of({
-  //     username: "test@mail.ru",
-  //     password: "11223344aa"
-  //   })
-  // }
-
   public getUserEmail(): Observable<UserMainInfo> {
     return of({
-      email: "test@mail.ru"
+      email: "test@mail.ru",
+      surname: "testov",
+      name: "test",
+      batya: "testovich",
     })
   }
 }

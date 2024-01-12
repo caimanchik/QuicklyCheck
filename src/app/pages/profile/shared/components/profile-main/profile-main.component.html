@@ -1,88 +1,60 @@
-<section class="profile">
-    <div class="profile__container container">
+<ng-container *ngIf="userMainInfo">
+    <div class="profile" @appear>
         <div class="profile__wrapper">
+            <div class="profile__title">
+                <app-title>Кабинет</app-title>
+            </div>
 
-            <h1 class="profile__title">
-                Кабинет
-            </h1>
 
-            <form [formGroup]="emailForm" class="profile__form profile-form">
-                <div class="profile-form__field">
-                    <div class="profile-form__name profile-form__name-small">
-                        Почта
+            <div class="profile__blocks">
+                <div class="profile__block">
+                    <div class="profile__field profile-field">
+                        <div class="profile-field__name">
+                            Фамилия
+                        </div>
+                        <div class="profile-field__content">
+                            {{ userMainInfo.surname }}
+                        </div>
                     </div>
-                    <div class="profile-form__input-wrap">
-                        <input
-                                type="email"
-                                value="dart@mail.ru"
-                                [formControl]="emailForm.controls.email"
-                        >
+                    <div class="profile__field profile-field">
+                        <div class="profile-field__name">
+                            Имя
+                        </div>
+                        <div class="profile-field__content">
+                            {{ userMainInfo.name }}
+                        </div>
                     </div>
-                </div>
-
-                <div class="profile-form__save" [ngClass]="{visible: mailSave}">
-                    <app-button>Сохранить</app-button>
-                </div>
-            </form>
-
-            <h2 class="profile__title profile__title-password">
-                Изменение пароля
-            </h2>
-
-            <div class="profile__form profile-form profile-form__password">
-                <div class="profile-form__field">
-                    <div class="profile-form__name">
-                        Введите старый пароль
-                    </div>
-                    <div class="profile-form__input-wrap">
-                        <input
-                                type="password"
-                                value=""
-                                #old
-                        >
-                        <div class="profile-form__show" (click)="old.type = old.type === 'text' ? 'password' : 'text'">
-                            <img src="assets/images/icons/show.svg" alt="">
+                    <div class="profile__field profile-field">
+                        <div class="profile-field__name">
+                            Отчество
+                        </div>
+                        <div class="profile-field__content">
+                            {{ userMainInfo.batya }}
                         </div>
                     </div>
                 </div>
 
-                <div class="profile-form__field">
-                    <div class="profile-form__name">
-                        Введите новый пароль
-                    </div>
-                    <div class="profile-form__input-wrap">
-                        <input
-                                type="password"
-                                value=""
-                                #new
-                        >
-                        <div class="profile-form__show" (click)="new.type = new.type === 'text' ? 'password' : 'text'">
-                            <img src="assets/images/icons/show.svg" alt="">
+                <div class="profile__block">
+                    <div class="profile__field profile-field">
+                        <div class="profile-field__name">
+                            Почта
+                        </div>
+                        <div class="profile-field__content">
+                            {{ userMainInfo.email }}
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="profile-form__field">
-                    <div class="profile-form__name">
-                        Повторите новый пароль
-                    </div>
-                    <div class="profile-form__input-wrap">
-                        <input
-                                type="password"
-                                value=""
-                                #newRepeat
-                        >
-                        <div class="profile-form__show" (click)="newRepeat.type = newRepeat.type === 'text' ? 'password' : 'text'">
-                            <img src="assets/images/icons/show.svg" alt="">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-form__save" [ngClass]="{visible: passSave}">
-                    <app-button>Сохранить</app-button>
+            <div class="profile__buttons">
+                <div class="profile__password">
+                    <app-button
+                            [filled]="true"
+                            (clickEvent)="changePassword()"
+                    >Изменить пароль</app-button>
                 </div>
             </div>
 
         </div>
     </div>
-</section>
+</ng-container>

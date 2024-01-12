@@ -1,4 +1,3 @@
-import { User } from "../interfaces/User/User";
 import { BehaviorSubject, catchError, map, Observable, of } from "rxjs";
 import { TokenPair } from "../interfaces/Tokens/TokenPair";
 import { CookieService } from "./infrastructure/cookie.service";
@@ -7,6 +6,7 @@ import { Injectable } from "@angular/core";
 import { RefreshToken } from "../interfaces/Tokens/RefreshToken";
 import { AccessToken } from "../interfaces/Tokens/AccessToken";
 import { IsTokenPair } from "../interceptors/IsTokenPair";
+import { UserLogin } from "../interfaces/User/UserLogin";
 
 
 @Injectable({
@@ -17,16 +17,12 @@ export class AuthService {
     private _http: HttpService,
     private _cookie: CookieService,
   ) {
-    // let access = this._cookie.getCookie('access')
-    //
-    // if (access)
-    //   this.isLogged$.next(true)
   }
 
   public isLogged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  public login(user: User): Observable<boolean> {
-    return this._http.Post<User, TokenPair>('token/', user, {withCredentials: false}, false)
+  public login(user: UserLogin): Observable<boolean> {
+    return this._http.Post<UserLogin, TokenPair>('token/', user, {withCredentials: false}, false)
       .pipe(
         map(pair => {
           this.saveToken(pair)
