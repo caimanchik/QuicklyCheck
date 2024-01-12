@@ -1,0 +1,25 @@
+//@import "vars";
+//@import "classes";
+
+.classes {
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__content {
+    margin-top: 4.6rem;
+  }
+}
+
+.classes-list {
+  &__item {
+    margin-top: 3.6rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

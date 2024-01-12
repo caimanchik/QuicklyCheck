@@ -1,46 +1,5 @@
-<section class="classes" @appear>
-
+<section class="classes">
     <div class="classes__container container">
-
-        <div class="classes__title">
-            <app-title>
-                Мои классы и группы
-            </app-title>
-            <app-button (clickEvent)="test()">
-                Добавить
-            </app-button>
-        </div>
-
-
-        <div class="classes__content">
-            <ng-container *ngIf="classes">
-                <ul class="classes__list classes-list" @appear>
-                    <ng-container *ngFor="let item of classes">
-                        <li class="classes-list__item">
-                            <app-card>
-                                <ng-container title>
-                                    Класс {{item.number}}{{item.letter}}
-                                </ng-container>
-
-                                <ng-container button1>
-                                    <app-button [filled]="true" (clickEvent)="openClass(item.id)" >
-                                        Открыть
-                                    </app-button>
-                                </ng-container>
-
-                                <ng-container button2>
-                                    <app-button (clickEvent)="test(item.id)">
-                                        Удалить
-                                    </app-button>
-                                </ng-container>
-                            </app-card>
-                        </li>
-                    </ng-container>
-                </ul>
-            </ng-container>
-
-        </div>
-
+        <router-outlet></router-outlet>
     </div>
-
 </section>

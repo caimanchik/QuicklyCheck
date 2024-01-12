@@ -12,7 +12,7 @@
                     Сервис для быстрой проверки тестовых работ
                 </div>
 
-                <button class="main-about__button">
+                <button routerLink="getBlank" class="main-about__button">
                     <span [appScroll]="30">инструкция</span> <span [appScroll]="30">по проверке</span>
                 </button>
 
@@ -120,7 +120,7 @@
                     </ng-container>
 
                     <ng-template #createClass>
-                        <a href="" class="main-choose-content__login" routerLink="/">
+                        <a href="" class="main-choose-content__login" routerLink="classes/create">
                             Создать класс
                         </a>
                     </ng-template>
