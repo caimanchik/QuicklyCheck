@@ -1,0 +1,27 @@
+<ng-container *ngIf="message">
+    <section class="confirm" @enter @leave>
+
+        <div class="confirm__wrapper">
+            <div class="confirm__image">
+                <img src="assets/images/icons/confirm.svg" alt="">
+            </div>
+            <div class="confirm__message">
+                <span>{{ message.message }}</span>
+            </div>
+
+            <div class="confirm__buttons">
+
+                <app-button (clickEvent)="confirm(true)">
+                    {{ message.buttonText }}
+                </app-button>
+                <button
+                        class="confirm__button"
+                        (click)="confirm(false)"
+                >
+                    Отмена
+                </button>
+            </div>
+        </div>
+    </section>
+
+</ng-container>

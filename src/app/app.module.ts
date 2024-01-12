@@ -25,10 +25,10 @@ import { ErrorService } from "./shared/services/infrastructure/error.service";
       useClass: TokenInterceptor,
       multi: true
     },
-    // {
-    //   provide: ErrorHandler,
-    //   useExisting: ErrorService
-    // }
+    {
+      provide: ErrorHandler,
+      useExisting: ErrorService
+    }
   ],
   bootstrap: [AppComponent]
 })

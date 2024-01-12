@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { take } from "rxjs";
+import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 
 @Component({
   selector: 'app-class-list',
@@ -32,7 +33,8 @@ export class ClassListComponent implements OnInit {
   constructor(
     private _classes: ClassesService,
     private _cd: ChangeDetectorRef,
-    private _router: Router
+    private _router: Router,
+    private _confirm: ConfirmService
   ) { }
 
   public ngOnInit(): void {
@@ -53,11 +55,21 @@ export class ClassListComponent implements OnInit {
   }
 
   protected deleteClass(id: number) {
-    this._classes.deleteClass(id)
+    this._confirm.createConfirm({
+      message: "Вы действительно хотите удалить класс?",
+      buttonText: "удалить"
+    })
       .pipe(take(1))
-      .subscribe(() => {
-        this.classes = this.classes.filter(c => c.pk !== id)
-        this._cd.markForCheck()
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
+
+        this._classes.deleteClass(id)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.classes = this.classes.filter(c => c.pk !== id)
+            this._cd.markForCheck()
+          })
       })
   }
 

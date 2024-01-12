@@ -8,6 +8,7 @@ import { ClassesComponent } from "./classes.component";
 import { ClassListComponent } from './shared/components/class-list/class-list.component';
 import { CreateComponent } from './shared/components/create/create.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { ClassAllInfoComponent } from './shared/components/class-all-info/class-all-info.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
         path: 'create', component: CreateComponent, pathMatch: 'full'
       },
       {
-        path: ':id', component: ClassComponent, pathMatch: 'full'
+        path: ':id', component: ClassAllInfoComponent, pathMatch: 'full'
       },
       {
         path: ':id/students', component: ClassStudentsComponent, pathMatch: 'full'
@@ -34,7 +35,8 @@ const routes: Routes = [
     ClassComponent,
     ClassStudentsComponent,
     ClassListComponent,
-    CreateComponent
+    CreateComponent,
+    ClassAllInfoComponent
   ],
   imports: [
     CommonModule,

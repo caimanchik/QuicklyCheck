@@ -9,6 +9,7 @@ import { TitleComponent } from './components/title/title.component';
 import { PatternComponent } from './components/pattern/pattern.component';
 import { PhotoComponent } from './components/photo/photo.component';
 import { ErrorComponent } from './components/error/error.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ErrorComponent } from './components/error/error.component';
     PatternComponent,
     PhotoComponent,
     ErrorComponent,
+    ConfirmComponent,
   ],
   exports: [
     FooterComponent,
@@ -31,6 +33,7 @@ import { ErrorComponent } from './components/error/error.component';
     PatternComponent,
     PhotoComponent,
     ErrorComponent,
+    ConfirmComponent,
   ],
   imports: [
     CommonModule,

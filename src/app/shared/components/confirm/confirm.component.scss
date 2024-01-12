@@ -1,0 +1,74 @@
+@import "vars";
+@import "classes";
+
+
+.confirm {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 5;
+
+  background-color: rgba(0, 0, 0, 0.25);
+
+  &__image {
+    position: absolute;
+    z-index: 5;
+    left: 40%;
+    bottom: 0;
+    width: 60%;
+
+    & img {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  &__wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 50rem;
+    border-radius: 42px;
+    border: 4.437px solid rgba(233, 58, 210, 0.75);
+    background: #FBFAFB;
+    box-shadow: 4.437px 6.212px 16.861px 0px rgba(0, 0, 0, 0.25);
+
+    padding: 3.9rem 4.4rem 2rem;
+  }
+
+  &__message {
+    text-align: center;
+    font-size: 2.14rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 6;
+
+    & span {
+      @extend %grad;
+    }
+  }
+
+  &__buttons {
+    margin-top: 5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 6;
+  }
+
+  &__button {
+    font-family: $comic;
+    font-size: 1.8rem;
+    color: $pink;
+  }
+}

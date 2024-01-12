@@ -1,16 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClassesService } from "../../../../../shared/services/classes.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
-import { Class } from "../../../../../shared/interfaces/Classes/Class";
+import { ActivatedRoute } from "@angular/router";
+import { take } from "rxjs";
+import { ClassAllInfo } from "../../../../../shared/interfaces/Classes/ClassAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 
 @Component({
-  selector: 'app-class',
-  templateUrl: './class.component.html',
-  styleUrls: ['./class.component.scss'],
-  providers: [DestroyService],
+  selector: 'app-class-all-info',
+  templateUrl: './class-all-info.component.html',
+  styleUrls: ['./class-all-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
@@ -26,32 +25,22 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
     ])
   ],
 })
-export class ClassComponent implements OnInit {
-
-  protected classInfo!: Class;
+export class ClassAllInfoComponent implements OnInit {
+  private classInfo!: ClassAllInfo
 
   constructor(
     private _classes: ClassesService,
     private _route: ActivatedRoute,
-    private _destroy: DestroyService,
-    private _cd: ChangeDetectorRef,
-    private _router: Router
+    private _cd: ChangeDetectorRef
   ) { }
 
   public ngOnInit(): void {
-    this._classes.getClassInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(this._destroy.takeUntilDestroy)
+    this._classes.getAllClassInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
+      .pipe(take(1))
       .subscribe(classInfo => {
         this.classInfo = classInfo
         this._cd.markForCheck()
       })
   }
 
-  protected openStudents() {
-    this._router.navigate(['classes', this.classInfo.pk, "students"], {
-      state: {
-        classInfo: this.classInfo
-      }
-    })
-  }
 }
