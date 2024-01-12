@@ -26,7 +26,7 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
   ],
 })
 export class ClassAllInfoComponent implements OnInit {
-  private classInfo!: ClassAllInfo
+  protected classInfo!: ClassAllInfo
 
   constructor(
     private _classes: ClassesService,

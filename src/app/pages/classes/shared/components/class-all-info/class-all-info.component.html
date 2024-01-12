@@ -1,1 +1,138 @@
-<p>class-all-info works!</p>
+<ng-container *ngIf="classInfo">
+    <div class="class" @appear>
+        <div class="class__wrapper">
+
+            <div class="class__block">
+                <div class="class__header">
+                    <div class="class__title">
+                        <app-title>
+                            {{classInfo.number}}{{classInfo.letter}} класс
+                        </app-title>
+                    </div>
+                    <div class="class__rename">
+                        <app-button>Изменить</app-button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="class__columns">
+                <div class="class__column">
+
+                    <div class="class__block">
+                        <div class="class__remember class-remember">
+
+                            <h2 class="class-remember__title subtitle">
+                                <span>Памятка</span>
+                            </h2>
+
+                            <ul class="class-remember__list">
+                                <li class="class-remember__item">
+                                    <div class="class-remember__number">
+                                        1.
+                                    </div>
+                                    <div class="class-remember__text">
+                                        Нажмите на ученика, чтобы увидеть его личные работы.
+                                    </div>
+                                </li>
+                                <li class="class-remember__item">
+                                    <div class="class-remember__number">
+                                        2.
+                                    </div>
+                                    <div class="class-remember__text">
+                                        Номер ученика - это личный ID  в этом классе. Нужен, чтобы идентифицировать бланк.
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="class__separator">
+
+                    </div>
+
+                    <div class="class__block">
+                        <div class="class__list class-list">
+                            <h2 class="class-list__title subtitle">
+                                <span>Ученики</span>
+                                <app-button>Изменить</app-button>
+                            </h2>
+                            <ul class="class-list__list">
+                                <ng-container
+                                        *ngFor="let student of classInfo.students; let i = index"
+                                >
+                                    <li class="class-list__item">
+                                        <div class="class-list__number">
+                                            <span>{{ i + 1 }}.</span>
+                                        </div>
+                                        <a routerLink="" class="class-list__student">
+                                            {{ student.name }}
+                                        </a>
+                                    </li>
+                                </ng-container>
+                            </ul>
+
+                            <div class="class-list__button">
+                                <app-button [filled]="true">Добавить</app-button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="class__column">
+
+                    <div class="class__block">
+                        <div class="class__remember class-remember">
+
+                            <h2 class="class-remember__title subtitle">
+                                <span>Памятка</span>
+                            </h2>
+
+                            <ul class="class-remember__list">
+                                <li class="class-remember__item">
+                                    <div class="class-remember__number">
+                                        1.
+                                    </div>
+                                    <div class="class-remember__text">
+                                        Нажмите на работу, чтобы увидеть результаты.
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="class__separator">
+
+                    </div>
+
+                    <div class="class__block">
+                        <div class="class__list class-list">
+                            <h2 class="class-list__title subtitle">
+                                <span>Работы</span>
+                                <app-button>Добавить</app-button>
+                            </h2>
+                            <ul class="class-list__list">
+                                <ng-container
+                                        *ngFor="let test of classInfo.tests; let i = index"
+                                >
+                                    <li class="class-list__item">
+                                        <div class="class-list__number">
+                                            <span>{{ i + 1 }}.</span>
+                                        </div>
+                                        <a routerLink="" class="class-list__student">
+                                            {{ test.name }}
+                                        </a>
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</ng-container>

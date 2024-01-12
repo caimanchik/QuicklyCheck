@@ -1,0 +1,144 @@
+@import "vars";
+@import "classes";
+
+
+.subtitle {
+  font-size: 2.14rem;
+  font-weight: 700;
+
+  & span {
+    @extend %grad;
+  }
+}
+
+.class {
+  &__wrapper {
+  }
+
+  &__block {
+    border-radius: 35px;
+    border: 4.045px solid rgba(233, 58, 210, 0.75);
+    background: #F6F6F6;
+    box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
+
+    padding: 2.5rem 2.9rem;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+  }
+
+  &__rename {
+  }
+
+  &__columns {
+    margin: 1rem -1rem -1rem;
+    display: flex;
+  }
+
+  &__column {
+    flex: 0 0 50%;
+    padding: 1rem;
+  }
+
+  &__remember {
+  }
+
+  &__list {
+  }
+
+  &__separator {
+    height: 2rem;
+  }
+}
+
+.class-remember {
+  &__title {
+  }
+
+  &__list {
+    margin-top: 1.8rem;
+  }
+
+  &__item {
+    display: flex;
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__number {
+    flex: 0 0 1.8rem;
+    position: relative;
+    top: 2px;
+    left: 0;
+  }
+
+  &__text {
+    line-height: 1.2em;
+  }
+}
+
+.class-list {
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__list {
+    margin-top: 2.5rem;
+  }
+
+  &__item {
+    display: flex;
+    margin-top: .8rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    font-size: 1.4rem;
+  }
+
+  &__number {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0 0 2rem;
+
+    & span {
+      @extend %grad;
+      line-height: 1.3em;
+    }
+  }
+
+  &__student {
+    margin-left: .5rem;
+    transition: all ease .3s;
+    background: transparent;
+    line-height: 1.3em;
+
+    @media(hover: hover) {
+      &:hover {
+        background: linear-gradient(270deg, #4653D2 0%, #E93AD2 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+        line-height: 1.3em;
+      }
+    }
+  }
+
+  &__button {
+    margin-top: 2rem;
+  }
+}
