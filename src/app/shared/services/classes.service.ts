@@ -16,32 +16,15 @@ export class ClassesService {
 
   public getClasses(): Observable<Class[]> {
     return this._http.Get<Class[]>("classes")
-      // .pipe(
-      //   map(classes => {
-      //     return classes.map((e, i) => ({
-      //       ...e,
-      //       pk: i + 1
-      //     }))
-      //   }),
-      //   // delay(400)
-      // )
   }
 
   public getClassInfo(id: number): Observable<Class> {
     return this._http.Get<Class>(`class/${id}`)
-      // .pipe(
-      //   map(classInfo => ({
-      //     ...classInfo,
-      //     id
-      //   })),
-      //   // delay(400)
-      // )
   }
 
   public getClassStudents(id: number) : Observable<Student[]> {
     return this._http.Get<Student[]>(`class/${id}/students`)
       .pipe(
-        // delay(400),
         map(students => {
           return students.map((e, i) => ({
             ...e,
@@ -53,5 +36,9 @@ export class ClassesService {
 
   public createClass(classInfo: ClassBase): Observable<Class> {
     return this._http.Post<ClassBase, Class>(`classes/`, classInfo)
+  }
+
+  public deleteClass(id: number): Observable<any> {
+    return this._http.Delete<any>(`class/${id}`)
   }
 }

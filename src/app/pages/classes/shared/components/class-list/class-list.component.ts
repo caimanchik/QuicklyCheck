@@ -44,12 +44,21 @@ export class ClassListComponent implements OnInit {
       })
   }
 
-  protected createClass(id: number = 0) {
+  protected createClass() {
     this._router.navigate(['classes', 'create'])
   }
 
   protected openClass(id: number) {
     this._router.navigate(["classes", id])
+  }
+
+  protected deleteClass(id: number) {
+    this._classes.deleteClass(id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.classes = this.classes.filter(c => c.pk !== id)
+        this._cd.markForCheck()
+      })
   }
 
 }
