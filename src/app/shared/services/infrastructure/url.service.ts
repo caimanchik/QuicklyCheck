@@ -6,31 +6,35 @@ import { filter } from "rxjs";
   providedIn: 'root'
 })
 export class UrlService {
-  private previousUrl: string;
-  private currentUrl: string;
+  private _previousUrl: string;
+  private _currentUrl: string;
 
   constructor(
     private router: Router
   ) {
-    this.currentUrl = this.router.url;
-    this.previousUrl = "/";
+    this._currentUrl = this.router.url
+    this._previousUrl = "/"
 
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd)
       )
       .subscribe((event) => {
-        let end = event as NavigationEnd;
-        this.previousUrl = this.currentUrl;
-        this.currentUrl = end.urlAfterRedirects;
+        let end = event as NavigationEnd
+        this._previousUrl = this._currentUrl
+        this._currentUrl = end.urlAfterRedirects
       });
   }
 
   public getPreviousUrl() {
-    return this.previousUrl === '/' ? '' : this.previousUrl;
+    return this._previousUrl === '/' ? '' : this._previousUrl
   }
 
-  public setNowUrl(url: string) {
-    this.currentUrl = url;
+  public setCurrentUrl(url: string) {
+    this._currentUrl = url
+  }
+
+  public getCurrentUrl(): string {
+    return this._currentUrl
   }
 }
