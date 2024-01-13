@@ -86,4 +86,12 @@ export class AuthService {
       }
     })
   }
+
+  public logout(): Observable<void> {
+    this.isLogged$.next(false)
+    this._cookie.deleteCookie('access')
+    this._cookie.deleteCookie('refresh')
+
+    return of(undefined)
+  }
 }

@@ -49,9 +49,16 @@
             <div class="profile__buttons">
                 <div class="profile__password">
                     <app-button
-                            [filled]="true"
                             (clickEvent)="changePassword()"
                     >Изменить пароль</app-button>
+                </div>
+                <div class="profile__logout">
+                    <app-button
+                            [filled]="true"
+                            (clickEvent)="logout()"
+                    >
+                        Выйти
+                    </app-button>
                 </div>
             </div>
 

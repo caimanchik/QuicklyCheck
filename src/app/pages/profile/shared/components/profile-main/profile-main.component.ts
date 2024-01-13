@@ -5,6 +5,7 @@ import { UserMainInfo } from "../../../../../shared/interfaces/User/UserMainInfo
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
+import { AuthService } from "../../../../../shared/services/auth.service";
 
 @Component({
   selector: 'app-profile-main',
@@ -31,7 +32,8 @@ export class ProfileMainComponent implements OnInit {
   constructor(
     private _cd: ChangeDetectorRef,
     private _user: UserService,
-    private _router: Router
+    private _router: Router,
+    private _auth: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -45,5 +47,11 @@ export class ProfileMainComponent implements OnInit {
 
   protected changePassword() {
     this._router.navigate(["profile", "password"])
+  }
+
+  protected logout() {
+    this._auth.logout()
+      .pipe(take(1))
+      .subscribe(() => this._router.navigate(['/']))
   }
 }
