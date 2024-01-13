@@ -6,6 +6,7 @@ import { BlankParsed } from "../interfaces/Tests/Blanks/BlankParsed";
 import { Test } from "../interfaces/Tests/Tests/Test";
 import { PatternParsed } from "../interfaces/Tests/Patterns/PatternParsed";
 import { PatternResponse } from "../interfaces/Tests/Patterns/PatternResponse";
+import { TestCreate } from "../interfaces/Tests/Tests/TestCreate";
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,17 @@ export class TestService {
 
     return this._http.Post<PatternResponse, PatternResponse>(`test/${pkTest}/patterns`, this.translatePatternToResponse(pattern))
       .pipe(map(resp => this.translatePatternFromResponse(resp)))
+  }
+
+  public getClassTests(classId: number) {
+    return this._http.Get<Test[]>(`tests`)
+      .pipe(
+        map(tests => tests.filter(e => e.grade === classId))
+      )
+  }
+
+  public createTest(test: TestCreate) {
+    return this._http.Post<TestCreate, Test>('tests/', test)
   }
 
   private translatePatternToResponse(pattern: PatternParsed): PatternResponse {

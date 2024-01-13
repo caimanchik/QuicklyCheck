@@ -71,7 +71,7 @@ export class CreateComponent implements OnInit {
     if (!n)
       this.numberCorrect = false
     else
-      this.numberCorrect = n > 0 && n < 12;
+      this.numberCorrect = n > 0 && n < 12 && /^\d+$/.test(this.createForm.controls.number.value);
 
     this._cd.markForCheck()
 

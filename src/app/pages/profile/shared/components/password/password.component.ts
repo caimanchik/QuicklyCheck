@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ChangePasswordForm } from "../../../../../shared/interfaces/Forms/ChangePasswordForm";
 import { Router } from "@angular/router";
-import { samePasswordValidator } from "../../../../../shared/Validators/SamePasswordValidator";
+import { samePasswordValidator } from "../../../../../shared/validators/SamePasswordValidator";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 

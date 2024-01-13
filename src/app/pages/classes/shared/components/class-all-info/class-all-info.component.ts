@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClassesService } from "../../../../../shared/services/classes.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
 import { ClassAllInfo } from "../../../../../shared/interfaces/Classes/ClassAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -31,7 +31,8 @@ export class ClassAllInfoComponent implements OnInit {
   constructor(
     private _classes: ClassesService,
     private _route: ActivatedRoute,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -41,6 +42,11 @@ export class ClassAllInfoComponent implements OnInit {
         this.classInfo = classInfo
         this._cd.markForCheck()
       })
+  }
+
+  protected createTest() {
+    console.log(['classes', this.classInfo.pk, ['create-test']])
+    this._router.navigate(['classes', this.classInfo.pk, 'create-test'])
   }
 
 }

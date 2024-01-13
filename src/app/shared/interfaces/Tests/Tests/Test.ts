@@ -1,6 +1,6 @@
-export interface Test {
+import { TestCreate } from "./TestCreate";
+
+export interface Test extends TestCreate {
   teacher: number
-  grade: number
-  name: string
   pk: number
 }

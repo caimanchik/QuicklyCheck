@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, switchMap } from "rxjs";
 import { Class } from "../interfaces/Classes/Class";
 import { HttpService } from "./infrastructure/http.service";
-import { Student } from "../interfaces/Students/Student";
 import { ClassBase } from "../interfaces/Classes/ClassBase";
 import { ClassAllInfo } from "../interfaces/Classes/ClassAllInfo";
-import { Test } from "../interfaces/Tests/Tests/Test";
+import { TestService } from "./test.service";
+import { StudentService } from "./student.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ import { Test } from "../interfaces/Tests/Tests/Test";
 export class ClassesService {
 
   constructor(
-    private _http: HttpService
+    private _http: HttpService,
+    private _test: TestService,
+    private _student: StudentService
   ) { }
 
   public getClasses(): Observable<Class[]> {
@@ -29,8 +31,8 @@ export class ClassesService {
       .pipe(
         switchMap(classInfo => {
           return forkJoin({
-            students: this.getClassStudents(id),
-            tests: this.getClassTests(id)
+            students: this._student.getClassStudents(id),
+            tests: this._test.getClassTests(id)
           })
             .pipe(
               map(testsAndStudents => ({
@@ -38,25 +40,6 @@ export class ClassesService {
                 ...classInfo
               }))
             )
-        })
-      )
-  }
-
-  public getClassTests(id: number) {
-    return this._http.Get<Test[]>(`tests`)
-      .pipe(
-        map(tests => tests.filter(e => e.grade === id))
-      )
-  }
-
-  public getClassStudents(id: number) : Observable<Student[]> {
-    return this._http.Get<Student[]>(`class/${id}/students`)
-      .pipe(
-        map(students => {
-          return students.map((e, i) => ({
-            ...e,
-            id: i + 1
-          }))
         })
       )
   }
