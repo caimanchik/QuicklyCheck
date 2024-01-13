@@ -18,7 +18,9 @@ export class TokenInterceptor implements HttpInterceptor {
   ) {}
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let newReq = this.cloneWithAccessToken(request, this._cookie.getCookie('access') ?? "");
+    const newReq = request.withCredentials
+      ? this.cloneWithAccessToken(request, this._cookie.getCookie('access') ?? "")
+      : request.clone();
 
     return next.handle(newReq)
       .pipe(

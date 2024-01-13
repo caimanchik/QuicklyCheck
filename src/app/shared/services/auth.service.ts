@@ -1,4 +1,4 @@
-import { BehaviorSubject, catchError, map, Observable, of } from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, of, throwError } from "rxjs";
 import { ITokenPair } from "../interfaces/Tokens/ITokenPair";
 import { CookieService } from "./infrastructure/cookie.service";
 import { HttpService } from "./infrastructure/http.service";
@@ -7,6 +7,7 @@ import { IRefreshToken } from "../interfaces/Tokens/IRefreshToken";
 import { IAccessToken } from "../interfaces/Tokens/IAccessToken";
 import { IsTokenPair } from "../interceptors/IsTokenPair";
 import { IUserLogin } from "../interfaces/User/IUserLogin";
+import { IUserRegister } from "../interfaces/User/IUserRegister";
 
 
 @Injectable({
@@ -30,10 +31,10 @@ export class AuthService {
           this.isLogged$.next(true);
           return true;
         }),
-        catchError(() => {
+        catchError((e) => {
           this.isLogged$.next(false)
 
-          return of(false)
+          return throwError(() => e)
         }),
       )
   }
@@ -93,5 +94,14 @@ export class AuthService {
     this._cookie.deleteCookie('refresh')
 
     return of(undefined)
+  }
+
+  public register(user: IUserRegister) {
+    return this._http.Post<IUserRegister, boolean>(`users/`, user, {
+      withCredentials: false
+    })
+      .pipe(
+        map(() => true)
+      )
   }
 }

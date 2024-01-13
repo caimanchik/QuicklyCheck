@@ -4,8 +4,8 @@ import { IChangePasswordForm } from "../interfaces/Forms/IChangePasswordForm";
 export const samePasswordValidator: ValidatorFn = (
   control: AbstractControl<IChangePasswordForm>
 ): ValidationErrors | null => {
-    const newPass = control.get('new')?.value;
-    const newRepeat = control.get('new')?.value;
+    const newPass = control.get('password')?.value;
+    const newRepeat = control.get('repeatPassword')?.value;
 
     if (!(newPass && newRepeat))
       return {

@@ -10,7 +10,7 @@
                     <li class="login-buttons__item active" [ngClass]="{loginMode: isLogin}">
                         <button
                                 class="login-buttons__button login-buttons__button_login"
-                                (click)="isLogin = true"
+                                (click)="changeForm(true)"
                         >
                             войти
                         </button>
@@ -18,7 +18,7 @@
                     <li class="login-buttons__item" [ngClass]="{loginMode: isLogin}" appActive>
                         <button
                                 class="login-buttons__button login-buttons__button_registration"
-                                (click)="isLogin = false"
+                                (click)="changeForm(false)"
                         >
                             <span>регистрация</span>
                         </button>
@@ -30,32 +30,26 @@
                             action=""
                             class="login__form login-form"
                             [ngClass]="{loginMode: isLogin}"
-                            [formGroup]="isLogin ? loginForm : loginForm"
-                            (ngSubmit)="isLogin ? login() : login()"
+                            [formGroup]="isLogin ? loginForm : registrationForm"
+                            (ngSubmit)="isLogin ? login() : register()"
                     >
                         <ng-container *ngIf="isLogin; else registration">
                             <div class="login-form__wrapper" @appearOnly>
 
-                                <ng-container *ngIf="loginForm.dirty && loginForm.invalid">
-                                    <div class="login__error login-error" @appear>
-                                        <div class="login-error__wrapper">
-                                            <div class="login-error__image">
-                                                <img ngSrc="assets/images/icons/attention.svg" alt="" fill priority="true">
-                                            </div>
-
-                                            <div class="login-error__text">
-                                                <ng-container *ngIf="loginForm.controls.email.invalid; else passwordLogin">
-                                                    Введите корректный email
-                                                </ng-container>
-                                                <ng-template #passwordLogin>
-                                                    <ng-container *ngIf="loginForm.controls.password.errors?.['minlength']">
-                                                        Пароль должен содержать минимум 6 символов
-                                                    </ng-container>
-                                                </ng-template>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <ng-container *ngIf="loginError; else formErrors">
+                                    <ng-container *ngTemplateOutlet="error; context: {$implicit: loginError}"></ng-container>
                                 </ng-container>
+
+                                <ng-template #formErrors>
+                                    <ng-container *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid; else passError">
+                                        <ng-container *ngTemplateOutlet="error; context: {$implicit: 'Введите корректный email'}"></ng-container>
+                                    </ng-container>
+                                    <ng-template #passError>
+                                        <ng-container *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.['minlength']">
+                                            <ng-container *ngTemplateOutlet="error; context: {$implicit: 'Пароль должен содержать минимум 8 символов'}"></ng-container>
+                                        </ng-container>
+                                    </ng-template>
+                                </ng-template>
 
                                 <div class="login-form__fields">
                                     <div class="login-form__field">
@@ -73,17 +67,26 @@
                                                 class="login-form__input"
                                                 placeholder="Пароль"
                                                 [formControl]="loginForm.controls.password"
+                                                #passwordLogin
                                         >
-                                        <div class="login-form__hide">
+                                        <button
+                                                type="button"
+                                                class="login-form__hide"
+                                                (click)="passwordLogin.type = passwordLogin.type === 'text' ? 'password' : 'text'"
+                                        >
                                             <img ngSrc="assets/images/icons/hide.svg" alt="" height="10" width="17">
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
 
                                 <div class="login-form__submit">
-                                    <button class="login-form__button">
+                                    <app-button
+                                            [filled]="true"
+                                            class="login-form__button"
+                                            (clickEvent)="login()"
+                                    >
                                         войти
-                                    </button>
+                                    </app-button>
                                 </div>
 
                             </div>
@@ -91,42 +94,103 @@
                         </ng-container>
 
                         <ng-template #registration>
-
                             <div class="login-form__wrapper" @appearOnly>
 
-                                <div class="login-form__field">
-                                    <input type="text" class="login-form__input" placeholder="Почта">
-                                </div>
+                                <ng-container *ngIf="registrationError; else formErrors">
+                                    <ng-container *ngTemplateOutlet="error; context: {$implicit: registrationError}"></ng-container>
+                                </ng-container>
 
-                                <div class="login-form__field">
-                                    <input type="password" class="login-form__input" placeholder="Пароль">
-                                    <div class="login-form__hide">
-                                        <img src="assets/images/icons/hide.svg" alt="">
+                                <ng-template #formErrors>
+                                    <ng-container *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.invalid; else passError">
+                                        <ng-container *ngTemplateOutlet="error; context: {$implicit: 'Введите email в виде login@domen.ru'}"></ng-container>
+                                    </ng-container>
+                                    <ng-template #passError>
+                                        <ng-container *ngIf="registrationForm.controls.password.touched && registrationForm.controls.password.errors?.['minlength']; else repeatError">
+                                            <ng-container *ngTemplateOutlet="error; context: {$implicit: 'Пароль должен содержать минимум 8 символов'}"></ng-container>
+                                        </ng-container>
+                                    </ng-template>
+                                    <ng-template #repeatError>
+                                        <ng-container *ngIf="registrationForm.controls.repeatPassword.touched && registrationForm.errors?.['notSame']; else personalError">
+                                            <ng-container *ngTemplateOutlet="error; context: {$implicit: 'Пароли не совпадают'}"></ng-container>
+                                        </ng-container>
+                                    </ng-template>
+
+                                    <ng-template #personalError>
+                                        <ng-container *ngIf="(registrationForm.controls.personal.dirty || registerToggled) && registrationForm.controls.personal.invalid">
+                                            <ng-container *ngTemplateOutlet="error; context: {$implicit: 'Нужно согласие на обработку персональных данных'}"></ng-container>
+                                        </ng-container>
+                                    </ng-template>
+                                </ng-template>
+
+                                <div class="login-form__fields">
+                                    <div class="login-form__field">
+                                        <input
+                                                type="text"
+                                                class="login-form__input"
+                                                placeholder="Почта"
+                                                [formControl]="registrationForm.controls.email"
+                                        >
                                     </div>
-                                </div>
 
-                                <div class="login-form__field">
-                                    <input type="password" class="login-form__input" placeholder="Подтвердите пароль">
-                                    <div class="login-form__hide">
-                                        <img src="assets/images/icons/hide.svg" alt="">
+                                    <div class="login-form__field">
+                                        <input
+                                                type="password"
+                                                class="login-form__input"
+                                                placeholder="Пароль"
+                                                [formControl]="registrationForm.controls.password"
+                                                #registerPass
+                                        >
+                                        <button
+                                                type="button"
+                                                class="login-form__hide"
+                                                (click)="registerPass.type = registerPass.type === 'text' ? 'password' : 'text'"
+                                        >
+                                            <img src="assets/images/icons/hide.svg" alt="">
+                                        </button>
                                     </div>
-                                </div>
 
-                                <div class="login-form__field">
-                                    <input id="agree" type="checkbox" class="login-form__agree">
-                                    <label for="agree" class="login-form__label" appActive #label></label>
-                                    <label class="login-form__text" (click)="label.click()">
-                                        Я согласен на
-                                        <a href="https://www.google.ru/" target="_blank" class="login-form__underline">
-                                            обработку персональных данных
-                                        </a>
-                                    </label>
+                                    <div class="login-form__field">
+                                        <input
+                                                type="password"
+                                                class="login-form__input"
+                                                placeholder="Подтвердите пароль"
+                                                [formControl]="registrationForm.controls.repeatPassword"
+                                                #registerRepeat
+                                        >
+                                        <button
+                                                class="login-form__hide"
+                                                type="button"
+                                                (click)="registerRepeat.type = registerRepeat.type === 'text' ? 'password' : 'text'"
+                                        >
+                                            <img src="assets/images/icons/hide.svg" alt="">
+                                        </button>
+                                    </div>
+
+                                    <div class="login-form__field">
+                                        <input
+                                                id="agree"
+                                                type="checkbox"
+                                                class="login-form__agree"
+                                                [formControl]="registrationForm.controls.personal"
+                                        >
+                                        <label for="agree" class="login-form__label" appActive #label></label>
+                                        <button class="login-form__text" (click)="label.click()" type="button">
+                                            Я согласен на
+                                            <a href="https://www.google.ru/" target="_blank" class="login-form__underline">
+                                                обработку персональных данных
+                                            </a>
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div class="login-form__submit">
-                                    <button class="login-form__button">
+                                    <app-button
+                                            [filled]="true"
+                                            class="login-form__button"
+                                            (clickEvent)="register()"
+                                    >
                                         зарегистрироваться
-                                    </button>
+                                    </app-button>
                                 </div>
 
                             </div>
@@ -144,3 +208,17 @@
     </div>
 
 </section>
+
+<ng-template #error let-text>
+    <div class="login__error login-error" @appear>
+        <div class="login-error__wrapper">
+            <div class="login-error__image">
+                <img ngSrc="assets/images/icons/attention.svg" alt="" fill priority="true">
+            </div>
+
+            <div class="login-error__text">
+                {{ text }}
+            </div>
+        </div>
+    </div>
+</ng-template>
