@@ -1,15 +1,75 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
+import { StudentService } from "../../../../../shared/services/student.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { CreateStudentForm } from "../../../../../shared/interfaces/Forms/CreateStudentForm";
+import { take } from "rxjs";
 
 @Component({
   selector: 'app-create-student',
   templateUrl: './create-student.component.html',
-  styleUrls: ['./create-student.component.scss']
+  styleUrls: ['./create-student.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('appear', [
+      transition(':enter',
+        useAnimation(transformOpacity), {
+          params: {
+            oStart: 0,
+            oEnd: 1,
+            transformStart: "translateY(10px)",
+            transformEnd: "translateY(0px)",
+          }
+        }),
+    ])
+  ],
 })
 export class CreateStudentComponent implements OnInit {
+  protected createForm!: FormGroup<CreateStudentForm>
 
-  constructor() { }
+  constructor(
+    private _student: StudentService,
+    private _router: Router,
+    private _route: ActivatedRoute
+  ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.createForm = new FormGroup<CreateStudentForm>({
+      surname: new FormControl<string>('', {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      name: new FormControl<string>('', {
+        validators: [Validators.required],
+        nonNullable: true
+      }),
+      batya: new FormControl<string>('', {
+        nonNullable: true
+      })
+    })
   }
 
+  protected create() {
+    if (this.createForm.invalid)
+      return
+
+    const name = [
+      this.createForm.controls.surname.value,
+      this.createForm.controls.name.value,
+      this.createForm.controls.batya.value
+    ]
+      .filter(e => !!e)
+      .join(' ')
+
+    this._student.createStudent({
+      name,
+      grade: +(this._route.snapshot.paramMap.get('id') ?? 0)
+    })
+      .pipe(take(1))
+      .subscribe(created => {
+        this._router.navigate(['classes', created.grade])
+      })
+  }
 }

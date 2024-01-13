@@ -49,4 +49,7 @@ export class ClassAllInfoComponent implements OnInit {
     this._router.navigate(['classes', this.classInfo.pk, 'create-test'])
   }
 
+  createStudent() {
+    this._router.navigate(['classes', this.classInfo.pk, 'create-student'])
+  }
 }

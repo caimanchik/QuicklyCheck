@@ -73,7 +73,10 @@
                             </ul>
 
                             <div class="class-list__button">
-                                <app-button [filled]="true">Добавить</app-button>
+                                <app-button
+                                        [filled]="true"
+                                        (clickEvent)="createStudent()"
+                                >Добавить</app-button>
                             </div>
                         </div>
                     </div>

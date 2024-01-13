@@ -24,6 +24,9 @@ const routes: Routes = [
       },
       {
         path: ':id/create-test', component: CreateTestComponent, pathMatch: 'full'
+      },
+      {
+        path: ':id/create-student', component: CreateStudentComponent, pathMatch: 'full'
       }
     ]
   }

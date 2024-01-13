@@ -1,6 +1,6 @@
-export interface Student {
-  name: string;
-  grade: number;
+import { StudentCreate } from "./StudentCreate";
+
+export interface Student extends StudentCreate {
   teacher: number;
   pk: number
 }
