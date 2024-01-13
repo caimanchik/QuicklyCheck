@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { Observable, of } from "rxjs";
-import { UserMainInfo } from "../interfaces/User/UserMainInfo";
+import { IUserMainInfo } from "../interfaces/User/IUserMainInfo";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class UserService {
     private _http: HttpService
   ) { }
 
-  public getUserEmail(): Observable<UserMainInfo> {
+  public getUserEmail(): Observable<IUserMainInfo> {
     return of({
       email: "test@mail.ru",
       surname: "testov",

@@ -1,7 +1,7 @@
-import { TokenPair } from "../interfaces/Tokens/TokenPair";
-import { AccessToken } from "../interfaces/Tokens/AccessToken";
-import { RefreshToken } from "../interfaces/Tokens/RefreshToken";
+import { ITokenPair } from "../interfaces/Tokens/ITokenPair";
+import { IAccessToken } from "../interfaces/Tokens/IAccessToken";
+import { IRefreshToken } from "../interfaces/Tokens/IRefreshToken";
 
-export function IsTokenPair(token: TokenPair | AccessToken | RefreshToken): token is TokenPair {
-  return (token as TokenPair).refresh !== undefined && (token as TokenPair).access !== undefined;
+export function IsTokenPair(token: ITokenPair | IAccessToken | IRefreshToken): token is ITokenPair {
+  return (token as ITokenPair).refresh !== undefined && (token as ITokenPair).access !== undefined;
 }

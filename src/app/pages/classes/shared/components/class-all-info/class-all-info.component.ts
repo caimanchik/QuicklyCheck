@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ClassesService } from "../../../../../shared/services/classes.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
-import { ClassAllInfo } from "../../../../../shared/interfaces/Classes/ClassAllInfo";
+import { IClassAllInfo } from "../../../../../shared/interfaces/Classes/IClassAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 
@@ -26,7 +26,7 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
   ],
 })
 export class ClassAllInfoComponent implements OnInit {
-  protected classInfo!: ClassAllInfo
+  protected classInfo!: IClassAllInfo
 
   constructor(
     private _classes: ClassesService,

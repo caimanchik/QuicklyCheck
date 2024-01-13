@@ -1,8 +1,8 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { ChangePasswordForm } from "../interfaces/Forms/ChangePasswordForm";
+import { IChangePasswordForm } from "../interfaces/Forms/IChangePasswordForm";
 
 export const samePasswordValidator: ValidatorFn = (
-  control: AbstractControl<ChangePasswordForm>
+  control: AbstractControl<IChangePasswordForm>
 ): ValidationErrors | null => {
     const newPass = control.get('new')?.value;
     const newRepeat = control.get('new')?.value;

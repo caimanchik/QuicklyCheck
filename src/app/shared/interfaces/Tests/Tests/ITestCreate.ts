@@ -1,4 +1,4 @@
-export interface StudentCreate {
+export interface ITestCreate {
   name: string
   grade: number
 }

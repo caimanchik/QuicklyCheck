@@ -1,5 +1,5 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { PatternParsed } from "../../interfaces/Tests/Patterns/PatternParsed";
+import { IPatternParsed } from "../../interfaces/Tests/Patterns/IPatternParsed";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../animations/transform-opacity";
 import { ErrorService } from "../../services/infrastructure/error.service";
@@ -24,8 +24,8 @@ import { ErrorService } from "../../services/infrastructure/error.service";
   ],
 })
 export class PatternComponent implements AfterViewChecked {
-  @Input() public patterns!: PatternParsed[]
-  @Output() public patternChanges = new EventEmitter<PatternParsed>()
+  @Input() public patterns!: IPatternParsed[]
+  @Output() public patternChanges = new EventEmitter<IPatternParsed>()
   @Output() public nextClicked = new EventEmitter<void>()
 
   protected selected = 0

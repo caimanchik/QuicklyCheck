@@ -1,4 +1,4 @@
-export interface ClassBase {
+export interface IClassBase {
   number: string
   letter: string
 }

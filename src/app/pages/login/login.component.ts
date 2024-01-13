@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../shared/animations/transform-opacity";
 import { opacity } from "../../shared/animations/opacity";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ILoginForm } from "../../shared/interfaces/Forms/ILoginForm";
 import { AuthService } from "../../shared/services/auth.service";
 import { Router } from "@angular/router";
@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
 
   protected isLogin: boolean = true
   protected loginForm!: FormGroup<ILoginForm>
+  protected registrationForm!: FormGroup<ILoginForm>
 
   constructor(
     private _auth: AuthService,
@@ -61,10 +62,10 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     this.loginForm = new FormGroup<ILoginForm>({
       email: new FormControl<string>("", {
-        // validators: [
-        //   validators.required,
-        //   validators.email,
-        // ],
+        validators: [
+          Validators.required,
+          Validators.email,
+        ],
         nonNullable: true
       }),
       password: new FormControl<string>("",{

@@ -1,4 +1,4 @@
-export interface Blank {
+export interface IBlank {
   pk: number;
   test: number;
   author: number;

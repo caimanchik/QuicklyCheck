@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Class } from "../../../../../shared/interfaces/Classes/Class";
+import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
 import { ClassesService } from "../../../../../shared/services/classes.service";
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -28,7 +28,7 @@ import { ConfirmService } from "../../../../../shared/services/infrastructure/co
 })
 export class ClassListComponent implements OnInit {
 
-  protected classes!: Class[];
+  protected classes!: IClass[];
 
   constructor(
     private _classes: ClassesService,

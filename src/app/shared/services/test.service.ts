@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { map, Observable } from "rxjs";
-import { BlankRequest } from "../interfaces/Tests/Blanks/BlankRequest";
-import { BlankParsed } from "../interfaces/Tests/Blanks/BlankParsed";
-import { Test } from "../interfaces/Tests/Tests/Test";
-import { PatternParsed } from "../interfaces/Tests/Patterns/PatternParsed";
-import { PatternResponse } from "../interfaces/Tests/Patterns/PatternResponse";
-import { TestCreate } from "../interfaces/Tests/Tests/TestCreate";
+import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
+import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
+import { ITest } from "../interfaces/Tests/Tests/ITest";
+import { IPatternParsed } from "../interfaces/Tests/Patterns/IPatternParsed";
+import { IPatternResponse } from "../interfaces/Tests/Patterns/IPatternResponse";
+import { ITestCreate } from "../interfaces/Tests/Tests/ITestCreate";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class TestService {
     private _http: HttpService
   ) { }
 
-  public getBlank(pk: number): Observable<BlankParsed> {
-    return this._http.Get<BlankRequest>(`blank/${pk}`)
+  public getBlank(pk: number): Observable<IBlankParsed> {
+    return this._http.Get<IBlankRequest>(`blank/${pk}`)
       .pipe(
         map(blank => ({
             ...blank,
@@ -27,53 +27,53 @@ export class TestService {
       )
   }
 
-  public getTests(): Observable<Test[]> {
-   return this._http.Get<Test[]>("tests")
+  public getTests(): Observable<ITest[]> {
+   return this._http.Get<ITest[]>("tests")
   }
   
-  public getPatterns(pkTest: number) : Observable<PatternParsed[]> {
-    return this._http.Get<PatternResponse[]>(`test/${pkTest}/patterns`)
+  public getPatterns(pkTest: number) : Observable<IPatternParsed[]> {
+    return this._http.Get<IPatternResponse[]>(`test/${pkTest}/patterns`)
       .pipe(
         map(patterns => this.translatePatternsFromResponse(patterns, pkTest))
       )
   }
 
-  public updatePattern(pattern: PatternParsed, pkTest: number): Observable<PatternParsed> {
+  public updatePattern(pattern: IPatternParsed, pkTest: number): Observable<IPatternParsed> {
     if (pattern.pk) {
       const patternResponse = this.translatePatternToResponse(pattern)
 
       if (patternResponse.pattern.length !== 0)
-        return this._http.Put<PatternResponse, PatternResponse>(`pattern/${pattern.pk}`, this.translatePatternToResponse(pattern))
+        return this._http.Put<IPatternResponse, IPatternResponse>(`pattern/${pattern.pk}`, this.translatePatternToResponse(pattern))
           .pipe(map(resp => this.translatePatternFromResponse(resp)))
       else
         return this._http.Delete<null>(`pattern/${pattern.pk}`)
           .pipe(map(() => this.getEmptyPattern(pkTest, pattern.num)))
     }
 
-    return this._http.Post<PatternResponse, PatternResponse>(`test/${pkTest}/patterns`, this.translatePatternToResponse(pattern))
+    return this._http.Post<IPatternResponse, IPatternResponse>(`test/${pkTest}/patterns`, this.translatePatternToResponse(pattern))
       .pipe(map(resp => this.translatePatternFromResponse(resp)))
   }
 
   public getClassTests(classId: number) {
-    return this._http.Get<Test[]>(`tests`)
+    return this._http.Get<ITest[]>(`tests`)
       .pipe(
         map(tests => tests.filter(e => e.grade === classId))
       )
   }
 
-  public createTest(test: TestCreate) {
-    return this._http.Post<TestCreate, Test>('tests/', test)
+  public createTest(test: ITestCreate) {
+    return this._http.Post<ITestCreate, ITest>('tests/', test)
   }
 
-  private translatePatternToResponse(pattern: PatternParsed): PatternResponse {
+  private translatePatternToResponse(pattern: IPatternParsed): IPatternResponse {
     return {
       ...pattern,
       pattern: pattern.pattern.filter(e => e >= 0).join(',')
     }
   }
 
-  private translatePatternsFromResponse(patterns: PatternResponse[], pkTest: number): PatternParsed[] {
-    const result = Array<PatternParsed>(8)
+  private translatePatternsFromResponse(patterns: IPatternResponse[], pkTest: number): IPatternParsed[] {
+    const result = Array<IPatternParsed>(8)
 
     for (let i = 0; i < 8; i++)
       result[i] = this.getEmptyPattern(pkTest, i + 1)
@@ -83,7 +83,7 @@ export class TestService {
     return result
   }
 
-  private translatePatternFromResponse(pattern: PatternResponse): PatternParsed {
+  private translatePatternFromResponse(pattern: IPatternResponse): IPatternParsed {
     const elements = pattern.pattern.split(',');
 
     return {
@@ -94,7 +94,7 @@ export class TestService {
     }
   }
 
-  private getEmptyPattern(test: number, num: number): PatternParsed {
+  private getEmptyPattern(test: number, num: number): IPatternParsed {
     return {
       test,
       num,

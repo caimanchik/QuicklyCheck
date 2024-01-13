@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { FormControl, FormGroup } from "@angular/forms";
-import { CreateClassForm } from "../../../../../shared/interfaces/Forms/CreateClassForm";
+import { ICreateClassForm } from "../../../../../shared/interfaces/Forms/ICreateClassForm";
 import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 import { ClassesService } from "../../../../../shared/services/classes.service";
 import { take } from "rxjs";
@@ -31,7 +31,7 @@ import { Router } from "@angular/router";
   ],
 })
 export class CreateComponent implements OnInit {
-  protected createForm!: FormGroup<CreateClassForm>
+  protected createForm!: FormGroup<ICreateClassForm>
   protected numberCorrect = true
   protected letterCorrect = true
 
@@ -43,7 +43,7 @@ export class CreateComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.createForm = new FormGroup<CreateClassForm>({
+    this.createForm = new FormGroup<ICreateClassForm>({
       number: new FormControl<string>('', {
         nonNullable: true
       }),

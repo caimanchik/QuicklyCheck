@@ -1,12 +1,12 @@
 import { BehaviorSubject, catchError, map, Observable, of } from "rxjs";
-import { TokenPair } from "../interfaces/Tokens/TokenPair";
+import { ITokenPair } from "../interfaces/Tokens/ITokenPair";
 import { CookieService } from "./infrastructure/cookie.service";
 import { HttpService } from "./infrastructure/http.service";
 import { Injectable } from "@angular/core";
-import { RefreshToken } from "../interfaces/Tokens/RefreshToken";
-import { AccessToken } from "../interfaces/Tokens/AccessToken";
+import { IRefreshToken } from "../interfaces/Tokens/IRefreshToken";
+import { IAccessToken } from "../interfaces/Tokens/IAccessToken";
 import { IsTokenPair } from "../interceptors/IsTokenPair";
-import { UserLogin } from "../interfaces/User/UserLogin";
+import { IUserLogin } from "../interfaces/User/IUserLogin";
 
 
 @Injectable({
@@ -21,8 +21,8 @@ export class AuthService {
 
   public isLogged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  public login(user: UserLogin): Observable<boolean> {
-    return this._http.Post<UserLogin, TokenPair>('token/', user, {withCredentials: false}, false)
+  public login(user: IUserLogin): Observable<boolean> {
+    return this._http.Post<IUserLogin, ITokenPair>('token/', user, {withCredentials: false}, false)
       .pipe(
         map(pair => {
           this.saveToken(pair)
@@ -46,7 +46,7 @@ export class AuthService {
       return of(false)
     }
 
-    return this._http.Post<RefreshToken, AccessToken>(
+    return this._http.Post<IRefreshToken, IAccessToken>(
       'token/refresh/',
       {refresh},
       {withCredentials: false},
@@ -66,7 +66,7 @@ export class AuthService {
       )
   }
 
-  public saveToken(token: TokenPair | AccessToken) {
+  public saveToken(token: ITokenPair | IAccessToken) {
     if (IsTokenPair(token))
       this._cookie.setCookie({
         name: "refresh",

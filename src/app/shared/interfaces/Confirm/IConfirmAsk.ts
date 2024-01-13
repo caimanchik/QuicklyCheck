@@ -1,4 +1,4 @@
-export interface ConfirmAsk {
+export interface IConfirmAsk {
   message: string
   buttonText: string
 }

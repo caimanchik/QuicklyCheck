@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Cookie } from "../../interfaces/Cookie/Cookie";
+import { ICookie } from "../../interfaces/Cookie/ICookie";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class CookieService {
     });
   }
 
-  public setCookie(cookie: Cookie) {
+  public setCookie(cookie: ICookie) {
     document.cookie = `${cookie.name}=${cookie.value}; max-age=${cookie.maxAge.days * 24 * 60 * 60 + cookie.maxAge.minutes * 60}`
   }
 }

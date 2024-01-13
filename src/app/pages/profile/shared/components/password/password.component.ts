@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ChangePasswordForm } from "../../../../../shared/interfaces/Forms/ChangePasswordForm";
+import { IChangePasswordForm } from "../../../../../shared/interfaces/Forms/IChangePasswordForm";
 import { Router } from "@angular/router";
 import { samePasswordValidator } from "../../../../../shared/validators/SamePasswordValidator";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -27,7 +27,7 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
 })
 export class PasswordComponent implements OnInit {
 
-  protected changeForm!: FormGroup<ChangePasswordForm>
+  protected changeForm!: FormGroup<IChangePasswordForm>
   protected passSave = true;
 
   constructor(
@@ -35,7 +35,7 @@ export class PasswordComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.changeForm = new FormGroup<ChangePasswordForm>({
+    this.changeForm = new FormGroup<IChangePasswordForm>({
       old: new FormControl<string>("", {
         validators: [
           Validators.required,

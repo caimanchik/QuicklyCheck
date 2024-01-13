@@ -4,7 +4,7 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
 import { StudentService } from "../../../../../shared/services/student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { CreateStudentForm } from "../../../../../shared/interfaces/Forms/CreateStudentForm";
+import { ICreateStudentForm } from "../../../../../shared/interfaces/Forms/ICreateStudentForm";
 import { take } from "rxjs";
 
 @Component({
@@ -27,7 +27,7 @@ import { take } from "rxjs";
   ],
 })
 export class CreateStudentComponent implements OnInit {
-  protected createForm!: FormGroup<CreateStudentForm>
+  protected createForm!: FormGroup<ICreateStudentForm>
 
   constructor(
     private _student: StudentService,
@@ -36,7 +36,7 @@ export class CreateStudentComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.createForm = new FormGroup<CreateStudentForm>({
+    this.createForm = new FormGroup<ICreateStudentForm>({
       surname: new FormControl<string>('', {
         validators: [Validators.required],
         nonNullable: true

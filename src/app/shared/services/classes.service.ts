@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, switchMap } from "rxjs";
-import { Class } from "../interfaces/Classes/Class";
+import { IClass } from "../interfaces/Classes/IClass";
 import { HttpService } from "./infrastructure/http.service";
-import { ClassBase } from "../interfaces/Classes/ClassBase";
-import { ClassAllInfo } from "../interfaces/Classes/ClassAllInfo";
+import { IClassBase } from "../interfaces/Classes/IClassBase";
+import { IClassAllInfo } from "../interfaces/Classes/IClassAllInfo";
 import { TestService } from "./test.service";
 import { StudentService } from "./student.service";
 
@@ -18,15 +18,15 @@ export class ClassesService {
     private _student: StudentService
   ) { }
 
-  public getClasses(): Observable<Class[]> {
-    return this._http.Get<Class[]>("classes")
+  public getClasses(): Observable<IClass[]> {
+    return this._http.Get<IClass[]>("classes")
   }
 
-  public getClassInfo(id: number): Observable<Class> {
-    return this._http.Get<Class>(`class/${id}`)
+  public getClassInfo(id: number): Observable<IClass> {
+    return this._http.Get<IClass>(`class/${id}`)
   }
 
-  public getAllClassInfo(id: number): Observable<ClassAllInfo> {
+  public getAllClassInfo(id: number): Observable<IClassAllInfo> {
     return this.getClassInfo(id)
       .pipe(
         switchMap(classInfo => {
@@ -44,8 +44,8 @@ export class ClassesService {
       )
   }
 
-  public createClass(classInfo: ClassBase): Observable<Class> {
-    return this._http.Post<ClassBase, Class>(`classes/`, classInfo)
+  public createClass(classInfo: IClassBase): Observable<IClass> {
+    return this._http.Post<IClassBase, IClass>(`classes/`, classInfo)
   }
 
   public deleteClass(id: number): Observable<any> {

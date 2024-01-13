@@ -1,6 +1,6 @@
 import { FormControl } from "@angular/forms";
 
-export interface ChangePasswordForm {
+export interface IChangePasswordForm {
   old: FormControl<string>
   new: FormControl<string>
   newRepeat: FormControl<string>

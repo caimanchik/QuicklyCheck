@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ConfirmService } from "../../services/infrastructure/confirm.service";
 import { DestroyService } from "../../services/infrastructure/destroy.service";
-import { ConfirmAsk } from "../../interfaces/Confirm/ConfirmAsk";
+import { IConfirmAsk } from "../../interfaces/Confirm/IConfirmAsk";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { opacity } from "../../animations/opacity";
 
@@ -34,7 +34,7 @@ import { opacity } from "../../animations/opacity";
 })
 export class ConfirmComponent implements OnInit {
 
-  protected message: ConfirmAsk | null = null
+  protected message: IConfirmAsk | null = null
 
   constructor(
     private confirmer: ConfirmService,

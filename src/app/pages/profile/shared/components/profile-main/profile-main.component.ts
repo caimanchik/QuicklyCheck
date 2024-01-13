@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UserService } from "../../../../../shared/services/user.service";
 import { take } from "rxjs";
-import { UserMainInfo } from "../../../../../shared/interfaces/User/UserMainInfo";
+import { IUserMainInfo } from "../../../../../shared/interfaces/User/IUserMainInfo";
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
@@ -27,7 +27,7 @@ import { AuthService } from "../../../../../shared/services/auth.service";
   ]
 })
 export class ProfileMainComponent implements OnInit {
-  protected userMainInfo!: UserMainInfo
+  protected userMainInfo!: IUserMainInfo
 
   constructor(
     private _cd: ChangeDetectorRef,

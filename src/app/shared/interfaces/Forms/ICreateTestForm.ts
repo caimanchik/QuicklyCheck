@@ -1,5 +1,5 @@
 import { FormControl } from "@angular/forms";
 
-export interface CreateTestForm {
+export interface ICreateTestForm {
   name: FormControl<string>
 }

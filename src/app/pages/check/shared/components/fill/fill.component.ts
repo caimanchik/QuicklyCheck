@@ -4,7 +4,7 @@ import { DestroyService } from "../../../../../shared/services/infrastructure/de
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { mergeMap, take } from "rxjs";
-import { PatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/PatternParsed";
+import { IPatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/IPatternParsed";
 import { Router } from "@angular/router";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 
@@ -30,7 +30,7 @@ import { ErrorService } from "../../../../../shared/services/infrastructure/erro
 })
 export class FillComponent implements OnInit {
 
-  protected patterns!: PatternParsed[]
+  protected patterns!: IPatternParsed[]
   private pkTest!: number
 
   constructor(
@@ -65,7 +65,7 @@ export class FillComponent implements OnInit {
       this._error.createError('Заполните хотя бы один вариант')
   }
 
-  protected updatePattern(pattern: PatternParsed) {
+  protected updatePattern(pattern: IPatternParsed) {
     this._testService.updatePattern(pattern, this.pkTest)
       .pipe(take(1))
       .subscribe(newPattern => {

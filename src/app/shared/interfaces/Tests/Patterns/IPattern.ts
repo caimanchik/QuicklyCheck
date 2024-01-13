@@ -1,4 +1,4 @@
-export interface Pattern {
+export interface IPattern {
   test: number
   num: number
   pk?: number

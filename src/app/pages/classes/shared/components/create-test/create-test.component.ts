@@ -3,7 +3,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { TestService } from "../../../../../shared/services/test.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { CreateTestForm } from "../../../../../shared/interfaces/Forms/CreateTestForm";
+import { ICreateTestForm } from "../../../../../shared/interfaces/Forms/ICreateTestForm";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
 
@@ -27,7 +27,7 @@ import { take } from "rxjs";
   ],
 })
 export class CreateTestComponent implements OnInit {
-  protected createForm!: FormGroup<CreateTestForm>
+  protected createForm!: FormGroup<ICreateTestForm>
 
   constructor(
     private _test: TestService,
@@ -36,7 +36,7 @@ export class CreateTestComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.createForm = new FormGroup<CreateTestForm>({
+    this.createForm = new FormGroup<ICreateTestForm>({
       name: new FormControl<string>('', {
         validators: [Validators.required],
         nonNullable: true
