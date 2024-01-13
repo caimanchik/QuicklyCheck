@@ -27,10 +27,10 @@ export class ErrorComponent implements OnInit {
       .subscribe(error => {
         this.error = error
         this.visible = true
-        this._cd.markForCheck()
+        this._cd.detectChanges()
         setTimeout(() => {
           this.visible = false
-          this._cd.markForCheck()
+          this._cd.detectChanges()
         }, 3000)
       })
   }

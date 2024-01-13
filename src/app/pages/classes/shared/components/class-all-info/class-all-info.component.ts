@@ -45,7 +45,6 @@ export class ClassAllInfoComponent implements OnInit {
   }
 
   protected createTest() {
-    console.log(['classes', this.classInfo.pk, ['create-test']])
     this._router.navigate(['classes', this.classInfo.pk, 'create-test'])
   }
 

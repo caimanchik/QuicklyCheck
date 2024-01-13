@@ -55,14 +55,11 @@ export class TestService {
   }
 
   public getClassTests(classId: number) {
-    return this._http.Get<ITest[]>(`tests`)
-      .pipe(
-        map(tests => tests.filter(e => e.grade === classId))
-      )
+    return this._http.Get<ITest[]>(`class/${classId}/tests`)
   }
 
   public createTest(test: ITestCreate) {
-    return this._http.Post<ITestCreate, ITest>('tests/', test)
+    return this._http.Post<ITestCreate, ITest>(`class/${test.grade}/tests/`, test)
   }
 
   private translatePatternToResponse(pattern: IPatternParsed): IPatternResponse {
