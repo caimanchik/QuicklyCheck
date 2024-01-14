@@ -134,13 +134,14 @@
       margin-top: .8rem;
     }
 
-    //&-wrap {
-      width: fit-content;
+    width: fit-content;
+
+    @media (hover: hover) {
       &:hover {
         .footer-column__link {
           transform: translateX(2px);
         }
-      //}
+      }
     }
   }
 
