@@ -28,6 +28,12 @@
                         </div>
                     </li>
 
+                    <ng-container *ngIf="(auth.isLogged$ | async) === true">
+                        <li class="footer-column__item">
+                            <a href="" class="footer-column__link" routerLink="classes">Мои классы</a>
+                        </li>
+                    </ng-container>
+
                     <li class="footer-column__item">
                         <a href="" class="footer-column__link" routerLink="getBlank">Скачать бланк</a>
                     </li>

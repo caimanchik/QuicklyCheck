@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { opacity } from "../../animations/opacity";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-footer',
@@ -26,11 +27,9 @@ import { opacity } from "../../animations/opacity";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor(
+    protected auth: AuthService
+  ) { }
 }

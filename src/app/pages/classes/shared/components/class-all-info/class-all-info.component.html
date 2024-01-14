@@ -23,26 +23,35 @@
 
                             <h2 class="class-remember__title subtitle">
                                 <span>Памятка</span>
+                                <button 
+                                        type="button"
+                                        class="class-remember__hide"
+                                        (click)="toggleHide({studentsHidden: true})"
+                                >
+                                    <img src="assets/images/icons/hide.svg">
+                                </button>
                             </h2>
 
-                            <ul class="class-remember__list">
-                                <li class="class-remember__item">
-                                    <div class="class-remember__number">
-                                        1.
-                                    </div>
-                                    <div class="class-remember__text">
-                                        Нажмите на ученика, чтобы увидеть его личные работы.
-                                    </div>
-                                </li>
-                                <li class="class-remember__item">
-                                    <div class="class-remember__number">
-                                        2.
-                                    </div>
-                                    <div class="class-remember__text">
-                                        Номер ученика - это личный ID  в этом классе. Нужен, чтобы идентифицировать бланк.
-                                    </div>
-                                </li>
-                            </ul>
+                            <ng-container *ngIf="rememberInfo.studentsHidden">
+                                <ul class="class-remember__list" @appear @leave>
+                                    <li class="class-remember__item">
+                                        <div class="class-remember__number">
+                                            1.
+                                        </div>
+                                        <div class="class-remember__text">
+                                            Нажмите на ученика, чтобы увидеть его личные работы.
+                                        </div>
+                                    </li>
+                                    <li class="class-remember__item">
+                                        <div class="class-remember__number">
+                                            2.
+                                        </div>
+                                        <div class="class-remember__text">
+                                            Номер ученика - это личный ID  в этом классе. Нужен, чтобы идентифицировать бланк.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ng-container>
 
                         </div>
                     </div>
@@ -90,18 +99,27 @@
 
                             <h2 class="class-remember__title subtitle">
                                 <span>Памятка</span>
+                                <button
+                                        type="button"
+                                        class="class-remember__hide"
+                                        (click)="toggleHide({worksHidden: true})"
+                                >
+                                    <img src="assets/images/icons/hide.svg" alt="">
+                                </button>
                             </h2>
 
-                            <ul class="class-remember__list">
-                                <li class="class-remember__item">
-                                    <div class="class-remember__number">
-                                        1.
-                                    </div>
-                                    <div class="class-remember__text">
-                                        Нажмите на работу, чтобы увидеть результаты.
-                                    </div>
-                                </li>
-                            </ul>
+                            <ng-container *ngIf="rememberInfo.worksHidden">
+                                <ul class="class-remember__list" @appear @leave>
+                                    <li class="class-remember__item">
+                                        <div class="class-remember__number">
+                                            1.
+                                        </div>
+                                        <div class="class-remember__text">
+                                            Нажмите на работу, чтобы увидеть результаты.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ng-container>
 
                         </div>
                     </div>
