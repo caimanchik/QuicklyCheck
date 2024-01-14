@@ -28,7 +28,7 @@
                         </div>
                     </li>
 
-                    <ng-container *ngIf="(auth.isLogged$ | async) === true">
+                    <ng-container *ngIf="auth.isLogged$ | async">
                         <li class="footer-column__item">
                             <a href="" class="footer-column__link" routerLink="classes">Мои классы</a>
                         </li>

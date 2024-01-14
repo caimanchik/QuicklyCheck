@@ -1,12 +1,43 @@
-<header class="header" @appear>
+<header
+        class="header"
+        @appear
+        [ngClass]="{
+            logged: _auth.isLogged$ | async,
+            notLogged: (_auth.isLogged$ | async) === false
+        }"
+>
 
     <div class="container">
 
-        <div class="header__row">
+        <div
+                class="header__blur"
+                [ngClass]="{navOpened}"
+                (click)="toggleNav()"
+        >
+        </div>
 
-            <div class="header__item">
+            <div class="header__row" [ngClass]="{navOpened}">
 
-                <a href="" class="header__logo header-logo" routerLink="">
+                <div class="header__burger header-burger">
+                    <button
+                            class="header-burger__burger"
+                            type="button"
+                            [ngClass]="{active: navOpened}"
+                            (click)="toggleNav()"
+                    >
+                        <span class="header-burger__item"></span>
+                        <span class="header-burger__item"></span>
+                        <span class="header-burger__item"></span>
+                        <span class="header-burger__item"></span>
+                        <span class="header-burger__item"></span>
+                    </button>
+                </div>
+
+                <a
+                        class="header__logo header-logo"
+                        [ngClass]="{navOpened}"
+                        (click)="navigate('/')"
+                >
                     <div class="header-logo__img">
                         <img src="assets/images/icons/logo.svg" alt="">
                     </div>
@@ -15,39 +46,53 @@
                     </div>
                 </a>
 
-                <nav class="header__links header-links">
-                    <ng-container *ngIf="_auth.isLogged$ | async">
-                        <a class="header-links__item" routerLink="classes">
-                            мои классы
+                <nav class="header__links header-links" [ngClass]="{navOpened}">
+                    <div class="header-links__decor" [ngClass]="{navOpened}">
+
+                    </div>
+                    <div class="header-links__group">
+                        <ng-container *ngIf="_auth.isLogged$ | async">
+                            <a
+                                    class="header-links__item"
+                                    (click)="navigate('classes')"
+                            >
+                                мои классы
+                            </a>
+                        </ng-container>
+                        <a
+                                class="header-links__item"
+                                (click)="navigate('getBlank')"
+                        >
+                            скачать бланк
                         </a>
-                    </ng-container>
-                    <a class="header-links__item" routerLink="getBlank">
-                        скачать бланк
-                    </a>
-<!--                    todo если что убрать так как нажмут и залетят-->
-                    <a class="header-links__item" routerLink="check">
-                        проверить тест
-                    </a>
+                        <a
+                                class="header-links__item"
+                                (click)="navigate('check')"
+                        >
+                            проверить тест
+                        </a>
+                    </div>
+
+                    <div class="header-links__group">
+                        <ng-container *ngIf="_auth.isLogged$ | async; else login">
+                            <a
+                                    class="header-links__account"
+                                    (click)="navigate('profile')"
+                            >
+                                <img src="assets/images/icons/account.svg" alt="Перейти в аккаунт">
+                            </a>
+                        </ng-container>
+
+                        <ng-template #login>
+                            <a
+                                    class="header__button"
+                                    (click)="navigate('login')"
+                            >
+                                войти
+                            </a>
+                        </ng-template>
+                    </div>
                 </nav>
-
-            </div>
-
-            <div class="header__item">
-
-                <ng-container *ngIf="_auth.isLogged$ | async; else login">
-                    <a class="header-links__account" routerLink="profile">
-                        <img src="assets/images/icons/account.svg" alt="Перейти в аккаунт">
-                    </a>
-                </ng-container>
-
-                <ng-template #login>
-                    <a class="header__button" routerLink="login">
-                        войти
-                    </a>
-                </ng-template>
-
-            </div>
-
         </div>
 
     </div>

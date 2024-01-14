@@ -6,17 +6,34 @@ html {
   font-family: $ff;
   font-size: $fontsize;
   background-color: $bgcolor;
+
+  @media(max-width:$md1){
+    font-size: $fontsize - 1px;
+  }
+
+  @media(max-width:$md2){
+    font-size: $fontsize - 2px;
+  }
+
+  @media(max-width:$md3){
+    font-size: $fontsize - 3px;
+  }
 }
 
 body {
   min-height: 100vh;
   width: 100%;
   color: #323232;
+
+  &.lock {
+    overflow: hidden;
+  }
 }
 
 .container {
-  max-width: $mw + 12px;
-  padding: 0 12px;
+  width: 100%;
+  max-width: $mw + 20px;
+  padding: 0 20px;
   margin: 0 auto;
 }
 

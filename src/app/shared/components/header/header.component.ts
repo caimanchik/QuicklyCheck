@@ -1,7 +1,8 @@
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
 import { opacity } from "../../animations/opacity";
 import { AuthService } from "../../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -28,7 +29,29 @@ import { AuthService } from "../../services/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
+  protected navOpened = false
+
   constructor(
-    protected _auth: AuthService
+    protected _auth: AuthService,
+    private _router: Router,
+    private _cd: ChangeDetectorRef
   ) { }
+
+  protected toggleNav() {
+    const body = document.querySelector('body')
+    if (body?.classList.contains('lock'))
+      body?.classList.remove('lock')
+    else
+      body?.classList.add('lock')
+
+    this._cd.markForCheck()
+    this.navOpened = !this.navOpened
+  }
+
+  protected navigate(url: string) {
+    if (this.navOpened)
+      this.toggleNav()
+
+    this._router.navigate([url])
+  }
 }

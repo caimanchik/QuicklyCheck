@@ -10,6 +10,7 @@ import { PatternComponent } from './components/pattern/pattern.component';
 import { PhotoComponent } from './components/photo/photo.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { ActiveDirective } from "./directives/active.directive";
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     CommonModule,
     RouterLinkWithHref,
     NgOptimizedImage,
+    ActiveDirective,
   ]
 })
 export class SharedModule { }
