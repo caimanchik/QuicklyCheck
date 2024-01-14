@@ -9,7 +9,7 @@
   }
 
   &__blocks {
-    margin-top: 3.9rem;
+    margin-top: 3rem;
   }
 
   &__block {
@@ -23,13 +23,17 @@
     &:first-child {
       margin-top: 0;
     }
+
+    @media(max-width:600px) {
+      padding: 2.8rem 3rem;
+    }
   }
 
   &__field {
   }
 
   &__buttons {
-    margin-top: 4.3rem;
+    margin-top: 3rem;
   }
 
   &__password {
@@ -52,8 +56,12 @@
 
   &__name {
     flex: 0 0 12rem;
-
     font-size: 2.14rem;
+
+    @media(max-width:600px){
+      font-size: 1.8rem;
+      flex: 0 0 9rem;
+    }
   }
 
   &__content {
