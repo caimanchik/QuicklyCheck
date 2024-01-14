@@ -2,19 +2,38 @@
 @import "classes";
 
 .footer {
-  padding: 3.3rem 4.85rem;
+  padding: 3.3rem 0 4.85rem;
   background-color: #4C4A4A;
   &__row {
     display: flex;
-    justify-content: space-between;
+
+    @media(max-width:860px){
+      flex-wrap: wrap;
+    }
   }
 
   &__item {
+    @media(max-width:670px){
+      flex: 0 0 100%;
+    }
     &_left {
-      display: flex;
+      @media(max-width:670px){
+        order: 2;
+      }
     }
 
     &_right {
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+
+      @media(max-width:670px){
+        justify-content: initial;
+      }
+
+      //@media(max-width:520px){
+      //  flex-direction: column;
+      //}
     }
   }
 }
@@ -24,6 +43,18 @@
     display: flex;
     flex-direction: column;
     margin-right: 5rem;
+
+    @media(max-width:670px) {
+      flex-direction: row;
+      margin-right: 0;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    @media(max-width:420px){
+      flex-direction: column;
+      align-items: initial;
+    }
   }
 
   &__logo {
@@ -37,10 +68,29 @@
     font-size: 1.43rem;
     max-width: 18.6rem;
     margin-top: 2.28rem;
+
+    @media(max-width:670px) {
+      max-width: 100%;
+      margin-left: 2rem;
+      margin-top: 0;
+    }
+
+    @media(max-width:420px) {
+      margin-left: 0;
+      margin-top: 1.5rem;
+    }
   }
 
   &__column {
-    padding-top: 1.4rem;
+    padding-top: 1rem;
+
+    @media(max-width:670px) {
+      margin-left: 2rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
   }
 }
 
