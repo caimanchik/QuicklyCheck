@@ -23,7 +23,9 @@
             </div>
 
             <div class="main-about__image">
-                <img ngSrc="assets/images/main/woman.svg" alt="" height="578" width="656" priority>
+                <div class="main-about__image-wrap">
+                    <img ngSrc="assets/images/main/woman.svg" alt="" height="578" width="656" priority>
+                </div>
             </div>
         </div>
 
@@ -37,55 +39,57 @@
 
                 <div class="main-choose__cards">
 
-                    <div class="main-choose__card main-choose-card">
+                    <div class="main-choose__cards-wrap">
 
-                        <div class="main-choose-card__wrapper">
-                            <div [appScroll]="20">
-                                <h3 class="main-choose-card__title">
-                                    Мгновенная проверка
-                                </h3>
+                        <div class="main-choose__card main-choose-card">
 
-                                <div class="main-choose-card__text">
-                                    Сэкономьте свое время на проверке тестовых работ. Наш сервис позволит сделать это за несколько минут.
+                            <div class="main-choose-card__wrapper">
+                                <div [appScroll]="20">
+                                    <h3 class="main-choose-card__title">
+                                        Мгновенная проверка
+                                    </h3>
+
+                                    <div class="main-choose-card__text">
+                                        Сэкономьте свое время на проверке тестовых работ. Наш сервис позволит сделать это за несколько минут.
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
-                    </div>
+                        <div class="main-choose__card main-choose-card">
 
-                    <div class="main-choose__card main-choose-card">
+                            <div class="main-choose-card__wrapper">
+                                <div [appScroll]="20">
+                                    <h3 class="main-choose-card__title">
+                                        Сохраняйте работы
+                                    </h3>
 
-                        <div class="main-choose-card__wrapper">
-                            <div [appScroll]="20">
-                                <h3 class="main-choose-card__title">
-                                    Сохраняйте работы
-                                </h3>
-
-                                <div class="main-choose-card__text">
-                                    Сохраняйте проверенные работы, чтобы получить доступ к ним в любую минуту, находясь даже не на работе.
+                                    <div class="main-choose-card__text">
+                                        Сохраняйте проверенные работы, чтобы получить доступ к ним в любую минуту, находясь даже не на работе.
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
-                    </div>
+                        <div class="main-choose__card main-choose-card">
 
-                    <div class="main-choose__card main-choose-card">
+                            <div class="main-choose-card__wrapper">
+                                <div [appScroll]="20">
+                                    <h3 class="main-choose-card__title">
+                                        Проводите анализ
+                                    </h3>
 
-                        <div class="main-choose-card__wrapper">
-                            <div [appScroll]="20">
-                                <h3 class="main-choose-card__title">
-                                    Проводите анализ
-                                </h3>
-
-                                <div class="main-choose-card__text">
-                                    Мы даем возможность быстро проанализировать выполненные работы и выявить пробелы в знаниях
+                                    <div class="main-choose-card__text">
+                                        Мы даем возможность быстро проанализировать выполненные работы и выявить пробелы в знаниях
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
-                    </div>
-
-                    <div class="main-choose__card main-choose-card">
+                        <div class="main-choose__card main-choose-card">
 
                         <div class="main-choose-card__wrapper">
                             <div [appScroll]="20">
@@ -99,6 +103,7 @@
                             </div>
                         </div>
 
+                    </div>
                     </div>
 
                 </div>
