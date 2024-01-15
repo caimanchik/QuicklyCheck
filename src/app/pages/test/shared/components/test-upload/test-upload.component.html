@@ -1,0 +1,11 @@
+<div class="upload" @appear>
+    <div class="upload__wrapper">
+        <app-photo
+                (uploadEvent)="uploadImages($event)"
+                (checkEvent)="check()"
+                (backEvent)="goToFill()"
+                (deleteEvent)="deleteImage($event)"
+                [previews]="previews"
+        ></app-photo>
+    </div>
+</div>

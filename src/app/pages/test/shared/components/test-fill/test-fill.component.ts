@@ -53,7 +53,7 @@ export class TestFillComponent implements OnInit {
       return
     }
 
-    // this.
+    this._router.navigate(['test', +(this._route.snapshot.paramMap.get('id') ?? 0), 'upload'])
   }
 
   protected updatePattern(pattern: IPatternParsed) {

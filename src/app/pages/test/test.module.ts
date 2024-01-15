@@ -5,6 +5,9 @@ import { TestComponent } from './test.component';
 import { TestInfoComponent } from "./shared/components/test-info/test-info.component";
 import { SharedModule } from "../../shared/shared.module";
 import { TestFillComponent } from './shared/components/test-fill/test-fill.component';
+import { TestUploadComponent } from './shared/components/test-upload/test-upload.component';
+import { CheckService } from "../../shared/services/check.service";
+import { TestResultComponent } from './shared/components/test-result/test-result.component';
 
 
 const routes: Routes = [
@@ -16,6 +19,9 @@ const routes: Routes = [
       {
         path: ':id/fill', component: TestFillComponent, pathMatch: 'full'
       },
+      {
+        path: ':id/upload', component: TestUploadComponent, pathMatch: 'full'
+      },
     ]
   }
 ]
@@ -24,7 +30,9 @@ const routes: Routes = [
   declarations: [
     TestInfoComponent,
     TestComponent,
-    TestFillComponent
+    TestFillComponent,
+    TestUploadComponent,
+    TestResultComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +41,9 @@ const routes: Routes = [
   ],
   exports: [
     RouterModule
+  ],
+  providers: [
+    CheckService
   ]
 })
 export class TestModule { }
