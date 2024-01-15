@@ -25,6 +25,7 @@
 
     font-weight: 700;
     padding: .8rem 2.85rem;
+    cursor: pointer;
   }
 
   &__blur {
@@ -163,6 +164,11 @@
         &__account {
           margin-top: 1rem;
           display: inline-block;
+          cursor: pointer;
+
+          & img {
+            cursor: pointer;
+          }
         }
 
         &__decor {
@@ -307,6 +313,7 @@
   display: flex;
   height: 3.64rem;
   align-items: center;
+  cursor: pointer;
 
   &__img {
     height: 100%;
@@ -364,6 +371,7 @@
     color: $violet;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    cursor: pointer;
 
     margin-left: 1.5rem;
     &:first-child{

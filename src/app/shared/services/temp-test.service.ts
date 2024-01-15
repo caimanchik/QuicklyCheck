@@ -4,11 +4,11 @@ import { ITempTest } from "../interfaces/ITempTest";
 import { HttpService } from "./infrastructure/http.service";
 import { ITest } from "../interfaces/Tests/Tests/ITest";
 import { IPatternParsed } from "../interfaces/Tests/Patterns/IPatternParsed";
-import { translatePatternsFromResponse } from "../functions/tests/translatePatternsFromResponse";
+import { translatePatternsFromResponse } from "../functions/patterns/translatePatternsFromResponse";
 import { IPatternResponse } from "../interfaces/Tests/Patterns/IPatternResponse";
-import { translatePatternToResponse } from "../functions/tests/translatePatternToResponse";
-import { translatePatternFromResponse } from "../functions/tests/translatePatternFromResponse";
-import { getEmptyPattern } from "../functions/tests/getEmptyPattern";
+import { translatePatternToResponse } from "../functions/patterns/translatePatternToResponse";
+import { translatePatternFromResponse } from "../functions/patterns/translatePatternFromResponse";
+import { getEmptyPattern } from "../functions/patterns/getEmptyPattern";
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class TempTestService {
 
       if (patternResponse.pattern.length !== 0)
         return this._http.Put<IPatternResponse, IPatternResponse>(
-          `temp/pattern/${pattern.pk}`,
+          `temp/pattern/${pattern.pk}/`,
           translatePatternToResponse(pattern),
           {withCredentials: false}
         )

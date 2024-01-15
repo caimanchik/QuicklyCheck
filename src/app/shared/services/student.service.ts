@@ -20,4 +20,8 @@ export class StudentService {
   public createStudent(student: IStudentCreate) {
     return this._http.Post<IStudentCreate, IStudent>(`class/${student.grade}/students/`, student)
   }
+
+  public getStudent(pk: number): Observable<IStudent> {
+    return this._http.Get<IStudent>(`student/${pk}`)
+  }
 }

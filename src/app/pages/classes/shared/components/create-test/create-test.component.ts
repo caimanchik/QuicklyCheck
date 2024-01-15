@@ -54,7 +54,7 @@ export class CreateTestComponent implements OnInit {
     })
       .pipe(take(1))
       .subscribe(test => {
-        console.log(test)
+        this._router.navigate(['test', test.pk])
       })
   }
 }

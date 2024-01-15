@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { map, Observable } from "rxjs";
+import { forkJoin, map, Observable, of, switchMap } from "rxjs";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
-import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
 import { ITest } from "../interfaces/Tests/Tests/ITest";
 import { IPatternParsed } from "../interfaces/Tests/Patterns/IPatternParsed";
 import { IPatternResponse } from "../interfaces/Tests/Patterns/IPatternResponse";
 import { ITestCreate } from "../interfaces/Tests/Tests/ITestCreate";
-import { translatePatternToResponse } from "../functions/tests/translatePatternToResponse";
-import { translatePatternFromResponse } from "../functions/tests/translatePatternFromResponse";
-import { translatePatternsFromResponse } from "../functions/tests/translatePatternsFromResponse";
-import { getEmptyPattern } from "../functions/tests/getEmptyPattern";
+import { translatePatternToResponse } from "../functions/patterns/translatePatternToResponse";
+import { translatePatternFromResponse } from "../functions/patterns/translatePatternFromResponse";
+import { translatePatternsFromResponse } from "../functions/patterns/translatePatternsFromResponse";
+import { getEmptyPattern } from "../functions/patterns/getEmptyPattern";
+import { ITestAllInfo } from "../interfaces/Tests/Tests/ITestAllInfo";
+import { translateBlanksFromRequest } from "../functions/blanks/translateBlanksFromRequest";
+import { StudentService } from "./student.service";
+import { IBlankWithAuthor } from "../interfaces/Tests/Blanks/IBlankWithAuthor";
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +21,58 @@ import { getEmptyPattern } from "../functions/tests/getEmptyPattern";
 export class TestService {
 
   constructor(
-    private _http: HttpService
+    private _http: HttpService,
+    private _student: StudentService
   ) { }
 
-  public getBlank(pk: number): Observable<IBlankParsed> {
-    return this._http.Get<IBlankRequest>(`blank/${pk}`)
+  // public getBlank(pk: number): Observable<IBlankParsed> {
+  //   return this._http.Get<IBlankRequest>(`blank/${pk}`)
+  //     .pipe(
+  //       map(blank => ({
+  //           ...blank,
+  //           answers: blank.answers.split(',').map(e => parseInt(e === '' ? '0' : e))
+  //       }))
+  //     )
+  // }
+
+  public getTest(pk: number): Observable<ITest> {
+    return this._http.Get<ITest>(`test/${pk}`)
+  }
+
+  public getTestAllInfo(pk: number): Observable<ITestAllInfo> {
+    return this.getTest(pk)
       .pipe(
-        map(blank => ({
-            ...blank,
-            answers: blank.answers.split(',').map(e => parseInt(e === '' ? '0' : e))
-        }))
+        switchMap(test => {
+          return this.getBlanks(pk)
+            .pipe(
+              map(blanks => ({...test, blanks}))
+            )
+        })
+      )
+  }
+
+  private getBlanks(pk: number) {
+    return this._http.Get<IBlankRequest[]>(`test/${pk}/blanks`)
+      .pipe(
+        switchMap(blanks => {
+          return blanks.length > 0
+            ? forkJoin(
+            blanks
+              .map(blank => {
+                return this._student.getStudent(blank.author)
+                  .pipe(
+                    map(student => ({
+                        ...blank,
+                        author: student.name
+                      }))
+                  )}))
+            : of([])
+        }),
+        switchMap((blanks: IBlankWithAuthor[]) =>
+          this.getPatterns(pk)
+            .pipe(
+              map(patterns => translateBlanksFromRequest(blanks, patterns))
+            ))
       )
   }
 

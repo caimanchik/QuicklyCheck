@@ -46,7 +46,7 @@ export class TokenInterceptor implements HttpInterceptor {
       .pipe(
         switchMap(isLogged => {
           if (isLogged)
-            return this.intercept(request, next)
+            return this.intercept(request.clone({withCredentials: true}), next)
 
           return throwError(() => e);
         })

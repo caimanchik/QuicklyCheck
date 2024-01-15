@@ -92,4 +92,8 @@ export class ClassAllInfoComponent implements OnInit {
   protected renameClass() {
     this._router.navigate(['classes', this.classInfo.pk, 'rename-class'])
   }
+
+  protected openTest(testPk: number) {
+    this._router.navigate(['/', 'test', testPk])
+  }
 }

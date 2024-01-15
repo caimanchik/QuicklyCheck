@@ -41,11 +41,11 @@ body {
   overflow: hidden;
 }
 
-.test {
-  @extend %grad;
-  font-size: 2rem;
-  font-weight: 700;
-}
+//.test {
+//  @extend %grad;
+//  font-size: 2rem;
+//  font-weight: 700;
+//}
 
 .grad {
   @extend %grad;
