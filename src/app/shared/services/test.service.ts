@@ -71,7 +71,15 @@ export class TestService {
         switchMap((blanks: IBlankWithAuthor[]) =>
           this.getPatterns(pk)
             .pipe(
-              map(patterns => translateBlanksFromRequest(blanks, patterns))
+              map(patterns => translateBlanksFromRequest(blanks, patterns)
+                .sort((a, b) => {
+                  if (a.author.toLowerCase() < b.author.toLowerCase())
+                    return -1;
+                  if (a.author.toLowerCase() > b.author.toLowerCase())
+                    return 1;
+
+                  return 0;
+                }))
             ))
       )
   }
@@ -87,7 +95,7 @@ export class TestService {
       )
   }
 
-  public updatePattern(pattern: IPatternParsed, pkTest: number): Observable<IPatternParsed> {
+  public updatePattern(pattern: IPatternParsed): Observable<IPatternParsed> {
     if (pattern.pk) {
       const patternResponse = translatePatternToResponse(pattern)
 
@@ -96,10 +104,10 @@ export class TestService {
           .pipe(map(resp => translatePatternFromResponse(resp)))
       else
         return this._http.Delete<null>(`pattern/${pattern.pk}`)
-          .pipe(map(() => getEmptyPattern(pkTest, pattern.num)))
+          .pipe(map(() => getEmptyPattern(pattern.test, pattern.num)))
     }
 
-    return this._http.Post<IPatternResponse, IPatternResponse>(`test/${pkTest}/patterns/`, translatePatternToResponse(pattern))
+    return this._http.Post<IPatternResponse, IPatternResponse>(`test/${pattern.test}/patterns/`, translatePatternToResponse(pattern))
       .pipe(map(resp => translatePatternFromResponse(resp)))
   }
 
@@ -109,5 +117,9 @@ export class TestService {
 
   public createTest(test: ITestCreate) {
     return this._http.Post<ITestCreate, ITest>(`class/${test.grade}/tests/`, test)
+  }
+
+  public deleteTest(testPk: number) {
+    return this._http.Delete<void>(`test/${testPk}`)
   }
 }

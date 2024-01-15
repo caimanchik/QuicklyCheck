@@ -1,0 +1,30 @@
+@import "vars";
+@import "classes";
+
+
+.fill {
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__attention {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.fill-attention {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  &__image {
+
+  }
+
+  &__text {
+    color: $red;
+    font-size: 1.4rem;
+    margin-left: 1rem;
+  }
+}

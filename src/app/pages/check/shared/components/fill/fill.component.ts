@@ -6,6 +6,7 @@ import { IPatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/
 import { Router } from "@angular/router";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { TempTestService } from "../../../../../shared/services/temp-test.service";
+import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 
 @Component({
   selector: 'app-fill',
@@ -59,7 +60,7 @@ export class FillComponent implements OnInit {
   }
 
   protected clickEvent() {
-    if (this.patterns.filter(pattern => pattern.pattern.filter(q => q >= 0).length > 0).length > 0) {
+    if (isFilled(this.patterns)) {
       this._router.navigate(['check', 'upload'])
     }
     else

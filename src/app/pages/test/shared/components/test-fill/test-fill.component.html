@@ -1,1 +1,21 @@
-<p>test-fill works!</p>
+<ng-container *ngIf="patterns">
+    <div class="fill" @appear>
+        <div class="fill__attention fill-attention">
+            <div class="fill-attention__image">
+                <img src="assets/images/icons/attention.svg" alt="">
+            </div>
+            <div class="fill-attention__text">
+                При изменении ответов могут поменяться оценки за уже проверенные работы
+            </div>
+        </div>
+        <div class="fill__wrapper">
+            <app-pattern
+                    (nextClicked)="nextClick()"
+                    (patternChanges)="updatePattern($event)"
+                    (prevClicked)="prevClick()"
+                    [patterns]="patterns"
+                    [showPrev]="true"
+            ></app-pattern>
+        </div>
+    </div>
+</ng-container>

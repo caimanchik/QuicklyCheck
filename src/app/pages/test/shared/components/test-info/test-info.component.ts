@@ -5,6 +5,7 @@ import { take } from "rxjs";
 import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITestAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
+import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 
 @Component({
   selector: 'app-test-info',
@@ -32,7 +33,8 @@ export class TestInfoComponent implements OnInit {
     private _test: TestService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _confirm: ConfirmService
   ) { }
 
   public ngOnInit(): void {
@@ -40,13 +42,23 @@ export class TestInfoComponent implements OnInit {
       .pipe(take(1))
       .subscribe(test => {
         this.test = test
-        console.log(test)
         this._cd.markForCheck()
       })
   }
 
   protected deleteTest() {
+    this._confirm.createConfirm({
+      message: "Вы действительно хотите удалить класс?",
+      buttonText: 'удалить'
+    })
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
 
+        this._test.deleteTest(this.test.pk)
+          .pipe(take(1))
+          .subscribe(() => this._router.navigate(['classes', this.test.grade]))
+      })
   }
 
   protected fillTest() {

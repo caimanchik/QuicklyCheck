@@ -14,13 +14,7 @@ export function translateBlankFromRequest(blank: IBlankWithAuthor, pattern: IPat
         isRight: answer === pattern.pattern[i]
       }
     })
-
-  for (let i = 0; i < pattern.pattern.length - answers.length; i++)
-    answers.push({
-      actual: -1,
-      correct: pattern.pattern[answers.length + i],
-      isRight: false
-    })
+    .filter(e => e.correct !== -1)
 
   return {
     ...blank,

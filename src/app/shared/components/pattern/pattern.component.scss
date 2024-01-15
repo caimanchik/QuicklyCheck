@@ -43,7 +43,11 @@
   
   &__button-wrap {
     margin-top: 3rem;
-    text-align: right;
+    display: flex;
+  }
+
+  &__button-grow {
+    flex-grow: 1;
   }
 }
 

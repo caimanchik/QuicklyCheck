@@ -25,8 +25,11 @@ import { ErrorService } from "../../services/infrastructure/error.service";
 })
 export class PatternComponent implements AfterViewChecked {
   @Input() public patterns!: IPatternParsed[]
+  @Input() public showPrev = false
+
   @Output() public patternChanges = new EventEmitter<IPatternParsed>()
   @Output() public nextClicked = new EventEmitter<void>()
+  @Output() public prevClicked = new EventEmitter<void>()
 
   protected selected = 0
   protected filled = [false, false, false, false, false, false, false, false]
@@ -81,7 +84,11 @@ export class PatternComponent implements AfterViewChecked {
       this.filled = this.patterns.map(e => e.pattern[0] !== -1)
   }
 
-  protected clickButton() {
+  protected nextButton() {
     this.nextClicked.next()
+  }
+
+  protected prevButton() {
+    this.prevClicked.next()
   }
 }

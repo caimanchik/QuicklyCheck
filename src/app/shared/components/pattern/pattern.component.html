@@ -126,13 +126,25 @@
             </div>
 
             <div class="pattern__button-wrap">
-                <button
-                        type="button"
-                        class="pattern__button"
-                        (click)="clickButton()"
+                <ng-container *ngIf="showPrev">
+                    <button
+                            type="button"
+                            class="pattern__button"
+                            (click)="prevButton()"
+                    >
+                        Назад
+                    </button>
+                </ng-container>
+
+                <div class="pattern__button-grow">
+
+                </div>
+
+                <app-button
+                        (clickEvent)="nextButton()"
                 >
                     Далее
-                </button>
+                </app-button>
             </div>
 
         </div>
