@@ -48,7 +48,7 @@ export class TestInfoComponent implements OnInit {
 
   protected deleteTest() {
     this._confirm.createConfirm({
-      message: "Вы действительно хотите удалить класс?",
+      message: "Вы действительно хотите удалить тест?",
       buttonText: 'удалить'
     })
       .subscribe(confirmed => {
@@ -63,5 +63,9 @@ export class TestInfoComponent implements OnInit {
 
   protected fillTest() {
     this._router.navigate(['test', this.test.pk, 'fill'])
+  }
+
+  protected checkMore() {
+    this._router.navigate(['/', 'test', this.test.pk, 'upload'])
   }
 }

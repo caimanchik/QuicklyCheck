@@ -15,9 +15,9 @@ export class ResultComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._checkService.checkBlanks()
-      .pipe(take(1))
-      .subscribe(console.log)
+    // this._checkService.checkBlanks()
+    //   .pipe(take(1))
+    //   .subscribe(console.log)
   }
 
 }

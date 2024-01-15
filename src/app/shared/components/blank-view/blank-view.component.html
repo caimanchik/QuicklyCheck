@@ -1,0 +1,99 @@
+<ng-container *ngIf="view">
+    <div class="view" @appear>
+        <div class="view__wrapper">
+
+            <div class="view__main view-main">
+                
+                <div class="view-main__arrows">
+                    <button type="button" class="view-main__arrow" (click)="swipe(-1)">
+                        <img src="assets/images/icons/arrow_pink.svg" alt="">
+                    </button>
+                    <button type="button" class="view-main__arrow" (click)="swipe(1)">
+                        <img src="assets/images/icons/arrow_pink.svg" alt="">
+                    </button>
+                </div>
+                
+                <div class="view-main__title">
+                    <app-title>РЕЗУЛЬТАТЫ ПРОВЕРКИ</app-title>
+                </div>
+
+                <div class="view-main__columns">
+                    <div class="view-main__column">
+                        <div class="view-main__image">
+                            <img src="{{ view.blank.image }}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="view-main__column">
+
+                        <div class="view-main__author">
+                            <span>{{ view.blank.author }}</span>
+                        </div>
+                        <div class="view-main__result">
+                            <div class="view-main__progress view-main-progress">
+                                <div class="view-main-progress__percent">
+                                    <span>{{ resultView.percentage }}%</span>
+                                </div>
+                                <div class="view-main-progress__decor">
+                                    <span></span>
+                                    <span [ngStyle]="{width: resultView.percentage + '%'}"></span>
+                                </div>
+                            </div>
+                            <div class="view-main__numbers">
+                                {{ resultView.actual }}/{{ resultView.right }}
+                            </div>
+                        </div>
+
+                        <div class="view-main__show">
+                            <app-button (clickEvent)="toggleShow()">
+                                <ng-container *ngIf="!view.showDetail; else hideText">
+                                    развернуть
+                                </ng-container>
+                                <ng-template #hideText>
+                                    свернуть
+                                </ng-template>
+                                 результат
+                            </app-button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="view-main__decor">
+                    <div class="view-main__decor-wrap">
+                        <img src="assets/images/icons/arrow-result.svg" alt="">
+                    </div>
+                </div>
+
+            </div>
+
+            <ng-container *ngIf="view.showDetail">
+                <div class="view__answers view-answers" @appear>
+                    <div class="view-answers__title">
+                        Ответы
+                    </div>
+
+                    <div class="view-answers__results">
+                        <ul class="view-answers__list view-answers-list">
+                            <ng-container *ngFor="let answer of view.blank.answers; let i = index">
+                                <div class="view-answers-list__item">
+                                    <div class="view-answers-list__number">
+                                        {{ i + 1 }}.
+                                    </div>
+                                    <div class="view-answers-list__answer">
+                                        {{ answer.correct }}-<span class="view-answers-list__actual" [ngClass]="{invalid: !answer.isRight}">{{ answer.actual }}</span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ul>
+                    </div>
+
+                    <div class="view-answers__summary">
+                        <span class="view-answers__itogo">Итого</span>: правильно {{ resultView.actual }} из {{ resultView.right }}
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</ng-container>

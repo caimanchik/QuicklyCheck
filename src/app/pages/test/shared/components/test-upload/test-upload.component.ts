@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
+import { UrlService } from "../../../../../shared/services/infrastructure/url.service";
 
 @Component({
   selector: 'app-test-upload',
@@ -32,7 +33,8 @@ export class TestUploadComponent implements OnDestroy {
     protected _checkService: CheckService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _url: UrlService
   ) { }
 
   public ngOnDestroy(): void {
@@ -61,7 +63,7 @@ export class TestUploadComponent implements OnDestroy {
 
   protected goToFill() {
     this.needsClear = false
-    this._router.navigate(['test', +(this._route.snapshot.paramMap.get('id') ?? 0), 'fill'])
+    this._router.navigate([this._url.getPreviousUrl()])
   }
 
 }

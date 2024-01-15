@@ -44,7 +44,8 @@ const routes: Routes = [
     NgOptimizedImage,
   ],
   exports: [
-    RouterModule
+    RouterModule,
+    ResultComponent
   ],
   providers: [
     CheckService

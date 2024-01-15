@@ -14,6 +14,8 @@ import { ITestAllInfo } from "../interfaces/Tests/Tests/ITestAllInfo";
 import { translateBlanksFromRequest } from "../functions/blanks/translateBlanksFromRequest";
 import { StudentService } from "./student.service";
 import { IBlankWithAuthor } from "../interfaces/Tests/Blanks/IBlankWithAuthor";
+import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -51,41 +53,41 @@ export class TestService {
       )
   }
 
-  private getBlanks(pk: number) {
+  public getBlanks(pk: number): Observable<IBlankParsed[]> {
     return this._http.Get<IBlankRequest[]>(`test/${pk}/blanks`)
-      .pipe(
-        switchMap(blanks => {
-          return blanks.length > 0
-            ? forkJoin(
-            blanks
-              .map(blank => {
-                return this._student.getStudent(blank.author)
-                  .pipe(
-                    map(student => ({
-                        ...blank,
-                        author: student.name
-                      }))
-                  )}))
-            : of([])
-        }),
-        switchMap((blanks: IBlankWithAuthor[]) =>
-          this.getPatterns(pk)
-            .pipe(
-              map(patterns => translateBlanksFromRequest(blanks, patterns)
-                .sort((a, b) => {
-                  if (a.author.toLowerCase() < b.author.toLowerCase())
-                    return -1;
-                  if (a.author.toLowerCase() > b.author.toLowerCase())
-                    return 1;
-
-                  return 0;
-                }))
-            ))
-      )
+      .pipe(switchMap(blanks => this.parseBlanks(blanks)))
   }
 
-  public getTests(): Observable<ITest[]> {
-   return this._http.Get<ITest[]>("tests")
+  public parseBlanks(blanksReq: IBlankRequest[]) : Observable<IBlankParsed[]> {
+    return (blanksReq.length > 0
+            ? forkJoin(blanksReq
+                .map(blank => {
+                  return this._student.getStudent(blank.author)
+                    .pipe(
+                      map(student => ({
+                        ...blank,
+                        image: environment.backendUrl + blank.image,
+                        author: student.name
+                      }))
+                    )}))
+            : of([])
+        )
+      .pipe(
+        switchMap((blanks: IBlankWithAuthor[]) => {
+          return blanks.length > 0
+            ? this.getPatterns(blanks[0].test)
+              .pipe(
+                map(patterns => translateBlanksFromRequest(blanks, patterns)
+                  .sort((a, b) => {
+                    if (a.author.toLowerCase() < b.author.toLowerCase())
+                      return -1;
+                    if (a.author.toLowerCase() > b.author.toLowerCase())
+                      return 1;
+
+                    return 0;
+                  })))
+            : of([])
+        }))
   }
   
   public getPatterns(pkTest: number) : Observable<IPatternParsed[]> {

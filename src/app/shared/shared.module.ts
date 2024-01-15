@@ -11,6 +11,8 @@ import { PhotoComponent } from './components/photo/photo.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { ActiveDirective } from "./directives/active.directive";
+import { BlankViewComponent } from './components/blank-view/blank-view.component';
+import { BlankDetailComponent } from './components/blank-detail/blank-detail.component';
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import { ActiveDirective } from "./directives/active.directive";
     PhotoComponent,
     ErrorComponent,
     ConfirmComponent,
+    BlankViewComponent,
+    BlankDetailComponent,
   ],
   exports: [
     FooterComponent,
@@ -35,6 +39,7 @@ import { ActiveDirective } from "./directives/active.directive";
     PhotoComponent,
     ErrorComponent,
     ConfirmComponent,
+    BlankViewComponent,
   ],
   imports: [
     CommonModule,

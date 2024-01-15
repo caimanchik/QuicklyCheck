@@ -22,7 +22,7 @@ export class HttpService {
       withCredentials?: boolean;
     } = {withCredentials: true}
   ): Observable<TGet> {
-    return this._httpClient.get<TGet>(environment.backendUrl + uri, {
+    return this._httpClient.get<TGet>(environment.backendUrl + /api/ + uri, {
       ...options,
       observe: 'response'
     }).pipe(
@@ -41,7 +41,7 @@ export class HttpService {
     } = {withCredentials: true},
     handleAuth = true
   ): Observable<TGet> {
-    return this._httpClient.post<TGet>(environment.backendUrl + uri, data, {
+    return this._httpClient.post<TGet>(environment.backendUrl + /api/ + uri, data, {
       ...options,
       observe: 'response'
     }).pipe(
@@ -60,7 +60,7 @@ export class HttpService {
     } = {withCredentials: true},
     handleAuth = true
   ): Observable<TGet> {
-    return this._httpClient.put<TGet>(environment.backendUrl + uri, data, {
+    return this._httpClient.put<TGet>(environment.backendUrl + /api/ + uri, data, {
       ...options,
       observe: 'response'
     }).pipe(
@@ -78,7 +78,7 @@ export class HttpService {
     } = {withCredentials: true},
     handleAuth = true
   ): Observable<TGet> {
-    return this._httpClient.delete<TGet>(environment.backendUrl + uri, {
+    return this._httpClient.delete<TGet>(environment.backendUrl + /api/ + uri, {
       ...options,
       observe: 'response'
     }).pipe(

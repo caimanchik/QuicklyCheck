@@ -22,6 +22,9 @@ const routes: Routes = [
       {
         path: ':id/upload', component: TestUploadComponent, pathMatch: 'full'
       },
+      {
+        path: ':id/result', component: TestResultComponent, pathMatch: 'full'
+      },
     ]
   }
 ]
