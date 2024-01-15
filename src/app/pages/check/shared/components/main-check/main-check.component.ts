@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { Router } from "@angular/router";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
+import { TempTestService } from "../../../../../shared/services/temp-test.service";
+import { take } from "rxjs";
 
 @Component({
   selector: 'app-check',
@@ -23,13 +25,25 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
   ],
 })
 export class MainCheckComponent {
+  private _clicked = false
 
   constructor(
     private _router: Router,
+    private _temp: TempTestService
   ) {
   }
 
   protected redirectToVariantFilling() {
-    this._router.navigate(['check', 'fill'])
+    if (this._clicked)
+      return
+
+    this._clicked = true
+    this._temp.createTest()
+      .pipe(take(1))
+      .subscribe((test) => {
+        localStorage.setItem("temp", test.pk.toString())
+        this._router.navigate(['check', 'fill'])
+      })
+
   }
 }

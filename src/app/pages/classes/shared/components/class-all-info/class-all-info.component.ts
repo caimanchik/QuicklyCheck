@@ -88,4 +88,8 @@ export class ClassAllInfoComponent implements OnInit {
     localStorage.setItem(key, (!now).toString())
     this.rememberInfo[key] = !now
   }
+
+  protected renameClass() {
+    this._router.navigate(['classes', this.classInfo.pk, 'rename-class'])
+  }
 }

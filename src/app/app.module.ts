@@ -1,11 +1,10 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SharedModule} from "./shared/shared.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { ErrorService } from "./shared/services/infrastructure/error.service";
 import { TokenInterceptor } from "./shared/http-interceptors/token.interceptor";
 
 @NgModule({
@@ -25,10 +24,10 @@ import { TokenInterceptor } from "./shared/http-interceptors/token.interceptor";
       useClass: TokenInterceptor,
       multi: true
     },
-    {
-      provide: ErrorHandler,
-      useExisting: ErrorService
-    }
+    // {
+    //   provide: ErrorHandler,
+    //   useExisting: ErrorService
+    // }
   ],
   bootstrap: [AppComponent]
 })

@@ -22,9 +22,6 @@ export class TokenInterceptor implements HttpInterceptor {
       ? this.cloneWithAccessToken(request, this._cookie.getCookie('access') ?? "")
       : request.clone();
 
-    console.log(newReq.withCredentials)
-    console.log(newReq.headers.get('access'))
-
     return next.handle(newReq)
       .pipe(
         catchError(e => {

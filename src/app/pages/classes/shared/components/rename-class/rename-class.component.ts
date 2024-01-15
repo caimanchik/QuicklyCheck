@@ -1,21 +1,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ICreateClassForm } from "../../../../../shared/interfaces/Forms/ICreateClassForm";
 import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 import { ClassesService } from "../../../../../shared/services/classes.service";
+import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
-import { Router } from "@angular/router";
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
+import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  selector: 'app-rename-class',
+  templateUrl: './rename-class.component.html',
+  styleUrls: ['./rename-class.component.scss'],
+  providers: [DestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    DestroyService
-  ],
   animations: [
     trigger('appear', [
       transition(':enter',
@@ -30,35 +29,48 @@ import { Router } from "@angular/router";
     ])
   ],
 })
-export class CreateComponent implements OnInit {
+export class RenameClassComponent implements OnInit {
+
   protected createForm!: FormGroup<ICreateClassForm>
   protected numberCorrect = true
   protected letterCorrect = true
+  protected classInfo!: IClass
+
+  private classId!: number
 
   constructor(
     private _destroy: DestroyService,
     private _classes: ClassesService,
     private _cd: ChangeDetectorRef,
-    private _router: Router
+    private _router: Router,
+    private _route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
-    this.createForm = new FormGroup<ICreateClassForm>({
-      number: new FormControl<string>('', {
-        nonNullable: true
-      }),
-      letter: new FormControl<string>('', {
-        nonNullable: true
+    this.classId = +(this._route.snapshot.paramMap.get('id') ?? 0)
+    this._classes.getClassInfo(this.classId)
+      .pipe(take(1))
+      .subscribe((clasInfo) => {
+        this.createForm = new FormGroup<ICreateClassForm>({
+          number: new FormControl<string>('', {
+            nonNullable: true
+          }),
+          letter: new FormControl<string>('', {
+            nonNullable: true
+          })
+        })
+
+        this.classInfo = clasInfo
+        this._cd.markForCheck()
+
+        this.createForm.controls.number.valueChanges
+          .pipe(this._destroy.takeUntilDestroy)
+          .subscribe(() => this.isNumberCorrect())
+
+        this.createForm.controls.letter.valueChanges
+          .pipe(this._destroy.takeUntilDestroy)
+          .subscribe(() => this.isLetterCorrect())
       })
-    })
-
-    this.createForm.controls.number.valueChanges
-      .pipe(this._destroy.takeUntilDestroy)
-      .subscribe(() => this.isNumberCorrect())
-
-    this.createForm.controls.letter.valueChanges
-      .pipe(this._destroy.takeUntilDestroy)
-      .subscribe(() => this.isLetterCorrect())
   }
 
   private isFormCorrect() {
@@ -87,11 +99,12 @@ export class CreateComponent implements OnInit {
     return this.letterCorrect
   }
 
-  protected create() {
+  protected rename() {
     if (!this.isFormCorrect())
       return
 
-    this._classes.createClass({
+    this._classes.renameClass({
+      ...this.classInfo,
       number: this.createForm.controls.number.value,
       letter: this.createForm.controls.letter.value
     })

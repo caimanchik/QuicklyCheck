@@ -7,6 +7,10 @@ import { ITest } from "../interfaces/Tests/Tests/ITest";
 import { IPatternParsed } from "../interfaces/Tests/Patterns/IPatternParsed";
 import { IPatternResponse } from "../interfaces/Tests/Patterns/IPatternResponse";
 import { ITestCreate } from "../interfaces/Tests/Tests/ITestCreate";
+import { translatePatternToResponse } from "../functions/tests/translatePatternToResponse";
+import { translatePatternFromResponse } from "../functions/tests/translatePatternFromResponse";
+import { translatePatternsFromResponse } from "../functions/tests/translatePatternsFromResponse";
+import { getEmptyPattern } from "../functions/tests/getEmptyPattern";
 
 @Injectable({
   providedIn: 'root'
@@ -34,24 +38,24 @@ export class TestService {
   public getPatterns(pkTest: number) : Observable<IPatternParsed[]> {
     return this._http.Get<IPatternResponse[]>(`test/${pkTest}/patterns`)
       .pipe(
-        map(patterns => this.translatePatternsFromResponse(patterns, pkTest))
+        map(patterns => translatePatternsFromResponse(patterns, pkTest))
       )
   }
 
   public updatePattern(pattern: IPatternParsed, pkTest: number): Observable<IPatternParsed> {
     if (pattern.pk) {
-      const patternResponse = this.translatePatternToResponse(pattern)
+      const patternResponse = translatePatternToResponse(pattern)
 
       if (patternResponse.pattern.length !== 0)
-        return this._http.Put<IPatternResponse, IPatternResponse>(`pattern/${pattern.pk}`, this.translatePatternToResponse(pattern))
-          .pipe(map(resp => this.translatePatternFromResponse(resp)))
+        return this._http.Put<IPatternResponse, IPatternResponse>(`pattern/${pattern.pk}`, translatePatternToResponse(pattern))
+          .pipe(map(resp => translatePatternFromResponse(resp)))
       else
         return this._http.Delete<null>(`pattern/${pattern.pk}`)
-          .pipe(map(() => this.getEmptyPattern(pkTest, pattern.num)))
+          .pipe(map(() => getEmptyPattern(pkTest, pattern.num)))
     }
 
-    return this._http.Post<IPatternResponse, IPatternResponse>(`test/${pkTest}/patterns`, this.translatePatternToResponse(pattern))
-      .pipe(map(resp => this.translatePatternFromResponse(resp)))
+    return this._http.Post<IPatternResponse, IPatternResponse>(`test/${pkTest}/patterns/`, translatePatternToResponse(pattern))
+      .pipe(map(resp => translatePatternFromResponse(resp)))
   }
 
   public getClassTests(classId: number) {
@@ -60,42 +64,5 @@ export class TestService {
 
   public createTest(test: ITestCreate) {
     return this._http.Post<ITestCreate, ITest>(`class/${test.grade}/tests/`, test)
-  }
-
-  private translatePatternToResponse(pattern: IPatternParsed): IPatternResponse {
-    return {
-      ...pattern,
-      pattern: pattern.pattern.filter(e => e >= 0).join(',')
-    }
-  }
-
-  private translatePatternsFromResponse(patterns: IPatternResponse[], pkTest: number): IPatternParsed[] {
-    const result = Array<IPatternParsed>(8)
-
-    for (let i = 0; i < 8; i++)
-      result[i] = this.getEmptyPattern(pkTest, i + 1)
-
-    patterns.forEach(pattern => result[pattern.num - 1] = this.translatePatternFromResponse(pattern))
-
-    return result
-  }
-
-  private translatePatternFromResponse(pattern: IPatternResponse): IPatternParsed {
-    const elements = pattern.pattern.split(',');
-
-    return {
-      ...pattern,
-      pattern: elements
-        .map(e => parseInt(e === '' ? '0' : e))
-        .concat(Array<number>(40 - elements.length).fill(-1))
-    }
-  }
-
-  private getEmptyPattern(test: number, num: number): IPatternParsed {
-    return {
-      test,
-      num,
-      pattern: Array<number>(40).fill(-1)
-    }
   }
 }
