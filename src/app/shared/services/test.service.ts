@@ -27,16 +27,6 @@ export class TestService {
     private _student: StudentService
   ) { }
 
-  // public getBlank(pk: number): Observable<IBlankParsed> {
-  //   return this._http.Get<IBlankRequest>(`blank/${pk}`)
-  //     .pipe(
-  //       map(blank => ({
-  //           ...blank,
-  //           answers: blank.answers.split(',').map(e => parseInt(e === '' ? '0' : e))
-  //       }))
-  //     )
-  // }
-
   public getTest(pk: number): Observable<ITest> {
     return this._http.Get<ITest>(`test/${pk}`)
   }
@@ -53,9 +43,18 @@ export class TestService {
       )
   }
 
-  public getBlanks(pk: number): Observable<IBlankParsed[]> {
-    return this._http.Get<IBlankRequest[]>(`test/${pk}/blanks`)
+  public getBlanks(pkTest: number): Observable<IBlankParsed[]> {
+    return this._http.Get<IBlankRequest[]>(`test/${pkTest}/blanks`)
       .pipe(switchMap(blanks => this.parseBlanks(blanks)))
+  }
+
+  public getBlank(pk: number): Observable<IBlankParsed> {
+    return this._http.Get<IBlankRequest>(`blank/${pk}`)
+      .pipe(
+        map(e => [e]),
+        switchMap(blanks => this.parseBlanks(blanks)),
+        map(blanks => blanks[0])
+      )
   }
 
   public parseBlanks(blanksReq: IBlankRequest[]) : Observable<IBlankParsed[]> {
@@ -123,5 +122,9 @@ export class TestService {
 
   public deleteTest(testPk: number) {
     return this._http.Delete<void>(`test/${testPk}`)
+  }
+
+  public deleteBlank(blankPk: number) {
+    return this._http.Delete<void>(`blank/${blankPk}`)
   }
 }

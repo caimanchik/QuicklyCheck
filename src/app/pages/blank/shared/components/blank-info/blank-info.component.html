@@ -1,0 +1,14 @@
+<ng-container *ngIf="view">
+    <div class="blank" @appear>
+        <div class="blank__wrapper">
+            <app-blank-view
+                    [view]="view"
+                    (showClick)="toggleShow()"
+            ></app-blank-view>
+        </div>
+
+        <div class="blank__buttons">
+            <app-button (clickEvent)="goPrev()">назад</app-button>
+        </div>
+    </div>
+</ng-container>

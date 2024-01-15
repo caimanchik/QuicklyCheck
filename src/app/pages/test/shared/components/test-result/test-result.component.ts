@@ -2,17 +2,15 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, EmbeddedViewRef,
-  OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import { CheckService } from "../../../../../shared/services/check.service";
 import { take } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
-import { TestService } from "../../../../../shared/services/test.service";
 import { IBlankParsed } from "../../../../../shared/interfaces/Tests/Blanks/IBlankParsed";
 import { IBlankView } from "../../../../../shared/interfaces/Views/IBlankView";
 
@@ -49,12 +47,12 @@ export class TestResultComponent implements AfterViewInit {
   constructor(
     private _check: CheckService,
     private _route: ActivatedRoute,
-    private _test: TestService,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _router: Router
   ) { }
 
   public ngAfterViewInit(): void {
-    this._test.getBlanks(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    this._check.checkBlanks(+(this._route.snapshot.paramMap.get('id') ?? 0))
       .pipe(take(1))
       .subscribe(blanks => {
         this.blanks = blanks
@@ -98,5 +96,9 @@ export class TestResultComponent implements AfterViewInit {
     }
 
     this._view.markForCheck()
+  }
+
+  protected goToTests() {
+    this._router.navigate(['test', +(this._route.snapshot.paramMap.get('id') ?? 0)])
   }
 }

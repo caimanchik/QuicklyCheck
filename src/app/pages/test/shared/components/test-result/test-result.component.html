@@ -1,4 +1,3 @@
-
 <div class="result">
     <div class="result__wrapper">
 
@@ -9,6 +8,11 @@
     </div>
 </div>
 
+<ng-container *ngIf="blanks">
+    <div class="result__button" @appear>
+        <app-button (clickEvent)="goToTests()">Назад</app-button>
+    </div>
+</ng-container>
 
 <ng-template #blank let-view='view'>
     <app-blank-view

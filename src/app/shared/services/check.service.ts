@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of, switchMap, tap, zip } from "rxjs";
+import { map, Observable, of, switchMap, zip } from "rxjs";
 import { HttpService } from "./infrastructure/http.service";
-import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
 import { TestService } from "./test.service";
 
@@ -61,6 +60,7 @@ export class CheckService {
     const data = new FormData()
 
     this.blanks.forEach(blank => data.append("images", blank, blank.name))
+    this.clearBlanks()
 
     return this._http.Post<FormData, IBlankRequest[]>(`test/${pkTest}/blanks/`, data)
       .pipe(

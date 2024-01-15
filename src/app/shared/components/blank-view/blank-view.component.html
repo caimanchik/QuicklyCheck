@@ -3,15 +3,17 @@
         <div class="view__wrapper">
 
             <div class="view__main view-main">
-                
-                <div class="view-main__arrows">
-                    <button type="button" class="view-main__arrow" (click)="swipe(-1)">
-                        <img src="assets/images/icons/arrow_pink.svg" alt="">
-                    </button>
-                    <button type="button" class="view-main__arrow" (click)="swipe(1)">
-                        <img src="assets/images/icons/arrow_pink.svg" alt="">
-                    </button>
-                </div>
+
+                <ng-container *ngIf="view.multi">
+                    <div class="view-main__arrows">
+                        <button type="button" class="view-main__arrow" (click)="swipe(-1)">
+                            <img src="assets/images/icons/arrow_pink.svg" alt="">
+                        </button>
+                        <button type="button" class="view-main__arrow" (click)="swipe(1)">
+                            <img src="assets/images/icons/arrow_pink.svg" alt="">
+                        </button>
+                    </div>
+                </ng-container>
                 
                 <div class="view-main__title">
                     <app-title>РЕЗУЛЬТАТЫ ПРОВЕРКИ</app-title>

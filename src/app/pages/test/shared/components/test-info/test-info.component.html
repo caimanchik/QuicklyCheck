@@ -31,7 +31,11 @@
                                     <span>{{ i + 1 }}.</span>
                                 </div>
 
-                                <button type="button" class="test-list__author">
+                                <button
+                                        type="button"
+                                        class="test-list__author"
+                                        (click)="showBlank(blank.pk)"
+                                >
                                     <span>{{ blank.author }}</span>
                                 </button>
 
@@ -39,7 +43,7 @@
                                     {{ blank.correctCount }}/{{ blank.answers.length }}
                                 </div>
 
-                                <button type="button" class="test-list__delete">
+                                <button type="button" class="test-list__delete" (click)="deleteBlank(i)">
                                     <img src="assets/images/icons/deleteGrey.svg" alt="">
                                     <img src="assets/images/icons/delete.svg" alt="">
                                 </button>

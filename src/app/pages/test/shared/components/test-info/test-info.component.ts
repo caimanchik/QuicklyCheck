@@ -68,4 +68,27 @@ export class TestInfoComponent implements OnInit {
   protected checkMore() {
     this._router.navigate(['/', 'test', this.test.pk, 'upload'])
   }
+
+  protected deleteBlank(i: number) {
+    const blank = this.test.blanks[i]
+    this._confirm.createConfirm({
+      message: `Вы действительно хотите удалить бланк ученика "${blank.author}"?`,
+      buttonText: 'удалить'
+    })
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
+
+        this._test.deleteBlank(blank.pk)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.test.blanks.splice(i, 1)
+            this._cd.markForCheck()
+          })
+      })
+  }
+
+  protected showBlank(pk: number) {
+    this._router.navigate(['blank', pk])
+  }
 }

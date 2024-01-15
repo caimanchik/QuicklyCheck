@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'test',
     loadChildren: () => import('./pages/test/test.module').then(m => m.TestModule),
   },
+  {
+    path: 'blank',
+    loadChildren: () => import('./pages/blank/blank.module').then(m => m.BlankModule),
+  },
 ];
 
 @NgModule({

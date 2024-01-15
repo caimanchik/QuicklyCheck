@@ -62,7 +62,7 @@ export class TestUploadComponent implements OnDestroy {
   }
 
   protected goToFill() {
-    this.needsClear = false
+    this.needsClear = true
     this._router.navigate([this._url.getPreviousUrl()])
   }
 
