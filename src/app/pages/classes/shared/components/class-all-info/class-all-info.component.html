@@ -64,7 +64,9 @@
                         <div class="class__list class-list">
                             <h2 class="class-list__title subtitle">
                                 <span>Ученики</span>
-                                <app-button>Изменить</app-button>
+                                <app-button
+                                        (clickEvent)="createStudent()"
+                                >Добавить</app-button>
                             </h2>
                             <ul class="class-list__list">
                                 <ng-container
@@ -81,12 +83,9 @@
                                 </ng-container>
                             </ul>
 
-                            <div class="class-list__button">
-                                <app-button
-                                        [filled]="true"
-                                        (clickEvent)="createStudent()"
-                                >Добавить</app-button>
-                            </div>
+<!--                            <div class="class-list__button">-->
+<!--                                -->
+<!--                            </div>-->
                         </div>
                     </div>
 
