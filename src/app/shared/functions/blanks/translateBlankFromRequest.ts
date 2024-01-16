@@ -6,7 +6,7 @@ export function translateBlankFromRequest(blank: IBlankWithAuthor, pattern: IPat
   let answers = blank.answers
     .split(',')
     .filter((e, i) => i < pattern.pattern.length)
-    .map(e => parseInt(e))
+    .map(e => e !== '' ? parseInt(e) : -1)
     .map((answer, i) => {
       return {
         actual: answer,

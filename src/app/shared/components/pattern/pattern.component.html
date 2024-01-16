@@ -10,18 +10,36 @@
 
                 <div class="pattern-vars__list">
 
-                    <ng-container *ngFor="let varI of [1, 2, 3, 4, 5, 6, 7, 8]">
-                        <button
-                                type="button"
-                                class="pattern-vars__item"
-                                (click)="changePattern(varI)"
-                                [ngClass]="{active: selected + 1 === varI, filled: filled[varI - 1]}"
-                        >
-                            <div class="pattern-vars__item-wrap">
-                                <span>{{ varI }}</span>
-                            </div>
-                        </button>
-                    </ng-container>
+                    <div class="pattern-vars__item-wrap1">
+                        <ng-container *ngFor="let varI of [1, 2, 3, 4, 5]">
+                            <button
+                                    type="button"
+                                    class="pattern-vars__item"
+                                    (click)="changePattern(varI)"
+                                    [ngClass]="{active: selected + 1 === varI, filled: filled[varI - 1]}"
+                            >
+                                <div class="pattern-vars__item-wrap">
+                                    <span>{{ varI }}</span>
+                                </div>
+                            </button>
+                        </ng-container>
+                    </div>
+                    <div class="pattern-vars__item-wrap1">
+                        <ng-container *ngFor="let varI of [6, 7, 8, 9, 10]">
+                            <button
+                                    type="button"
+                                    class="pattern-vars__item"
+                                    (click)="changePattern(varI)"
+                                    [ngClass]="{active: selected + 1 === varI, filled: filled[varI - 1]}"
+                            >
+                                <div class="pattern-vars__item-wrap">
+                                    <span>{{ varI }}</span>
+                                </div>
+                            </button>
+                        </ng-container>
+                    </div>
+
+
 
                 </div>
 

@@ -51,26 +51,35 @@
 
                     </div>
                     <div class="header-links__group">
-                        <ng-container *ngIf="_auth.isLogged$ | async">
+                        <ng-container *ngIf="_auth.isLogged$ | async; else check">
                             <a
                                     class="header-links__item"
                                     (click)="navigate('classes')"
                             >
                                 мои классы
                             </a>
+                            <ng-container *ngTemplateOutlet="getBlank"></ng-container>
                         </ng-container>
-                        <a
-                                class="header-links__item"
-                                (click)="navigate('getBlank')"
-                        >
-                            скачать бланк
-                        </a>
-                        <a
-                                class="header-links__item"
-                                (click)="navigate('check')"
-                        >
-                            проверить тест
-                        </a>
+
+                        <ng-template #check>
+                            <ng-container *ngTemplateOutlet="getBlank"></ng-container>
+                            <a
+                                    class="header-links__item"
+                                    (click)="navigate('check')"
+                            >
+                                проверить тест
+                            </a>
+                        </ng-template>
+
+
+                        <ng-template #getBlank>
+                            <a
+                                    class="header-links__item"
+                                    (click)="navigate('getBlank')"
+                            >
+                                скачать бланк
+                            </a>
+                        </ng-template>
                     </div>
 
                     <div class="header-links__group">

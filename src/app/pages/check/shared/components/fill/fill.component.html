@@ -1,14 +1,11 @@
 <section class="fill">
 
-    <div class="fill__container container">
-        <div class="fill__wrapper">
-            <app-pattern
-                    (nextClicked)="clickEvent()"
-                    (patternChanges)="updatePattern($event)"
-                    [patterns]="patterns"
-            ></app-pattern>
-        </div>
-
+    <div class="fill__wrapper">
+        <app-pattern
+                (nextClicked)="clickEvent()"
+                (patternChanges)="updatePattern($event)"
+                [patterns]="patterns"
+        ></app-pattern>
     </div>
 
 </section>

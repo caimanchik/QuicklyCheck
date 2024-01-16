@@ -9,6 +9,11 @@
   border-radius: 20px;
   transition: all ease .3s;
   z-index: 5;
+  text-align: center;
+
+  @media(max-width:500px){
+    padding: .8rem 1.8rem;
+  }
 
   &__error {
     font-size: 1.3rem;
