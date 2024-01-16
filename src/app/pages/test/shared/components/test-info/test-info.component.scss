@@ -12,6 +12,14 @@
     background: #F6F6F6;
     box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
     padding: 2.5rem 3.5rem;
+
+    @media(max-width:700px){
+      padding: 2rem 2.9rem;
+    }
+
+    @media(max-width:560px) {
+      padding: 2rem 2rem;
+    }
   }
 
   &__title-wrap {
@@ -19,8 +27,6 @@
   }
 
   &__title {
-    display: flex;
-    justify-content: space-between;
   }
 
   &__list-wrap {
@@ -28,12 +34,21 @@
     margin-top: 2.5rem;
     .test__block {
       flex: 0 0 80%;
+
+      @media(max-width:880px){
+        flex: 0 0 100%;
+      }
     }
   }
 
   &__subtitle {
     display: flex;
     align-items: center;
+
+    @media(max-width:550px){
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
 
     & span {
       @extend %grad;
@@ -52,14 +67,43 @@
   }
 }
 
+.test-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media(max-width:600px){
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__item {
+    &:first-child {
+      @extend %grad;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+}
+
 .test-list {
   margin-top: 2.5rem;
 
   &__item {
     display: flex;
-    font-size: 2.14rem;
     align-items: center;
     margin-top: 1rem;
+    font-size: 1.8rem;
+
+    @media(max-width:560px){
+      font-size: 1.4rem;
+    }
+
+    @media(max-width:460px){
+      font-size: 1.3rem;
+    }
 
     &:first-child {
       margin-top: 0;
@@ -89,11 +133,15 @@
   }
 
   &__number {
-    flex: 0 0 3.4rem;
+    flex: 0 0 2.7rem;
     display: flex;
     justify-content: flex-end;
     & span {
       @extend %grad;
+    }
+
+    @media(max-width:560px) {
+      flex: 0 0 2rem;
     }
   }
 
@@ -101,9 +149,26 @@
     flex-grow: 1;
     display: flex;
     margin-left: 1.5rem;
+
+    @media(max-width:600px){
+      margin-left: 1rem;
+    }
+
+    @media(max-width:500px){
+      margin-left: .8rem;
+    }
+
     & span {
-      font-size: 2.14rem;
       line-height: 1.2em;
+      font-size: 1.8rem;
+
+      @media(max-width:560px){
+        font-size: 1.4rem;
+      }
+
+      @media(max-width:460px){
+        font-size: 1.3rem;
+      }
     }
   }
 
@@ -128,6 +193,10 @@
       &:last-child {
         opacity: 0;
       }
+    }
+
+    @media(max-width:700px){
+      margin-left: .8rem;
     }
   }
 }
