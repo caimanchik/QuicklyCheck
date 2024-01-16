@@ -4,16 +4,32 @@
 .card {
   &__wrapper {
     padding: 2.75rem 1.8rem;
-    border: 4.045px solid rgba(233, 58, 210, 0.75);
+    border: .34rem solid rgba(233, 58, 210, 0.75);
     border-radius: 35px;
     background: #F6F6F6;
     box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
+
+    @media(max-width:700px){
+      padding: 2.3rem 1.5rem;
+    }
+
+    @media(max-width:550px) {
+      padding: 3rem 2.5rem;
+    }
+
+    @media(max-width:430px){
+      padding: 2.5rem 2rem;
+    }
   }
 
   &__row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media(max-width:550px) {
+      flex-wrap: wrap;
+    }
   }
 
   &__title {
@@ -24,11 +40,31 @@
 
   &__buttons {
     display: flex;
+
+    @media(max-width:550px){
+      flex: 0 0 100%;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      //justify-content: space-between;
+    }
   }
 
   &__button {
     &:last-child {
       margin-left: 3.5rem;
+
+      @media(max-width:800px){
+        margin-left: 2.5rem;
+      }
+
+      @media(max-width:650px){
+        margin-left: 1.7rem;
+      }
+
+      @media(max-width:550px){
+        margin-left: 0;
+      }
     }
   }
 }
