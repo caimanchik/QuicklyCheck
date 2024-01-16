@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of, switchMap, zip } from "rxjs";
+import { map, Observable, of, switchMap, tap, zip } from "rxjs";
 import { HttpService } from "./infrastructure/http.service";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
 import { TestService } from "./test.service";
+import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
 
 @Injectable()
 export class CheckService {
@@ -56,15 +57,24 @@ export class CheckService {
     this.blanks = []
   }
 
-  public checkBlanks(pkTest: number): Observable<any> {
+  public checkBlanks(pkTest: number, temporary: boolean = false): Observable<any> {
     const data = new FormData()
 
     this.blanks.forEach(blank => data.append("images", blank, blank.name))
-    this.clearBlanks()
 
-    return this._http.Post<FormData, IBlankRequest[]>(`test/${pkTest}/blanks/`, data)
+    return this._http.Post<FormData, IBlankRequest[]>(
+      temporary ? `temp/test/${pkTest}/blanks/` : `test/${pkTest}/blanks/`,
+      data,
+      {withCredentials: !temporary}
+    )
       .pipe(
-        switchMap(blanks => this._test.parseBlanks(blanks))
+        tap(() => this.clearBlanks()),
+        switchMap(blanks => this._test.parseBlanks(blanks, temporary))
       )
+  }
+
+  public getBlanks(pkTest: number): Observable<IBlankParsed[]> {
+    return this._http.Get<IBlankRequest[]>(`temp/test/${pkTest}/blanks`, {withCredentials: false})
+      .pipe(switchMap(blanks => this._test.parseBlanks(blanks, true)))
   }
 }

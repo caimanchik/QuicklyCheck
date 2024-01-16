@@ -10,16 +10,15 @@
             </div>
 
             <div class="confirm__buttons">
-
-                <app-button (clickEvent)="confirm(true)">
-                    {{ message.buttonText }}
-                </app-button>
                 <button
                         class="confirm__button"
                         (click)="confirm(false)"
                 >
                     Отмена
                 </button>
+                <app-button (clickEvent)="confirm(true)">
+                    {{ message.buttonText }}
+                </app-button>
             </div>
         </div>
     </section>

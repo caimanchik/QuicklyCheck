@@ -57,24 +57,24 @@ export class TestService {
       )
   }
 
-  public parseBlanks(blanksReq: IBlankRequest[]) : Observable<IBlankParsed[]> {
+  public parseBlanks(blanksReq: IBlankRequest[], temporary: boolean = false) : Observable<IBlankParsed[]> {
     return (blanksReq.length > 0
             ? forkJoin(blanksReq
                 .map(blank => {
-                  return this._student.getStudent(blank.author)
+                  return !temporary ? this._student.getStudent(blank.author)
                     .pipe(
                       map(student => ({
                         ...blank,
                         image: environment.backendUrl + blank.image,
                         author: student.name
                       }))
-                    )}))
+                    ) : of({...blank, image: environment.backendUrl + blank.image, author: blank.id_blank})}))
             : of([])
         )
       .pipe(
         switchMap((blanks: IBlankWithAuthor[]) => {
           return blanks.length > 0
-            ? this.getPatterns(blanks[0].test)
+            ? this.getPatterns(blanks[0].test, temporary)
               .pipe(
                 map(patterns => translateBlanksFromRequest(blanks, patterns)
                   .sort((a, b) => {
@@ -89,8 +89,8 @@ export class TestService {
         }))
   }
   
-  public getPatterns(pkTest: number) : Observable<IPatternParsed[]> {
-    return this._http.Get<IPatternResponse[]>(`test/${pkTest}/patterns`)
+  public getPatterns(pkTest: number, temporary: boolean = false) : Observable<IPatternParsed[]> {
+    return this._http.Get<IPatternResponse[]>(temporary ? `temp/test/${pkTest}/patterns` : `test/${pkTest}/patterns`, {withCredentials: !temporary})
       .pipe(
         map(patterns => translatePatternsFromResponse(patterns, pkTest))
       )

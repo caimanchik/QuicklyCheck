@@ -62,7 +62,17 @@ export class TestInfoComponent implements OnInit {
   }
 
   protected fillTest() {
-    this._router.navigate(['test', this.test.pk, 'fill'])
+    this._confirm.createConfirm({
+      message: 'При редактировании теста меняются все оценки уже проверенных работ. Вы точно хотите продолжить?',
+      buttonText: 'продолжить'
+    })
+      .pipe(take(1))
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
+
+        this._router.navigate(['test', this.test.pk, 'fill'])
+      })
   }
 
   protected checkMore() {
