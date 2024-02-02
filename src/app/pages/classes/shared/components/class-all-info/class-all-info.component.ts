@@ -5,7 +5,7 @@ import { take } from "rxjs";
 import { IClassAllInfo } from "../../../../../shared/interfaces/Classes/IClassAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
-import { IRememberInfo } from "../../../../../shared/interfaces/IRememberInfo";
+import { IRememberInfo } from "../../../../../shared/interfaces/Application/IRememberInfo";
 
 @Component({
   selector: 'app-class-all-info',

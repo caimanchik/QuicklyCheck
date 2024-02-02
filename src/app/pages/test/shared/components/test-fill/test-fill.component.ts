@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
-import { TestService } from "../../../../../shared/services/test.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take } from "rxjs";
 import { IPatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/IPatternParsed";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
+import { PatternService } from "../../../../../shared/services/pattern.service";
 
 @Component({
   selector: 'app-test-fill',
@@ -31,15 +31,15 @@ export class TestFillComponent implements OnInit {
   protected patterns!: IPatternParsed[]
 
   constructor(
-    private _test: TestService,
     private _route: ActivatedRoute,
     private _cd: ChangeDetectorRef,
     private _error: ErrorService,
-    private _router: Router
+    private _router: Router,
+    private _pattern: PatternService
   ) { }
 
   public ngOnInit(): void {
-    this._test.getPatterns(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    this._pattern.getPatterns(+(this._route.snapshot.paramMap.get('id') ?? 0))
       .pipe(take(1))
       .subscribe(patterns => {
         this.patterns = patterns
@@ -57,7 +57,7 @@ export class TestFillComponent implements OnInit {
   }
 
   protected updatePattern(pattern: IPatternParsed) {
-    this._test.updatePattern(pattern)
+    this._pattern.updatePattern(pattern)
       .pipe(take(1))
       .subscribe(updated => {
         this.patterns[updated.num - 1] = updated

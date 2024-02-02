@@ -15,6 +15,7 @@ import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
+import { BlankService } from "../../../../../shared/services/blank.service";
 
 @Component({
   selector: 'app-result',
@@ -50,12 +51,13 @@ export class ResultComponent implements AfterViewInit {
     private _cd: ChangeDetectorRef,
     private _router: Router,
     private _checkService: CheckService,
+    private _blank: BlankService,
     private _confirm: ConfirmService
   ) { }
 
   public ngAfterViewInit(): void {
     if (localStorage.getItem('checked')) {
-      this._checkService.getBlanks(+(localStorage.getItem('temp') ?? 0))
+      this._blank.getBlanks(+(localStorage.getItem('temp') ?? 0), true)
         .pipe(take(1))
         .subscribe(blanks => {
           this.blanks = blanks
@@ -124,7 +126,5 @@ export class ResultComponent implements AfterViewInit {
 
         this._router.navigate(['check'])
       })
-
   }
-
 }

@@ -6,6 +6,7 @@ import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITest
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
+import { BlankService } from "../../../../../shared/services/blank.service";
 
 @Component({
   selector: 'app-test-info',
@@ -31,6 +32,7 @@ export class TestInfoComponent implements OnInit {
 
   constructor(
     private _test: TestService,
+    private _blank: BlankService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _cd: ChangeDetectorRef,
@@ -89,7 +91,7 @@ export class TestInfoComponent implements OnInit {
         if (!confirmed)
           return
 
-        this._test.deleteBlank(blank.pk)
+        this._blank.deleteBlank(blank.pk)
           .pipe(take(1))
           .subscribe(() => {
             this.test.blanks.splice(i, 1)

@@ -303,6 +303,10 @@
     display: flex;
     font-size: 1.4rem;
     margin-top: .8rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
   &__number {

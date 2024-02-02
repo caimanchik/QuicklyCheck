@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of, switchMap, tap, zip } from "rxjs";
 import { HttpService } from "./infrastructure/http.service";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
-import { TestService } from "./test.service";
-import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
+import { BlankService } from "./blank.service";
 
 @Injectable()
 export class CheckService {
@@ -12,7 +11,7 @@ export class CheckService {
 
   constructor(
     private _http: HttpService,
-    private _test: TestService
+    private _blank: BlankService
   ) { }
 
   public addBlanks(images: FileList): Observable<string[]> {
@@ -63,18 +62,13 @@ export class CheckService {
     this.blanks.forEach(blank => data.append("images", blank, blank.name))
 
     return this._http.Post<FormData, IBlankRequest[]>(
-      temporary ? `temp/test/${pkTest}/blanks/` : `test/${pkTest}/blanks/`,
+      (temporary ? "test/" : "") + `test/${pkTest}/blanks/`,
       data,
       {withCredentials: !temporary}
     )
       .pipe(
         tap(() => this.clearBlanks()),
-        switchMap(blanks => this._test.parseBlanks(blanks, temporary))
+        switchMap(blanks => this._blank.parseBlanks(blanks, temporary))
       )
-  }
-
-  public getBlanks(pkTest: number): Observable<IBlankParsed[]> {
-    return this._http.Get<IBlankRequest[]>(`temp/test/${pkTest}/blanks`, {withCredentials: false})
-      .pipe(switchMap(blanks => this._test.parseBlanks(blanks, true)))
   }
 }

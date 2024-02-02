@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  // backendUrl: "https://quicklycheck.ru/api/"
+  // backendUrl: "https://quicklycheck.ru"
   backendUrl: "http://127.0.0.1:8000",
 };
 

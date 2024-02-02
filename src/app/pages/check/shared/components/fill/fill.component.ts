@@ -5,8 +5,8 @@ import { take } from "rxjs";
 import { IPatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/IPatternParsed";
 import { Router } from "@angular/router";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
-import { TempTestService } from "../../../../../shared/services/temp-test.service";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
+import { PatternService } from "../../../../../shared/services/pattern.service";
 
 @Component({
   selector: 'app-fill',
@@ -33,7 +33,7 @@ export class FillComponent implements OnInit {
   private pkTest!: number
 
   constructor(
-    private _testService: TempTestService,
+    private _pattern: PatternService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
     private _error: ErrorService
@@ -49,7 +49,7 @@ export class FillComponent implements OnInit {
     }
     this.pkTest = +pk
 
-    this._testService.getPatterns(this.pkTest)
+    this._pattern.getPatterns(this.pkTest, true)
       .pipe(
         take(1)
       )
@@ -68,7 +68,7 @@ export class FillComponent implements OnInit {
   }
 
   protected updatePattern(pattern: IPatternParsed) {
-    this._testService.updatePattern(pattern, this.pkTest)
+    this._pattern.updatePattern(pattern, true)
       .pipe(take(1))
       .subscribe(newPattern => {
         this.patterns[newPattern.num - 1] = newPattern

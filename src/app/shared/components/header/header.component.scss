@@ -31,195 +31,106 @@
   &__blur {
     opacity: 0;
     pointer-events: none;
+
     width: 100vw;
     height: 100vh;
     position: fixed;
     background-color: rgba(0, 0, 0, .25);
     z-index: 3;
+    transition: all ease .3s;
 
     &.navOpened {
       pointer-events: all;
       opacity: 1;
     }
   }
+  @media(max-width:660px){
+    .header-links {
+      position: fixed;
+      left: -100%;
+      top: 0;
+      display: block;
+      height: 100vh;
+      background-color: $bgcolor;
+      z-index: 3;
+      margin-left: 0;
+      padding-top: 9.2rem;
 
-  &.notLogged {
-    @media(max-width:660px){
-      .header-links {
-        position: fixed;
-        left: -100%;
-        top: 0;
+      transition: all ease .2s;
+
+      &__group {
+        padding: 0 20px;
         display: block;
-        height: 100vh;
-        background-color: $bgcolor;
-        z-index: 3;
-        margin-left: 0;
-        padding-top: 9.2rem;
+      }
 
-        transition: all ease .2s;
+      &__item {
+        margin: 1.5rem 0 0;
+        padding-right: 10rem;
+        display: block;
 
-        &__group {
-          padding: 0 20px;
-          display: block;
-        }
-
-        &__item {
-          margin: 1.5rem 0 0;
-          padding-right: 10rem;
-          display: block;
-
-          &:first-child {
-            margin-top: 0;
-          }
-        }
-
-        &__decor {
-          display: block;
-          position: relative;
-          width: 100%;
-
-          &::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: -3rem;
-            width: calc(100% - 40px);
-            height: 2px;
-            border-radius: 2px;
-            background-color: rgba(136, 74, 206, 0.8);
-          }
-        }
-
-        &.navOpened {
-          left: 0;
+        &:first-child {
+          margin-top: 0;
         }
       }
 
-      .header-logo {
+      &__account {
+        margin-top: 1rem;
+        display: inline-block;
+        cursor: pointer;
+
+        & img {
+          cursor: pointer;
+        }
+      }
+
+      &__decor {
+        display: block;
         position: relative;
-        left: 50%;
-        top: 0;
-        transform: translateX(-50%);
-        transition: all ease .3s;
+        width: 100%;
 
-        &.navOpened {
-          left: 35px;
-          transform: none;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          top: -3rem;
+          width: calc(100% - 40px);
+          height: 2px;
+          border-radius: 2px;
+          background-color: rgba(136, 74, 206, 0.8);
         }
       }
 
-      .header {
-        &__button {
-          display: inline-block;
-          top: 0;
-          margin-top: 1.5rem;
-        }
-
-        &__row {
-
-
-          &.navOpened {
-
-          }
-        }
-      }
-
-      .header-burger {
-        display: block;
+      &.navOpened {
+        left: 0;
       }
     }
-  }
 
-  &.logged {
-    @media(max-width:660px){
-      .header-links {
-        position: fixed;
-        left: -100%;
-        top: 0;
-        display: block;
-        height: 100vh;
-        background-color: $bgcolor;
-        z-index: 3;
-        margin-left: 0;
-        padding-top: 9.2rem;
+    .header-logo {
+      position: relative;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      transition: all ease .3s;
 
-        transition: all ease .2s;
+      &.navOpened {
+        left: 35px;
+        transform: none;
+      }
+    }
 
-        &__group {
-          padding: 0 20px;
-          display: block;
-        }
+    .header {
+      &__row {
 
-        &__item {
-          margin: 1.5rem 0 0;
-          padding-right: 10rem;
-          display: block;
-
-          &:first-child {
-            margin-top: 0;
-          }
-        }
-
-        &__account {
-          margin-top: 1rem;
-          display: inline-block;
-          cursor: pointer;
-
-          & img {
-            cursor: pointer;
-          }
-        }
-
-        &__decor {
-          display: block;
-          position: relative;
-          width: 100%;
-
-          &::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: -3rem;
-            width: calc(100% - 40px);
-            height: 2px;
-            border-radius: 2px;
-            background-color: rgba(136, 74, 206, 0.8);
-          }
-        }
 
         &.navOpened {
-          left: 0;
+
         }
       }
+    }
 
-      .header-logo {
-        position: relative;
-        left: 50%;
-        top: 0;
-        transform: translateX(-50%);
-        transition: all ease .3s;
-
-        &.navOpened {
-          left: 35px;
-          transform: none;
-        }
-      }
-
-      .header {
-        &__row {
-
-
-          &.navOpened {
-
-          }
-        }
-      }
-
-      .header-burger {
-        display: block;
-      }
+    .header-burger {
+      display: block;
     }
   }
 }
