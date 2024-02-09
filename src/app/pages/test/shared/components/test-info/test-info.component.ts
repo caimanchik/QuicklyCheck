@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TestService } from "../../../../../shared/services/test.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { take } from "rxjs";
 import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITestAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
@@ -45,14 +44,12 @@ export class TestInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     this._test.getTestAllInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(take(1))
       .subscribe(test => {
         this.test = test
         this._cd.markForCheck()
       })
 
     this._pattern.getPatterns(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(take(1))
       .subscribe(patterns => this.showCheckButton = isFilled(patterns))
   }
 
@@ -66,7 +63,6 @@ export class TestInfoComponent implements OnInit {
           return
 
         this._test.deleteTest(this.test.pk)
-          .pipe(take(1))
           .subscribe(() => this._router.navigate(['classes', this.test.grade]))
       })
   }
@@ -76,7 +72,6 @@ export class TestInfoComponent implements OnInit {
       message: 'При редактировании теста меняются все оценки уже проверенных работ. Вы точно хотите продолжить?',
       buttonText: 'продолжить'
     })
-      .pipe(take(1))
       .subscribe(confirmed => {
         if (!confirmed)
           return
@@ -100,7 +95,6 @@ export class TestInfoComponent implements OnInit {
           return
 
         this._blank.deleteBlank(blank.pk)
-          .pipe(take(1))
           .subscribe(() => {
             this.test.blanks.splice(i, 1)
             this._cd.markForCheck()

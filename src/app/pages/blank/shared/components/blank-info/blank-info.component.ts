@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { take } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { IBlankView } from "../../../../../shared/interfaces/Views/IBlankView";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -39,7 +38,6 @@ export class BlankInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     this._blank.getBlank(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(take(1))
       .subscribe(blank => {
         this.view = {
           blank,

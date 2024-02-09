@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
-import { take } from "rxjs";
 import { IPatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/IPatternParsed";
 import { Router } from "@angular/router";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
@@ -50,9 +49,6 @@ export class FillComponent implements OnInit {
     this.pkTest = +pk
 
     this._pattern.getPatterns(this.pkTest, true)
-      .pipe(
-        take(1)
-      )
       .subscribe(patterns => {
         this.patterns = patterns
         this._cd.markForCheck()
@@ -69,7 +65,6 @@ export class FillComponent implements OnInit {
 
   protected updatePattern(pattern: IPatternParsed) {
     this._pattern.updatePattern(pattern, true)
-      .pipe(take(1))
       .subscribe(newPattern => {
         this.patterns[newPattern.num - 1] = newPattern
         this._cd.markForCheck()

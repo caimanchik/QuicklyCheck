@@ -5,7 +5,6 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ICreateClassForm } from "../../../../../shared/interfaces/Forms/ICreateClassForm";
 import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 import { ClassesService } from "../../../../../shared/services/classes.service";
-import { take } from "rxjs";
 import { Router } from "@angular/router";
 
 @Component({
@@ -95,7 +94,6 @@ export class CreateComponent implements OnInit {
       number: this.createForm.controls.number.value,
       letter: this.createForm.controls.letter.value
     })
-      .pipe(take(1))
       .subscribe(createdClass => {
         this._router.navigate(['classes', createdClass.pk])
       })

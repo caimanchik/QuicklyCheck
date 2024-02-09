@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ILoginForm } from "../../shared/interfaces/Forms/ILoginForm";
 import { AuthService } from "../../shared/services/auth.service";
 import { Router } from "@angular/router";
-import { catchError, of, take, throwError } from "rxjs";
+import { catchError, of, throwError } from "rxjs";
 import { UrlService } from "../../shared/services/infrastructure/url.service";
 import { IRegistrationForm } from "../../shared/interfaces/Forms/IRegistrationForm";
 import { samePasswordValidator } from "../../shared/validators/SamePasswordValidator";
@@ -148,33 +148,15 @@ export class LoginComponent implements OnInit {
 
     this._canLogin = false
 
-    this._auth.login({
+    this.loginUser({
       username: this.loginForm.controls.email.value,
       password: this.loginForm.controls.password.value
     })
-      .pipe(
-        take(1),
-        catchError(e => {
-          if (e instanceof HttpErrorResponse && e.status === 401) {
-            this.loginError = e.error.detail
-            this._cd.markForCheck()
-          }
-          this._canLogin = true
-
-          return throwError(() => e)
-        })
-      )
-      .subscribe(successful => {
-        if (successful) {
-          this._router.navigate(this._url.getPreviousUrl().split('/'));
-        }
-      })
   }
 
   private loginUser(user: IUserLogin) {
     this._auth.login(user)
       .pipe(
-        take(1),
         catchError(e => {
           if (e instanceof HttpErrorResponse && e.status === 401) {
             this.loginError = e.error.detail
@@ -211,7 +193,6 @@ export class LoginComponent implements OnInit {
 
     this._auth.register(user)
       .pipe(
-        take(1),
         catchError(e => {
           if (e instanceof HttpErrorResponse) {
             if (e.error.detail)

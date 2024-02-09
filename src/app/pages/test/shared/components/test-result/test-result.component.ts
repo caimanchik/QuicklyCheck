@@ -53,7 +53,6 @@ export class TestResultComponent implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     this._check.checkBlanks(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(take(1))
       .subscribe(blanks => {
         this.blanks = blanks
         this.createView()

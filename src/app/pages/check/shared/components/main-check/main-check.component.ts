@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { Router } from "@angular/router";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
-import { take } from "rxjs";
 import { TestService } from "../../../../../shared/services/test.service";
 
 @Component({
@@ -39,7 +38,6 @@ export class MainCheckComponent {
 
     this._clicked = true
     this._temp.createTempTest()
-      .pipe(take(1))
       .subscribe((test) => {
         localStorage.setItem("temp", test.pk.toString())
         this._router.navigate(['check', 'fill'])

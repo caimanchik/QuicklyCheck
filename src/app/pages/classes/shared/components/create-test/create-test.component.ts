@@ -5,7 +5,6 @@ import { TestService } from "../../../../../shared/services/test.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ICreateTestForm } from "../../../../../shared/interfaces/Forms/ICreateTestForm";
 import { ActivatedRoute, Router } from "@angular/router";
-import { take } from "rxjs";
 
 @Component({
   selector: 'app-create-test',
@@ -52,7 +51,6 @@ export class CreateTestComponent implements OnInit {
       name: this.createForm.controls.name.value,
       grade: +(this._route.snapshot.paramMap.get('id') ?? 0)
     })
-      .pipe(take(1))
       .subscribe(test => {
         this._router.navigate(['test', test.pk])
       })

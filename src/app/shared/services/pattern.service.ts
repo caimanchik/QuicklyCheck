@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable } from "rxjs";
+import { map, Observable, take } from "rxjs";
 import { IPatternParsed } from "../interfaces/Tests/Patterns/IPatternParsed";
 import { IPatternResponse } from "../interfaces/Tests/Patterns/IPatternResponse";
 import { translatePatternsFromResponse } from "../functions/patterns/translatePatternsFromResponse";
@@ -22,7 +22,8 @@ export class PatternService {
       temporary ? `temp/test/${pkTest}/patterns` : `test/${pkTest}/patterns`,
       {withCredentials: !temporary})
       .pipe(
-        map(patterns => translatePatternsFromResponse(patterns, pkTest))
+        map(patterns => translatePatternsFromResponse(patterns, pkTest)),
+        take(1)
       )
   }
 
@@ -37,13 +38,17 @@ export class PatternService {
           translatePatternToResponse(pattern),
           {withCredentials: !temporary}
         )
-          .pipe(map(resp => translatePatternFromResponse(resp)))
+          .pipe(
+            map(resp => translatePatternFromResponse(resp)),
+            take(1))
       else
         return this._http.Delete<null>(
           startUri + `pattern/${pattern.pk}`,
           {withCredentials: !temporary}
         )
-          .pipe(map(() => getEmptyPattern(pattern.test, pattern.num)))
+          .pipe(
+            map(() => getEmptyPattern(pattern.test, pattern.num)),
+            take(1))
     }
 
     return this._http.Post<IPatternResponse, IPatternResponse>(
@@ -51,6 +56,8 @@ export class PatternService {
       translatePatternToResponse(pattern),
       {withCredentials: !temporary}
     )
-      .pipe(map(resp => translatePatternFromResponse(resp)))
+      .pipe(
+        map(resp => translatePatternFromResponse(resp)),
+        take(1))
   }
 }

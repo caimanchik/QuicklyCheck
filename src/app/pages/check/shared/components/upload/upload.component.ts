@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { CheckService } from "../../../../../shared/services/check.service";
-import { take } from "rxjs";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { Router } from "@angular/router";
@@ -41,7 +40,6 @@ export class UploadComponent implements OnDestroy{
 
   protected uploadImages(images: FileList) {
     this._checkService.addBlanks(images)
-      .pipe(take(1))
       .subscribe(previews => {
         this.previews = previews
         this._cd.markForCheck()

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UserService } from "../../../../../shared/services/user.service";
-import { take } from "rxjs";
 import { IUserMainInfo } from "../../../../../shared/interfaces/User/IUserMainInfo";
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -38,7 +37,6 @@ export class ProfileMainComponent implements OnInit {
 
   ngOnInit(): void {
     this._user.getUserEmail()
-      .pipe(take(1))
       .subscribe(userMainInfo => {
         this.userMainInfo = userMainInfo;
         this._cd.markForCheck()
@@ -51,7 +49,6 @@ export class ProfileMainComponent implements OnInit {
 
   protected logout() {
     this._auth.logout()
-      .pipe(take(1))
       .subscribe(() => this._router.navigate(['/']))
   }
 }

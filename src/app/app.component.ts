@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { ScrollService } from "./shared/services/infrastructure/scroll.service";
 import { AuthService } from "./shared/services/auth.service";
-import { take } from "rxjs";
 import { UrlService } from "./shared/services/infrastructure/url.service";
 
 @Component({
@@ -21,7 +20,6 @@ export class AppComponent implements OnInit {
 
   public ngOnInit() {
     this._auth.refresh()
-      .pipe(take(1))
       .subscribe()
   }
 
