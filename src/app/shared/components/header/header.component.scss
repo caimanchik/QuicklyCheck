@@ -26,6 +26,7 @@
     font-weight: 700;
     padding: .8rem 2.85rem;
     cursor: pointer;
+    display: inline-block;
   }
 
   &__blur {
@@ -45,6 +46,9 @@
     }
   }
   @media(max-width:660px){
+    .header__button {
+      margin-top: .5rem;
+    }
     .header-links {
       position: fixed;
       left: -100%;

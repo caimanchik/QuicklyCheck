@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-all": "ng serve --host 192.168.1.37",
     "build": "ng build && firebase deploy",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
