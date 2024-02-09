@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'blank',
     loadChildren: () => import('./pages/blank/blank.module').then(m => m.BlankModule),
   },
+  {
+    path: "**",
+    loadChildren: () => import('./pages/error/error.module').then(m => m.ErrorModule),
+  }
 ];
 
 @NgModule({
