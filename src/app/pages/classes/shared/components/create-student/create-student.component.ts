@@ -5,6 +5,8 @@ import { StudentService } from "../../../../../shared/services/student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ICreateStudentForm } from "../../../../../shared/interfaces/Forms/ICreateStudentForm";
+import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
+import { IStudentCreate } from "../../../../../shared/interfaces/Students/IStudentCreate";
 
 @Component({
   selector: 'app-create-student',
@@ -30,6 +32,7 @@ export class CreateStudentComponent implements OnInit {
 
   constructor(
     private _student: StudentService,
+    private _error: ErrorService,
     private _router: Router,
     private _route: ActivatedRoute
   ) { }
@@ -62,10 +65,13 @@ export class CreateStudentComponent implements OnInit {
       .filter(e => !!e)
       .join(' ')
 
-    this._student.createStudent({
+    const student: IStudentCreate = {
       name,
       grade: +(this._route.snapshot.paramMap.get('id') ?? 0)
-    })
+    }
+
+    this._student.createStudent(student)
+      .pipe(this._error.passErrorWithMessage("Не удалось создать студента", ["classes", student.grade]))
       .subscribe(created => {
         this._router.navigate(['classes', created.grade])
       })

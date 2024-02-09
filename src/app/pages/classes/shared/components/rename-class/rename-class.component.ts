@@ -4,10 +4,10 @@ import { ICreateClassForm } from "../../../../../shared/interfaces/Forms/ICreate
 import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 import { ClassesService } from "../../../../../shared/services/classes.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { take } from "rxjs";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
+import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 
 @Component({
   selector: 'app-rename-class',
@@ -41,6 +41,7 @@ export class RenameClassComponent implements OnInit {
   constructor(
     private _destroy: DestroyService,
     private _classes: ClassesService,
+    private _error: ErrorService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
     private _route: ActivatedRoute
@@ -49,6 +50,7 @@ export class RenameClassComponent implements OnInit {
   public ngOnInit(): void {
     this.classId = +(this._route.snapshot.paramMap.get('id') ?? 0)
     this._classes.getClassInfo(this.classId)
+      .pipe(this._error.passErrorWithMessage("", ["classes", this.classId]))
       .subscribe((clasInfo) => {
         this.createForm = new FormGroup<ICreateClassForm>({
           number: new FormControl<string>('', {
@@ -107,6 +109,7 @@ export class RenameClassComponent implements OnInit {
       number: this.createForm.controls.number.value,
       letter: this.createForm.controls.letter.value
     })
+      .pipe(this._error.passErrorWithMessage("не удалось переименовать класс", ["classes", this.classId]))
       .subscribe(createdClass => {
         this._router.navigate(['classes', createdClass.pk])
       })

@@ -7,7 +7,6 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { CheckService } from "../../../../../shared/services/check.service";
-import { take } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
@@ -52,6 +51,7 @@ export class TestResultComponent implements AfterViewInit {
   ) { }
 
   public ngAfterViewInit(): void {
+    //todo
     this._check.checkBlanks(+(this._route.snapshot.paramMap.get('id') ?? 0))
       .subscribe(blanks => {
         this.blanks = blanks

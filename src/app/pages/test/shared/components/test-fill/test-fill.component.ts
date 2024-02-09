@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { ActivatedRoute, Router } from "@angular/router";
-import { take } from "rxjs";
 import { IPatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/IPatternParsed";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
@@ -39,7 +38,10 @@ export class TestFillComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._pattern.getPatterns(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    const testId = +(this._route.snapshot.paramMap.get('id') ?? 0)
+
+    this._pattern.getPatterns(testId)
+      .pipe(this._error.passErrorWithMessage("Ошибка при открытии вариантов", ["test", testId]))
       .subscribe(patterns => {
         this.patterns = patterns
         this._cd.markForCheck()

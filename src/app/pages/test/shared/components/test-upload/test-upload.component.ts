@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CheckService } from "../../../../../shared/services/check.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { take } from "rxjs";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { UrlService } from "../../../../../shared/services/infrastructure/url.service";
+import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
+import { TestService } from "../../../../../shared/services/test.service";
 
 @Component({
   selector: 'app-test-upload',
@@ -25,17 +26,26 @@ import { UrlService } from "../../../../../shared/services/infrastructure/url.se
     ])
   ]
 })
-export class TestUploadComponent implements OnDestroy {
+export class TestUploadComponent implements OnDestroy, OnInit {
   protected previews!: string[]
   private needsClear = true
 
   constructor(
-    protected _checkService: CheckService,
+    private _checkService: CheckService,
+    private _test: TestService,
+    private _error: ErrorService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
     private _route: ActivatedRoute,
     private _url: UrlService
   ) { }
+
+  public ngOnInit(): void {
+    const testId = +(this._route.snapshot.paramMap.get('id') ?? 0)
+    this._test.getTest(testId)
+      .pipe(this._error.passErrorWithMessage("Не удалось открыть страницу загрузки"))
+      .subscribe()
+  }
 
   public ngOnDestroy(): void {
     if (this.needsClear)
@@ -64,5 +74,4 @@ export class TestUploadComponent implements OnDestroy {
     this.needsClear = true
     this._router.navigate([this._url.getPreviousUrl()])
   }
-
 }

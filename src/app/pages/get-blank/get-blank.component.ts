@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {transition, trigger, useAnimation} from "@angular/animations";
 import {transformOpacity} from "../../shared/animations/transform-opacity";
 
@@ -22,11 +22,7 @@ import {transformOpacity} from "../../shared/animations/transform-opacity";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GetBlankComponent implements OnInit {
+export class GetBlankComponent  {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

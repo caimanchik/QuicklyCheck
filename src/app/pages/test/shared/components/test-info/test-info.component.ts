@@ -8,6 +8,7 @@ import { ConfirmService } from "../../../../../shared/services/infrastructure/co
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { PatternService } from "../../../../../shared/services/pattern.service";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
+import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 
 @Component({
   selector: 'app-test-info',
@@ -39,17 +40,21 @@ export class TestInfoComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _cd: ChangeDetectorRef,
-    private _confirm: ConfirmService
+    private _confirm: ConfirmService,
+    private _error: ErrorService,
   ) { }
 
   public ngOnInit(): void {
-    this._test.getTestAllInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    const testId = +(this._route.snapshot.paramMap.get('id') ?? 0)
+    this._test.getTestAllInfo(testId)
+      .pipe(this._error.passErrorWithMessage("Тест не найден"))
       .subscribe(test => {
         this.test = test
         this._cd.markForCheck()
       })
 
-    this._pattern.getPatterns(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    this._pattern.getPatterns(testId)
+      .pipe(this._error.passErrorWithMessage("Тест не найден"))
       .subscribe(patterns => this.showCheckButton = isFilled(patterns))
   }
 

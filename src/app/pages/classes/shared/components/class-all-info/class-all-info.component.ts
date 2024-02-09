@@ -5,6 +5,7 @@ import { IClassAllInfo } from "../../../../../shared/interfaces/Classes/IClassAl
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { IRememberInfo } from "../../../../../shared/interfaces/Application/IRememberInfo";
+import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 
 @Component({
   selector: 'app-class-all-info',
@@ -45,6 +46,7 @@ export class ClassAllInfoComponent implements OnInit {
 
   constructor(
     private _classes: ClassesService,
+    private _error: ErrorService,
     private _route: ActivatedRoute,
     private _cd: ChangeDetectorRef,
     private _router: Router,
@@ -52,6 +54,7 @@ export class ClassAllInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     this._classes.getAllClassInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
+      .pipe(this._error.passErrorWithMessage("Данного класса не существует", ["error"]))
       .subscribe(classInfo => {
         this.classInfo = classInfo
         this._cd.markForCheck()

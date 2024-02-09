@@ -5,6 +5,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { UrlService } from "../../../../../shared/services/infrastructure/url.service";
 import { BlankService } from "../../../../../shared/services/blank.service";
+import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 
 @Component({
   selector: 'app-blank-info',
@@ -31,13 +32,16 @@ export class BlankInfoComponent implements OnInit {
   constructor(
     private _blank: BlankService,
     private _route: ActivatedRoute,
+    private _error: ErrorService,
     private _cd: ChangeDetectorRef,
     private _url: UrlService,
     private _router: Router
   ) { }
 
   public ngOnInit(): void {
-    this._blank.getBlank(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    const blankId = +(this._route.snapshot.paramMap.get('id') ?? 0)
+    this._blank.getBlank(blankId)
+      .pipe(this._error.passErrorWithMessage("Бланк не найден"))
       .subscribe(blank => {
         this.view = {
           blank,
