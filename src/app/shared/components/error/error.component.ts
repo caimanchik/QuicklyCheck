@@ -11,7 +11,7 @@ import { DestroyService } from "../../services/infrastructure/destroy.service";
 })
 export class ErrorComponent implements OnInit {
 
-  protected error: string = ''
+  protected error: string = ""
   protected visible: boolean = false
 
   constructor(

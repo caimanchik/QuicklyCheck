@@ -1,18 +1,60 @@
+@import "vars";
+@import "classes";
+
 .error {
   position: fixed;
-  padding: 1rem 2rem;
-  background-color: #DA0303;
   left: 50%;
   bottom: 0;
   transform: translate(-50%, 0);
   opacity: 0;
-  border-radius: 20px;
   transition: all ease .3s;
   z-index: 5;
   text-align: center;
+  display: flex;
+  justify-content: center;
 
   @media(max-width:500px){
     padding: .8rem 1.8rem;
+    width: 100%;
+    max-width: calc(100% - 1.5rem);
+  }
+
+  &__image-wrap {
+    width: 1rem;
+  }
+
+  &__image {
+    width: 100%;
+    padding-top: 170%;
+    position: relative;
+
+    & img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__columns {
+    display: flex;
+    align-items: center;
+    background-color: $red;
+    width: fit-content;
+    border-radius: 20px;
+    padding: 1rem 2rem;
+
+    @media(max-width:500px) {
+      padding: .8rem 1.8rem;
+    }
+  }
+
+  &__column {
+    &:last-child {
+      margin-left: 1rem;
+    }
   }
 
   &__error {

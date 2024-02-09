@@ -1,7 +1,19 @@
 <div class="error" [ngClass]="{visible}">
 
-    <div class="error__error">
-        {{ this.error }}
+    <div class="error__columns">
+        <div class="error__column">
+            <div class="error__image-wrap">
+                <div class="error__image">
+                    <img src="assets/images/icons/warning.svg" alt="Иконка предупреждения">
+                </div>
+            </div>
+        </div>
+
+        <div class="error__column">
+            <div class="error__error">
+                {{ this.error }}
+            </div>
+        </div>
     </div>
 
 </div>
