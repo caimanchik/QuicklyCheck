@@ -80,11 +80,6 @@
       &__account {
         margin-top: 1rem;
         display: inline-block;
-        cursor: pointer;
-
-        & img {
-          cursor: pointer;
-        }
       }
 
       &__decor {
@@ -314,6 +309,10 @@
         }
       }
     }
+  }
+
+  &__account {
+    cursor: pointer;
   }
 }
 

@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { AuthService } from "../../../../../shared/services/auth.service";
+import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 
 @Component({
   selector: 'app-profile-main',
@@ -30,6 +31,7 @@ export class ProfileMainComponent implements OnInit {
 
   constructor(
     private _cd: ChangeDetectorRef,
+    private _confirm: ConfirmService,
     private _user: UserService,
     private _router: Router,
     private _auth: AuthService
@@ -48,7 +50,16 @@ export class ProfileMainComponent implements OnInit {
   }
 
   protected logout() {
-    this._auth.logout()
-      .subscribe(() => this._router.navigate(['/']))
+    this._confirm.createConfirm({
+      message: "Вы действительно хотите выйти?",
+      buttonText: "выйти"
+    })
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
+
+        this._auth.logout()
+          .subscribe(() => this._router.navigate(['/']))
+      })
   }
 }
