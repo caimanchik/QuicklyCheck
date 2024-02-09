@@ -7,6 +7,8 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 import { BlankService } from "../../../../../shared/services/blank.service";
+import { PatternService } from "../../../../../shared/services/pattern.service";
+import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 
 @Component({
   selector: 'app-test-info',
@@ -29,10 +31,12 @@ import { BlankService } from "../../../../../shared/services/blank.service";
 })
 export class TestInfoComponent implements OnInit {
   protected test!: ITestAllInfo
+  protected showCheckButton = false;
 
   constructor(
     private _test: TestService,
     private _blank: BlankService,
+    private _pattern: PatternService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _cd: ChangeDetectorRef,
@@ -46,6 +50,10 @@ export class TestInfoComponent implements OnInit {
         this.test = test
         this._cd.markForCheck()
       })
+
+    this._pattern.getPatterns(+(this._route.snapshot.paramMap.get('id') ?? 0))
+      .pipe(take(1))
+      .subscribe(patterns => this.showCheckButton = isFilled(patterns))
   }
 
   protected deleteTest() {

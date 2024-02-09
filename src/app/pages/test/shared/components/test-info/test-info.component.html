@@ -20,7 +20,9 @@
                 <div class="test__block">
                     <h2 class="test__subtitle">
                         <span>Проверенные бланки</span>
-                        <app-button (clickEvent)="checkMore()">проверить еще</app-button>
+                        <ng-container *ngIf="showCheckButton">
+                            <app-button (clickEvent)="checkMore()">проверить еще</app-button>
+                        </ng-container>
                     </h2>
 
                     <ul class="test__list test-list">
