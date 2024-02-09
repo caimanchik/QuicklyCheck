@@ -49,7 +49,6 @@ export class RenameClassComponent implements OnInit {
   public ngOnInit(): void {
     this.classId = +(this._route.snapshot.paramMap.get('id') ?? 0)
     this._classes.getClassInfo(this.classId)
-      .pipe(take(1))
       .subscribe((clasInfo) => {
         this.createForm = new FormGroup<ICreateClassForm>({
           number: new FormControl<string>('', {
@@ -108,7 +107,6 @@ export class RenameClassComponent implements OnInit {
       number: this.createForm.controls.number.value,
       letter: this.createForm.controls.letter.value
     })
-      .pipe(take(1))
       .subscribe(createdClass => {
         this._router.navigate(['classes', createdClass.pk])
       })

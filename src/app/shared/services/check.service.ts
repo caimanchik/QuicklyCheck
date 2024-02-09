@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of, switchMap, tap, zip } from "rxjs";
+import { map, Observable, of, switchMap, take, tap, zip } from "rxjs";
 import { HttpService } from "./infrastructure/http.service";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
 import { BlankService } from "./blank.service";
@@ -38,7 +38,8 @@ export class CheckService {
           map(previews => {
             this.previews = this.previews.concat(previews)
             return this.previews
-          })
+          }),
+          take(1)
         )
     }
 
@@ -68,7 +69,8 @@ export class CheckService {
     )
       .pipe(
         tap(() => this.clearBlanks()),
-        switchMap(blanks => this._blank.parseBlanks(blanks, temporary))
+        switchMap(blanks => this._blank.parseBlanks(blanks, temporary)),
+        take(1)
       )
   }
 }

@@ -39,7 +39,6 @@ export class ClassListComponent implements OnInit {
 
   public ngOnInit(): void {
     this._classes.getClasses()
-      .pipe(take(1))
       .subscribe(classes => {
         this.classes = classes
         this._cd.markForCheck()
@@ -59,13 +58,11 @@ export class ClassListComponent implements OnInit {
       message: "Вы действительно хотите удалить класс?",
       buttonText: "удалить"
     })
-      .pipe(take(1))
       .subscribe(confirmed => {
         if (!confirmed)
           return
 
         this._classes.deleteClass(id)
-          .pipe(take(1))
           .subscribe(() => {
             this.classes = this.classes.filter(c => c.pk !== id)
             this._cd.markForCheck()

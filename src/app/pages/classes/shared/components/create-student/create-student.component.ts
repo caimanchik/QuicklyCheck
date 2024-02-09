@@ -67,7 +67,6 @@ export class CreateStudentComponent implements OnInit {
       name,
       grade: +(this._route.snapshot.paramMap.get('id') ?? 0)
     })
-      .pipe(take(1))
       .subscribe(created => {
         this._router.navigate(['classes', created.grade])
       })

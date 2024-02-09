@@ -95,7 +95,6 @@ export class CreateComponent implements OnInit {
       number: this.createForm.controls.number.value,
       letter: this.createForm.controls.letter.value
     })
-      .pipe(take(1))
       .subscribe(createdClass => {
         this._router.navigate(['classes', createdClass.pk])
       })

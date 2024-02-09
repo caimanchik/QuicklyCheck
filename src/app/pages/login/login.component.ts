@@ -148,33 +148,15 @@ export class LoginComponent implements OnInit {
 
     this._canLogin = false
 
-    this._auth.login({
+    this.loginUser({
       username: this.loginForm.controls.email.value,
       password: this.loginForm.controls.password.value
     })
-      .pipe(
-        take(1),
-        catchError(e => {
-          if (e instanceof HttpErrorResponse && e.status === 401) {
-            this.loginError = e.error.detail
-            this._cd.markForCheck()
-          }
-          this._canLogin = true
-
-          return throwError(() => e)
-        })
-      )
-      .subscribe(successful => {
-        if (successful) {
-          this._router.navigate(this._url.getPreviousUrl().split('/'));
-        }
-      })
   }
 
   private loginUser(user: IUserLogin) {
     this._auth.login(user)
       .pipe(
-        take(1),
         catchError(e => {
           if (e instanceof HttpErrorResponse && e.status === 401) {
             this.loginError = e.error.detail

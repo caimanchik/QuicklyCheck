@@ -40,7 +40,6 @@ export class TestFillComponent implements OnInit {
 
   public ngOnInit(): void {
     this._pattern.getPatterns(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(take(1))
       .subscribe(patterns => {
         this.patterns = patterns
         this._cd.markForCheck()
@@ -58,7 +57,6 @@ export class TestFillComponent implements OnInit {
 
   protected updatePattern(pattern: IPatternParsed) {
     this._pattern.updatePattern(pattern)
-      .pipe(take(1))
       .subscribe(updated => {
         this.patterns[updated.num - 1] = updated
         this._cd.markForCheck()

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
-import { forkJoin, map, Observable, of, switchMap } from "rxjs";
+import { forkJoin, map, Observable, of, switchMap, take } from "rxjs";
 import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
 import { environment } from "../../../environments/environment";
 import { IBlankWithAuthor } from "../interfaces/Tests/Blanks/IBlankWithAuthor";
@@ -22,13 +22,17 @@ export class BlankService {
 
   public deleteBlank(blankPk: number) {
     return this._http.Delete<void>(`blank/${blankPk}`)
+      .pipe(take(1))
   }
 
   public getBlanks(pkTest: number, temporary = false): Observable<IBlankParsed[]> {
     return this._http.Get<IBlankRequest[]>(
       (temporary ? "test/" : "") + `test/${pkTest}/blanks`
     )
-      .pipe(switchMap(blanks => this.parseBlanks(blanks)))
+      .pipe(
+        switchMap(blanks => this.parseBlanks(blanks)),
+        take(1)
+      )
   }
 
   public getBlank(pk: number): Observable<IBlankParsed> {
@@ -36,7 +40,8 @@ export class BlankService {
       .pipe(
         map(e => [e]),
         switchMap(blanks => this.parseBlanks(blanks)),
-        map(blanks => blanks[0])
+        map(blanks => blanks[0]),
+        take(1)
       )
   }
 

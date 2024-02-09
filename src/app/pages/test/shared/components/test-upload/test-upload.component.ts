@@ -44,7 +44,6 @@ export class TestUploadComponent implements OnDestroy {
 
   protected uploadImages(images: FileList) {
     this._checkService.addBlanks(images)
-      .pipe(take(1))
       .subscribe(previews => {
         this.previews = previews
         this._cd.markForCheck()

@@ -39,7 +39,6 @@ export class BlankInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     this._blank.getBlank(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(take(1))
       .subscribe(blank => {
         this.view = {
           blank,

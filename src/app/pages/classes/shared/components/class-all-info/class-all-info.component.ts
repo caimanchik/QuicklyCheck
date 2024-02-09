@@ -53,7 +53,6 @@ export class ClassAllInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     this._classes.getAllClassInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
-      .pipe(take(1))
       .subscribe(classInfo => {
         this.classInfo = classInfo
         this._cd.markForCheck()

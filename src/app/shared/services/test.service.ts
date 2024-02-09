@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { map, Observable, switchMap } from "rxjs";
+import { map, Observable, switchMap, take } from "rxjs";
 import { ITest } from "../interfaces/Tests/Tests/ITest";
 import { ITestCreate } from "../interfaces/Tests/Tests/ITestCreate";
 import { ITestAllInfo } from "../interfaces/Tests/Tests/ITestAllInfo";
@@ -27,7 +27,8 @@ export class TestService {
         switchMap(test => {
           return this._blank.getBlanks(pk)
             .pipe(
-              map(blanks => ({...test, blanks}))
+              map(blanks => ({...test, blanks})),
+              take(1)
             )
         })
       )

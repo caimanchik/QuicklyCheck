@@ -1,4 +1,4 @@
-import { BehaviorSubject, catchError, map, Observable, of, throwError } from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, of, take, throwError } from "rxjs";
 import { ITokenPair } from "../interfaces/Tokens/ITokenPair";
 import { CookieService } from "./infrastructure/cookie.service";
 import { HttpService } from "./infrastructure/http.service";
@@ -36,6 +36,7 @@ export class AuthService {
 
           return throwError(() => e)
         }),
+        take(1)
       )
   }
 
@@ -64,6 +65,7 @@ export class AuthService {
 
           return of(false)
         }),
+        take(1)
       )
   }
 
