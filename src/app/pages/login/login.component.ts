@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from "@angular/core";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../shared/animations/transform-opacity";
 import { opacity } from "../../shared/animations/opacity";
@@ -14,6 +14,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { DestroyService } from "../../shared/services/infrastructure/destroy.service";
 import { IUserLogin } from "../../shared/interfaces/User/IUserLogin";
 import { IUserRegister } from "../../shared/interfaces/User/IUserRegister";
+import { AuthToken, UrlToken } from "../../app.module";
 
 @Component({
   selector: 'app-login',
@@ -65,9 +66,9 @@ export class LoginComponent implements OnInit {
   protected registerToggled = false
 
   constructor(
-    private _auth: AuthService,
+    @Inject(AuthToken) private _auth: AuthService,
+    @Inject(UrlToken) private _url: UrlService,
     private _router: Router,
-    private _url: UrlService,
     private _cd: ChangeDetectorRef,
     private _destroy: DestroyService
   ) {

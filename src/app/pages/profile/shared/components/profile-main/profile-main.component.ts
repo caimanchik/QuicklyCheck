@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { UserService } from "../../../../../shared/services/user.service";
 import { IUserMainInfo } from "../../../../../shared/interfaces/User/IUserMainInfo";
 import { Router } from "@angular/router";
@@ -6,6 +6,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { AuthService } from "../../../../../shared/services/auth.service";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
+import { AuthToken } from "../../../../../app.module";
 
 @Component({
   selector: 'app-profile-main',
@@ -30,11 +31,11 @@ export class ProfileMainComponent implements OnInit {
   protected userMainInfo!: IUserMainInfo
 
   constructor(
+    @Inject(AuthToken) private _auth: AuthService,
     private _cd: ChangeDetectorRef,
     private _confirm: ConfirmService,
     private _user: UserService,
     private _router: Router,
-    private _auth: AuthService
   ) { }
 
   ngOnInit(): void {

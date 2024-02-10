@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -9,12 +9,13 @@ import {
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { CookieService } from "../services/infrastructure/cookie.service";
 import { AuthService } from "../services/auth.service";
+import { AuthToken } from "../../app.module";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private _cookie: CookieService,
-    private _auth: AuthService
+    @Inject(AuthToken) private _auth: AuthService,
   ) {}
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {

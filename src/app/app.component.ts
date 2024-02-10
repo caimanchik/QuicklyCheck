@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Inject, OnInit } from '@angular/core';
 import { ScrollService } from "./shared/services/infrastructure/scroll.service";
 import { AuthService } from "./shared/services/auth.service";
-import { UrlService } from "./shared/services/infrastructure/url.service";
+import { AuthToken } from "./app.module";
 
 @Component({
   selector: 'app-root',
@@ -14,8 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private _scrollService: ScrollService,
-    private _auth: AuthService,
-    private _url: UrlService
+    @Inject(AuthToken) private _auth: AuthService,
   ) { }
 
   public ngOnInit() {

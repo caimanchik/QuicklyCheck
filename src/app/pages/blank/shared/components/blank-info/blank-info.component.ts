@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { IBlankView } from "../../../../../shared/interfaces/Views/IBlankView";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -6,6 +6,7 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
 import { UrlService } from "../../../../../shared/services/infrastructure/url.service";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
+import { UrlToken } from "../../../../../app.module";
 
 @Component({
   selector: 'app-blank-info',
@@ -30,11 +31,11 @@ export class BlankInfoComponent implements OnInit {
   protected view!: IBlankView
 
   constructor(
+    @Inject(UrlToken) private _url: UrlService,
     private _blank: BlankService,
     private _route: ActivatedRoute,
     private _error: ErrorService,
     private _cd: ChangeDetectorRef,
-    private _url: UrlService,
     private _router: Router
   ) { }
 

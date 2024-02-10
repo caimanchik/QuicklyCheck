@@ -10,15 +10,12 @@ import { IUserLogin } from "../interfaces/User/IUserLogin";
 import { IUserRegister } from "../interfaces/User/IUserRegister";
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
   constructor(
     private _http: HttpService,
     private _cookie: CookieService,
-  ) {
-  }
+  ) { }
 
   public isLogged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 

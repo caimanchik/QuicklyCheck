@@ -1,8 +1,9 @@
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from "@angular/core";
 import { opacity } from "../../animations/opacity";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
+import { AuthToken } from "../../../app.module";
 
 @Component({
   selector: 'app-header',
@@ -32,7 +33,7 @@ export class HeaderComponent {
   protected navOpened = false
 
   constructor(
-    protected _auth: AuthService,
+    @Inject(AuthToken) protected auth: AuthService,
     private _router: Router,
     private _cd: ChangeDetectorRef
   ) { }

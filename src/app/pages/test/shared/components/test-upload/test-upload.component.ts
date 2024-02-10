@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { CheckService } from "../../../../../shared/services/check.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -6,6 +6,7 @@ import { transformOpacity } from "../../../../../shared/animations/transform-opa
 import { UrlService } from "../../../../../shared/services/infrastructure/url.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { TestService } from "../../../../../shared/services/test.service";
+import { UrlToken } from "../../../../../app.module";
 
 @Component({
   selector: 'app-test-upload',
@@ -31,13 +32,13 @@ export class TestUploadComponent implements OnDestroy, OnInit {
   private needsClear = true
 
   constructor(
+    @Inject(UrlToken) private _url: UrlService,
     private _checkService: CheckService,
     private _test: TestService,
     private _error: ErrorService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _url: UrlService
   ) { }
 
   public ngOnInit(): void {

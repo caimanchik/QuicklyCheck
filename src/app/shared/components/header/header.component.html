@@ -2,8 +2,8 @@
         class="header"
         @appear
         [ngClass]="{
-            logged: _auth.isLogged$ | async,
-            notLogged: (_auth.isLogged$ | async) === false
+            logged: auth.isLogged$ | async,
+            notLogged: (auth.isLogged$ | async) === false
         }"
 >
 
@@ -51,7 +51,7 @@
 
                     </div>
                     <div class="header-links__group">
-                        <ng-container *ngIf="_auth.isLogged$ | async; else check">
+                        <ng-container *ngIf="auth.isLogged$ | async; else check">
                             <a
                                     class="header-links__item"
                                     (click)="navigate('classes')"
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="header-links__group">
-                        <ng-container *ngIf="_auth.isLogged$ | async; else login">
+                        <ng-container *ngIf="auth.isLogged$ | async; else login">
                             <a
                                     class="header-links__account"
                                     (click)="navigate('profile')"

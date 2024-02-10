@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { opacity } from "../../animations/opacity";
 import { AuthService } from "../../services/auth.service";
+import { AuthToken } from "../../../app.module";
 
 @Component({
   selector: 'app-footer',
@@ -30,6 +31,6 @@ import { AuthService } from "../../services/auth.service";
 export class FooterComponent {
 
   constructor(
-    protected auth: AuthService
+    @Inject(AuthToken) protected auth: AuthService,
   ) { }
 }
