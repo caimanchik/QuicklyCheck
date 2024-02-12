@@ -35,7 +35,6 @@
                     >
                         <ng-container *ngIf="isLogin; else registration">
                             <div class="login-form__wrapper" @appearOnly>
-
                                 <ng-container *ngIf="loginError; else formErrors">
                                     <ng-container *ngTemplateOutlet="error; context: {$implicit: loginError}"></ng-container>
                                 </ng-container>

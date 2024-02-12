@@ -38,8 +38,7 @@ export class HttpService {
       headers?: HttpHeaders,
       params?: HttpParams,
       withCredentials?: boolean;
-    } = {withCredentials: true},
-    handleAuth = true
+    } = {withCredentials: true}
   ): Observable<TGet> {
     return this._httpClient.post<TGet>(environment.backendUrl + /api/ + uri, data, {
       ...options,
@@ -57,8 +56,7 @@ export class HttpService {
       headers?: HttpHeaders,
       params?: HttpParams,
       withCredentials?: boolean;
-    } = {withCredentials: true},
-    handleAuth = true
+    } = {withCredentials: true}
   ): Observable<TGet> {
     return this._httpClient.put<TGet>(environment.backendUrl + /api/ + uri, data, {
       ...options,
@@ -75,8 +73,7 @@ export class HttpService {
       headers?: HttpHeaders,
       params?: HttpParams,
       withCredentials?: boolean;
-    } = {withCredentials: true},
-    handleAuth = true
+    } = {withCredentials: true}
   ): Observable<TGet> {
     return this._httpClient.delete<TGet>(environment.backendUrl + /api/ + uri, {
       ...options,
@@ -85,6 +82,28 @@ export class HttpService {
       catchError(e => this.handleError.bind(this)(e)),
       map(r => r.body as TGet)
     )
+  }
+
+  public Patch<TPost, TGet>(
+    uri: string,
+    data: TPost,
+    options: {
+      headers?: HttpHeaders,
+      params?: HttpParams,
+      withCredentials?: boolean;
+    } = {withCredentials: true}
+  ) {
+    return this._httpClient.patch(
+      environment.backendUrl + '/api/' + uri,
+      data,
+      {
+        ...options,
+        observe: 'response'
+      })
+      .pipe(
+        catchError(e => this.handleError.bind(this)(e)),
+        map(r => r.body as TGet)
+      )
   }
 
   private handleError(e: HttpErrorResponse) {

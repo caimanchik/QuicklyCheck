@@ -20,7 +20,7 @@ export class AuthService {
   public isLogged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public login(user: IUserLogin): Observable<boolean> {
-    return this._http.Post<IUserLogin, ITokenPair>('token/', user, {withCredentials: false}, false)
+    return this._http.Post<IUserLogin, ITokenPair>('token/', user, {withCredentials: false})
       .pipe(
         map(pair => {
           this.saveToken(pair)
@@ -48,8 +48,7 @@ export class AuthService {
     return this._http.Post<IRefreshToken, IAccessToken>(
       'token/refresh/',
       {refresh},
-      {withCredentials: false},
-      false)
+      {withCredentials: false})
       .pipe(
         map(token => {
           this.saveToken(token)

@@ -82,16 +82,16 @@ export class LoginComponent implements OnInit {
   private initLoginForm() {
     this.loginForm = new FormGroup<ILoginForm>({
       email: new FormControl<string>("", {
-        validators: [
-          Validators.required,
-          Validators.email,
-        ],
+        // validators: [
+        //   Validators.required,
+        //   Validators.email,
+        // ],
         nonNullable: true
       }),
       password: new FormControl<string>("",{
-        validators: [
-          Validators.minLength(8),
-        ],
+        // validators: [
+        //   Validators.minLength(8),
+        // ],
         nonNullable: true
       })
     })

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule, Routes } from "@angular/router";
 import { ProfileComponent } from './profile.component';
 import { ProfileMainComponent } from './shared/components/profile-main/profile-main.component';
@@ -32,7 +32,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgOptimizedImage
   ],
   exports: [
     RouterModule
