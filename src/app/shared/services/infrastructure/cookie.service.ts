@@ -21,7 +21,7 @@ export class CookieService {
       value: '',
       maxAge: {
         days: 0,
-        minutes: -1
+        minutes: -100
       }
     });
   }

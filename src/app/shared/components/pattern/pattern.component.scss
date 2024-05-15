@@ -9,7 +9,7 @@
     border-radius: 42px;
     border: 4.437px solid rgba(233, 58, 210, 0.75);
     background: #FBFAFB;
-    box-shadow: 4.437px 6.212px 16.861px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 4.437px 6.212px 16.861px 0 rgba(0, 0, 0, 0.25);
 
     @media(max-width:660px){
       padding: 2.5rem 2.35rem;
@@ -150,11 +150,11 @@
     color: rgba(0, 0, 0, 0.40);
     transition: all ease .2s;
 
-    & span {
-      position: relative;
-      top: 2px;
-      left: 0;
-    }
+    //& span {
+    //  position: relative;
+    //  //top: 2px;
+    //  left: 0;
+    //}
   }
 
   &__text {
@@ -180,10 +180,11 @@
     display: flex;
     justify-content: space-between;
 
-    //@media(max-width:475px) {
-    //  justify-content: center;
-    //  flex-wrap: wrap;
-    //}
+    @media(max-width:475px) {
+      //justify-content: center;
+      //flex-wrap: wrap;
+      margin: 0 -1rem;
+    }
   }
 
   &__column {
@@ -241,18 +242,14 @@
       font-size: 1.36rem;
 
       @media(max-width:475px){
-        width: 3.5rem;
-      }
-
-      @media(max-width:430px){
-        width: 3rem;
+        width: 2.8rem;
       }
     }
 
     &_right {
       width: 11.4rem;
       @media(max-width:475px) {
-        width: 10.5rem;
+        width: 11rem;
       }
     }
 
@@ -287,6 +284,11 @@
       //&:nth-child(2) {
       //  margin-left: 0;
       //}
+
+      @media(max-width:475px) {
+        width: 1.9rem;
+        height: 1.9rem;
+      }
 
       &.active {
         background: rgba(255, 207, 249, 0.99);
