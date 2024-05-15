@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { IChangePasswordForm } from "../../../../../shared/interfaces/Forms/IChangePasswordForm";
 import { Router } from "@angular/router";
-import { samePasswordValidator } from "../../../../../shared/validators/SamePasswordValidator";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { UserService } from "../../../../../shared/services/user.service";
@@ -56,15 +55,7 @@ export class PasswordComponent implements OnInit {
           Validators.required,
           Validators.minLength(8)],
         nonNullable: true
-      }),
-      repeatPassword: new FormControl<string>("", {
-        validators: [
-          Validators.required,
-          Validators.minLength(8)],
-        nonNullable: true
       })
-    }, {
-      validators: samePasswordValidator
     })
 
     this.changeForm.valueChanges
@@ -88,7 +79,7 @@ export class PasswordComponent implements OnInit {
       .pipe(
         catchError(e => {
           if (e.error.detail[0]) {
-            this.responseError = e.error.detail[0]
+            this.responseError = e.error.detail
             this._cd.markForCheck()
             return of(false)
           }
