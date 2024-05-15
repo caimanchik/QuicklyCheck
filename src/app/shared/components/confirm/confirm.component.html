@@ -1,7 +1,14 @@
 <ng-container *ngIf="message">
-    <section class="confirm" @enter @leave>
+    <section
+            class="confirm"
+            @enter
+            @leave
+            (click)="confirm(false)"
+            appEscape
+            (escapeEvent)="confirm(false)"
+    >
 
-        <div class="confirm__wrapper">
+        <div class="confirm__wrapper" (click)="stopPropagation($event)">
             <div class="confirm__image">
                 <img src="assets/images/icons/confirm.svg" alt="">
             </div>

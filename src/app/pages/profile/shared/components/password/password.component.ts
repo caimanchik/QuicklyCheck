@@ -32,7 +32,6 @@ import { catchError, of, throwError } from "rxjs";
 export class PasswordComponent implements OnInit {
 
   protected changeForm!: FormGroup<IChangePasswordForm>
-  // protected passSave = true;
   protected responseError: string | null = null
 
   constructor(

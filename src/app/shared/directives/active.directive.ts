@@ -17,5 +17,4 @@ export class ActiveDirective {
     else
       this.e.nativeElement.classList.add('active')
   }
-
 }

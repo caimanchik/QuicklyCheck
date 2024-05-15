@@ -42,7 +42,7 @@ export class ConfirmComponent implements OnInit {
     private _cd: ChangeDetectorRef
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.confirmer.confirmMessages
       .pipe(this._destroy.takeUntilDestroy)
       .subscribe(message => {
@@ -51,10 +51,13 @@ export class ConfirmComponent implements OnInit {
       })
   }
 
-  confirm(result: boolean) {
+  protected confirm(result: boolean) {
     this.message = null
     this._cd.markForCheck()
     this.confirmer.confirmResult.next(result)
   }
 
+  protected stopPropagation($event: MouseEvent) {
+    $event.stopPropagation()
+  }
 }

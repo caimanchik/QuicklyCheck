@@ -13,6 +13,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
 import { ActiveDirective } from "./directives/active.directive";
 import { BlankViewComponent } from './components/blank-view/blank-view.component';
 import { BlankDetailComponent } from './components/blank-detail/blank-detail.component';
+import { EscapeDirective } from './directives/escape.directive';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { BlankDetailComponent } from './components/blank-detail/blank-detail.com
     ConfirmComponent,
     BlankViewComponent,
     BlankDetailComponent,
+    EscapeDirective,
   ],
   exports: [
     FooterComponent,
