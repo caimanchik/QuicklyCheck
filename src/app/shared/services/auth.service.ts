@@ -43,6 +43,7 @@ export class AuthService {
     if (!refresh) {
       this.isLogged$.next(false)
       return of(false)
+        .pipe(take(1))
     }
 
     return this._http.Post<IRefreshToken, IAccessToken>(

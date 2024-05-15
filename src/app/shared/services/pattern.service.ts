@@ -34,7 +34,7 @@ export class PatternService {
 
       if (patternResponse.pattern.length !== 0)
         return this._http.Put<IPatternResponse, IPatternResponse>(
-          startUri + `pattern/${pattern.pk}`,
+          startUri + `pattern/${pattern.pk}/`,
           translatePatternToResponse(pattern),
           {withCredentials: !temporary}
         )

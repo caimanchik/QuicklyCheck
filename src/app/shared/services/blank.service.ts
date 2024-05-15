@@ -27,10 +27,11 @@ export class BlankService {
 
   public getBlanks(pkTest: number, temporary = false): Observable<IBlankParsed[]> {
     return this._http.Get<IBlankRequest[]>(
-      (temporary ? "test/" : "") + `test/${pkTest}/blanks`
+      (temporary ? "temp/" : "") + `test/${pkTest}/blanks`,
+      {withCredentials: !temporary}
     )
       .pipe(
-        switchMap(blanks => this.parseBlanks(blanks)),
+        switchMap(blanks => this.parseBlanks(blanks, temporary)),
         take(1)
       )
   }

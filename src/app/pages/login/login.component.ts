@@ -169,9 +169,10 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe(successful => {
-        if (successful) {
-          this._router.navigate(this._url.getPreviousUrl().split('/'));
-        }
+        if (!successful)
+          return
+
+        this._router.navigate(this._url.getPreviousUrl().split('/'))
       })
   }
 

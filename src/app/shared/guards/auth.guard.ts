@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { map, Observable, of, switchMap, take } from 'rxjs';
 import { AuthService } from "../services/auth.service";
 import { UrlService } from "../services/infrastructure/url.service";
 import { AuthToken, UrlToken } from "../../app.module";
@@ -21,19 +21,22 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this._auth.isLogged$
       .pipe(
+        take(1),
         switchMap(isLogged => {
           if (isLogged)
-            return of(isLogged)
+            return of(true)
 
           return this._auth.refresh()
         }),
-        tap(isLogged => {
-          if (isLogged)
-            return
+        map(isLogged => {
+          if (!isLogged) {
+            this._url.setCurrentUrl(route.url.map(e => e.path).join('/'))
+            this._router.navigate(['login'])
+          }
 
-          this._url.setCurrentUrl(route.url.map(e => e.path).join('/'))
-          this._router.navigate(['login'])
-        }));
+          return isLogged
+        })
+      );
   }
   
 }

@@ -63,7 +63,7 @@ export class CheckService {
     this.blanks.forEach(blank => data.append("images", blank, blank.name))
 
     return this._http.Post<FormData, IBlankRequest[]>(
-      (temporary ? "test/" : "") + `test/${pkTest}/blanks/`,
+      (temporary ? "temp/" : "") + `test/${pkTest}/blanks/`,
       data,
       {withCredentials: !temporary}
     )

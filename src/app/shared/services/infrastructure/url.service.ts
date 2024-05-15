@@ -27,7 +27,7 @@ export class UrlService {
   }
 
   public getPreviousUrl() {
-    return this._previousUrl === '/' ? '' : this._previousUrl
+    return ['/', '/login'].includes(this._previousUrl) ? '' : this._previousUrl
   }
 
   public setCurrentUrl(url: string) {
