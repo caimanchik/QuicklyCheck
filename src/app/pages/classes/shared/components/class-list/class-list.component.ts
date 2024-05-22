@@ -49,7 +49,7 @@ export class ClassListComponent implements OnInit {
   }
 
   protected openClass(id: number) {
-    this._router.navigate(["classes", id])
+    this._router.navigate(["class", id])
   }
 
   protected deleteClass(id: number) {

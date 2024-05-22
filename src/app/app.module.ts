@@ -30,10 +30,10 @@ export const UrlToken = new InjectionToken("url");
       useClass: TokenInterceptor,
       multi: true
     },
-    {
-      provide: ErrorHandler,
-      useExisting: ErrorService
-    },
+    // {
+    //   provide: ErrorHandler,
+    //   useExisting: ErrorService
+    // },
     {
       provide: AuthToken,
       useClass: AuthService,

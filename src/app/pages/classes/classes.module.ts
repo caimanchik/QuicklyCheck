@@ -20,18 +20,18 @@ const routes: Routes = [
       {
         path: 'create', component: CreateComponent, pathMatch: 'full'
       },
-      {
-        path: ':id', component: ClassAllInfoComponent, pathMatch: 'full'
-      },
-      {
-        path: ':id/create-test', component: CreateTestComponent, pathMatch: 'full'
-      },
-      {
-        path: ':id/create-student', component: CreateStudentComponent, pathMatch: 'full'
-      },
-      {
-        path: ':id/rename-class', component: RenameClassComponent, pathMatch: 'full'
-      }
+      // {
+      //   path: ':id', component: ClassAllInfoComponent, pathMatch: 'full'
+      // },
+      // {
+      //   path: ':id/create-test', component: CreateTestComponent, pathMatch: 'full'
+      // },
+      // {
+      //   path: ':id/create-student', component: CreateStudentComponent, pathMatch: 'full'
+      // },
+      // {
+      //   path: ':id/rename-class', component: RenameClassComponent, pathMatch: 'full'
+      // }
     ]
   }
 ]
