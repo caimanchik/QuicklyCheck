@@ -1,0 +1,133 @@
+@import "vars";
+@import "classes";
+
+
+.student {
+  &__wrapper {
+  }
+
+  &__block {
+  }
+
+  &__header {
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div {
+      &:nth-child(1) {
+        @extend %title;
+      }
+    }
+  }
+
+  &__content {
+    margin-top: 2.4rem;
+    display: flex;
+  }
+
+  &__works {
+    flex: 0 0 75%;
+  }
+
+  &__delete {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2.4rem;
+  }
+}
+
+.student-works {
+  &__title {
+    @extend %title;
+  }
+
+  &__list {
+  }
+}
+
+.student-works-list {
+  margin-top: 2.6rem;
+
+  &__item {
+    margin-top: 1rem;
+
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:hover {
+      .student-works-list {
+        &__name {
+          & span {
+            @extend %grad;
+          }
+        }
+      }
+    }
+  }
+
+  &__number {
+    flex: 0 0 2.7rem;
+    display: flex;
+    justify-content: flex-end;
+    & span {
+      @extend %grad;
+    }
+
+    @media(max-width:560px) {
+      flex: 0 0 2rem;
+    }
+  }
+
+  &__name {
+    font-size: 1.8rem;
+    flex-grow: 1;
+    display: flex;
+    margin-left: 1.5rem;
+
+    @media(max-width:600px){
+      margin-left: 1rem;
+    }
+
+    @media(max-width:500px){
+      margin-left: .8rem;
+    }
+
+    & span {
+      line-height: 1.2em;
+      font-size: 1.8rem;
+
+      @media(max-width:560px){
+        font-size: 1.4rem;
+      }
+
+      @media(max-width:460px){
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  &__score {
+    display: flex;
+
+    & > span {
+      &:nth-child(1) {
+        @extend %grad;
+      }
+
+      &:nth-child(2) {
+        margin-left: 0.8rem;
+        color: $darkGrey;
+        line-height: 1.2em;
+      }
+    }
+  }
+}

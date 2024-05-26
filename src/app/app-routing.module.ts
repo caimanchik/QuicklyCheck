@@ -33,6 +33,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'student',
+    loadChildren: () => import('./pages/student/student.module').then(m => m.StudentModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'check',
     loadChildren: () => import('./pages/check/check.module').then(m => m.CheckModule),
   },

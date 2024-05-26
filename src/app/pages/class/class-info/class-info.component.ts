@@ -7,6 +7,7 @@ import { ErrorService } from "../../../shared/services/infrastructure/error.serv
 import { ActivatedRoute, Router } from "@angular/router";
 import { appear } from "../../../shared/animations/appear";
 import { leaveTransform } from "../../../shared/animations/leaveTransform";
+import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
 
 @Component({
   selector: 'app-class-info',
@@ -38,7 +39,7 @@ export class ClassInfoComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._classes.getAllClassInfo(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    this._classes.getAllClassInfo(getParamFromRoute(this._route))
       .pipe(this._error.passErrorWithMessage("Данного класса не существует", ["error"]))
       .subscribe(classInfo => {
         this.classInfo = classInfo
@@ -83,9 +84,9 @@ export class ClassInfoComponent implements OnInit {
     this._router.navigate(['/', 'test', testPk])
   }
 
-  protected openStudent($event: MouseEvent, pk: number) {
+  protected openStudent($event: MouseEvent, studentPk: number) {
     $event.preventDefault()
 
-    //todo
+    this._router.navigate(['/', 'student', studentPk])
   }
 }
