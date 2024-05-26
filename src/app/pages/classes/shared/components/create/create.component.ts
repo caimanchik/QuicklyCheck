@@ -95,7 +95,7 @@ export class CreateComponent implements OnInit {
       letter: this.createForm.controls.letter.value
     })
       .subscribe(createdClass => {
-        this._router.navigate(['classes', createdClass.pk])
+        this._router.navigate(['class', createdClass.pk])
       })
   }
 }

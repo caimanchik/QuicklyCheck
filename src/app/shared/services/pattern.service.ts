@@ -12,7 +12,6 @@ import { HttpService } from "./infrastructure/http.service";
   providedIn: 'root'
 })
 export class PatternService {
-
   constructor(
     private _http: HttpService
   ) { }
@@ -42,7 +41,7 @@ export class PatternService {
             map(resp => translatePatternFromResponse(resp)),
             take(1))
       else
-        return this._http.Delete<null>(
+        return this._http.Delete<void>(
           startUri + `pattern/${pattern.pk}`,
           {withCredentials: !temporary}
         )

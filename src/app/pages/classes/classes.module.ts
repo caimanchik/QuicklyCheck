@@ -6,10 +6,6 @@ import { ClassesComponent } from "./classes.component";
 import { ClassListComponent } from './shared/components/class-list/class-list.component';
 import { CreateComponent } from './shared/components/create/create.component';
 import { ReactiveFormsModule } from "@angular/forms";
-import { ClassAllInfoComponent } from './shared/components/class-all-info/class-all-info.component';
-import { CreateTestComponent } from './shared/components/create-test/create-test.component';
-import { CreateStudentComponent } from './shared/components/create-student/create-student.component';
-import { RenameClassComponent } from "./shared/components/rename-class/rename-class.component";
 
 const routes: Routes = [
   {
@@ -20,18 +16,6 @@ const routes: Routes = [
       {
         path: 'create', component: CreateComponent, pathMatch: 'full'
       },
-      // {
-      //   path: ':id', component: ClassAllInfoComponent, pathMatch: 'full'
-      // },
-      // {
-      //   path: ':id/create-test', component: CreateTestComponent, pathMatch: 'full'
-      // },
-      // {
-      //   path: ':id/create-student', component: CreateStudentComponent, pathMatch: 'full'
-      // },
-      // {
-      //   path: ':id/rename-class', component: RenameClassComponent, pathMatch: 'full'
-      // }
     ]
   }
 ]
@@ -41,10 +25,6 @@ const routes: Routes = [
     ClassesComponent,
     ClassListComponent,
     CreateComponent,
-    ClassAllInfoComponent,
-    CreateTestComponent,
-    CreateStudentComponent,
-    RenameClassComponent
   ],
   imports: [
     CommonModule,

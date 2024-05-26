@@ -20,3 +20,11 @@
   font-size: 1.14rem;
   letter-spacing: 0.05em;
 }
+
+%title {
+  font-size: 2.86rem;
+  letter-spacing: 0.05em;
+  @extend %grad;
+  font-weight: bold;
+  line-height: 1.375em;
+}
