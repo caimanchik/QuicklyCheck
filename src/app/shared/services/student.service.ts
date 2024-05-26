@@ -10,10 +10,10 @@ import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
 export class StudentService {
 
   constructor(
-    private _http: HttpService
+    private _http: HttpService,
   ) { }
 
-  public getClassStudents(id: number) : Observable<IStudent[]> {
+  public getClassStudents(id: number): Observable<IStudent[]> {
     return this._http.Get<IStudent[]>(`class/${id}/students`)
       .pipe(take(1))
   }
@@ -23,8 +23,13 @@ export class StudentService {
       .pipe(take(1))
   }
 
-  public getStudent(pk: number): Observable<IStudent> {
-    return this._http.Get<IStudent>(`student/${pk}`)
+  public getStudent(studentPk: number): Observable<IStudent> {
+    return this._http.Get<IStudent>(`student/${studentPk}`)
+      .pipe(take(1))
+  }
+
+  public deleteStudent(studentPk: number): Observable<any> {
+    return this._http.Delete<void>(`student/${studentPk}`)
       .pipe(take(1))
   }
 }

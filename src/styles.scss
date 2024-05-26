@@ -41,6 +41,15 @@ body {
   overflow: hidden;
 }
 
+.block {
+  border-radius: 35px;
+  border: 4.045px solid rgba(233, 58, 210, 0.75);
+  background: #F6F6F6;
+  box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
+
+  padding: 2.5rem 2.9rem;
+}
+
 //.test {
 //  @extend %grad;
 //  font-size: 2rem;

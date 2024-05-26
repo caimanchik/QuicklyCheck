@@ -3,4 +3,5 @@ export interface IBlank {
   test: number;
   var: number;
   id_blank: string
+  testName: string
 }
