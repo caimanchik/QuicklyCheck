@@ -265,7 +265,7 @@
 
   position: relative;
   left: 0;
-  top: 2px;
+  //top: 3px;
 
   &__group {
     display: flex;
@@ -314,6 +314,15 @@
 
   &__account {
     cursor: pointer;
+
+    width: 8.7rem;
+    height: auto;
+
+    & > img {
+      width: 100%;
+      height: auto;
+      object-fit: fill;
+    }
   }
 }
 
