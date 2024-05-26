@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 import { catchError, of, throwError } from "rxjs";
 import { UrlService } from "../../shared/services/infrastructure/url.service";
 import { IRegistrationForm } from "../../shared/interfaces/Forms/IRegistrationForm";
-import { samePasswordValidator } from "../../shared/validators/SamePasswordValidator";
+import { samePasswordValidator } from "../../shared/validators/samePasswordValidator";
 import { HttpErrorResponse } from "@angular/common/http";
 import { DestroyService } from "../../shared/services/infrastructure/destroy.service";
 import { IUserLogin } from "../../shared/interfaces/User/IUserLogin";

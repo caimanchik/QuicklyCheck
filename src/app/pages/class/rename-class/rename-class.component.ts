@@ -8,6 +8,8 @@ import { ErrorService } from "../../../shared/services/infrastructure/error.serv
 import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../shared/animations/appear";
+import { IBuildForm } from "../../../shared/interfaces/Forms/IBuildForm";
+import { classCharValidator } from "../../../shared/validators/classCharValidator";
 
 @Component({
   selector: 'app-rename-class',
@@ -27,6 +29,8 @@ export class RenameClassComponent implements OnInit {
   protected letterCorrect = true
   protected classInfo!: IClass
 
+  protected buildForm!: IBuildForm
+
   private classId!: number
 
   constructor(
@@ -37,6 +41,22 @@ export class RenameClassComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute
   ) { }
+
+  private createBuildForm() {
+    this.buildForm = {
+      controls: [
+        {
+          control: new FormControl<string>("", {
+            validators: classCharValidator("some error")
+          }),
+          type: 'text',
+          placeholder: 'абв'
+        }
+      ]
+    }
+
+    this._cd.markForCheck()
+  }
 
   public ngOnInit(): void {
     this.classId = +(this._route.snapshot.paramMap.get('id') ?? 0)
@@ -63,6 +83,8 @@ export class RenameClassComponent implements OnInit {
           .pipe(this._destroy.takeUntilDestroy)
           .subscribe(() => this.isLetterCorrect())
       })
+
+    this.createBuildForm()
   }
 
   private isFormCorrect() {

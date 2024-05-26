@@ -14,6 +14,8 @@ import { ActiveDirective } from "./directives/active.directive";
 import { BlankViewComponent } from './components/blank-view/blank-view.component';
 import { BlankDetailComponent } from './components/blank-detail/blank-detail.component';
 import { EscapeDirective } from './directives/escape.directive';
+import { FormComponent } from './components/form/form.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import { EscapeDirective } from './directives/escape.directive';
     BlankViewComponent,
     BlankDetailComponent,
     EscapeDirective,
+    FormComponent,
   ],
   exports: [
     FooterComponent,
@@ -42,12 +45,14 @@ import { EscapeDirective } from './directives/escape.directive';
     ErrorComponent,
     ConfirmComponent,
     BlankViewComponent,
+    FormComponent,
   ],
   imports: [
     CommonModule,
     RouterLinkWithHref,
     NgOptimizedImage,
     ActiveDirective,
+    ReactiveFormsModule,
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,13 @@
+<ng-container *ngIf="buildForm">
+    <ng-container *ngFor="let buildControl of buildForm.controls">
+        <input
+                [type]="buildControl.type"
+                [placeholder]="buildControl.placeholder"
+                [formControl]="buildControl.control"
+        >
+    </ng-container>
+
+    <ng-container *ngIf="error">
+        {{ error }}
+    </ng-container>
+</ng-container>
