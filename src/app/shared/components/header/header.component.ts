@@ -1,30 +1,19 @@
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from "@angular/core";
-import { opacity } from "../../animations/opacity";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
 import { AuthToken } from "../../../app.module";
+import { opacityIn } from "../../animations/opacityIn";
+import { opacityOut } from "../../animations/opacityOut";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   animations: [
-    trigger('appear', [
-      transition(':enter',
-        useAnimation(opacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-          }
-        }),
-      transition(':leave',
-        useAnimation(opacity), {
-          params: {
-            oStart: 1,
-            oEnd: 0,
-          }
-        })
+    trigger('animation', [
+      transition(':enter', useAnimation(opacityIn)),
+      transition(':leave', useAnimation(opacityOut))
     ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

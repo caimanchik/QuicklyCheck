@@ -1,8 +1,7 @@
 <ng-container *ngIf="message">
     <section
             class="confirm"
-            @enter
-            @leave
+            @animation
             (click)="confirm(false)"
             appEscape
             (escapeEvent)="confirm(false)"

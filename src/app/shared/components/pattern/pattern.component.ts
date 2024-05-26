@@ -1,8 +1,8 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IPatternParsed } from "../../interfaces/Tests/Patterns/IPatternParsed";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../animations/transform-opacity";
 import { ErrorService } from "../../services/infrastructure/error.service";
+import { appear } from "../../animations/appear";
 
 @Component({
   selector: 'app-pattern',
@@ -11,15 +11,7 @@ import { ErrorService } from "../../services/infrastructure/error.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ],
 })

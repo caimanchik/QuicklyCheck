@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../shared/animations/transform-opacity";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ICreateStudentForm } from "../../../shared/interfaces/Forms/ICreateStudentForm";
 import { StudentService } from "../../../shared/services/student.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { IStudentCreate } from "../../../shared/interfaces/Students/IStudentCreate";
+import { appear } from "../../../shared/animations/appear";
 
 @Component({
   selector: 'app-create-student',
@@ -15,15 +15,7 @@ import { IStudentCreate } from "../../../shared/interfaces/Students/IStudentCrea
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ],
 })

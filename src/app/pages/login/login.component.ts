@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from "@angular/core";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../shared/animations/transform-opacity";
-import { opacity } from "../../shared/animations/opacity";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ILoginForm } from "../../shared/interfaces/Forms/ILoginForm";
 import { AuthService } from "../../shared/services/auth.service";
@@ -15,6 +13,8 @@ import { DestroyService } from "../../shared/services/infrastructure/destroy.ser
 import { IUserLogin } from "../../shared/interfaces/User/IUserLogin";
 import { IUserRegister } from "../../shared/interfaces/User/IUserRegister";
 import { AuthToken, UrlToken } from "../../app.module";
+import { appear } from "../../shared/animations/appear";
+import { leave } from "../../shared/animations/leave";
 
 @Component({
   selector: 'app-login',
@@ -22,34 +22,12 @@ import { AuthToken, UrlToken } from "../../app.module";
   styleUrls: ['./login.component.scss'],
   providers: [DestroyService],
   animations: [
-    trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
-      transition(':leave',
-        useAnimation(opacity), {
-          params: {
-            oStart: 1,
-            oEnd: 0,
-          }
-        })
+    trigger('animation', [
+      transition(':enter', useAnimation(appear)),
+      transition(':leave', useAnimation(leave))
     ]),
     trigger('appearOnly', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear)),
     ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

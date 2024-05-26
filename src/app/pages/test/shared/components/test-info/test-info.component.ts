@@ -3,12 +3,12 @@ import { TestService } from "../../../../../shared/services/test.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITestAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { PatternService } from "../../../../../shared/services/pattern.service";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
+import { appear } from "../../../../../shared/animations/appear";
 
 @Component({
   selector: 'app-test-info',
@@ -18,14 +18,7 @@ import { ErrorService } from "../../../../../shared/services/infrastructure/erro
   animations: [
     trigger('appear', [
       transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+        useAnimation(appear)),
     ])
   ]
 })

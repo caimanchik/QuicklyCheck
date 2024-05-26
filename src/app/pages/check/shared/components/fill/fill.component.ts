@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { IPatternParsed } from "../../../../../shared/interfaces/Tests/Patterns/IPatternParsed";
 import { Router } from "@angular/router";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { PatternService } from "../../../../../shared/services/pattern.service";
+import { appear } from "../../../../../shared/animations/appear";
 
 @Component({
   selector: 'app-fill',
@@ -14,15 +14,7 @@ import { PatternService } from "../../../../../shared/services/pattern.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ],
 })

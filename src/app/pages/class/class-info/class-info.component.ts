@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../shared/animations/transform-opacity";
 import { IClassAllInfo } from "../../../shared/interfaces/Classes/IClassAllInfo";
 import { IRememberInfo } from "../../../shared/interfaces/Application/IRememberInfo";
 import { ClassesService } from "../../../shared/services/classes.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { appear } from "../../../shared/animations/appear";
+import { leaveTransform } from "../../../shared/animations/leaveTransform";
 
 @Component({
   selector: 'app-class-info',
@@ -14,26 +15,10 @@ import { ActivatedRoute, Router } from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ]),
     trigger('leave', [
-      transition(':leave',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 1,
-            oEnd: 0,
-            transformStart: "translateY(0px)",
-            transformEnd: "translateY(10px)",
-          }
-        }),
+      transition(':leave', useAnimation(leaveTransform))
     ])
   ],
 })

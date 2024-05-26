@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ICreateClassForm } from "../../../../../shared/interfaces/Forms/ICreateClassForm";
 import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 import { ClassesService } from "../../../../../shared/services/classes.service";
 import { Router } from "@angular/router";
+import { appear } from "../../../../../shared/animations/appear";
 
 @Component({
   selector: 'app-create',
@@ -17,15 +17,7 @@ import { Router } from "@angular/router";
   ],
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ],
 })

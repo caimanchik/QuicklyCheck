@@ -7,7 +7,7 @@ import { ClassesService } from "../../../shared/services/classes.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../shared/animations/transform-opacity";
+import { appear } from "../../../shared/animations/appear";
 
 @Component({
   selector: 'app-rename-class',
@@ -17,15 +17,7 @@ import { transformOpacity } from "../../../shared/animations/transform-opacity";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ],
 })

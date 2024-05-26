@@ -1,6 +1,6 @@
 <header
         class="header"
-        @appear
+        @animation
         [ngClass]="{
             logged: auth.isLogged$ | async,
             notLogged: (auth.isLogged$ | async) === false

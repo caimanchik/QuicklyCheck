@@ -3,10 +3,10 @@ import { UserService } from "../../../../../shared/services/user.service";
 import { IUserMainInfo } from "../../../../../shared/interfaces/User/IUserMainInfo";
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { AuthService } from "../../../../../shared/services/auth.service";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 import { AuthToken } from "../../../../../app.module";
+import { appear } from "../../../../../shared/animations/appear";
 
 @Component({
   selector: 'app-profile-main',
@@ -15,15 +15,7 @@ import { AuthToken } from "../../../../../app.module";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ]
 })

@@ -3,8 +3,8 @@ import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
 import { ClassesService } from "../../../../../shared/services/classes.service";
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
+import { appear } from "../../../../../shared/animations/appear";
 
 @Component({
   selector: 'app-class-list',
@@ -12,15 +12,7 @@ import { ConfirmService } from "../../../../../shared/services/infrastructure/co
   styleUrls: ['./class-list.component.scss'],
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

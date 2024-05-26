@@ -3,7 +3,8 @@ import { ConfirmService } from "../../services/infrastructure/confirm.service";
 import { DestroyService } from "../../services/infrastructure/destroy.service";
 import { IConfirmAsk } from "../../interfaces/Confirm/IConfirmAsk";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { opacity } from "../../animations/opacity";
+import { opacityIn } from "../../animations/opacityIn";
+import { opacityOut } from "../../animations/opacityOut";
 
 @Component({
   selector: 'app-confirm',
@@ -12,23 +13,9 @@ import { opacity } from "../../animations/opacity";
   providers: [DestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    trigger('enter', [
-      transition(':enter',
-        useAnimation(opacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-          }
-        })
-    ]),
-    trigger('leave', [
-      transition(':leave',
-        useAnimation(opacity), {
-          params: {
-            oStart: 1,
-            oEnd: 0,
-          }
-        })
+    trigger('animation', [
+      transition(':enter', useAnimation(opacityIn)),
+      transition(':leave', useAnimation(opacityOut))
     ])
   ]
 })

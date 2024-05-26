@@ -8,11 +8,11 @@ import {
   ViewChildren
 } from "@angular/core";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../shared/animations/transform-opacity";
-import { opacity } from "../../shared/animations/opacity";
 import { AuthService } from "../../shared/services/auth.service";
 import { take } from "rxjs";
 import { AuthToken } from "../../app.module";
+import { appear } from "../../shared/animations/appear";
+import { leave } from "../../shared/animations/leave";
 
 
 @Component({
@@ -20,24 +20,10 @@ import { AuthToken } from "../../app.module";
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
   animations: [
-    trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
-      transition(':leave',
-        useAnimation(opacity), {
-          params: {
-            oStart: 1,
-            oEnd: 0,
-          }
-        })
-    ])
+    trigger('animation', [
+      transition(':enter', useAnimation(appear)),
+      transition(':leave', useAnimation(leave))
+    ]),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

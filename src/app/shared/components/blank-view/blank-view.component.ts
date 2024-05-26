@@ -6,10 +6,10 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../animations/transform-opacity";
 import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { IResultView } from "../../interfaces/Views/IResultView";
 import { IBlankParsed } from "../../interfaces/Tests/Blanks/IBlankParsed";
+import { appear } from "../../animations/appear";
 
 @Component({
   selector: 'app-blank-view',
@@ -18,15 +18,7 @@ import { IBlankParsed } from "../../interfaces/Tests/Blanks/IBlankParsed";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ]
 })

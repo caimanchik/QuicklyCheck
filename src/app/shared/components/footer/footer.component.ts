@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { opacity } from "../../animations/opacity";
 import { AuthService } from "../../services/auth.service";
 import { AuthToken } from "../../../app.module";
+import { opacityIn } from "../../animations/opacityIn";
+import { opacityOut } from "../../animations/opacityOut";
 
 @Component({
   selector: 'app-footer',
@@ -10,20 +11,8 @@ import { AuthToken } from "../../../app.module";
   styleUrls: ['./footer.component.scss'],
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(opacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-          }
-        }),
-      transition(':leave',
-        useAnimation(opacity), {
-          params: {
-            oStart: 1,
-            oEnd: 0,
-          }
-        })
+      transition(':enter', useAnimation(opacityIn)),
+      transition(':leave', useAnimation(opacityOut))
     ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

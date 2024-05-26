@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { ActivatedRoute, Router } from "@angular/router";
 import { IBlankView } from "../../../../../shared/interfaces/Views/IBlankView";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { transformOpacity } from "../../../../../shared/animations/transform-opacity";
 import { UrlService } from "../../../../../shared/services/infrastructure/url.service";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { UrlToken } from "../../../../../app.module";
+import { appear } from "../../../../../shared/animations/appear";
 
 @Component({
   selector: 'app-blank-info',
@@ -15,15 +15,7 @@ import { UrlToken } from "../../../../../app.module";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(transformOpacity), {
-          params: {
-            oStart: 0,
-            oEnd: 1,
-            transformStart: "translateY(10px)",
-            transformEnd: "translateY(0px)",
-          }
-        }),
+      transition(':enter', useAnimation(appear))
     ])
   ]
 })
