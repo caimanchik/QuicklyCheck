@@ -11,7 +11,7 @@ export class ConfirmService {
 
   constructor() { }
 
-  createConfirm(ask: IConfirmAsk): Observable<boolean> {
+  public createConfirm(ask: IConfirmAsk): Observable<boolean> {
     this.confirmMessages.next(ask)
     return this.confirmResult
       .pipe(take(1))

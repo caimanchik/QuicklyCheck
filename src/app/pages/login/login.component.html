@@ -172,7 +172,13 @@
                                                 class="login-form__agree"
                                                 [formControl]="registrationForm.controls.personal"
                                         >
-                                        <label for="agree" class="login-form__label" appActive #label></label>
+                                        <label
+                                                for="agree"
+                                                class="login-form__label"
+                                                appActive
+                                                [isActiveInit]="registrationForm.controls.personal.value"
+                                                #label
+                                        ></label>
                                         <button class="login-form__text" (click)="label.click()" type="button">
                                             Я согласен на
                                             <a href="https://www.google.ru/" target="_blank" class="login-form__underline">

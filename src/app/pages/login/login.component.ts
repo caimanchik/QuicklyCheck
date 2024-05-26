@@ -178,7 +178,7 @@ export class LoginComponent implements OnInit {
 
   protected changeForm(isLogin: boolean) {
     this.isLogin = isLogin
-    this._cd.markForCheck()
+    this._cd.detectChanges()
   }
 
   protected register() {

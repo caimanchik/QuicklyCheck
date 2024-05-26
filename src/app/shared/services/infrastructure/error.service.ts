@@ -26,7 +26,7 @@ export class ErrorService implements ErrorHandler {
     this.createError('Неизвестная ошибка')
   }
 
-  public passErrorWithMessage(message: string, redirectPath: any[] = ["error"], withRedirect = true) {
+  public passErrorWithMessage(message: string, redirectPath: any[] = ['/', "error"], withRedirect = true) {
     return <T>(origin: Observable<T>) =>
       origin.pipe(
         catchError(e => {
