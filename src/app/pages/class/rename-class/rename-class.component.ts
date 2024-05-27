@@ -4,8 +4,6 @@ import { IClass } from "../../../shared/interfaces/Classes/IClass";
 import { ClassesService } from "../../../shared/services/classes.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { transition, trigger, useAnimation } from "@angular/animations";
-import { appear } from "../../../shared/animations/appear";
 import { IBuildForm } from "../../../shared/interfaces/Forms/IBuildForm";
 import { classCharValidator } from "../../../shared/validators/classCharValidator";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
@@ -15,12 +13,7 @@ import { classNumberValidator } from "../../../shared/validators/classNumberVali
   selector: 'app-rename-class',
   templateUrl: './rename-class.component.html',
   styleUrls: ['./rename-class.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('appear', [
-      transition(':enter', useAnimation(appear))
-    ])
-  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RenameClassComponent implements OnInit {
   protected classInfo!: IClass
