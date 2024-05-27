@@ -68,15 +68,15 @@ h1, h2, h3, h4, h5, h6 {
 
 @font-face {
   font-family: "Comic Sans MS";
-  src: url('/assets/fonts/ComicSansMS.woff2') format('woff2'),
-  url('/assets/fonts/ComicSansMS.woff') format('woff');
+  src: url('https://storage.yandexcloud.net/qucklycheck/fonts/ComicSansMS.woff2') format('woff2'),
+  url('https://storage.yandexcloud.net/qucklycheck/fonts/ComicSansMS.woff') format('woff');
 }
 
 @font-face {
   font-family: "a_FuturaRound";
   src:
           local("afuturaround"),
-          url("/assets/fonts/afuturaround.woff2");
+          url("https://storage.yandexcloud.net/qucklycheck/fonts/afuturaround.woff2");
   font-weight: 400;
 }
 
@@ -84,6 +84,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "a_FuturaRound";
   src:
           local("afuturaroundbold"),
-          url("/assets/fonts/afuturaroundbold.woff2");
+          url("https://storage.yandexcloud.net/qucklycheck/fonts/afuturaroundbold.woff2");
   font-weight: bold;
 }

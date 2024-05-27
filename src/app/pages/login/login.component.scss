@@ -105,7 +105,7 @@
       position: absolute;
       height: 50%;
       aspect-ratio: 2 / 3;
-      background: url("/assets/images/icons/border-button.svg") no-repeat;
+      background: url("https://storage.yandexcloud.net/qucklycheck/border-button.svg") no-repeat;
       opacity: 0;
       transition: all ease .2s;
     }
@@ -263,7 +263,7 @@
       height: 130%;
       width: 140%;
       transform: translate(0, 1px);
-      background: url("/assets/images/icons/ok.svg") 100%/100% no-repeat;
+      background: url("https://storage.yandexcloud.net/qucklycheck/ok.svg") 100%/100% no-repeat;
       opacity: 0;
       transition: all ease .3s;
     }
