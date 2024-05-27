@@ -1,0 +1,92 @@
+@import "vars";
+@import "classes";
+
+
+.form {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__logo {
+
+    & img {
+      width: 7.14rem;
+      height: 7.14rem;
+      object-fit: contain;
+    }
+  }
+
+  &__title {
+    margin-top: 5rem;
+  }
+
+  &__form {
+    width: 100%;
+  }
+
+  &__wrong {
+    position: relative;
+  }
+
+  &__fields {
+    flex: 1 0 100%;
+    margin-top: 4.3rem;
+  }
+
+  &__field {
+    margin: 1.7rem auto 0;
+    max-width: 40rem;
+    width: 100%;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__input {
+    width: 100%;
+
+    & input {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid rgba(233, 58, 210, 0.75);
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.31);
+
+      padding: .85rem 1.7rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__submit {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.form-wrong {
+  width: 100%;
+
+  &__wrapper {
+    left: 50%;
+    width: calc(100% - 2rem);
+    top: 5px;
+    transform: translateX(-50%);
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  &__image {
+
+  }
+
+  &__text {
+    font-size: 1.5rem;
+    color: $red;
+    margin-left: .8rem;
+  }
+}

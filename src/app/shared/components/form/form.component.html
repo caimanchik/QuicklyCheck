@@ -1,13 +1,57 @@
 <ng-container *ngIf="buildForm">
-    <ng-container *ngFor="let buildControl of buildForm.controls">
-        <input
-                [type]="buildControl.type"
-                [placeholder]="buildControl.placeholder"
-                [formControl]="buildControl.control"
-        >
-    </ng-container>
+    <div class="form" @appear>
+        <div class="form__wrapper">
 
-    <ng-container *ngIf="error">
-        {{ error }}
-    </ng-container>
+            <div class="form__logo">
+                <img ngSrc="assets/images/icons/logoSmall.svg" alt="" height="104" width="109">
+            </div>
+
+            <div class="form__title">
+                <app-title>{{ buildForm.title }}</app-title>
+            </div>
+
+            <form [formGroup]="formGroup" action="" (ngSubmit)="submit()" class="form__form">
+                <ng-container *ngIf="error">
+                    <div @appear class="form__wrong form-wrong">
+                        <div class="form-wrong__wrapper">
+                            <div class="form-wrong__image">
+                                <img ngSrc="assets/images/icons/attention.svg" alt="" height="26" width="29">
+                            </div>
+
+                            <div class="form-wrong__text">
+                                {{ error }}
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div class="form__fields">
+                    <ng-container *ngFor="let buildControl of buildForm.controls">
+                        <div class="form__field">
+                            <div class="form__input">
+                                <input
+                                        [type]="buildControl.type"
+                                        [placeholder]="buildControl.placeholder"
+                                        [formControl]="buildControl.control"
+                                        (keyup.enter)="submit()"
+                                >
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="form__submit">
+                    <app-button
+                            [filled]="true"
+                            (clickEvent)="submit()"
+                    >
+                        {{ buildForm.submitText }}
+                    </app-button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
 </ng-container>

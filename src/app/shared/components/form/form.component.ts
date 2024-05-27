@@ -1,17 +1,33 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import { IBuildForm } from "../../interfaces/Forms/IBuildForm";
 import { DestroyService } from "../../services/infrastructure/destroy.service";
 import { FormArray, FormGroup } from "@angular/forms";
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { appear } from "../../animations/appear";
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DestroyService]
+  providers: [DestroyService],
+  animations: [
+    trigger("appear", [
+      transition(':enter', useAnimation(appear))
+    ])
+  ]
 })
 export class FormComponent implements OnInit {
   @Input() public buildForm!: IBuildForm
+  @Output() public submitEvent = new EventEmitter<string[]>()
 
   protected error!: string | null
   protected formGroup!: FormGroup<{controls: FormArray}>
@@ -28,21 +44,36 @@ export class FormComponent implements OnInit {
 
     this.formGroup.valueChanges
       .pipe(this._destroy.takeUntilDestroy)
-      .subscribe(() => {
-        let found = false
+      .subscribe(() => this.updateValidity())
+  }
 
-        this.formGroup.controls.controls.controls.forEach(formControl => {
-          if (found || formControl.valid)
-            return
+  private updateValidity(submit = false) {
+    let found = false
 
-          this.error = formControl.errors?.['error']
-          found = true
-        })
+    this.formGroup.controls.controls.controls.forEach(formControl => {
+      if (found || formControl.valid && (formControl.touched || submit))
+        return
 
-        if (!found)
-          this.error = null
+      if (Object.keys(formControl.errors ?? {}).length === 1 && formControl.errors?.['required'])
+        this.error = "Поле не может быть пустым"
+      else
+        this.error = formControl.errors?.['error']
 
-        this._cd.detectChanges()
-      })
+      found = true
+    })
+
+    if (!found)
+      this.error = null
+
+    this._cd.markForCheck()
+  }
+
+  protected submit() {
+    if (this.formGroup.invalid) {
+      this.updateValidity(true)
+      return
+    }
+
+    this.submitEvent.emit(this.formGroup.controls.controls.controls.map(control => control.value))
   }
 }

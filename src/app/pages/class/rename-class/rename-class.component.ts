@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
-import { ICreateClassForm } from "../../../shared/interfaces/Forms/ICreateClassForm";
+import { FormControl } from "@angular/forms";
 import { IClass } from "../../../shared/interfaces/Classes/IClass";
-import { DestroyService } from "../../../shared/services/infrastructure/destroy.service";
 import { ClassesService } from "../../../shared/services/classes.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -10,12 +8,13 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../shared/animations/appear";
 import { IBuildForm } from "../../../shared/interfaces/Forms/IBuildForm";
 import { classCharValidator } from "../../../shared/validators/classCharValidator";
+import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
+import { classNumberValidator } from "../../../shared/validators/classNumberValidator";
 
 @Component({
   selector: 'app-rename-class',
   templateUrl: './rename-class.component.html',
   styleUrls: ['./rename-class.component.scss'],
-  providers: [DestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
@@ -24,9 +23,6 @@ import { classCharValidator } from "../../../shared/validators/classCharValidato
   ],
 })
 export class RenameClassComponent implements OnInit {
-  protected createForm!: FormGroup<ICreateClassForm>
-  protected numberCorrect = true
-  protected letterCorrect = true
   protected classInfo!: IClass
 
   protected buildForm!: IBuildForm
@@ -34,7 +30,6 @@ export class RenameClassComponent implements OnInit {
   private classId!: number
 
   constructor(
-    private _destroy: DestroyService,
     private _classes: ClassesService,
     private _error: ErrorService,
     private _cd: ChangeDetectorRef,
@@ -42,85 +37,45 @@ export class RenameClassComponent implements OnInit {
     private _route: ActivatedRoute
   ) { }
 
-  private createBuildForm() {
-    this.buildForm = {
+  public ngOnInit(): void {
+    this.classId = getParamFromRoute(this._route)
+    this._classes.getClassInfo(this.classId)
+      .pipe(this._error.passErrorWithMessage("", ["class", this.classId]))
+      .subscribe((clasInfo) => {
+        this.classInfo = clasInfo
+        this.buildForm = this.getBuildForm()
+        this._cd.markForCheck()
+      })
+  }
+
+  private getBuildForm(): IBuildForm {
+    return {
       controls: [
         {
-          control: new FormControl<string>("", {
-            validators: classCharValidator("some error")
+          control: new FormControl<string>('', {
+            validators: classNumberValidator('Введите цифру от 1 до 11'),
           }),
           type: 'text',
-          placeholder: 'абв'
-        }
-      ]
-    }
-
-    this._cd.markForCheck()
-  }
-
-  public ngOnInit(): void {
-    this.classId = +(this._route.snapshot.paramMap.get('id') ?? 0)
-    this._classes.getClassInfo(this.classId)
-      .pipe(this._error.passErrorWithMessage("", ["classes", this.classId]))
-      .subscribe((clasInfo) => {
-        this.createForm = new FormGroup<ICreateClassForm>({
-          number: new FormControl<string>('', {
-            nonNullable: true
+          placeholder: 'Введите цифру класса'
+        },
+        {
+          control: new FormControl<string>('', {
+            validators: classCharValidator('Введите 1 русскую букву'),
           }),
-          letter: new FormControl<string>('', {
-            nonNullable: true
-          })
-        })
-
-        this.classInfo = clasInfo
-        this._cd.markForCheck()
-
-        this.createForm.controls.number.valueChanges
-          .pipe(this._destroy.takeUntilDestroy)
-          .subscribe(() => this.isNumberCorrect())
-
-        this.createForm.controls.letter.valueChanges
-          .pipe(this._destroy.takeUntilDestroy)
-          .subscribe(() => this.isLetterCorrect())
-      })
-
-    this.createBuildForm()
+          type: 'text',
+          placeholder: 'Введите букву класса'
+        },
+      ],
+      title: `Изменение класса ${this.classInfo.number}${this.classInfo.letter.toUpperCase()}`,
+      submitText: 'Изменить',
+    }
   }
 
-  private isFormCorrect() {
-    return this.isNumberCorrect() && this.isLetterCorrect()
-  }
-
-  private isNumberCorrect() {
-    const n = parseInt(this.createForm.controls.number.value)
-
-    if (!n)
-      this.numberCorrect = false
-    else
-      this.numberCorrect = n > 0 && n < 12 && /^\d+$/.test(this.createForm.controls.number.value);
-
-    this._cd.markForCheck()
-
-    return this.numberCorrect
-  }
-
-  private isLetterCorrect() {
-    const char = this.createForm.controls.letter.value
-
-    this.letterCorrect = char.length === 1 && /^[а-яё]*$/i.test(char)
-    this._cd.markForCheck()
-
-    return this.letterCorrect
-  }
-
-  protected rename() {
-    if (!this.isFormCorrect())
-      return
-
+  protected rename(values: string[]) {
     this._classes.renameClass({
       ...this.classInfo,
-      number: this.createForm.controls.number.value,
-      letter: this.createForm.controls.letter.value
+      number: values[0],
+      letter: values[1].toUpperCase()
     })
       .pipe(this._error.passErrorWithMessage("не удалось переименовать класс", ["classes", this.classId]))
       .subscribe(editedClass => {
