@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ICreateTestForm } from "../../../shared/interfaces/Forms/ICreateTestForm";
+import { FormControl, Validators } from "@angular/forms";
 import { TestService } from "../../../shared/services/test.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { appear } from "../../../shared/animations/appear";
+import { IBuildForm } from "../../../shared/interfaces/Forms/IBuildForm";
+import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
+import { capitalizeFirstLetter } from "../../../shared/functions/application/capitalizeFirstLetter";
 
 @Component({
   selector: 'app-create-test',
@@ -18,30 +20,40 @@ import { appear } from "../../../shared/animations/appear";
   ],
 })
 export class CreateTestComponent implements OnInit {
-  protected createForm!: FormGroup<ICreateTestForm>
+  protected buildForm!: IBuildForm
 
   constructor(
     private _test: TestService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _cd: ChangeDetectorRef
   ) { }
 
   public ngOnInit(): void {
-    this.createForm = new FormGroup<ICreateTestForm>({
-      name: new FormControl<string>('', {
-        validators: [Validators.required],
-        nonNullable: true
-      })
-    })
+    this.buildForm = this.getBuildForm()
+    this._cd.markForCheck()
   }
 
-  protected create() {
-    if (this.createForm.invalid)
-      return
+  private getBuildForm(): IBuildForm {
+    return {
+      controls: [
+        {
+          control: new FormControl<string>('', {
+            validators: Validators.required
+          }),
+          placeholder: 'Введите название работы',
+          type: 'text'
+        }
+      ],
+      title: 'Новая тестовая работа',
+      submitText: 'Создать'
+    }
+  }
 
+  protected create(values: string[]) {
     this._test.createTest({
-      name: this.createForm.controls.name.value,
-      grade: +(this._route.snapshot.paramMap.get('id') ?? 0)
+      name: capitalizeFirstLetter(values[0]),
+      grade: getParamFromRoute(this._route)
     })
       .subscribe(test => {
         this._router.navigate(['test', test.pk])
