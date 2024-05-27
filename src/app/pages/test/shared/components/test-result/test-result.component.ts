@@ -12,6 +12,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { IBlankParsed } from "../../../../../shared/interfaces/Tests/Blanks/IBlankParsed";
 import { IBlankView } from "../../../../../shared/interfaces/Views/IBlankView";
 import { appear } from "../../../../../shared/animations/appear";
+import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
 
 @Component({
   selector: 'app-test-result',
@@ -43,8 +44,7 @@ export class TestResultComponent implements AfterViewInit {
   ) { }
 
   public ngAfterViewInit(): void {
-    //todo
-    this._check.checkBlanks(+(this._route.snapshot.paramMap.get('id') ?? 0))
+    this._check.checkBlanks(getParamFromRoute(this._route))
       .subscribe(blanks => {
         this.blanks = blanks
         this.createView()

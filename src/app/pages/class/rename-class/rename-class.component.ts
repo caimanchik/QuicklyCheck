@@ -24,7 +24,6 @@ import { classNumberValidator } from "../../../shared/validators/classNumberVali
 })
 export class RenameClassComponent implements OnInit {
   protected classInfo!: IClass
-
   protected buildForm!: IBuildForm
 
   private classId!: number
@@ -66,7 +65,7 @@ export class RenameClassComponent implements OnInit {
           placeholder: 'Введите букву класса'
         },
       ],
-      title: `Изменение класса ${this.classInfo.number}${this.classInfo.letter.toUpperCase()}`,
+      title: `Измененить класса ${this.classInfo.number}${this.classInfo.letter.toUpperCase()}`,
       submitText: 'Изменить',
     }
   }
