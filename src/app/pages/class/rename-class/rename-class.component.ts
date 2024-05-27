@@ -58,7 +58,7 @@ export class RenameClassComponent implements OnInit {
           placeholder: 'Введите букву класса'
         },
       ],
-      title: `Измененить класса ${this.classInfo.number}${this.classInfo.letter.toUpperCase()}`,
+      title: `Изменение класса ${this.classInfo.number}${this.classInfo.letter.toUpperCase()}`,
       submitText: 'Изменить',
     }
   }
