@@ -1,26 +1,21 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { transition, trigger, useAnimation } from "@angular/animations";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ICreateStudentForm } from "../../../shared/interfaces/Forms/ICreateStudentForm";
+import { FormControl, Validators } from "@angular/forms";
 import { StudentService } from "../../../shared/services/student.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { IStudentCreate } from "../../../shared/interfaces/Students/IStudentCreate";
-import { appear } from "../../../shared/animations/appear";
+import { IBuildForm } from "../../../shared/interfaces/Forms/IBuildForm";
+import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
+import { capitalizeFirstLetter } from "../../../shared/functions/application/capitalizeFirstLetter";
 
 @Component({
   selector: 'app-create-student',
   templateUrl: './create-student.component.html',
   styleUrls: ['./create-student.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('appear', [
-      transition(':enter', useAnimation(appear))
-    ])
-  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateStudentComponent implements OnInit {
-  protected createForm!: FormGroup<ICreateStudentForm>
+  protected buildForm!: IBuildForm
 
   constructor(
     private _student: StudentService,
@@ -30,36 +25,49 @@ export class CreateStudentComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.createForm = new FormGroup<ICreateStudentForm>({
-      surname: new FormControl<string>('', {
-        validators: [Validators.required],
-        nonNullable: true
-      }),
-      name: new FormControl<string>('', {
-        validators: [Validators.required],
-        nonNullable: true
-      }),
-      batya: new FormControl<string>('', {
-        nonNullable: true
-      })
-    })
+    this.buildForm = this.getBuildForm()
   }
 
-  protected create() {
-    if (this.createForm.invalid)
-      return
+  private getBuildForm(): IBuildForm {
+    return {
+      controls: [
+        {
+          control: new FormControl<string>('', {
+            validators: Validators.required
+          }),
+          placeholder: 'Фамилия ученика',
+          type: 'text'
+        },
+        {
+          control: new FormControl<string>('', {
+            validators: Validators.required
+          }),
+          placeholder: 'Имя ученика',
+          type: 'text'
+        },
+        {
+          control: new FormControl<string>('', {}),
+          placeholder: 'Отчество ученика (при наличии)',
+          type: 'text'
+        }
+      ],
+      title: 'Добавить ученика',
+      submitText: 'Добавить'
+    }
+  }
 
+  protected create(values: string[]) {
     const name = [
-      this.createForm.controls.surname.value,
-      this.createForm.controls.name.value,
-      this.createForm.controls.batya.value
+      capitalizeFirstLetter(values[0]),
+      capitalizeFirstLetter(values[1]),
+      values[2] ? capitalizeFirstLetter(values[2]) : ''
     ]
       .filter(e => !!e)
       .join(' ')
 
     const student: IStudentCreate = {
       name,
-      grade: +(this._route.snapshot.paramMap.get('id') ?? 0)
+      grade: getParamFromRoute(this._route)
     }
 
     this._student.createStudent(student)
