@@ -10,7 +10,7 @@
                             <span>{{ student.classInfo.number }}{{ student.classInfo.letter }} класс</span>
                         </div>
                         <div>
-                            <app-button>
+                            <app-button (clickEvent)="rename()">
                                 изменить
                             </app-button>
                         </div>

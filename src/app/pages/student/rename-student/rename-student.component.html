@@ -1,0 +1,6 @@
+<ng-container *ngIf="student">
+    <app-form
+            [buildForm]="buildForm"
+            (submitEvent)="rename($event)"
+    ></app-form>
+</ng-container>

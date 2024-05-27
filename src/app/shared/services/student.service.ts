@@ -3,6 +3,7 @@ import { Observable, take } from "rxjs";
 import { IStudent } from "../interfaces/Students/IStudent";
 import { HttpService } from "./infrastructure/http.service";
 import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
+import { IStudentRename } from "../interfaces/Students/IStudentRename";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,11 @@ export class StudentService {
 
   public getStudent(studentPk: number): Observable<IStudent> {
     return this._http.Get<IStudent>(`student/${studentPk}`)
+      .pipe(take(1))
+  }
+
+  public renameStudent(student: IStudentRename) {
+    return this._http.Put<IStudentRename, IStudent>(`student/${student.pk}/`, student)
       .pipe(take(1))
   }
 

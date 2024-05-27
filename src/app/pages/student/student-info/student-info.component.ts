@@ -92,4 +92,8 @@ export class StudentInfoComponent implements OnInit {
           .subscribe(() => this._router.navigate(['class', this.student.grade]))
       })
   }
+
+  protected rename() {
+    this._router.navigate(['student', this.student.pk, 'rename'])
+  }
 }
