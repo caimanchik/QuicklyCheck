@@ -61,7 +61,7 @@ export class TestInfoComponent implements OnInit {
           return
 
         this._test.deleteTest(this.test.pk)
-          .subscribe(() => this._router.navigate(['classes', this.test.grade]))
+          .subscribe(() => this._router.navigate(['class', this.test.grade]))
       })
   }
 
