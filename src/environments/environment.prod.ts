@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUrl: "https://quicklycheck.ru"
+  backendUrl: "http://51.250.4.76:8000"
 };
