@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
   private initRegistrationForm() {
     this.registrationForm = new FormGroup<IRegistrationForm>({
       email: new FormControl<string>('', {
-        validators: [Validators.email, Validators.required],
+        // validators: [Validators.email, Validators.required],
         nonNullable: true
       }),
       password: new FormControl<string>('', {
@@ -167,8 +167,7 @@ export class LoginComponent implements OnInit {
 
     const user: IUserRegister = {
       email: this.registrationForm.controls.email.value,
-      password1: this.registrationForm.controls.password.value,
-      password2: this.registrationForm.controls.repeatPassword.value
+      password: this.registrationForm.controls.password.value,
     }
 
     this._auth.register(user)
@@ -191,7 +190,7 @@ export class LoginComponent implements OnInit {
         if (registered)
           this.loginUser({
             username: user.email,
-            password: user.password1
+            password: user.password
           })
       })
   }

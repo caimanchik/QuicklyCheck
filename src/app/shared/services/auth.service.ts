@@ -97,7 +97,7 @@ export class AuthService {
   }
 
   public register(user: IUserRegister) {
-    return this._http.Post<IUserRegister, boolean>(`users/`, user, {
+    return this._http.Post<IUserRegister, boolean>(`registration/`, user, {
       withCredentials: false
     })
       .pipe(

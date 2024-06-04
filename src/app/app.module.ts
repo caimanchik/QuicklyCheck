@@ -30,7 +30,7 @@ export const UrlToken = new InjectionToken("url");
       useClass: TokenInterceptor,
       multi: true
     },
-    {
+    { // todo
       provide: ErrorHandler,
       useExisting: ErrorService
     },
