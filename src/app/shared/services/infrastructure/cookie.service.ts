@@ -20,8 +20,8 @@ export class CookieService {
       name: cookieName,
       value: '',
       maxAge: {
-        days: 0,
-        minutes: -100
+        days: -10000000000,
+        minutes: -10000000000
       }
     });
   }
