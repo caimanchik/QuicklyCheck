@@ -57,6 +57,10 @@ export class CheckService {
     this.blanks = []
   }
 
+  public canCheck(): boolean {
+    return this.blanks.length > 0;
+  }
+
   public checkBlanks(pkTest: number, temporary: boolean = false): Observable<any> {
     const data = new FormData()
 

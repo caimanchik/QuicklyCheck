@@ -37,17 +37,24 @@ export class TestResultComponent implements AfterViewInit {
   private _show = false
 
   constructor(
-    private _check: CheckService,
+    private _checkService: CheckService,
     private _route: ActivatedRoute,
     private _cd: ChangeDetectorRef,
     private _router: Router
   ) { }
 
   public ngAfterViewInit(): void {
-    this._check.checkBlanks(getParamFromRoute(this._route))
+    const pkTest = getParamFromRoute(this._route)
+    if (!this._checkService.canCheck()) {
+      this._router.navigate(['/', 'test', pkTest])
+      return
+    }
+
+    this._checkService.checkBlanks(pkTest)
       .subscribe(blanks => {
         this.blanks = blanks
         this.createView()
+        this._checkService.clearBlanks()
       })
   }
 
