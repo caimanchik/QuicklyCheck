@@ -53,14 +53,20 @@ export class ResultComponent implements AfterViewInit {
           this.blanks = blanks
           this.createView()
         })
+      return
     }
-    else
+    else if (this._checkService.canCheck()) {
       this._checkService.checkBlanks(+(localStorage.getItem('temp') ?? 0), true)
         .subscribe(blanks => {
           this.blanks = blanks
           localStorage.setItem('checked', '1')
           this.createView()
         })
+
+      return;
+    }
+    else
+      this._router.navigate(['/', 'check', 'upload'])
   }
 
   private createView() {
