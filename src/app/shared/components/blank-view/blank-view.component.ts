@@ -8,8 +8,8 @@ import {
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { IResultView } from "../../interfaces/Views/IResultView";
-import { IBlankParsed } from "../../interfaces/Tests/Blanks/IBlankParsed";
 import { appear } from "../../animations/appear";
+import { calculateResult } from "../../functions/blanks/calculateResult";
 
 @Component({
   selector: 'app-blank-view',
@@ -36,18 +36,7 @@ export class BlankViewComponent implements OnChanges {
     if (!changes?.['view']?.currentValue)
       return
 
-    this.calculateResult(changes?.['view']?.currentValue.blank)
-  }
-
-  protected calculateResult(blank: IBlankParsed) {
-    const actual = blank.answers.filter(e => e.isRight).length
-    const right = blank.answers.length
-
-    this.resultView = {
-      actual,
-      right,
-      percentage: Math.round(actual / right * 100)
-    }
+    this.resultView = calculateResult(changes?.['view']?.currentValue.blank)
   }
 
   protected toggleShow() {
