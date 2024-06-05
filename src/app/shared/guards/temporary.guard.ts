@@ -18,18 +18,19 @@ export class TemporaryGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this._auth.isLogged$
-      .pipe(map(isLogged => {
-        if (isLogged) {
-          this._router.navigate(['/'])
-          return false
-        }
+      .pipe(
+        map(isLogged => {
+          if (isLogged) {
+            this._router.navigate(['/'])
+            return false
+          }
 
-        if (localStorage.getItem('checked')) {
-          this._router.navigate(['check', 'result'])
-          return false;
-        }
+          // if (localStorage.getItem('checked')) {
+          //   this._router.navigate(['check', 'result'])
+          //   return false;
+          // }
 
-        return true;
+          return true;
       }))
   }
   
