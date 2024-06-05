@@ -17,53 +17,137 @@
 
 
             <div class="test__list-wrap">
-                <div class="test__block">
-                    <h2 class="test__subtitle">
-                        <span>Проверенные бланки</span>
+                <div class="test__column">
+                    <div class="test__block">
+                        <div class="test__remember test-remember">
+                            <div class="test-remember__title">
+                                <span>Памятка</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test__column">
+                    <div class="test__block">
+                        <h2 class="test__subtitle">
+                            <span>Проверенные бланки</span>
+                        </h2>
+
+                        <ng-container *ngIf="test.blanks.length > 0">
+                            <ul class="test__list test-list">
+
+                                <ng-container *ngFor="let blank of test.blanks; let i = index">
+                                    <li class="test-list__item normal">
+                                        <div class="test-list__number normal">
+                                            <span>{{ i + 1 }}.</span>
+                                        </div>
+
+                                        <button
+                                                type="button"
+                                                class="test-list__author"
+                                                (click)="showBlank(blank.pk)"
+                                        >
+                                            <span>{{ blank.author }}</span>
+                                        </button>
+
+                                        <div class="test-list__right">
+                                            {{ blank.correctCount }}/{{ blank.answers.length }}
+                                        </div>
+
+                                        <button type="button" class="test-list__delete" (click)="deleteBlank(i)">
+                                            <img src="assets/images/icons/deleteGrey.svg" alt="">
+                                            <img src="assets/images/icons/delete.svg" alt="">
+                                        </button>
+
+                                    </li>
+                                </ng-container>
+
+                            </ul>
+                        </ng-container>
+
                         <ng-container *ngIf="showCheckButton">
-                            <app-button (clickEvent)="checkMore()">проверить еще</app-button>
+                            <div class="test__check">
+                                <app-button (clickEvent)="checkMore()">проверить работу</app-button>
+                            </div>
                         </ng-container>
-                    </h2>
+                    </div>
 
-                    <ul class="test__list test-list">
+                    <ng-container *ngIf="test.wrongBlanks.length > 0">
 
-                        <ng-container *ngFor="let blank of test.blanks; let i = index">
-                            <li class="test-list__item">
-                                <div class="test-list__number">
-                                    <span>{{ i + 1 }}.</span>
-                                </div>
+                        <div class="test-wrong">
 
-                                <button
-                                        type="button"
-                                        class="test-list__author"
-                                        (click)="showBlank(blank.pk)"
-                                >
-                                    <span>{{ blank.author }}</span>
-                                </button>
+                            <h2 class="test-wrong__subtitle">
+                                Непроверенные бланки
+                            </h2>
 
-                                <div class="test-list__right">
-                                    {{ blank.correctCount }}/{{ blank.answers.length }}
-                                </div>
+                            <ul class="test__wrong test-wrong__list test-list">
 
-                                <button type="button" class="test-list__delete" (click)="deleteBlank(i)">
-                                    <img src="assets/images/icons/deleteGrey.svg" alt="">
-                                    <img src="assets/images/icons/delete.svg" alt="">
-                                </button>
+                                <ng-container *ngFor="let blank of test.wrongBlanks; let i = index">
+                                    <li class="test-list__item test-wrong__item">
+                                        <div class="test-list__number test-wrong__number">
+                                            <span>{{ i + 1 }}.</span>
+                                        </div>
 
-                            </li>
-                        </ng-container>
+                                        <button
+                                                type="button"
+                                                class="test-list__author test-wrong__author"
+                                                (click)="showWrongBlank(blank.pk)"
+                                        >
+                                            <span>Неизвестно</span>
+                                        </button>
 
-                    </ul>
+                                        <div class="test-list__right test-wrong__right">
+                                            {{ blank.createdAt.getDate() | number:'2.0' }}.{{ blank.createdAt.getMonth() + 1 | number:'2.0' }}.{{ blank.createdAt.getFullYear() }}
+                                        </div>
+
+                                        <button type="button" class="test-list__delete test-wrong__delete" (click)="deleteWrongBlank(i)">
+                                            <img src="assets/images/icons/deleteGrey.svg" alt="">
+                                            <img src="assets/images/icons/delete-red.svg" alt="">
+                                        </button>
+
+                                    </li>
+                                </ng-container>
+
+                            </ul>
+                        </div>
+
+                    </ng-container>
+
+
+                    <div class="test__delete">
+                        <app-button
+                                [filled]="true"
+                                (clickEvent)="deleteTest()"
+                        >удалить тест</app-button>
+                    </div>
+                </div>
+
+                <div class="test__column">
+                    <div class="test__block test__assessment test-assessment">
+
+                        <h3 class="test-assessment__title">
+                            <span>Оценивание</span>
+                        </h3>
+
+                        <ul class="test-assessment__list">
+                            <ng-container *ngFor="let grad of assessment; let i = index">
+                                <li class="test-assessment__grad-item">
+                                    от
+                                    &nbsp;
+                                    <div class="test-assessment__justify">
+                                        <span><ng-container *ngIf="i === assessment.length - 1">&nbsp;&nbsp;</ng-container>{{ grad.from }}%</span>
+                                        <span>до</span>
+                                        <span>{{ grad.to }}% <ng-container *ngIf="i !== 0">&nbsp;</ng-container></span>
+                                    </div>
+                                    &nbsp;
+                                    — {{ grad.point }}
+                                </li>
+                            </ng-container>
+                        </ul>
+
+                    </div>
                 </div>
             </div>
-
-            <div class="test__delete">
-                <app-button
-                        [filled]="true"
-                        (clickEvent)="deleteTest()"
-                >удалить тест</app-button>
-            </div>
-
         </div>
     </div>
 </ng-container>

@@ -9,6 +9,7 @@ import { PatternService } from "../../../../../shared/services/pattern.service";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { appear } from "../../../../../shared/animations/appear";
+import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
 
 @Component({
   selector: 'app-test-info',
@@ -25,6 +26,28 @@ import { appear } from "../../../../../shared/animations/appear";
 export class TestInfoComponent implements OnInit {
   protected test!: ITestAllInfo
   protected showCheckButton = false;
+  protected assessment: IGrad[] = [
+    {
+      from: 80,
+      to: 100,
+      point: 5
+    },
+    {
+      from: 60,
+      to: 80,
+      point: 4
+    },
+    {
+      from: 40,
+      to: 60,
+      point: 3
+    },
+    {
+      from: 0,
+      to: 40,
+      point: 2
+    }
+  ]
 
   constructor(
     private _test: TestService,
@@ -100,7 +123,32 @@ export class TestInfoComponent implements OnInit {
       })
   }
 
-  protected showBlank(pk: number) {
-    this._router.navigate(['blank', pk])
+  protected deleteWrongBlank(i: number) {
+    const blank = this.test.wrongBlanks[i]
+    this._confirm.createConfirm({
+      message: `Вы действительно хотите удалить бланк от ${
+        (blank.createdAt.getDate() < 10 ? '0' : '') + blank.createdAt.getDate()}.${
+        (blank.createdAt.getMonth() + 1 < 10 ? '0' : '') + (blank.createdAt.getMonth() + 1)}.${
+        blank.createdAt.getFullYear()}?`,
+      buttonText: 'удалить'
+    })
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
+
+        this._blank.deleteWrongBlank(blank.pk)
+          .subscribe(() => {
+            this.test.wrongBlanks.splice(i, 1)
+            this._cd.markForCheck()
+          })
+      })
+  }
+
+  protected showBlank(pkBlank: number) {
+    this._router.navigate(['blank', pkBlank])
+  }
+
+  protected showWrongBlank(pkBlank: number) {
+    // todo
   }
 }

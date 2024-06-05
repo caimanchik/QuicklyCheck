@@ -6,7 +6,6 @@ import { SharedModule } from "./shared/shared.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TokenInterceptor } from "./shared/http-interceptors/token.interceptor";
-import { ErrorService } from "./shared/services/infrastructure/error.service";
 import { AuthService } from "./shared/services/auth.service";
 import { UrlService } from "./shared/services/infrastructure/url.service";
 
@@ -30,10 +29,10 @@ export const UrlToken = new InjectionToken("url");
       useClass: TokenInterceptor,
       multi: true
     },
-    { // todo
-      provide: ErrorHandler,
-      useExisting: ErrorService
-    },
+    // { // todo
+    //   provide: ErrorHandler,
+    //   useExisting: ErrorService
+    // },
     {
       provide: AuthToken,
       useClass: AuthService,

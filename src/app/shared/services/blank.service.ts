@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
-import { forkJoin, map, Observable, of, switchMap, take } from "rxjs";
+import { delay, forkJoin, map, Observable, of, switchMap, take } from "rxjs";
 import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
 import { environment } from "../../../environments/environment";
 import { IBlankWithAuthor } from "../interfaces/Tests/Blanks/IBlankWithAuthor";
@@ -9,6 +9,8 @@ import { translateBlanksFromRequest } from "../functions/blanks/translateBlanksF
 import { StudentService } from "./student.service";
 import { PatternService } from "./pattern.service";
 import { sortStrings } from "../functions/application/sortStrings";
+import { IBlankWrongParsed } from "../interfaces/Tests/Blanks/IBlankWrongParsed";
+import { translateWrongBlanksFromRequest } from "../functions/blanks/translateWrongBlanksFromRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class BlankService {
     private _pattern: PatternService
   ) { }
 
-  public deleteBlank(blankPk: number) {
+  public deleteBlank(blankPk: number): Observable<void> {
     return this._http.Delete<void>(`blank/${blankPk}`)
       .pipe(take(1))
   }
@@ -32,6 +34,42 @@ export class BlankService {
     )
       .pipe(
         switchMap(blanks => this.parseBlanks(blanks, temporary)),
+        take(1)
+      )
+  }
+
+  public getWrongBlanks(pkTest: number): Observable<IBlankWrongParsed[]> {
+    return of([
+      {
+        pk: 1,
+        createdAt: Date.now(),
+        image: "",
+      },
+      {
+        pk: 1,
+        createdAt: new Date().setDate(new Date().getDate() - 7),
+        image: "",
+      },
+      {
+        pk: 1,
+        createdAt: new Date().setDate(new Date().getDate() - 14),
+        image: "",
+      },
+      {
+        pk: 1,
+        createdAt: new Date().setDate(new Date().getDate() - 21),
+        image: "",
+      }])
+      .pipe(
+        map(blanks => translateWrongBlanksFromRequest(blanks)),
+        take(1),
+      )
+  }
+
+  public deleteWrongBlank(pkBlank: number): Observable<any> {
+    return of({})
+      .pipe(
+        delay(100),
         take(1)
       )
   }
@@ -68,6 +106,8 @@ export class BlankService {
                 map(patterns => translateBlanksFromRequest(blanks, patterns)
                   .sort((a, b) => sortStrings(a.author, b.author))))
             : of([])
-        }))
+        }),
+        take(1)
+      )
   }
 }

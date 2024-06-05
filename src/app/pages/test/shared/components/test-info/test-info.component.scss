@@ -7,19 +7,7 @@
   }
 
   &__block {
-    border-radius: 35px;
-    border: 4.045px solid rgba(233, 58, 210, 0.75);
-    background: #F6F6F6;
-    box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
-    padding: 2.5rem 3.5rem;
-
-    @media(max-width:700px){
-      padding: 2rem 2.9rem;
-    }
-
-    @media(max-width:560px) {
-      padding: 2rem 2rem;
-    }
+    @extend %block;
   }
 
   &__title-wrap {
@@ -30,26 +18,59 @@
   }
 
   &__list-wrap {
-    display: flex;
     margin-top: 2.5rem;
-    .test__block {
-      flex: 0 0 80%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__column {
+    &:nth-child(1) {
+      flex: 0 0 100%;
+
+      @media(max-width:880px){
+        flex: 0 0 calc(100% - 23.5rem);
+        order: 1;
+        display: flex;
+
+        & .test__block {
+          flex-grow: 1;
+        }
+      }
+
+      @media(max-width:700px){
+        flex: 0 0 100%;
+      }
+    }
+
+    &:nth-child(2) {
+      margin-top: 2rem;
+      flex: 0 0 calc(100% - 23.5rem);
 
       @media(max-width:880px){
         flex: 0 0 100%;
+        order: 3;
+      }
+    }
+
+    &:nth-child(3) {
+      margin-top: 2rem;
+      padding-left: 2rem;
+      flex: 0 0 23.5rem;
+
+      @media(max-width:880px){
+        order: 2;
+        margin-top: 0;
+      }
+
+      @media(max-width:700px){
+        padding-left: 0;
+        flex: 0 0 21.5rem;
+        margin-top: 2rem;
       }
     }
   }
 
   &__subtitle {
-    display: flex;
-    align-items: center;
-
-    @media(max-width:550px){
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
     & span {
       @extend %grad;
       display: inline-block;
@@ -64,6 +85,13 @@
 
   &__delete {
     margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__check {
+    margin-top: 3.5rem;
+
   }
 }
 
@@ -109,22 +137,24 @@
       margin-top: 0;
     }
 
-    &:hover {
-      .test-list {
-        &__author {
-          & span {
-            @extend %grad;
-          }
-        }
-
-        &__delete {
-          & img {
-            &:first-child {
-              opacity: 0;
+    &.normal {
+      &:hover {
+        .test-list {
+          &__author {
+            & span {
+              @extend %grad;
             }
+          }
 
-            &:last-child {
-              opacity: 1;
+          &__delete {
+            & img {
+              &:first-child {
+                opacity: 0;
+              }
+
+              &:last-child {
+                opacity: 1;
+              }
             }
           }
         }
@@ -136,8 +166,11 @@
     flex: 0 0 2.7rem;
     display: flex;
     justify-content: flex-end;
-    & span {
-      @extend %grad;
+
+    &.normal {
+      & span {
+        @extend %grad;
+      }
     }
 
     @media(max-width:560px) {
@@ -197,6 +230,101 @@
 
     @media(max-width:700px){
       margin-left: .8rem;
+    }
+  }
+}
+
+.test-wrong {
+  margin-top: 2rem;
+  @extend %block-red;
+
+  &__item {
+    @media (hover: hover) {
+      &:hover {
+        .test-wrong {
+          &__author {
+            color: $red
+          }
+
+          &__delete {
+            & img {
+              &:first-child {
+                opacity: 0;
+              }
+
+              &:last-child {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__subtitle {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-right: 2rem;
+    color: $red;
+    line-height: 1.2em;
+  }
+
+  &__list {
+  }
+
+  &__number {
+    & span {
+      color: $red;
+    }
+  }
+
+  &__author {
+    transition: all ease .3s;
+  }
+
+  &__right {
+    color: $textGrey;
+  }
+}
+
+.test-assessment {
+  &__title {
+    & span {
+      @extend %grad;
+      font-size: 2.14rem;
+      font-weight: bold;
+    }
+  }
+
+  &__list {
+    margin-top: 1.2rem;
+  }
+
+  &__grad-item {
+    display: flex;
+    font-size: 1.5rem;
+    font-family: $roboto;
+    margin-top: .7rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__justify {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.test-remember {
+  &__title {
+    & span {
+      @extend %grad;
+      font-size: 2.5rem;
+      font-weight: bold;
     }
   }
 }
