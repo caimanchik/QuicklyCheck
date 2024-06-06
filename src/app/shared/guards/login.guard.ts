@@ -20,7 +20,7 @@ export class LoginGuard implements CanActivate {
     return this._auth.isLogged$
       .pipe(map(isLogged => {
         if (isLogged)
-          this._router.navigate([])
+          this._router.navigate(['/', 'classes'])
 
         return !isLogged;
       }));

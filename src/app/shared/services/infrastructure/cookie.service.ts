@@ -12,8 +12,6 @@ export class CookieService {
       .split('; ')
       .map(e => e.split('=')))
 
-    console.log(cookies[name])
-
     return cookies[name]
   }
 
@@ -29,6 +27,6 @@ export class CookieService {
   }
 
   public setCookie(cookie: ICookie) {
-    document.cookie = `${cookie.name}=${cookie.value};expires=${cookie.maxAge.days * 24 * 60 * 60 + cookie.maxAge.minutes * 60}`
+    document.cookie = `${cookie.name}=${cookie.value};expires=${cookie.maxAge.days * 24 * 60 * 60 + cookie.maxAge.minutes * 60};path=/`
   }
 }
