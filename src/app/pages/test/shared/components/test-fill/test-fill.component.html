@@ -1,3 +1,9 @@
+<ng-container *ngIf="!patterns">
+    <app-loader>
+        Загружаем варианты
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="patterns">
     <div class="fill" @appear>
         <div class="fill__attention fill-attention">

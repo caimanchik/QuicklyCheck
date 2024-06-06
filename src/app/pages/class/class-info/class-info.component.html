@@ -1,3 +1,9 @@
+<ng-container *ngIf="!classInfo">
+    <app-loader>
+        Загружаем класс
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="classInfo">
     <div class="class" @appear>
         <div class="class__wrapper">
@@ -28,7 +34,7 @@
                                         class="class-remember__hide"
                                         (click)="toggleHide({studentsHidden: true})"
                                 >
-                                    <img src="assets/images/icons/hide.svg">
+                                    <img src="assets/images/icons/hide.svg" alt="Скрыть памятку">
                                 </button>
                             </h2>
 
@@ -99,7 +105,7 @@
                                         class="class-remember__hide"
                                         (click)="toggleHide({worksHidden: true})"
                                 >
-                                    <img src="assets/images/icons/hide.svg" alt="">
+                                    <img src="assets/images/icons/hide.svg" alt="Сркыть памятку">
                                 </button>
                             </h2>
 

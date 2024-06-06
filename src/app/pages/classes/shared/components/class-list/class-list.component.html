@@ -13,6 +13,12 @@
         </span>
     </div>
 
+    <ng-container *ngIf="!classes">
+        <app-loader>
+            Загружаем классы
+        </app-loader>
+    </ng-container>
+
 
     <div class="classes__content">
         <ng-container *ngIf="classes">
