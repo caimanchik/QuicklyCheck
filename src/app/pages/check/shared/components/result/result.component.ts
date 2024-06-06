@@ -116,7 +116,7 @@ export class ResultComponent implements AfterViewInit {
         if (!confirmed)
           return
 
-        localStorage.removeItem('pkTest')
+        localStorage.removeItem('temp')
         localStorage.removeItem('checked')
 
         this._router.navigate(['check'])
