@@ -31,13 +31,19 @@
                             </ng-container>
 
                             <ng-container button1>
-                                <app-button [filled]="true" (clickEvent)="openClass(item.pk)" >
+                                <app-button
+                                        [mode]="'filled'"
+                                        (clickEvent)="openClass(item.pk)"
+                                >
                                     Открыть
                                 </app-button>
                             </ng-container>
 
                             <ng-container button2>
-                                <app-button (clickEvent)="deleteClass(item.pk)">
+                                <app-button
+                                        (clickEvent)="deleteClass(item.pk)"
+                                        [mode]="'red'"
+                                >
                                     Удалить
                                 </app-button>
                             </ng-container>

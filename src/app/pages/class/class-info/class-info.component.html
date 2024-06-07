@@ -91,6 +91,19 @@
                         </div>
                     </div>
 
+                    <div class="class__separator">
+
+                    </div>
+
+                    <div class="class__delete">
+                        <app-button
+                                mode="red"
+                                (clickEvent)="deleteClass()"
+                        >
+                            удалить класс
+                        </app-button>
+                    </div>
+
                 </div>
 
                 <div class="class__column">
@@ -132,7 +145,7 @@
                     <div class="class__block">
                         <div class="class__list class-list">
                             <h2 class="class-list__title subtitle">
-                                <span>Работы</span>
+                                <span>Тесты</span>
                                 <app-button (clickEvent)="createTest()">Добавить</app-button>
                             </h2>
                             <ul class="class-list__list">

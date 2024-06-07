@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { PatternService } from "../services/pattern.service";
 import { IAsyncGuard } from "../interfaces/Application/IAsyncGuard";
 import { isFilled } from "../functions/patterns/isFilled";
 import { ErrorService } from "../services/infrastructure/error.service";
+import { UrlService } from "../services/infrastructure/url.service";
+import { UrlToken } from "../../app.module";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class CheckFillGuard implements IAsyncGuard {
     private _pattern: PatternService,
     private _router: Router,
     private _error: ErrorService,
+    @Inject(UrlToken) private _urlService: UrlService,
   ) {
   }
 
@@ -34,7 +37,9 @@ export class CheckFillGuard implements IAsyncGuard {
           if (isFilled(patterns))
             return true
 
-          this._error.createError('Сначала необходимо заполнить варианты!')
+          if (this._urlService.getCurrentUrl().endsWith('fill'))
+            this._error.createError('Сначала необходимо заполнить варианты!')
+
           this._router.navigate(['/', 'check', 'fill'])
           return false
         })

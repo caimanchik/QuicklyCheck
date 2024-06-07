@@ -28,7 +28,7 @@ export class HttpService {
     }).pipe(
       catchError(e => this.handleError.bind(this)(e)),
       map(r => r.body as TGet),
-      delay(500)
+      // delay(500)
     )
   }
 
