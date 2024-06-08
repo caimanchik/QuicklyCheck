@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
   protected registerToggled = false
 
   constructor(
-    @Inject(AuthToken) private _auth: AuthService,
-    @Inject(UrlToken) private _url: UrlService,
+    @Inject(AuthToken) private _authService: AuthService,
+    @Inject(UrlToken) private _urlService: UrlService,
+    private _destroy: DestroyService,
     private _router: Router,
     private _cd: ChangeDetectorRef,
-    private _destroy: DestroyService
   ) {
   }
 
@@ -134,7 +134,7 @@ export class LoginComponent implements OnInit {
   }
 
   private loginUser(user: IUserLogin) {
-    this._auth.login(user)
+    this._authService.login(user)
       .pipe(
         catchError(e => {
           if (e instanceof HttpErrorResponse && e.status === 401) {
@@ -150,7 +150,7 @@ export class LoginComponent implements OnInit {
         if (!successful)
           return
 
-        this._router.navigate(this._url.getPreviousUrl().split('/'))
+        this._router.navigate(this._urlService.getPreviousUrl().split('/'))
       })
   }
 
@@ -170,7 +170,7 @@ export class LoginComponent implements OnInit {
       password: this.registrationForm.controls.password.value,
     }
 
-    this._auth.register(user)
+    this._authService.register(user)
       .pipe(
         catchError(e => {
           if (e instanceof HttpErrorResponse) {
@@ -187,11 +187,14 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe(registered => {
-        if (registered)
-          this.loginUser({
-            username: user.email,
-            password: user.password
-          })
+        if (!registered)
+          return
+
+        this._urlService.setCurrentUrl('/')
+        this.loginUser({
+          username: user.email,
+          password: user.password
+        })
       })
   }
 }

@@ -7,49 +7,73 @@
 
 
             <div class="profile__blocks">
-                <form class="profile__form profile__block">
+                <form class="profile__form profile__block" [formGroup]="profileForm">
                     <div class="profile__field profile-field">
-                        <div class="profile-field__name">
-                            Фамилия
+                        <div class="profile-field__wrapper">
+                            <div class="profile-field__name">
+                                Фамилия
+                            </div>
+                            <input
+                                    type="text"
+                                    value="{{ userMainInfo.profile.last_name }}"
+                                    class="profile-field__content"
+                                    placeholder="укажите фамилию"
+                                    [formControl]="profileForm.controls.surname"
+                            >
                         </div>
-                        <input
-                                type="text"
-                                value="{{ userMainInfo.profile.last_name }}"
-                                class="profile-field__content"
-                                placeholder="укажите фамилию"
-                        >
                     </div>
                     <div class="profile__field profile-field">
-                        <div class="profile-field__name">
-                            Имя
+                        <div class="profile-field__wrapper">
+                            <div class="profile-field__name">
+                                Имя
+                            </div>
+                            <input
+                                    type="text"
+                                    value="{{ userMainInfo.profile.first_name }}"
+                                    class="profile-field__content"
+                                    placeholder="укажите имя"
+                                    [formControl]="profileForm.controls.name"
+                            >
                         </div>
-                        <input
-                                type="text"
-                                value="{{ userMainInfo.profile.first_name }}"
-                                class="profile-field__content"
-                                placeholder="укажите имя"
-                        >
                     </div>
                     <div class="profile__field profile-field">
-                        <div class="profile-field__name">
-                            Отчество
+                        <div class="profile-field__wrapper">
+                            <div class="profile-field__name">
+                                Отчество
+                            </div>
+                            <input
+                                    type="text"
+                                    value="{{ userMainInfo.profile.patronymic }}"
+                                    class="profile-field__content"
+                                    placeholder="укажите отчество"
+                                    [formControl]="profileForm.controls.patronymic"
+                                    min="0"
+                            >
                         </div>
-                        <input
-                                type="text"
-                                value="{{ userMainInfo.profile.patronymic }}"
-                                class="profile-field__content"
-                                placeholder="укажите отчество"
-                        >
+
+                        <ng-container *ngIf="showSave">
+                            <div class="profile__button-wrap" @smooth>
+                                <button
+                                        class="profile__button"
+                                        type="button"
+                                        (click)="saveProfile()">
+                                    сохранить
+                                </button>
+                            </div>
+                        </ng-container>
+
                     </div>
                 </form>
 
                 <div class="profile__block">
                     <div class="profile__field profile-field">
-                        <div class="profile-field__name">
-                            Почта
-                        </div>
-                        <div class="profile-field__content">
-                            {{ userMainInfo.email }}
+                        <div class="profile-field__wrapper">
+                            <div class="profile-field__name">
+                                Почта
+                            </div>
+                            <div class="profile-field__content">
+                                {{ userMainInfo.email }}
+                            </div>
                         </div>
                     </div>
                 </div>
