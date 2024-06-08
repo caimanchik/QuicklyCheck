@@ -13,19 +13,11 @@
   }
 
   &__block {
-    border-radius: 41.453px;
-    border: 4.318px solid rgba(233, 58, 210, 0.75);
-    background: #FBFAFB;
-    box-shadow: 4.318px 6.045px 16.409px 0px rgba(0, 0, 0, 0.25);
+    @extend %block;
     margin-top: 2rem;
-    padding: 3.2rem 3.6rem;
 
     &:first-child {
       margin-top: 0;
-    }
-
-    @media(max-width:600px) {
-      padding: 2.8rem 3rem;
     }
   }
 

@@ -7,32 +7,41 @@
 
 
             <div class="profile__blocks">
-                <div class="profile__block">
+                <form class="profile__form profile__block">
                     <div class="profile__field profile-field">
                         <div class="profile-field__name">
                             Фамилия
                         </div>
-                        <div class="profile-field__content">
-                            {{ userMainInfo.surname }}
-                        </div>
+                        <input
+                                type="text"
+                                value="{{ userMainInfo.profile.last_name }}"
+                                class="profile-field__content"
+                                placeholder="укажите фамилию"
+                        >
                     </div>
                     <div class="profile__field profile-field">
                         <div class="profile-field__name">
                             Имя
                         </div>
-                        <div class="profile-field__content">
-                            {{ userMainInfo.name }}
-                        </div>
+                        <input
+                                type="text"
+                                value="{{ userMainInfo.profile.first_name }}"
+                                class="profile-field__content"
+                                placeholder="укажите имя"
+                        >
                     </div>
                     <div class="profile__field profile-field">
                         <div class="profile-field__name">
                             Отчество
                         </div>
-                        <div class="profile-field__content">
-                            {{ userMainInfo.batya }}
-                        </div>
+                        <input
+                                type="text"
+                                value="{{ userMainInfo.profile.patronymic }}"
+                                class="profile-field__content"
+                                placeholder="укажите отчество"
+                        >
                     </div>
-                </div>
+                </form>
 
                 <div class="profile__block">
                     <div class="profile__field profile-field">

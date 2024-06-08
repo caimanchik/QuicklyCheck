@@ -31,7 +31,7 @@ export class ProfileMainComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._user.getUserEmail()
+    this._user.getProfile()
       .subscribe(userMainInfo => {
         this.userMainInfo = userMainInfo;
         this._cd.markForCheck()
