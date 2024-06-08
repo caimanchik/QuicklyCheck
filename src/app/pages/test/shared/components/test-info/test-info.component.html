@@ -10,6 +10,14 @@
 
             <div class="test__title-wrap">
                 <div class="test__block">
+                    <ng-container *ngIf="classInfo">
+                        <app-return
+                                (returnEvent)="navigateClass()"
+                        >
+                            Класс {{ classInfo.number }}{{ classInfo.letter }}
+                        </app-return>
+                    </ng-container>
+
                     <div class="test__title test-title">
                         <h1 class="test-title__item">
                             {{ test.name }}

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
-import { catchError, delay, map, Observable, throwError } from "rxjs";
+import { catchError, map, Observable, throwError } from "rxjs";
 import { environment } from "../../../../environments/environment";
 import { Router } from "@angular/router";
 
@@ -28,7 +28,6 @@ export class HttpService {
     }).pipe(
       catchError(e => this.handleError.bind(this)(e)),
       map(r => r.body as TGet),
-      // delay(500)
     )
   }
 

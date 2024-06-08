@@ -107,4 +107,8 @@ export class ClassInfoComponent implements OnInit {
           })
       })
   }
+
+  protected navigateClasses() {
+    this._router.navigate(['/', 'classes'])
+  }
 }

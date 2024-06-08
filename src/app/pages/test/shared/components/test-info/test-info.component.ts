@@ -10,6 +10,8 @@ import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { appear } from "../../../../../shared/animations/appear";
 import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
+import { ClassesService } from "../../../../../shared/services/classes.service";
+import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
 
 @Component({
   selector: 'app-test-info',
@@ -26,6 +28,8 @@ import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
 export class TestInfoComponent implements OnInit {
   protected test!: ITestAllInfo
   protected showCheckButton = false;
+  protected classInfo!: IClass
+
   protected assessment: IGrad[] = [
     {
       from: 80,
@@ -50,32 +54,39 @@ export class TestInfoComponent implements OnInit {
   ]
 
   constructor(
-    private _test: TestService,
-    private _blank: BlankService,
-    private _pattern: PatternService,
+    private _testService: TestService,
+    private _blankService: BlankService,
+    private _patternService: PatternService,
+    private _confirmService: ConfirmService,
+    private _errorService: ErrorService,
+    private _classesService: ClassesService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _cd: ChangeDetectorRef,
-    private _confirm: ConfirmService,
-    private _error: ErrorService,
   ) { }
 
   public ngOnInit(): void {
     const testId = +(this._route.snapshot.paramMap.get('id') ?? 0)
-    this._test.getTestAllInfo(testId)
-      .pipe(this._error.passErrorWithMessage("Тест не найден"))
+    this._testService.getTestAllInfo(testId)
+      .pipe(this._errorService.passErrorWithMessage("Тест не найден"))
       .subscribe(test => {
         this.test = test
         this._cd.markForCheck()
+
+        this._classesService.getClassInfo(test.grade)
+          .subscribe(classInfo => {
+            this.classInfo = classInfo
+            this._cd.markForCheck()
+          })
       })
 
-    this._pattern.getPatterns(testId)
-      .pipe(this._error.passErrorWithMessage("Тест не найден"))
+    this._patternService.getPatterns(testId)
+      .pipe(this._errorService.passErrorWithMessage("Тест не найден"))
       .subscribe(patterns => this.showCheckButton = isFilled(patterns))
   }
 
   protected deleteTest() {
-    this._confirm.createConfirm({
+    this._confirmService.createConfirm({
       message: "Вы действительно хотите удалить тест?",
       buttonText: 'удалить'
     })
@@ -83,13 +94,13 @@ export class TestInfoComponent implements OnInit {
         if (!confirmed)
           return
 
-        this._test.deleteTest(this.test.pk)
+        this._testService.deleteTest(this.test.pk)
           .subscribe(() => this._router.navigate(['class', this.test.grade]))
       })
   }
 
   protected fillTest() {
-    this._confirm.createConfirm({
+    this._confirmService.createConfirm({
       message: 'При редактировании теста меняются все оценки уже проверенных работ. Вы точно хотите продолжить?',
       buttonText: 'продолжить'
     })
@@ -107,7 +118,7 @@ export class TestInfoComponent implements OnInit {
 
   protected deleteBlank(i: number) {
     const blank = this.test.blanks[i]
-    this._confirm.createConfirm({
+    this._confirmService.createConfirm({
       message: `Вы действительно хотите удалить бланк ученика "${blank.author}"?`,
       buttonText: 'удалить'
     })
@@ -115,7 +126,7 @@ export class TestInfoComponent implements OnInit {
         if (!confirmed)
           return
 
-        this._blank.deleteBlank(blank.pk)
+        this._blankService.deleteBlank(blank.pk)
           .subscribe(() => {
             this.test.blanks.splice(i, 1)
             this._cd.markForCheck()
@@ -125,7 +136,7 @@ export class TestInfoComponent implements OnInit {
 
   protected deleteWrongBlank(i: number) {
     const blank = this.test.wrongBlanks[i]
-    this._confirm.createConfirm({
+    this._confirmService.createConfirm({
       message: `Вы действительно хотите удалить бланк от ${
         (blank.createdAt.getDate() < 10 ? '0' : '') + blank.createdAt.getDate()}.${
         (blank.createdAt.getMonth() + 1 < 10 ? '0' : '') + (blank.createdAt.getMonth() + 1)}.${
@@ -136,7 +147,7 @@ export class TestInfoComponent implements OnInit {
         if (!confirmed)
           return
 
-        this._blank.deleteWrongBlank(blank.pk)
+        this._blankService.deleteWrongBlank(blank.pk)
           .subscribe(() => {
             this.test.wrongBlanks.splice(i, 1)
             this._cd.markForCheck()
@@ -150,5 +161,9 @@ export class TestInfoComponent implements OnInit {
 
   protected showWrongBlank(pkBlank: number) {
     // todo
+  }
+
+  protected navigateClass() {
+    this._router.navigate(['/', 'class', this.classInfo.pk])
   }
 }

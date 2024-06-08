@@ -40,13 +40,27 @@
                     </ng-container>
                 </div>
 
-                <div class="form__submit">
-                    <app-button
-                            mode="filled"
-                            (clickEvent)="submit()"
-                    >
-                        {{ buildForm.submitText }}
-                    </app-button>
+                <div class="form__buttons-wrap">
+                    <div class="form__buttons">
+                        <div class="form__return form-return">
+                            <button
+                                    type="button"
+                                    class="form-return__button"
+                                    (click)="returnEvent.emit()"
+                            >
+                                Назад
+                            </button>
+                        </div>
+
+                        <div class="form__submit">
+                            <app-button
+                                    mode="filled"
+                                    (clickEvent)="submit()"
+                            >
+                                {{ buildForm.submitText }}
+                            </app-button>
+                        </div>
+                    </div>
                 </div>
 
             </form>

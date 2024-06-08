@@ -9,6 +9,11 @@
         <div class="student__wrapper">
 
             <div class="student__block">
+                <app-return
+                        (returnEvent)="navigateClass()"
+                >
+                    Класс {{ classInfo.number }}{{ classInfo.letter }}
+                </app-return>
                 <div class="student__header">
                     <div class="student__title">
                         <div>

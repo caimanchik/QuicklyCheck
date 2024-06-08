@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { StudentService } from "../../../shared/services/student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
-import { forkJoin, map, of, switchMap, zip } from "rxjs";
+import { forkJoin, map, of, switchMap, tap, zip } from "rxjs";
 import { ClassesService } from "../../../shared/services/classes.service";
 import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
 import { BlankService } from "../../../shared/services/blank.service";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../shared/animations/appear";
 import { ConfirmService } from "../../../shared/services/infrastructure/confirm.service";
+import { IClass } from "../../../shared/interfaces/Classes/IClass";
 
 @Component({
   selector: 'app-student-info',
@@ -23,6 +24,7 @@ import { ConfirmService } from "../../../shared/services/infrastructure/confirm.
 })
 export class StudentInfoComponent implements OnInit {
   protected student!: IStudentAllInfo
+  protected classInfo!: IClass
 
   constructor(
     private _studentService: StudentService,
@@ -44,7 +46,8 @@ export class StudentInfoComponent implements OnInit {
                 map(classInfo => ({
                   ...classInfo,
                   letter: classInfo.letter.toUpperCase()
-                }))
+                })),
+                tap(classInfo => this.classInfo = classInfo)
               ),
             works: student.works.length > 0
               ? zip(...student.works.map(work => this._blankService.parseBlanks([work]).pipe(map(w => w[0]))))
@@ -95,5 +98,9 @@ export class StudentInfoComponent implements OnInit {
 
   protected rename() {
     this._router.navigate(['student', this.student.pk, 'rename'])
+  }
+
+  protected navigateClass() {
+    this._router.navigate(['/', 'class', this.classInfo.pk])
   }
 }
