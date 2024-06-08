@@ -8,6 +8,12 @@
     </div>
 </div>
 
+<ng-container *ngIf="!blanks">
+    <app-loader>
+        Проверяем бланки
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="blanks">
     <div class="result__button" @appear>
         <app-button (clickEvent)="goToTests()">Назад</app-button>

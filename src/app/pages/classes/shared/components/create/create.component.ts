@@ -68,4 +68,8 @@ export class CreateComponent implements OnInit {
       submitText: 'Создать',
     }
   }
+
+  protected navigateClasses() {
+    this._router.navigate(['/', 'classes'])
+  }
 }

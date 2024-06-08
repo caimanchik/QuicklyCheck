@@ -51,8 +51,8 @@ export class ClassesService {
       .pipe(take(1))
   }
 
-  public deleteClass(id: number): Observable<any> {
-    return this._http.Delete<any>(`class/${id}`)
+  public deleteClass(pkClass: number): Observable<any> {
+    return this._http.Delete<any>(`class/${pkClass}`)
       .pipe(take(1))
   }
 

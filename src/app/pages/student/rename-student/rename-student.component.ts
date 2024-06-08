@@ -60,7 +60,7 @@ export class RenameStudentComponent implements OnInit {
         }
       ],
       title: 'Изменить ученика',
-      submitText: 'Изменить'
+      submitText: 'Изменить',
     }
   }
 
@@ -74,5 +74,9 @@ export class RenameStudentComponent implements OnInit {
       .subscribe(student => {
         this._router.navigate(['/', 'student', student.pk])
       })
+  }
+
+  protected navigateClass() {
+    this._router.navigate(['/', 'student', this.student.pk])
   }
 }

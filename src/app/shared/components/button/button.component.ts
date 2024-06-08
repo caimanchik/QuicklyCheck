@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -6,15 +6,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
 
   @Output() public clickEvent = new EventEmitter<void>;
-  @Input() public filled = false;
+  @Input() public mode: 'filled' | 'red' | 'default' = 'default'
 
   constructor() { }
-
-  public ngOnInit(): void {
-  }
 
   protected handleClick() {
     this.clickEvent.next()

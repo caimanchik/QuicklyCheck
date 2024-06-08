@@ -1,6 +1,13 @@
+<ng-container *ngIf="!student">
+    <app-loader>
+        Загружаем ученика
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="student">
     <app-form
             [buildForm]="buildForm"
             (submitEvent)="rename($event)"
+            (returnEvent)="navigateClass()"
     ></app-form>
 </ng-container>

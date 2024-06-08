@@ -41,9 +41,11 @@
                         <a href="" class="footer-column__link" routerLink="getBlank">Скачать бланк</a>
                     </li>
 
-                    <li class="footer-column__item">
-                        <a href="" class="footer-column__link" routerLink="check">Проверить тест</a>
-                    </li>
+                    <ng-container *ngIf="(auth.isLogged$ | async) === false">
+                        <li class="footer-column__item">
+                            <a href="" class="footer-column__link" routerLink="check">Проверить тест</a>
+                        </li>
+                    </ng-container>
 
                 </ul>
                 <ul class="footer-item__column footer-column">

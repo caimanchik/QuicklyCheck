@@ -1,15 +1,29 @@
+<ng-container *ngIf="!test">
+    <app-loader>
+        Загружаем тест
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="test">
     <div class="test" @appear>
         <div class="test__wrapper">
 
             <div class="test__title-wrap">
                 <div class="test__block">
+                    <ng-container *ngIf="classInfo">
+                        <app-return
+                                (returnEvent)="navigateClass()"
+                        >
+                            Класс {{ classInfo.number }}{{ classInfo.letter }}
+                        </app-return>
+                    </ng-container>
+
                     <div class="test__title test-title">
                         <h1 class="test-title__item">
                             {{ test.name }}
                         </h1>
                         <div class="test-title__item">
-                            <app-button (clickEvent)="fillTest()">изменить варианты</app-button>
+                            <app-button (clickEvent)="fillTest()">редактировать</app-button>
                         </div>
                     </div>
                 </div>
@@ -116,7 +130,7 @@
 
                     <div class="test__delete">
                         <app-button
-                                [filled]="true"
+                                [mode]="'red'"
                                 (clickEvent)="deleteTest()"
                         >удалить тест</app-button>
                     </div>

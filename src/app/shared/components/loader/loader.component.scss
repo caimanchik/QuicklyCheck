@@ -1,0 +1,53 @@
+@import "vars";
+@import "classes";
+
+
+.loader {
+  position: relative;
+
+  &__wrapper {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-45%);
+    width: 10rem;
+    height: 10rem;
+    //position: relative;
+
+    & img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      //object-fit: fill;
+      transform: scale(-1, 1);
+      animation: anim 1.3s infinite ease;
+    }
+  }
+
+  &__content {
+    position: absolute;
+    top: 11rem;
+    left: 50%;
+    transform: translateX(-50%);
+    @extend %grad;
+    font-size: 1.7rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}
+
+@keyframes anim {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

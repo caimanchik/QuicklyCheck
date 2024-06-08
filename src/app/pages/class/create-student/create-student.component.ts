@@ -52,7 +52,7 @@ export class CreateStudentComponent implements OnInit {
         }
       ],
       title: 'Добавить ученика',
-      submitText: 'Добавить'
+      submitText: 'Добавить',
     }
   }
 
@@ -75,5 +75,9 @@ export class CreateStudentComponent implements OnInit {
       .subscribe(created => {
         this._router.navigate(['class', created.grade])
       })
+  }
+
+  protected navigateClass() {
+    this._router.navigate(['/', 'class', getParamFromRoute(this._route)])
   }
 }

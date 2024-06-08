@@ -1,8 +1,19 @@
+<ng-container *ngIf="!student">
+    <app-loader>
+        Загружаем ученика
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="student">
     <div class="student" @appear>
         <div class="student__wrapper">
 
             <div class="student__block">
+                <app-return
+                        (returnEvent)="navigateClass()"
+                >
+                    Класс {{ classInfo.number }}{{ classInfo.letter }}
+                </app-return>
                 <div class="student__header">
                     <div class="student__title">
                         <div>
@@ -52,6 +63,7 @@
 
                     <div class="student__delete">
                         <app-button
+                                mode="red"
                                 (clickEvent)="deleteStudent()"
                         >
                             Удалить ученика

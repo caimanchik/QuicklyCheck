@@ -27,7 +27,7 @@ export class HttpService {
       observe: 'response'
     }).pipe(
       catchError(e => this.handleError.bind(this)(e)),
-      map(r => r.body as TGet)
+      map(r => r.body as TGet),
     )
   }
 

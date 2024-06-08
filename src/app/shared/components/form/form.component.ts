@@ -28,6 +28,7 @@ import { appear } from "../../animations/appear";
 export class FormComponent implements OnInit {
   @Input() public buildForm!: IBuildForm
   @Output() public submitEvent = new EventEmitter<string[]>()
+  @Output() public returnEvent = new EventEmitter<void>()
 
   protected error!: string | null
   protected formGroup!: FormGroup<{controls: FormArray}>

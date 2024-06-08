@@ -12,7 +12,7 @@
 
   &__wrap {
     border-radius: 100px;
-    background-color: #fff;
+    background-color: $bgcolor;
     padding: .5rem 3rem;
   }
   
@@ -22,6 +22,19 @@
     font-weight: 700;
     letter-spacing: .03em;
     text-transform: uppercase;
+    white-space: nowrap;
+
+    @media(max-width:1200px){
+      font-size: 1.4rem;
+    }
+
+    @media(max-width:1000px){
+      font-size: 1.3rem;
+    }
+
+    @media(max-width:700px){
+      font-size: 1.4rem;
+    }
   }
 
   &.filled {
@@ -31,10 +44,21 @@
       }
 
       &__button {
+        @extend %nograd;
         color: white;
         -webkit-text-fill-color: white;
         background: transparent;
       }
+    }
+  }
+
+  &.red {
+    background: $red;
+
+    & .button__button {
+      @extend %nograd;
+      -webkit-text-fill-color: $red;
+      color: $red;
     }
   }
 }

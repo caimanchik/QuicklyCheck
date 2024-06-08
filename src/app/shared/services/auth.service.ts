@@ -72,10 +72,12 @@ export class AuthService {
         name: "refresh",
         value: token.refresh,
         maxAge: {
-          days: 1,
+          days: 365,
           minutes: 0
         }
       })
+
+    this._cookie.deleteCookie('access')
 
     this._cookie.setCookie({
       name: "access",

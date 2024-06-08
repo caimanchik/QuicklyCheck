@@ -19,7 +19,7 @@ export class ErrorService implements ErrorHandler {
   }
 
   public handleError(error: any): void {
-    if (error instanceof HttpErrorResponse && error.status == 401) {
+    if (error instanceof HttpErrorResponse && (error.status == 401 || error.status == 404)) {
       return
     }
 

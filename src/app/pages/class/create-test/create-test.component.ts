@@ -46,7 +46,7 @@ export class CreateTestComponent implements OnInit {
         }
       ],
       title: 'Новая тестовая работа',
-      submitText: 'Создать'
+      submitText: 'Создать',
     }
   }
 
@@ -58,5 +58,9 @@ export class CreateTestComponent implements OnInit {
       .subscribe(test => {
         this._router.navigate(['test', test.pk])
       })
+  }
+
+  protected navigateClass() {
+    this._router.navigate(['/', 'class', getParamFromRoute(this._route)])
   }
 }

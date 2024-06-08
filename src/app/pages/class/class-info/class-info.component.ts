@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { appear } from "../../../shared/animations/appear";
 import { leaveTransform } from "../../../shared/animations/leaveTransform";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
+import { ConfirmService } from "../../../shared/services/infrastructure/confirm.service";
 
 @Component({
   selector: 'app-class-info',
@@ -31,16 +32,17 @@ export class ClassInfoComponent implements OnInit {
   }
 
   constructor(
-    private _classes: ClassesService,
-    private _error: ErrorService,
+    private _classesService: ClassesService,
+    private _errorService: ErrorService,
+    private _confirmService: ConfirmService,
     private _route: ActivatedRoute,
     private _cd: ChangeDetectorRef,
     private _router: Router,
   ) { }
 
   public ngOnInit(): void {
-    this._classes.getAllClassInfo(getParamFromRoute(this._route))
-      .pipe(this._error.passErrorWithMessage("Данного класса не существует", ["error"]))
+    this._classesService.getAllClassInfo(getParamFromRoute(this._route))
+      .pipe(this._errorService.passErrorWithMessage("Данного класса не существует", ["error"]))
       .subscribe(classInfo => {
         this.classInfo = classInfo
         this._cd.markForCheck()
@@ -88,5 +90,25 @@ export class ClassInfoComponent implements OnInit {
     $event.preventDefault()
 
     this._router.navigate(['/', 'student', studentPk])
+  }
+
+  protected deleteClass() {
+    this._confirmService.createConfirm({
+      message: `Вы действительно хотите удалить класс ${this.classInfo.number}${this.classInfo.letter}`,
+      buttonText: 'удалить'
+    })
+      .subscribe(isConfirmed => {
+        if (!isConfirmed)
+          return
+
+        this._classesService.deleteClass(this.classInfo.pk)
+          .subscribe(() => {
+            this._router.navigate(['/', 'classes'])
+          })
+      })
+  }
+
+  protected navigateClasses() {
+    this._router.navigate(['/', 'classes'])
   }
 }

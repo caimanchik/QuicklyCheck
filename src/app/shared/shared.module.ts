@@ -16,6 +16,8 @@ import { BlankDetailComponent } from './components/blank-detail/blank-detail.com
 import { EscapeDirective } from './directives/escape.directive';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { LoaderComponent } from './components/loader/loader.component';
+import { ReturnComponent } from './components/return/return.component';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     BlankDetailComponent,
     EscapeDirective,
     FormComponent,
+    LoaderComponent,
+    ReturnComponent,
   ],
   exports: [
     FooterComponent,
@@ -46,6 +50,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     ConfirmComponent,
     BlankViewComponent,
     FormComponent,
+    LoaderComponent,
+    ReturnComponent,
   ],
   imports: [
     CommonModule,

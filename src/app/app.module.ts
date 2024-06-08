@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TokenInterceptor } from "./shared/http-interceptors/token.interceptor";
 import { AuthService } from "./shared/services/auth.service";
 import { UrlService } from "./shared/services/infrastructure/url.service";
+import { ErrorService } from "./shared/services/infrastructure/error.service";
 
 export const AuthToken = new InjectionToken("auth");
 export const UrlToken = new InjectionToken("url");
@@ -29,10 +30,10 @@ export const UrlToken = new InjectionToken("url");
       useClass: TokenInterceptor,
       multi: true
     },
-    // { // todo
-    //   provide: ErrorHandler,
-    //   useExisting: ErrorService
-    // },
+    { // todo
+      provide: ErrorHandler,
+      useExisting: ErrorService
+    },
     {
       provide: AuthToken,
       useClass: AuthService,

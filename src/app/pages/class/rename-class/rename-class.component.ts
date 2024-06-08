@@ -74,4 +74,8 @@ export class RenameClassComponent implements OnInit {
         this._router.navigate(['class', editedClass.pk])
       })
   }
+
+  protected navigateClass() {
+    this._router.navigate(['/', 'class', this.classId])
+  }
 }

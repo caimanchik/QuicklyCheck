@@ -59,10 +59,36 @@
     }
   }
 
-  &__submit {
+  &__buttons-wrap {
+    flex: 1 0 100%;
     margin-top: 4rem;
+  }
+
+  &__buttons {
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    max-width: 40rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__return {
+
+  }
+
+  &__submit {
+    //margin-top: 4rem;
+    //display: flex;
+    //justify-content: center;
+  }
+}
+
+.form-return {
+  &__button {
+    color: $pink;
+    opacity: 0.6;
+    font-size: 1.8rem;
+    font-family: $comic;
   }
 }
 

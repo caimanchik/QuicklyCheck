@@ -20,13 +20,13 @@ export class CookieService {
       name: cookieName,
       value: '',
       maxAge: {
-        days: 0,
-        minutes: -100
+        days: -10000000000,
+        minutes: -10000000000
       }
     });
   }
 
   public setCookie(cookie: ICookie) {
-    document.cookie = `${cookie.name}=${cookie.value}; max-age=${cookie.maxAge.days * 24 * 60 * 60 + cookie.maxAge.minutes * 60}`
+    document.cookie = `${cookie.name}=${cookie.value};expires=${cookie.maxAge.days * 24 * 60 * 60 + cookie.maxAge.minutes * 60};path=/`
   }
 }

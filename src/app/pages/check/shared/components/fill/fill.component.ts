@@ -32,13 +32,7 @@ export class FillComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    let pk = localStorage.getItem('temp')
-
-    if (pk === null) {
-      this._router.navigate(['/', 'check'])
-      return
-    }
-    this.pkTest = +pk
+    this.pkTest = +(localStorage.getItem('temp') ?? 0)
 
     this._pattern.getPatterns(this.pkTest, true)
       .subscribe(patterns => {

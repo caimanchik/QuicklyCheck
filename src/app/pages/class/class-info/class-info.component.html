@@ -1,8 +1,19 @@
+<ng-container *ngIf="!classInfo">
+    <app-loader>
+        Загружаем класс
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="classInfo">
     <div class="class" @appear>
         <div class="class__wrapper">
 
             <div class="class__block">
+                <app-return
+                        (returnEvent)="navigateClasses()"
+                >
+                    Все классы
+                </app-return>
                 <div class="class__header">
                     <div class="class__title">
                         <app-title>
@@ -28,7 +39,7 @@
                                         class="class-remember__hide"
                                         (click)="toggleHide({studentsHidden: true})"
                                 >
-                                    <img src="assets/images/icons/hide.svg">
+                                    <img src="assets/images/icons/hide.svg" alt="Скрыть памятку">
                                 </button>
                             </h2>
 
@@ -85,6 +96,19 @@
                         </div>
                     </div>
 
+                    <div class="class__separator">
+
+                    </div>
+
+                    <div class="class__delete">
+                        <app-button
+                                mode="red"
+                                (clickEvent)="deleteClass()"
+                        >
+                            удалить класс
+                        </app-button>
+                    </div>
+
                 </div>
 
                 <div class="class__column">
@@ -99,7 +123,7 @@
                                         class="class-remember__hide"
                                         (click)="toggleHide({worksHidden: true})"
                                 >
-                                    <img src="assets/images/icons/hide.svg" alt="">
+                                    <img src="assets/images/icons/hide.svg" alt="Сркыть памятку">
                                 </button>
                             </h2>
 
@@ -126,7 +150,7 @@
                     <div class="class__block">
                         <div class="class__list class-list">
                             <h2 class="class-list__title subtitle">
-                                <span>Работы</span>
+                                <span>Тесты</span>
                                 <app-button (clickEvent)="createTest()">Добавить</app-button>
                             </h2>
                             <ul class="class-list__list">

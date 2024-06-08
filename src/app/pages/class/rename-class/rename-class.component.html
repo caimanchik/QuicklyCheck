@@ -1,7 +1,14 @@
+<ng-container *ngIf="!classInfo">
+    <app-loader>
+        Загружаем класс
+    </app-loader>
+</ng-container>
+
 <ng-container *ngIf="classInfo">
     <app-form
             [buildForm]="buildForm"
             (submitEvent)="rename($event)"
+            (returnEvent)="navigateClass()"
     >
     </app-form>
 </ng-container>
