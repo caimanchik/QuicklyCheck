@@ -1,0 +1,22 @@
+<div class="return"
+     [ngClass]="{lateMedia}"
+>
+    <div class="return__wrapper">
+        <button
+                type="button"
+                class="return__content"
+                (click)="generateReturnEvent()"
+        >
+
+            <div class="return__arrow">
+                <img src="assets/images/icons/return.svg" alt="">
+                <img src="assets/images/icons/return-dark.svg" alt="">
+            </div>
+
+            <div class="return__text">
+                <ng-content></ng-content>
+            </div>
+
+        </button>
+    </div>
+</div>
