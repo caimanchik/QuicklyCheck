@@ -1,0 +1,23 @@
+<div class="blanks" @appear>
+    <ng-container #blankContainer>
+
+    </ng-container>
+
+    <div class="blanks__return">
+        <app-button
+                (clickEvent)="emitPreviousClick()"
+        >
+            назад
+        </app-button>
+    </div>
+</div>
+
+
+<ng-template #blank let-view='view'>
+    <app-blank-view
+            [view]="view"
+            (showClick)="toggleShow()"
+            (swipeEvent)="swipe($event)"
+    ></app-blank-view>
+</ng-template>
+

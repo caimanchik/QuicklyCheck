@@ -5,7 +5,7 @@ import { HttpService } from "./infrastructure/http.service";
 import { Injectable } from "@angular/core";
 import { IRefreshToken } from "../interfaces/Tokens/IRefreshToken";
 import { IAccessToken } from "../interfaces/Tokens/IAccessToken";
-import { IsTokenPair } from "../interceptors/IsTokenPair";
+import { IsTokenPair } from "../type-guards/IsTokenPair";
 import { IUserLogin } from "../interfaces/User/IUserLogin";
 import { IUserRegister } from "../interfaces/User/IUserRegister";
 

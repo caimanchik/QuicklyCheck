@@ -6,3 +6,5 @@ export interface IBlankView {
   showDetail: boolean,
   isLogged: boolean
 }
+
+// todo

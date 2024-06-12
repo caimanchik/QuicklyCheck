@@ -1,14 +1,15 @@
-<ng-container *ngIf="view">
-    <div class="blank" @appear>
-        <div class="blank__wrapper">
-            <app-blank-view
-                    [view]="view"
-                    (showClick)="toggleShow()"
-            ></app-blank-view>
-        </div>
+<ng-container *ngIf="readyToShow; else loader">
+    <app-blanks-view
+            [blanks]="blanks"
+            [showIndex]="showIndex"
+            (previousClickEvent)="navigateTest()"
+    >
 
-        <div class="blank__buttons">
-            <app-button (clickEvent)="goPrev()">назад</app-button>
-        </div>
-    </div>
+    </app-blanks-view>
 </ng-container>
+
+<ng-template #loader>
+    <app-loader>
+        Загружаем бланки
+    </app-loader>
+</ng-template>

@@ -12,12 +12,12 @@ import { ErrorComponent } from './components/error/error.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { ActiveDirective } from "./directives/active.directive";
 import { BlankViewComponent } from './components/blank-view/blank-view.component';
-import { BlankDetailComponent } from './components/blank-detail/blank-detail.component';
 import { EscapeDirective } from './directives/escape.directive';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { LoaderComponent } from './components/loader/loader.component';
 import { ReturnComponent } from './components/return/return.component';
+import { BlanksViewComponent } from './components/blanks-view/blanks-view.component';
 
 
 @NgModule({
@@ -32,11 +32,11 @@ import { ReturnComponent } from './components/return/return.component';
     ErrorComponent,
     ConfirmComponent,
     BlankViewComponent,
-    BlankDetailComponent,
     EscapeDirective,
     FormComponent,
     LoaderComponent,
     ReturnComponent,
+    BlanksViewComponent,
   ],
   exports: [
     FooterComponent,
@@ -52,6 +52,7 @@ import { ReturnComponent } from './components/return/return.component';
     FormComponent,
     LoaderComponent,
     ReturnComponent,
+    BlanksViewComponent,
   ],
   imports: [
     CommonModule,

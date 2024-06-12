@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TestService } from "../../../../../shared/services/test.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITestAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
@@ -159,7 +159,13 @@ export class TestInfoComponent implements OnInit {
   }
 
   protected showBlank(pkBlank: number) {
-    this._router.navigate(['blank', pkBlank])
+    const extras: NavigationExtras = {
+      state: {
+        blanks: this.test.blanks
+      }
+    }
+
+    this._router.navigate(['blank', pkBlank], extras)
   }
 
   protected showWrongBlank(pkBlank: number) {
