@@ -4,62 +4,150 @@
 
         <div class="footer__row">
 
-            <div class="footer__item footer__item_left footer-item">
-
-                <div class="footer-item__about">
-                    <a href="" class="footer-item__logo footer-item-logo" routerLink="">
-                        <div class="footer-item-logo__img">
+            <div class="footer__column footer-column">
+                <div class="footer-column__about">
+                    <a href="" class="footer__logo footer-logo" routerLink="">
+                        <div class="footer-logo__img">
                             <img ngSrc="assets/images/icons/logo-footer.svg" alt="" fill>
-                        </div>
-                        <div class="footer-item-logo__text">
-                            QuicklyCheck
                         </div>
                     </a>
 
-                    <div class="footer-item__info">
+                    <div class="footer-column__info">
                         Быстро проверяйте тесты, используя наш сервис
                     </div>
                 </div>
-
             </div>
 
-            <div class="footer__item footer__item_right footer-item">
-                <ul class="footer-item__column footer-column">
-                    <li class="footer-column__item">
-                        <div class="footer-column__title">
-                            Учителям и преподавателям
-                        </div>
-                    </li>
-
-                    <ng-container *ngIf="auth.isLogged$ | async">
-                        <li class="footer-column__item">
-                            <a href="" class="footer-column__link" routerLink="classes">Мои классы</a>
+            <div class="footer__column">
+                <div class="footer__item footer-item">
+                    <ul class="footer-item__column footer-item-column">
+                        <li class="footer-item-column__item">
+                            <div class="footer-item-column__title">
+                                Преподавателям
+                            </div>
                         </li>
-                    </ng-container>
 
-                    <li class="footer-column__item">
-                        <a href="" class="footer-column__link" routerLink="getBlank">Скачать бланк</a>
-                    </li>
+                        <ng-container *ngIf="auth.isLogged$ | async">
+                            <li class="footer-item-column__item">
+                                <a
+                                        href=""
+                                        class="footer-item-column__link"
+                                        routerLink="classes"
+                                >Мои классы</a>
+                            </li>
+                        </ng-container>
 
-                    <ng-container *ngIf="(auth.isLogged$ | async) === false">
-                        <li class="footer-column__item">
-                            <a href="" class="footer-column__link" routerLink="check">Проверить тест</a>
+                        <li class="footer-item-column__item">
+                            <a
+                                    href=""
+                                    class="footer-item-column__link"
+                                    routerLink="getBlank"
+                            >Скачать бланк</a>
                         </li>
-                    </ng-container>
 
-                </ul>
-                <ul class="footer-item__column footer-column">
-                    <li class="footer-column__item">
-                        <div class="footer-column__title">
-                            Контакты
-                        </div>
-                    </li>
+                        <ng-container *ngIf="(auth.isLogged$ | async) === false">
+                            <li class="footer-item-column__item">
+                                <a
+                                        href=""
+                                        class="footer-item-column__link"
+                                        routerLink="check"
+                                >Проверить тест</a>
+                            </li>
+                        </ng-container>
 
-                    <li class="footer-column__item">
-                        <a href="mailto:d.n.noskova@mail.ru" class="footer-column__link">d.n.noskova@mail.ru</a>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
+
+                <div class="footer__item footer-item">
+                    <ul class="footer-item__column footer-item-column">
+                        <li class="footer-item-column__item">
+                            <div class="footer-item-column__title">
+                                Контакты
+                            </div>
+                        </li>
+
+                        <li class="footer-item-column__item">
+                            <a
+                                    href="mailto:son_m03@mail.ru"
+                                    class="footer-item-column__link"
+                            >
+                                son_m03@mail.ru
+                            </a>
+                        </li>
+
+                        <li class="footer-item-column__item">
+                            <div class="footer-item-column__text">
+                                Г. Екатеринбург
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
+<!--            <div class="footer__item footer__item_left footer-item">-->
+
+<!--                <div class="footer-item__about">-->
+<!--                    <a href="" class="footer-item__logo footer-item-logo" routerLink="">-->
+<!--                        <div class="footer-item-logo__img">-->
+<!--                            <img src="assets/images/icons/logo-footer.svg" alt="">-->
+<!--                        </div>-->
+<!--                    </a>-->
+
+<!--                    <div class="footer-item__info">-->
+<!--                        Быстро проверяйте тесты, используя наш сервис-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="footer__item footer__item_right footer-item">-->
+<!--                <ul class="footer-item__column footer-column">-->
+<!--                    <li class="footer-column__item">-->
+<!--                        <div class="footer-column__title">-->
+<!--                            Учителям и преподавателям-->
+<!--                        </div>-->
+<!--                    </li>-->
+
+<!--                    <ng-container *ngIf="auth.isLogged$ | async">-->
+<!--                        <li class="footer-column__item">-->
+<!--                            <a href="" class="footer-column__link" routerLink="classes">Мои классы</a>-->
+<!--                        </li>-->
+<!--                    </ng-container>-->
+
+<!--                    <li class="footer-column__item">-->
+<!--                        <a href="" class="footer-column__link" routerLink="getBlank">Скачать бланк</a>-->
+<!--                    </li>-->
+
+<!--                    <ng-container *ngIf="(auth.isLogged$ | async) === false">-->
+<!--                        <li class="footer-column__item">-->
+<!--                            <a href="" class="footer-column__link" routerLink="check">Проверить тест</a>-->
+<!--                        </li>-->
+<!--                    </ng-container>-->
+
+<!--                </ul>-->
+<!--                <ul class="footer-item__column footer-column">-->
+<!--                    <li class="footer-column__item">-->
+<!--                        <div class="footer-column__title">-->
+<!--                            Контакты-->
+<!--                        </div>-->
+<!--                    </li>-->
+
+<!--                    <li class="footer-column__item">-->
+<!--                        <a-->
+<!--                                href="mailto:son_m03@mail.ru"-->
+<!--                                class="footer-column__link"-->
+<!--                        >-->
+<!--                            son_m03@mail.ru-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    <li class="footer-column__item">-->
+<!--                        <div class="footer-column__text">-->
+<!--                            Г. Екатеринбург-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
 
         </div>
 

@@ -9,15 +9,18 @@
                 </h1>
 
                 <div class="main-about__text" [appScroll]="30">
-                    Сервис для быстрой проверки тестовых работ
+                    Сфокусируйтесь на важных задачах, пока мы берем на себя рутинную работу. Зарегистрируйтесь бесплатно
+                    и убедитесь в преимуществах нашего сервиса прямо сейчас!
                 </div>
 
-                <button routerLink="getBlank" class="main-about__button">
-                    <span [appScroll]="30">инструкция</span> <span [appScroll]="30">по проверке</span>
-                </button>
 
-                <div class="main-about__arrow">
-                    <img src="assets/images/icons/arrow-down.svg" alt="">
+                <div class="main-about__button">
+                    <app-button
+                            mode="filled"
+                            (clickEvent)="navigateGetBlank()"
+                    >
+                        узнать больше
+                    </app-button>
                 </div>
 
             </div>
@@ -118,7 +121,7 @@
                         Чтобы получить доступ ко всем сервисам, войдите в аккаунт
                     </div>
 
-                    <ng-container *ngIf="(_auth.isLogged$ | async) === false; else createClass">
+                    <ng-container *ngIf="(_authService.isLogged$ | async) === false; else createClass">
                         <a href="" class="main-choose-content__login" routerLink="./login">
                             Войти
                         </a>
@@ -136,7 +139,7 @@
 
         </div>
 
-        <ng-container *ngIf="(_auth.isLogged$ | async) === false">
+        <ng-container *ngIf="(_authService.isLogged$ | async) === false">
             <div class="main__howto main-howto">
                 <div class="main-howto__content">
                     <h2 class="main-howto__title">

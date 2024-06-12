@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { map, Observable, of, take } from "rxjs";
+import { map, Observable, take } from "rxjs";
 import { IUserMainInfo } from "../interfaces/User/IUserMainInfo";
 import { IUserChangePassword } from "../interfaces/User/IUserChangePassword";
+import { IProfile } from "../interfaces/User/IProfile";
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,13 @@ export class UserService {
       )
   }
 
-  public getUserEmail(): Observable<IUserMainInfo> {
-    return of({
-      email: "test@mail.ru",
-      surname: "testov",
-      name: "test",
-      batya: "testovich",
-    })
+  public getProfile(): Observable<IUserMainInfo> {
+    return this._http.Get<IUserMainInfo>(`profile`)
+      .pipe(take(1))
+  }
+
+  public saveProfile(profile: Partial<IProfile>): Observable<IProfile> {
+    return this._http.Post<Partial<IProfile>, IProfile>(`profile/edit/`, profile)
       .pipe(take(1))
   }
 }

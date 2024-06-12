@@ -27,6 +27,6 @@ export class CookieService {
   }
 
   public setCookie(cookie: ICookie) {
-    document.cookie = `${cookie.name}=${cookie.value};expires=${cookie.maxAge.days * 24 * 60 * 60 + cookie.maxAge.minutes * 60};path=/`
+    document.cookie = `${cookie.name}=${cookie.value};max-age=${cookie.maxAge.days * 24 * 60 * 60 + cookie.maxAge.minutes * 60};path=/`
   }
 }

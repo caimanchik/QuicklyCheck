@@ -13,6 +13,7 @@ import { take } from "rxjs";
 import { AuthToken } from "../../app.module";
 import { appear } from "../../shared/animations/appear";
 import { leave } from "../../shared/animations/leave";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -35,11 +36,12 @@ export class MainComponent implements AfterViewInit {
   private _currentSlide = 1
 
   constructor(
-    @Inject(AuthToken) protected _auth: AuthService,
+    @Inject(AuthToken) protected _authService: AuthService,
+    private _router: Router,
   ) { }
 
   public ngAfterViewInit(): void {
-    this._auth.isLogged$
+    this._authService.isLogged$
       .pipe(take(1))
       .subscribe(r => {
         if (!r)
@@ -80,5 +82,9 @@ export class MainComponent implements AfterViewInit {
   protected movePrevSlide() {
     if (this._currentSlide - 1 >= 0)
       this.initSlide(this._currentSlide - 1)
+  }
+
+  protected navigateGetBlank() {
+    this._router.navigate(['getBlank'])
   }
 }

@@ -51,7 +51,7 @@
                             <ul class="test__list test-list">
 
                                 <ng-container *ngFor="let blank of test.blanks; let i = index">
-                                    <li class="test-list__item normal">
+                                    <li class="test-list__item normal" @animateOut>
                                         <div class="test-list__number normal">
                                             <span>{{ i + 1 }}.</span>
                                         </div>
@@ -86,46 +86,46 @@
                         </ng-container>
                     </div>
 
-                    <ng-container *ngIf="test.wrongBlanks.length > 0">
+<!--                    <ng-container *ngIf="test.wrongBlanks.length > 0">-->
 
-                        <div class="test-wrong">
+<!--                        <div class="test-wrong">-->
 
-                            <h2 class="test-wrong__subtitle">
-                                Непроверенные бланки
-                            </h2>
+<!--                            <h2 class="test-wrong__subtitle">-->
+<!--                                Непроверенные бланки-->
+<!--                            </h2>-->
 
-                            <ul class="test__wrong test-wrong__list test-list">
+<!--                            <ul class="test__wrong test-wrong__list test-list">-->
 
-                                <ng-container *ngFor="let blank of test.wrongBlanks; let i = index">
-                                    <li class="test-list__item test-wrong__item">
-                                        <div class="test-list__number test-wrong__number">
-                                            <span>{{ i + 1 }}.</span>
-                                        </div>
+<!--                                <ng-container *ngFor="let blank of test.wrongBlanks; let i = index">-->
+<!--                                    <li class="test-list__item test-wrong__item">-->
+<!--                                        <div class="test-list__number test-wrong__number">-->
+<!--                                            <span>{{ i + 1 }}.</span>-->
+<!--                                        </div>-->
 
-                                        <button
-                                                type="button"
-                                                class="test-list__author test-wrong__author"
-                                                (click)="showWrongBlank(blank.pk)"
-                                        >
-                                            <span>Неизвестно</span>
-                                        </button>
+<!--                                        <button-->
+<!--                                                type="button"-->
+<!--                                                class="test-list__author test-wrong__author"-->
+<!--                                                (click)="showWrongBlank(blank.pk)"-->
+<!--                                        >-->
+<!--                                            <span>Неизвестно</span>-->
+<!--                                        </button>-->
 
-                                        <div class="test-list__right test-wrong__right">
-                                            {{ blank.createdAt.getDate() | number:'2.0' }}.{{ blank.createdAt.getMonth() + 1 | number:'2.0' }}.{{ blank.createdAt.getFullYear() }}
-                                        </div>
+<!--                                        <div class="test-list__right test-wrong__right">-->
+<!--                                            {{ blank.createdAt.getDate() | number:'2.0' }}.{{ blank.createdAt.getMonth() + 1 | number:'2.0' }}.{{ blank.createdAt.getFullYear() }}-->
+<!--                                        </div>-->
 
-                                        <button type="button" class="test-list__delete test-wrong__delete" (click)="deleteWrongBlank(i)">
-                                            <img src="assets/images/icons/deleteGrey.svg" alt="">
-                                            <img src="assets/images/icons/delete-red.svg" alt="">
-                                        </button>
+<!--                                        <button type="button" class="test-list__delete test-wrong__delete" (click)="deleteWrongBlank(i)">-->
+<!--                                            <img src="assets/images/icons/deleteGrey.svg" alt="">-->
+<!--                                            <img src="assets/images/icons/delete-red.svg" alt="">-->
+<!--                                        </button>-->
 
-                                    </li>
-                                </ng-container>
+<!--                                    </li>-->
+<!--                                </ng-container>-->
 
-                            </ul>
-                        </div>
+<!--                            </ul>-->
+<!--                        </div>-->
 
-                    </ng-container>
+<!--                    </ng-container>-->
 
 
                     <div class="test__delete">

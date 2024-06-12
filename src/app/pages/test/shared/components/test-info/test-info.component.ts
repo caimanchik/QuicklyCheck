@@ -12,6 +12,7 @@ import { appear } from "../../../../../shared/animations/appear";
 import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
 import { ClassesService } from "../../../../../shared/services/classes.service";
 import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
+import { animateOut } from "../../../../../shared/animations/animateOut";
 
 @Component({
   selector: 'app-test-info',
@@ -20,8 +21,10 @@ import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
-      transition(':enter',
-        useAnimation(appear)),
+      transition(':enter', useAnimation(appear)),
+    ]),
+    trigger('animateOut', [
+      transition(':leave', useAnimation(animateOut)),
     ])
   ]
 })

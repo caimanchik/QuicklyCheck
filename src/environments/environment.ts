@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
+  backendUrl: 'http://localhost:8000'
   // backendUrl: "https://quicklycheck.ru"
   // backendUrl: "http://192.168.1.37:8000",
-  backendUrl: "http://127.0.0.1:8000",
+  // backendUrl: "https://158.160.98.193",
   // backendUrl: "http://51.250.4.76:8000",
 };
 
