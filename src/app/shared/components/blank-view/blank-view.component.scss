@@ -200,12 +200,12 @@
     width: 2.8rem;
     height: 2.8em;
 
-    &:first-child {
+    &_prev {
       left: 1rem;
       transform: translateY(-50%);
     }
 
-    &:last-child {
+    &_next {
       right: 1rem;
       transform: translateY(-50%) rotate(180deg);
     }

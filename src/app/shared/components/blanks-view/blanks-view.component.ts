@@ -47,7 +47,10 @@ export class BlanksViewComponent implements AfterViewInit {
   private createView(blank: IBlankParsed, showDetail: boolean = false) {
     this._viewContext = {
       blank: blank,
-      multi: this.blanks.length > 1,
+      arrows: {
+        prev: this.showIndex > 0,
+        next: this.showIndex < this.blanks.length - 1
+      },
       showDetail: showDetail,
       isLogged: true
     }

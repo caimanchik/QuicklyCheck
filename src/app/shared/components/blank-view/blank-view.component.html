@@ -4,14 +4,18 @@
 
             <div class="view__main view-main">
 
-                <ng-container *ngIf="view.multi">
+                <ng-container>
                     <div class="view-main__arrows">
-                        <button type="button" class="view-main__arrow" (click)="swipe(-1)">
-                            <img src="assets/images/icons/arrow_pink.svg" alt="">
-                        </button>
-                        <button type="button" class="view-main__arrow" (click)="swipe(1)">
-                            <img src="assets/images/icons/arrow_pink.svg" alt="">
-                        </button>
+                        <ng-container *ngIf="view.arrows.prev">
+                            <button type="button" class="view-main__arrow view-main__arrow_prev" (click)="swipe(-1)">
+                                <img src="assets/images/icons/arrow_pink.svg" alt="">
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="view.arrows.next">
+                            <button type="button" class="view-main__arrow view-main__arrow_next" (click)="swipe(1)">
+                                <img src="assets/images/icons/arrow_pink.svg" alt="">
+                            </button>
+                        </ng-container>
                     </div>
                 </ng-container>
                 

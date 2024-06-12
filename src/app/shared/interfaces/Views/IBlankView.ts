@@ -2,9 +2,10 @@ import { IBlankParsed } from "../Tests/Blanks/IBlankParsed";
 
 export interface IBlankView {
   blank: IBlankParsed,
-  multi: boolean,
+  arrows: {
+    prev: boolean,
+    next: boolean
+  },
   showDetail: boolean,
   isLogged: boolean
 }
-
-// todo

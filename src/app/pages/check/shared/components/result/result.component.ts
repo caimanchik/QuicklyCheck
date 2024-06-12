@@ -72,7 +72,10 @@ export class ResultComponent implements AfterViewInit {
   private createView() {
     this._viewContext = {
       blank: this.blanks[this._nowIndex],
-      multi: this.blanks.length > 1,
+      arrows: {
+        prev: true,
+        next: true,
+      },
       showDetail: this._show,
       isLogged: true
     }
