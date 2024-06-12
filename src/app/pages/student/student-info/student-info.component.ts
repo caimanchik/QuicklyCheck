@@ -79,7 +79,12 @@ export class StudentInfoComponent implements OnInit {
   }
 
   protected showBlank(blankPk: number) {
-    this._router.navigate(['/', 'blank', blankPk])
+    this._router.navigate(['/', 'blank', blankPk], {
+      state: {
+        blanks: this.student.works,
+        previousUrl: this._router.url
+      }
+    })
   }
 
   protected deleteStudent() {

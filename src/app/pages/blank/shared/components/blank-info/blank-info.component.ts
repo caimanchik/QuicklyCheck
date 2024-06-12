@@ -20,6 +20,8 @@ export class BlankInfoComponent implements OnInit {
   protected showIndex!: number
   protected readyToShow!: boolean;
 
+  private readonly _previousUrl!: any[]
+
   constructor(
     private _blank: BlankService,
     private _route: ActivatedRoute,
@@ -28,6 +30,7 @@ export class BlankInfoComponent implements OnInit {
     private _router: Router
   ) {
     this.blanks = this._router.getCurrentNavigation()?.extras.state?.['blanks']
+    this._previousUrl = this._router.getCurrentNavigation()?.extras.state?.['previousUrl']
   }
 
   public ngOnInit() {
@@ -56,7 +59,9 @@ export class BlankInfoComponent implements OnInit {
     this._cd.markForCheck()
   }
 
-  protected navigateTest() {
-    this._router.navigate(['/', 'test', this.blanks[0].test])
+  protected navigatePrevious() {
+    this._router.navigate(this._previousUrl
+      ? [this._previousUrl]
+      : ['/', 'test', this.blanks[0].test])
   }
 }

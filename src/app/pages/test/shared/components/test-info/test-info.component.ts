@@ -161,7 +161,8 @@ export class TestInfoComponent implements OnInit {
   protected showBlank(pkBlank: number) {
     const extras: NavigationExtras = {
       state: {
-        blanks: this.test.blanks
+        blanks: this.test.blanks,
+        previousUrl: this._router.url
       }
     }
 
