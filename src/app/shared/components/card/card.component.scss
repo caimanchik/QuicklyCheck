@@ -3,11 +3,13 @@
 
 .card {
   &__wrapper {
+
+    //border: .34rem solid rgba(233, 58, 210, 0.75);
+    //border-radius: 35px;
+    //background: #F6F6F6;
+    //box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
+    @extend %block;
     padding: 2.75rem 1.8rem;
-    border: .34rem solid rgba(233, 58, 210, 0.75);
-    border-radius: 35px;
-    background: #F6F6F6;
-    box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
 
     @media(max-width:700px){
       padding: 2.3rem 1.5rem;
@@ -33,9 +35,8 @@
   }
 
   &__title {
-    @extend %grad;
+    @extend %title;
     font-size: 2.14rem;
-    font-weight: 700;
   }
 
   &__buttons {

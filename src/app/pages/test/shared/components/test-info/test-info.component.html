@@ -20,7 +20,9 @@
 
                     <div class="test__title test-title">
                         <h1 class="test-title__item">
-                            {{ test.name }}
+                            <span>
+                                {{ test.name }}
+                            </span>
                         </h1>
                         <div class="test-title__item">
                             <app-button (clickEvent)="fillTest()">редактировать</app-button>

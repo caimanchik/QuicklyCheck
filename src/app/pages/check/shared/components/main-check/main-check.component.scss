@@ -43,6 +43,10 @@
     &:first-child {
       padding: 2.1rem 0 2.6rem;
       flex-grow: 0;
+
+      & span {
+        @extend %title;
+      }
     }
 
     &:last-child {

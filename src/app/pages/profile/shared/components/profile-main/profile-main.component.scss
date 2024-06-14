@@ -6,6 +6,9 @@
   }
 
   &__title {
+    & span {
+      @extend %title;
+    }
   }
 
   &__blocks {
@@ -57,7 +60,6 @@
     padding: .7rem 2.2rem;
     text-transform: uppercase;
     font-weight: bold;
-    font-family: $roboto;
 
     @media(max-width:680px){
       margin-left: 1.5rem;

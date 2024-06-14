@@ -19,6 +19,9 @@
   }
 
   &__title {
+    & span {
+      @extend %title;
+    }
   }
 
   &__upload {
@@ -38,8 +41,8 @@
 
   &__back {
     font-size: 1.8rem;
-    font-family: $comic;
-    color: $pink;
+    //font-family: $comic;
+    color: rgba($pink, .6);
   }
 }
 

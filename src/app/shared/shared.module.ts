@@ -5,7 +5,6 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { RouterLinkWithHref } from "@angular/router";
 import { CardComponent } from './components/card/card.component';
 import { ButtonComponent } from './components/button/button.component';
-import { TitleComponent } from './components/title/title.component';
 import { PatternComponent } from './components/pattern/pattern.component';
 import { PhotoComponent } from './components/photo/photo.component';
 import { ErrorComponent } from './components/error/error.component';
@@ -26,7 +25,6 @@ import { BlanksViewComponent } from './components/blanks-view/blanks-view.compon
     FooterComponent,
     CardComponent,
     ButtonComponent,
-    TitleComponent,
     PatternComponent,
     PhotoComponent,
     ErrorComponent,
@@ -43,7 +41,6 @@ import { BlanksViewComponent } from './components/blanks-view/blanks-view.compon
     HeaderComponent,
     CardComponent,
     ButtonComponent,
-    TitleComponent,
     PatternComponent,
     PhotoComponent,
     ErrorComponent,

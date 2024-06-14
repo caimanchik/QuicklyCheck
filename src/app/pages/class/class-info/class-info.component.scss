@@ -1,26 +1,12 @@
 @import "vars";
 @import "classes";
 
-.subtitle {
-  font-size: 2.14rem;
-  font-weight: 700;
-
-  & span {
-    @extend %grad;
-  }
-}
-
 .class {
   &__wrapper {
   }
 
   &__block {
-    border-radius: 35px;
-    border: 4.045px solid rgba(233, 58, 210, 0.75);
-    background: #F6F6F6;
-    box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
-
-    padding: 2.5rem 2.9rem;
+    @extend %block;
     position: relative;
   }
 
@@ -37,6 +23,9 @@
   }
 
   &__title {
+    & span {
+      @extend %title;
+    }
   }
 
   &__rename {
@@ -75,6 +64,13 @@
   &__title {
     display: flex;
     align-items: center;
+
+    &.subtitle {
+      & span {
+        @extend %title;
+        font-size: 2.14rem;
+      }
+    }
   }
 
   &__list {
@@ -126,6 +122,13 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+
+    &.subtitle {
+      & span {
+        @extend %title;
+        font-size: 2.14rem;
+      }
+    }
   }
 
   &__list {

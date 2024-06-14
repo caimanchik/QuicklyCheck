@@ -1,16 +1,16 @@
 <div class="classes" @appear>
 
-    <div class="classes__title">
-        <span>
-            <app-title>
+    <div class="classes__title classes-title">
+        <div class="classes-title__column">
+            <span>
                 Мои классы и группы
-            </app-title>
-        </span>
-        <span>
+            </span>
+        </div>
+        <div class="classes-title__column">
             <app-button (clickEvent)="createClass()">
                 Добавить
             </app-button>
-        </span>
+        </div>
     </div>
 
     <ng-container *ngIf="!classes">

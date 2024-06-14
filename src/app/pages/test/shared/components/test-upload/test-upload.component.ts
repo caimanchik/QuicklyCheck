@@ -7,6 +7,7 @@ import { ErrorService } from "../../../../../shared/services/infrastructure/erro
 import { TestService } from "../../../../../shared/services/test.service";
 import { UrlToken } from "../../../../../app.module";
 import { appear } from "../../../../../shared/animations/appear";
+import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
 
 @Component({
   selector: 'app-test-upload',
@@ -21,7 +22,9 @@ import { appear } from "../../../../../shared/animations/appear";
 })
 export class TestUploadComponent implements OnDestroy, OnInit {
   protected previews!: string[]
+
   private needsClear = true
+  private testId!: number
 
   constructor(
     @Inject(UrlToken) private _url: UrlService,
@@ -34,8 +37,8 @@ export class TestUploadComponent implements OnDestroy, OnInit {
   ) { }
 
   public ngOnInit(): void {
-    const testId = +(this._route.snapshot.paramMap.get('id') ?? 0)
-    this._test.getTest(testId)
+    this.testId = getParamFromRoute(this._route)
+    this._test.getTest(this.testId)
       .pipe(this._error.passErrorWithMessage("Не удалось открыть страницу загрузки"))
       .subscribe()
   }
@@ -65,6 +68,6 @@ export class TestUploadComponent implements OnDestroy, OnInit {
 
   protected goToFill() {
     this.needsClear = true
-    this._router.navigate([this._url.getPreviousUrl()])
+    this._router.navigate(['/', 'test', this.testId, 'fill'])
   }
 }

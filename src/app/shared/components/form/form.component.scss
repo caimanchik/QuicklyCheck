@@ -20,6 +20,9 @@
 
   &__title {
     margin-top: 5rem;
+    & span {
+      @extend %title;
+    }
   }
 
   &__form {

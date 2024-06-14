@@ -29,7 +29,7 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        column-gap: .5rem ;
+        column-gap: .5rem;
       }
 
       &:nth-child(2) {
@@ -71,6 +71,7 @@
 .student-works {
   &__title {
     @extend %title;
+    font-size: 2.14rem;
   }
 
   &__list {

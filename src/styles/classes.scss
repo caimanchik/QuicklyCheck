@@ -1,7 +1,7 @@
 @import "vars";
 
 %grad {
-  background: linear-gradient(270deg, #4653D2 0%, #E93AD2 100%);
+  background: linear-gradient(270deg, $blue 0%, $pink 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -20,8 +20,7 @@
 
 %button {
   border-radius: 100px;
-  background: linear-gradient(315deg, rgba(70, 83, 210, 0.99) 3.46%, #E93AD2 92.67%);
-  //box-shadow: 0px 0px 17px 0px rgba(223, 40, 255, 0.35) inset, 0px 0px 30px 0px rgba(60, 0, 128, 0.15);
+  background: linear-gradient(315deg, $blue 3.46%, $pink 92.67%);
   color: white;
   text-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.10);
   text-transform: uppercase;
@@ -36,19 +35,24 @@
   font-size: 2.86rem;
   letter-spacing: 0.05em;
   @extend %grad;
+  font-family: $futura;
   font-weight: bold;
   line-height: 1.375em;
 
   @media(max-width:700px){
     font-size: 2.4rem;
   }
+
+  @media(max-width:500px){
+
+  }
 }
 
 %block {
   border-radius: 35px;
-  border: 4.045px solid rgba(233, 58, 210, 0.75);
+  border: 4.045px solid rgba($pink, .75);
   background: #F6F6F6;
-  box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
+  box-shadow: 4.44px 6.21px 16.86px 0px rgba(0, 0, 0, 0.25);
   padding: 2.5rem 2.9rem;
 
   @media(max-width:700px){
@@ -64,7 +68,7 @@
   border-radius: 35px;
   border: 4.045px solid $red;
   background: #F6F6F6;
-  box-shadow: 18.608px 20.226px 60.677px 0px rgba(0, 0, 0, 0.06);
+  box-shadow: 4.44px 6.21px 16.86px 0px rgba(0, 0, 0, 0.25);
   padding: 2.5rem 2.9rem;
 
   @media(max-width:700px){

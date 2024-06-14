@@ -1,7 +1,6 @@
 @import "vars";
 @import "classes";
 
-
 .test {
   &__wrapper {
   }
@@ -73,11 +72,12 @@
 
   &__subtitle {
     & span {
-      @extend %grad;
-      display: inline-block;
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-right: 2rem;
+      @extend %title;
+      font-size: 2.14rem;
+
+      @media(max-width:700px) {
+        font-size: 2rem;
+      }
     }
   }
 
@@ -108,6 +108,10 @@
   }
 
   &__item {
+    & span {
+      @extend %title;
+    }
+
     &:first-child {
       @extend %grad;
       font-size: 2.5rem;
@@ -187,6 +191,7 @@
     flex-grow: 1;
     display: flex;
     margin-left: 1.5rem;
+    text-align: left;
 
     @media(max-width:600px){
       margin-left: 1rem;
@@ -296,9 +301,12 @@
 .test-assessment {
   &__title {
     & span {
-      @extend %grad;
+      @extend %title;
       font-size: 2.14rem;
-      font-weight: bold;
+
+      @media(max-width:700px) {
+        font-size: 2rem;
+      }
     }
   }
 
@@ -309,7 +317,6 @@
   &__grad-item {
     display: flex;
     font-size: 1.5rem;
-    font-family: $roboto;
     margin-top: .7rem;
 
     &:first-child {
@@ -321,15 +328,5 @@
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
-  }
-}
-
-.test-remember {
-  &__title {
-    & span {
-      @extend %grad;
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
   }
 }
