@@ -6,14 +6,14 @@
 
                 <ng-container>
                     <div class="view-main__wrong view-main-wrong">
-                        <div class="view-main-wrong__text">
-                            результат не верный?
-                        </div>
+                        <button type="button" class="view-main-wrong__text">
+                            результат неверный<span>?</span>
+                        </button>
                         <div class="view-main-wrong__info">
                             <img src="assets/images/icons/info.svg" alt="Информация">
 
                             <div class="view-main-wrong__modal">
-                                Если система не правильно оценила работу, вы можете изменить её вручную.
+                                Если система неправильно оценила работу, вы можете изменить результат вручную.
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,6 @@
                                 <ng-template #hideText>
                                     <app-button
                                             (clickEvent)="toggleShow()"
-                                            mode="filled"
                                             @opacityIn
                                     >
                                         свернуть результат
@@ -106,7 +105,7 @@
             <ng-container *ngIf="view.showDetail">
                 <div class="view__answers view-answers" @appear>
                     <div class="view-answers__title">
-                        Вариант {{ view.blank.var + 1 }}
+                        Вариант {{ view.blank.var }}
                         <button type="button" class="view-answers__edit-icon">
                             <img src="assets/images/icons/pencil.svg" alt="Редактировать">
                             <img src="assets/images/icons/pencil-pink.svg" alt="">
@@ -138,6 +137,12 @@
                         &nbsp;правильно {{ resultView.actual }} из {{ resultView.right }}
                     </div>
                 </div>
+            </ng-container>
+
+            <ng-container>
+                <app-blank-edit
+                        [view]="view"
+                ></app-blank-edit>
             </ng-container>
 
         </div>

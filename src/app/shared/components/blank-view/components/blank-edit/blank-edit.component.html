@@ -1,0 +1,99 @@
+<ng-container *ngIf="view">
+    <div class="block">
+        <div class="answers section">
+            <div class="answers__title section__title">
+                Ответы
+            </div>
+
+            <div class="answers__results">
+                <ul class="answers__list answers-list">
+                    <ng-container *ngFor="let answer of view.blank.answers; let i = index">
+                        <div class="answers-list__item">
+                            <div class="answers-list__number">
+                                {{ i + 1 }}.
+                            </div>
+                            <input
+                                    class="answers-list__answer"
+                                    [ngClass]="{wrong: !answer.isRight}"
+                                    [value]="answer.actual"
+                            >
+                        </div>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section__wrapper">
+            <div class="section">
+                <div class="section__title">
+                    Вариант
+                </div>
+
+                <ul class="section__list section-list">
+                    <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index">
+                        <li class="section-list__item">
+                            <input
+                                    class="section-list__input"
+                                    type="radio"
+                                    name="variant"
+                                    [id]="'var' + i"
+                                    checked
+                            >
+                            <label class="section-list__label" [for]="'var' + i">
+                                {{ item }}
+                            </label>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section__title">
+                    ID
+                </div>
+
+                <ul class="section__list section-list">
+                    <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index">
+                        <li class="section-list__item">
+                            <input
+                                    class="section-list__input"
+                                    type="radio"
+                                    name="idFirst"
+                                    [id]="'idFirst' + i"
+                            >
+                            <label class="section-list__label" [for]="'idFirst' + i">
+                                {{ i }}
+                            </label>
+                        </li>
+                    </ng-container>
+                </ul>
+
+                <ul class="section__list section-list">
+                    <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index">
+                        <li class="section-list__item">
+                            <input
+                                    class="section-list__input"
+                                    type="radio"
+                                    name="idSecond"
+                                    [id]="'idSecond' + i"
+                            >
+                            <label class="section-list__label" [for]="'idSecond' + i">
+                                {{ i }}
+                            </label>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="save">
+            <app-button
+                    mode="filled"
+                    (clickEvent)="saveEvent()"
+            >
+                Сохранить
+            </app-button>
+        </div>
+    </div>
+</ng-container>

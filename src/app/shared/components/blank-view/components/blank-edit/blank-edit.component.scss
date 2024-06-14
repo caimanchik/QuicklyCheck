@@ -1,0 +1,165 @@
+@import "vars";
+@import "classes";
+
+
+.section {
+  &__wrapper {
+    display: flex;
+    margin: 0 -1.5rem;
+    margin-top: 2rem;
+    justify-content: space-between;
+
+    @media(max-width:900px) {
+      margin: 2rem -.8rem 0;
+    }
+
+    @media(max-width:730px){
+      flex-wrap: wrap;
+    }
+
+    & .section {
+      flex: 0 0 50%;
+      padding: 0 1.5rem;
+
+      @media(max-width:900px){
+        padding: 0 .8rem;
+      }
+
+      @media(max-width:730px){
+        flex: 0 0 100%;
+
+        &:nth-child(2) {
+          margin-top: 3rem;
+        }
+      }
+
+    }
+  }
+
+  &__list {
+  }
+}
+
+.section-list {
+  display: flex;
+
+  &:last-child {
+    margin-top: .6rem;
+  }
+
+  &:nth-child(2) {
+    margin-top: 1.3rem;
+  }
+
+  &__item {
+    position: relative;
+    width: 2.7rem;
+    height: 2.7rem;
+
+    margin-left: 0.4rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    @media(max-width:880px){
+      width: 2.3rem;
+      height: 2.3rem;
+    }
+
+    @media(max-width:390px){
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+
+    @media(max-width:370px) {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    @media(max-width:370px) {
+      margin-left: .3rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:checked + label {
+      &::after {
+        width: 1.65rem;
+        height: 1.65rem;
+
+        @media(max-width:880px){
+          width: 1.2rem;
+          height: 1.2rem;
+        }
+
+        @media(max-width:390px) {
+          width: 1rem;
+          height: 1rem;
+        }
+
+        @media(max-width:370px) {
+          width: 1.1rem;
+          height: 1.1rem;
+        }
+      }
+    }
+  }
+
+  &__label {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+    border: 3px solid $pink;
+    cursor: pointer;
+    color: $grey;
+    font-size: 1.4rem;
+
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      background: $pink;
+      border-radius: 50%;
+
+      transform: translate(-50%, -50%);
+      transition: all ease .2s;
+    }
+
+    @media(max-width:880px){
+      font-size: 1.2rem;
+    }
+
+    @media(max-width:390px) {
+      font-size: 1rem;
+    }
+
+    @media(max-width:370px) {
+      border-width: 2px;
+    }
+  }
+}
+
+.save {
+  margin-top: 3rem;
+}

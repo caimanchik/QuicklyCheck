@@ -10,6 +10,7 @@ import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { IResultView } from "../../interfaces/Views/IResultView";
 import { appear } from "../../animations/appear";
 import { calculateResult } from "../../functions/blanks/calculateResult";
+import { opacityIn } from "../../animations/opacityIn";
 
 @Component({
   selector: 'app-blank-view',
@@ -19,6 +20,9 @@ import { calculateResult } from "../../functions/blanks/calculateResult";
   animations: [
     trigger('appear', [
       transition(':enter', useAnimation(appear))
+    ]),
+    trigger('opacityIn', [
+      transition(':enter', useAnimation(opacityIn))
     ])
   ]
 })
