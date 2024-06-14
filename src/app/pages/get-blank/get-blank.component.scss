@@ -15,7 +15,7 @@
   &__columns {
     display: flex;
 
-    @media(max-width:580px) {
+    @media(max-width:700px) {
       flex-wrap: wrap;
     }
   }
@@ -28,7 +28,7 @@
       flex: 0 0 65%;
     }
 
-    @media(max-width:580px){
+    @media(max-width:700px){
       &:first-child {
         flex: 0 0 100%;
         order: 2;
@@ -39,36 +39,38 @@
     }
   }
 
-  &__image {
+  &__image-wrap {
     width: 100%;
+    margin: 0 auto;
 
-    @media(max-width:580px) {
-      display: flex;
-      justify-content: center;
+    @media(max-width:700px){
       margin-top: 2rem;
+      width: 70%;
     }
 
-    & img {
+    @media(max-width:500px){
+      width: 90%;
+    }
+
+    @media(max-width:400px){
       width: 100%;
-      height: auto;
-      margin: 0 auto;
+    }
+  }
+
+  &__image {
+    position: relative;
+    width: 100%;
+    padding-top: 145%;
+
+    box-shadow: 0 16px 24px 0 rgba(#4C4A4A, .2);
+
+    & img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       display: inline-block;
-
-      @media(max-width:580px) {
-        width: 50%;
-      }
-
-      @media(max-width:540px) {
-        width: 70%;
-      }
-
-      @media(max-width:500px) {
-        width: 85%;
-      }
-
-      @media(max-width:450px) {
-        width: 100%;
-      }
+      left: 0;
+      top: 0;
     }
   }
 
@@ -135,11 +137,21 @@
       &::after {
         content: '';
         position: absolute;
-        left: 0px;
+        left: 50%;
         bottom: -2px;
-        width: 100%;
+        width: 0;
         height: 2px;
         background-color: $violet;
+        transform: translateX(-50%);
+        transition: all ease .3s;
+      }
+
+      @media(hover: hover) {
+        &:hover {
+          &::after {
+            width: 100%;
+          }
+        }
       }
     }
   }
