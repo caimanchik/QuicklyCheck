@@ -1,4 +1,4 @@
-<ng-container *ngIf="userMainInfo">
+<ng-container *ngIf="userMainInfo; else loader">
     <div class="profile" @appear>
         <div class="profile__wrapper">
             <div class="profile__title">
@@ -98,3 +98,9 @@
         </div>
     </div>
 </ng-container>
+
+<ng-template #loader>
+    <app-loader>
+        Загрузка профиля
+    </app-loader>
+</ng-template>
