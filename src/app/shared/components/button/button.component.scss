@@ -14,10 +14,19 @@
     border-radius: 100px;
     background-color: $bgcolor;
     padding: .5rem 3rem;
+    
+    @media(max-width:1200px){
+      padding: .5rem 2.8rem;
+    }
+
+    @media(max-width:1000px){
+      padding: .5rem 2.6rem;
+    }
   }
   
   &__button {
     @extend %grad;
+    font-family: $futura;
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: .03em;
@@ -30,10 +39,6 @@
 
     @media(max-width:1000px){
       font-size: 1.3rem;
-    }
-
-    @media(max-width:700px){
-      font-size: 1.4rem;
     }
   }
 
