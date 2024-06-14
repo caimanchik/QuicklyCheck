@@ -5,6 +5,21 @@
             <div class="view__main view-main">
 
                 <ng-container>
+                    <div class="view-main__wrong view-main-wrong">
+                        <div class="view-main-wrong__text">
+                            результат не верный?
+                        </div>
+                        <div class="view-main-wrong__info">
+                            <img src="assets/images/icons/info.svg" alt="Информация">
+
+                            <div class="view-main-wrong__modal">
+                                Если система не правильно оценила работу, вы можете изменить её вручную.
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container>
                     <div class="view-main__arrows">
                         <ng-container *ngIf="view.arrows.prev">
                             <button type="button" class="view-main__arrow view-main__arrow_prev" (click)="swipe(-1)">
@@ -19,9 +34,14 @@
                     </div>
                 </ng-container>
                 
-                <h1 class="view-main__title">
-                    <app-title>Результаты проверки</app-title>
-                </h1>
+                <div class="view-main__title view-main-title">
+                    <h1 class="view-main-title__title">
+                        <span>Результаты проверки</span>
+                    </h1>
+                    <div class="view-main-title__test">
+                        {{ view.blank.testName }}
+                    </div>
+                </div>
 
                 <div class="view-main__columns">
                     <div class="view-main__column">
@@ -51,15 +71,25 @@
                         </div>
 
                         <div class="view-main__show">
-                            <app-button (clickEvent)="toggleShow()">
+
                                 <ng-container *ngIf="!view.showDetail; else hideText">
-                                    развернуть
+                                    <app-button
+                                            (clickEvent)="toggleShow()"
+                                            mode="filled"
+                                            @opacityIn
+                                    >
+                                        развернуть результат
+                                    </app-button>
                                 </ng-container>
                                 <ng-template #hideText>
-                                    свернуть
+                                    <app-button
+                                            (clickEvent)="toggleShow()"
+                                            mode="filled"
+                                            @opacityIn
+                                    >
+                                        свернуть результат
+                                    </app-button>
                                 </ng-template>
-                                 результат
-                            </app-button>
                         </div>
 
                     </div>
@@ -76,7 +106,11 @@
             <ng-container *ngIf="view.showDetail">
                 <div class="view__answers view-answers" @appear>
                     <div class="view-answers__title">
-                        Ответы
+                        Вариант {{ view.blank.var + 1 }}
+                        <button type="button" class="view-answers__edit-icon">
+                            <img src="assets/images/icons/pencil.svg" alt="Редактировать">
+                            <img src="assets/images/icons/pencil-pink.svg" alt="">
+                        </button>
                     </div>
 
                     <div class="view-answers__results">
@@ -86,8 +120,11 @@
                                     <div class="view-answers-list__number">
                                         {{ i + 1 }}.
                                     </div>
-                                    <div class="view-answers-list__answer">
-                                        {{ answer.correct }}-<span class="view-answers-list__actual" [ngClass]="{invalid: !answer.isRight}">{{ answer.actual }}</span>
+                                    <div
+                                            class="view-answers-list__answer"
+                                            [ngClass]="{wrong: !answer.isRight}"
+                                    >
+                                        {{ answer.actual }}
                                     </div>
                                 </div>
                             </ng-container>
@@ -95,7 +132,10 @@
                     </div>
 
                     <div class="view-answers__summary">
-                        <span class="view-answers__itogo">Итого</span>: правильно {{ resultView.actual }} из {{ resultView.right }}
+                        <span class="view-answers__itogo">
+                            Итого:
+                        </span>
+                        &nbsp;правильно {{ resultView.actual }} из {{ resultView.right }}
                     </div>
                 </div>
             </ng-container>
