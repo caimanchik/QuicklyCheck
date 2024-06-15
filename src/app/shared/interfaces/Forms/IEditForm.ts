@@ -1,7 +1,7 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 
 export interface IEditForm {
-  answers: FormArray<FormControl<number>>
+  answers: FormArray<FormControl<number | string>>
   variant: FormControl<number>
   id: FormGroup<IIdEditForm>
 }

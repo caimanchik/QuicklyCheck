@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component, EventEmitter,
   Input,
   OnChanges, Output,
@@ -15,7 +15,10 @@ import { opacityIn } from "../../animations/opacityIn";
 @Component({
   selector: 'app-blank-view',
   templateUrl: './blank-view.component.html',
-  styleUrls: ['./blank-view.component.scss'],
+  styleUrls: [
+    './blank-view.component.scss',
+    './styles/answers.scss'
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
@@ -33,14 +36,18 @@ export class BlankViewComponent implements OnChanges {
   @Output() public swipeEvent = new EventEmitter<number>()
 
   protected resultView!: IResultView
+  protected isEdit: boolean = false
 
-  constructor() { }
+  constructor(
+    private _cd: ChangeDetectorRef
+  ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (!changes?.['view']?.currentValue)
       return
 
     this.resultView = calculateResult(changes?.['view']?.currentValue.blank)
+    this.enableEditMod()
   }
 
   protected toggleShow() {
@@ -49,5 +56,10 @@ export class BlankViewComponent implements OnChanges {
 
   protected swipe(delta: number) {
     this.swipeEvent.next(delta)
+  }
+
+  protected enableEditMod() {
+    this.isEdit = true
+    this._cd.markForCheck()
   }
 }

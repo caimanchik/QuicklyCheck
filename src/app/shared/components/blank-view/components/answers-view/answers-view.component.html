@@ -1,0 +1,38 @@
+<div class="block section">
+    <div class="section__title">
+        Вариант {{ view.blank.var }}
+        <button
+                type="button"
+                class="answers__edit-icon"
+                (click)="startEdit()"
+        >
+            <img src="assets/images/icons/pencil.svg" alt="Редактировать">
+            <img src="assets/images/icons/pencil-pink.svg" alt="">
+        </button>
+    </div>
+
+    <div class="answers__results">
+        <ul class="answers__list answers-list">
+            <ng-container *ngFor="let answer of view.blank.answers; let i = index">
+                <div class="answers-list__item">
+                    <div class="answers-list__number">
+                        {{ i + 1 }}.
+                    </div>
+                    <div
+                            class="answers-list__answer"
+                            [ngClass]="{wrong: !answer.isRight}"
+                    >
+                        {{ answer.actual === -1 ? 'X' : answer.actual }}
+                    </div>
+                </div>
+            </ng-container>
+        </ul>
+    </div>
+
+    <div class="answers__summary">
+                        <span class="answers__itogo">
+                            Итого:
+                        </span>
+        &nbsp;правильно {{ resultView.actual }} из {{ resultView.right }}
+    </div>
+</div>

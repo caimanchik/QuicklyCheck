@@ -18,6 +18,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { ReturnComponent } from './components/return/return.component';
 import { BlanksViewComponent } from './components/blanks-view/blanks-view.component';
 import { BlankEditComponent } from './components/blank-view/components/blank-edit/blank-edit.component';
+import { AnswersViewComponent } from './components/blank-view/components/answers-view/answers-view.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { BlankEditComponent } from './components/blank-view/components/blank-edi
     ReturnComponent,
     BlanksViewComponent,
     BlankEditComponent,
+    AnswersViewComponent,
   ],
   exports: [
     FooterComponent,
