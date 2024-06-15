@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   EmbeddedViewRef, EventEmitter,
-  Input, Output,
+  Input, OnChanges, Output, SimpleChanges,
   TemplateRef,
   ViewChild, ViewContainerRef
 } from '@angular/core';
@@ -23,7 +23,7 @@ import { appear } from "../../animations/appear";
     ])
   ]
 })
-export class BlanksViewComponent implements AfterViewInit {
+export class BlanksViewComponent implements AfterViewInit, OnChanges {
   @ViewChild('blankContainer', {read: ViewContainerRef}) private _blankContainer!: ViewContainerRef
   @ViewChild('blank', {read: TemplateRef, static: true}) private _blankTemplate!: TemplateRef<{ view: IBlankView }>
 
@@ -31,6 +31,7 @@ export class BlanksViewComponent implements AfterViewInit {
   @Input() public showIndex = 0
 
   @Output() public previousClickEvent = new EventEmitter<void>()
+  @Output() public saveEvent = new EventEmitter<IBlankParsed>()
 
   private _viewContext!: IBlankView
   private _view!: EmbeddedViewRef<{view: IBlankView}>
@@ -39,6 +40,13 @@ export class BlanksViewComponent implements AfterViewInit {
   constructor(
     private _cd: ChangeDetectorRef,
   ) { }
+
+  public ngOnChanges(changes: SimpleChanges) {
+    if (!changes?.['blanks'].currentValue || changes?.['blanks'].firstChange)
+      return
+
+    this.createView(this.blanks[this.showIndex], this._showDetail)
+  }
 
   public ngAfterViewInit(): void {
     this.createView(this.blanks[this.showIndex])
@@ -87,5 +95,9 @@ export class BlanksViewComponent implements AfterViewInit {
 
   protected emitPreviousClick() {
     this.previousClickEvent.emit()
+  }
+
+  protected save(blank: IBlankParsed) {
+    this.saveEvent.next(blank)
   }
 }

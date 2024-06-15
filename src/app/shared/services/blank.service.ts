@@ -9,8 +9,9 @@ import { translateBlanksFromRequest } from "../functions/blanks/translateBlanksF
 import { StudentService } from "./student.service";
 import { PatternService } from "./pattern.service";
 import { sortStrings } from "../functions/application/sortStrings";
-import { IBlankWrongParsed } from "../interfaces/Tests/Blanks/IBlankWrongParsed";
+import { IBlankInvalidParsed } from "../interfaces/Tests/Blanks/IBlankInvalidParsed";
 import { translateWrongBlanksFromRequest } from "../functions/blanks/translateWrongBlanksFromRequest";
+import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class BlankService {
       )
   }
 
-  public getWrongBlanks(pkTest: number): Observable<IBlankWrongParsed[]> {
+  public getWrongBlanks(pkTest: number): Observable<IBlankInvalidParsed[]> {
     return of([
       {
         pk: 1,
@@ -107,6 +108,19 @@ export class BlankService {
                   .sort((a, b) => sortStrings(a.author, b.author))))
             : of([])
         }),
+        take(1)
+      )
+  }
+
+  public updateBlank(blank: BlankUpdate, temporary = false): Observable<IBlankParsed> {
+    return this._http.Put<BlankUpdate, IBlankRequest>(
+      (temporary ? "temp/" : "") + `blank/${blank.pk}/`,
+      blank,
+      { withCredentials: !temporary }
+    )
+      .pipe(
+        switchMap(blankRequest => this.parseBlanks([blankRequest], temporary)),
+        map(blanks => blanks[0]),
         take(1)
       )
   }

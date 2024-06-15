@@ -1,7 +1,7 @@
-import { IBlankWrongRequest } from "../../interfaces/Tests/Blanks/IBlankWrongRequest";
-import { IBlankWrongParsed } from "../../interfaces/Tests/Blanks/IBlankWrongParsed";
+import { IBlankInvalidRequest } from "../../interfaces/Tests/Blanks/IBlankInvalidRequest";
+import { IBlankInvalidParsed } from "../../interfaces/Tests/Blanks/IBlankInvalidParsed";
 
-export function translateWrongBlanksFromRequest(blanks: IBlankWrongRequest[]): IBlankWrongParsed[] {
+export function translateWrongBlanksFromRequest(blanks: IBlankInvalidRequest[]): IBlankInvalidParsed[] {
   return blanks.map(blank => ({
     ...blank,
     createdAt: new Date(blank.createdAt)

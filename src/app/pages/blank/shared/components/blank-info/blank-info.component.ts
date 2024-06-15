@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { IBlankParsed } from "../../../../../shared/interfaces/Tests/Blanks/IBlankParsed";
+import { translateBlankToRequest } from "../../../../../shared/functions/blanks/translateBlankToRequest";
+import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
 
 @Component({
   selector: 'app-blank-info',
@@ -23,9 +25,9 @@ export class BlankInfoComponent implements OnInit {
   private readonly _previousUrl!: any[]
 
   constructor(
-    private _blank: BlankService,
+    private _blankService: BlankService,
+    private _errorService: ErrorService,
     private _route: ActivatedRoute,
-    private _error: ErrorService,
     private _cd: ChangeDetectorRef,
     private _router: Router
   ) {
@@ -34,34 +36,56 @@ export class BlankInfoComponent implements OnInit {
   }
 
   public ngOnInit() {
-    const blankId = +(this._route.snapshot.paramMap.get('id') ?? 0)
+    const blankPk = getParamFromRoute(this._route)
 
     if (this.blanks)
-      this.prepareBlanksForView(blankId)
+      this.prepareBlanksForView(blankPk)
     else
-      this._blank.getBlank(blankId)
-        .pipe(this._error.passErrorWithMessage("Бланк не найден"))
+      this._blankService.getBlank(blankPk)
+        .pipe(this._errorService.passErrorWithMessage("Бланк не найден"))
         .subscribe(blank => {
           this.blanks = [blank]
-          this.prepareBlanksForView(blankId)
+          this.prepareBlanksForView(blankPk)
         })
   }
 
-  private prepareBlanksForView(blankId: number) {
-    this.blanks.forEach((blank, i) => {
-      if (blank.pk === blankId) {
-        this.showIndex = i
-        return
-      }
-    })
+  private prepareBlanksForView(blankPk: number) {
+    this.showIndex = this.findIndex(blankPk)
 
     this.readyToShow = true
     this._cd.markForCheck()
+  }
+
+  private findIndex(blankPk: number): number {
+    let index = 0
+
+    this.blanks.forEach((blank, i) => {
+      if (blank.pk === blankPk)
+        index = i
+    })
+
+    return index
   }
 
   protected navigatePrevious() {
     this._router.navigate(this._previousUrl
       ? [this._previousUrl]
       : ['/', 'test', this.blanks[0].test])
+  }
+
+  protected saveBlank(blank: IBlankParsed) {
+    this._blankService.updateBlank(translateBlankToRequest(blank))
+      .subscribe(blankParsed => {
+        const index = this.findIndex(blankParsed.pk)
+        this.blanks = [
+          ...this.blanks.slice(0, index),
+          blankParsed,
+          ...this.blanks.slice(index + 1)
+        ]
+
+        // this.prepareBlanksForView(blankParsed.pk)
+
+        this._cd.detectChanges()
+      })
   }
 }

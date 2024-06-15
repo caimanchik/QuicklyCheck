@@ -11,6 +11,7 @@ import { IResultView } from "../../interfaces/Views/IResultView";
 import { appear } from "../../animations/appear";
 import { calculateResult } from "../../functions/blanks/calculateResult";
 import { opacityIn } from "../../animations/opacityIn";
+import { IBlankParsed } from "../../interfaces/Tests/Blanks/IBlankParsed";
 
 @Component({
   selector: 'app-blank-view',
@@ -34,6 +35,7 @@ export class BlankViewComponent implements OnChanges {
 
   @Output() public showClick = new EventEmitter<void>()
   @Output() public swipeEvent = new EventEmitter<number>()
+  @Output() public saveEvent = new EventEmitter<IBlankParsed>()
 
   protected resultView!: IResultView
   protected isEdit: boolean = false
@@ -47,7 +49,6 @@ export class BlankViewComponent implements OnChanges {
       return
 
     this.resultView = calculateResult(changes?.['view']?.currentValue.blank)
-    this.enableEditMod()
   }
 
   protected toggleShow() {
@@ -60,6 +61,15 @@ export class BlankViewComponent implements OnChanges {
 
   protected enableEditMod() {
     this.isEdit = true
+    this._cd.markForCheck()
+  }
+
+  protected closeEditForm(blank: IBlankParsed | void) {
+    if (blank) {
+      this.saveEvent.next(blank)
+    }
+
+    this.isEdit = false;
     this._cd.markForCheck()
   }
 }

@@ -1,8 +1,8 @@
 import { ITest } from "./ITest";
 import { IBlankParsed } from "../Blanks/IBlankParsed";
-import { IBlankWrongParsed } from "../Blanks/IBlankWrongParsed";
+import { IBlankInvalidParsed } from "../Blanks/IBlankInvalidParsed";
 
 export interface ITestAllInfo extends ITest {
   blanks: IBlankParsed[]
-  wrongBlanks: IBlankWrongParsed[]
+  wrongBlanks: IBlankInvalidParsed[]
 }

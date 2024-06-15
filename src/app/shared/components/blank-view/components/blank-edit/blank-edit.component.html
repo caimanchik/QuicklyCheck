@@ -16,9 +16,11 @@
                             </div>
                             <input
                                     class="answers-list__answer"
-                                    [ngClass]="{wrong: control.value !== view.blank.answers[i].correct}"
                                     [value]="control.value"
                                     [formControl]="control"
+                                    appValid
+                                    [validControl]="control"
+                                    [rightValue]="view.blank.answers[i].correct"
                             >
                         </div>
                     </ng-container>
@@ -107,7 +109,7 @@
         <div class="edit__buttons">
             <div class="edit__button">
                 <app-button
-                        (clickEvent)="cancelEvent()"
+                        (clickEvent)="cancel()"
                 >
                     Отмена
                 </app-button>
@@ -116,7 +118,7 @@
             <div class="edit__button">
                 <app-button
                         mode="filled"
-                        (clickEvent)="saveEvent()"
+                        (clickEvent)="save()"
                 >
                     Сохранить
                 </app-button>

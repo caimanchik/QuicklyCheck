@@ -2,9 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
-  OnInit,
+  Output,
   SimpleChanges
 } from '@angular/core';
 import { IBlankView } from "../../../../interfaces/Views/IBlankView";
@@ -13,6 +14,9 @@ import { IEditForm, IIdEditForm } from "../../../../interfaces/Forms/IEditForm";
 import { answerValidator } from "../../../../validators/answerValidator";
 import { idValidator } from "../../../../validators/idValidator";
 import { DestroyService } from "../../../../services/infrastructure/destroy.service";
+import { IBlankParsed } from "../../../../interfaces/Tests/Blanks/IBlankParsed";
+import { Observable } from "rxjs";
+import { ConfirmService } from "../../../../services/infrastructure/confirm.service";
 
 @Component({
   selector: 'app-blank-edit',
@@ -24,14 +28,17 @@ import { DestroyService } from "../../../../services/infrastructure/destroy.serv
   providers: [DestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BlankEditComponent implements OnInit, OnChanges {
+export class BlankEditComponent implements OnChanges {
   @Input() public view!: IBlankView
+
+  @Output() public closeEvent = new EventEmitter<IBlankParsed | void>()
 
   protected editForm!: FormGroup<IEditForm>
 
   constructor(
-    private _cd: ChangeDetectorRef,
+    private _confirmService: ConfirmService,
     private _destroy: DestroyService,
+    private _cd: ChangeDetectorRef,
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -47,13 +54,13 @@ export class BlankEditComponent implements OnInit, OnChanges {
     return new FormGroup<IEditForm>({
       answers: new FormArray<FormControl<number | string>>([
         ...this.view.blank.answers.map((answer, i) => new FormControl<number | string>(
-          answer.actual === -1 ? 'X' : answer.actual,
-          {
-            nonNullable: true,
-            validators: [
-              answerValidator(`Ошибка в номере ${i + 1}. Диапазон ответов от 1 до 5. X: ответа на данный вопрос не дано`)
-            ]
-          }))
+            answer.actual === -1 ? 'X' : answer.actual,
+            {
+              nonNullable: true,
+              validators: [
+                answerValidator(`Ошибка в номере ${i + 1}. Диапазон ответов от 1 до 5. X: ответа на данный вопрос не дано`)
+              ]
+            }))
       ]),
       variant: new FormControl<number>(this.view.blank.var, {
         nonNullable: true
@@ -88,14 +95,43 @@ export class BlankEditComponent implements OnInit, OnChanges {
       })
   }
 
-  public ngOnInit(): void {
+  protected save() {
+    if (this.editForm.invalid)
+      return
+
+    const blank: IBlankParsed = {
+      ...this.view.blank,
+      answers: this.editForm.controls.answers.controls.map((control, i) => {
+        return {
+          ...this.view.blank.answers[i],
+          actual: isNaN(+control.value)
+            ? -1
+            : +control.value
+        }
+      }),
+      var: this.editForm.controls.variant.value,
+      author: (
+        this.editForm.controls.id.controls.idFirst.value * 10
+        + this.editForm.controls.id.controls.idSecond.value).toString()
+    }
+
+    this.closeEvent.next(blank)
   }
 
-  protected saveEvent() {
+  protected cancel() {
+    this.canClose()
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
 
+        this.closeEvent.next()
+      })
   }
 
-  protected cancelEvent() {
-
+  protected canClose(message: string = 'Вы действительно хотите закончить редактирование? Изменения не сохранятся'): Observable<boolean> {
+    return this._confirmService.createConfirm({
+      message,
+      buttonText: 'Закончить'
+    })
   }
 }
