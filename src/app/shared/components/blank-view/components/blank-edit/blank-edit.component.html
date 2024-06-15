@@ -1,4 +1,4 @@
-<ng-container *ngIf="view">
+<ng-container *ngIf="editForm">
     <div class="block">
         <div class="answers section">
             <div class="answers__title section__title">
@@ -38,6 +38,7 @@
                                     name="variant"
                                     [id]="'var' + i"
                                     checked
+                                    [value]="item"
                             >
                             <label class="section-list__label" [for]="'var' + i">
                                 {{ item }}
@@ -60,6 +61,7 @@
                                     type="radio"
                                     name="idFirst"
                                     [id]="'idFirst' + i"
+                                    [value]="i"
                             >
                             <label class="section-list__label" [for]="'idFirst' + i">
                                 {{ i }}
@@ -76,6 +78,7 @@
                                     type="radio"
                                     name="idSecond"
                                     [id]="'idSecond' + i"
+                                    [value]="i"
                             >
                             <label class="section-list__label" [for]="'idSecond' + i">
                                 {{ i }}
@@ -93,6 +96,12 @@
                     (clickEvent)="saveEvent()"
             >
                 Сохранить
+            </app-button>
+
+            <app-button
+                    (clickEvent)="cancelEvent()"
+            >
+                Отмена
             </app-button>
         </div>
     </div>
