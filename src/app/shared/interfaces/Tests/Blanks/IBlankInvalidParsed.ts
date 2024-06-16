@@ -1,5 +1,5 @@
 export interface IBlankInvalidParsed {
   pk: number
-  createdAt: Date
+  created_at: Date
   image: string
 }

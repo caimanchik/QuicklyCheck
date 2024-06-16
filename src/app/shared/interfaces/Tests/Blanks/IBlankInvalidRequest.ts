@@ -1,5 +1,5 @@
 export interface IBlankInvalidRequest {
   pk: number
-  createdAt: number
+  created_at: number
   image: string
 }
