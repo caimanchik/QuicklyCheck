@@ -1,0 +1,139 @@
+<ng-container *ngIf="editForm">
+    <div class="block edit">
+        <div class="answers section">
+            <div class="answers__title section__title">
+                Ответы
+            </div>
+
+            <div class="answers__results">
+                <ul class="answers__list answers-list">
+                    <ng-container
+                            *ngFor="let control of editForm.controls.answers.controls; let i = index"
+                    >
+                        <div class="answers-list__item">
+                            <div class="answers-list__number">
+                                {{ i + 1 }}.
+                            </div>
+                            <input
+                                    class="answers-list__answer"
+                                    [value]="control.value"
+                                    [formControl]="control"
+                                    appValid
+                                    [validControl]="control"
+                                    [rightValue]="view.blank.answers[i].correct"
+                            >
+                        </div>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+
+        <ng-container *ngIf="answerError">
+            <div class="edit__error edit-error" @appear>
+                        <span class="edit-error__image">
+                            <img src="assets/images/icons/attention.svg" alt="Ошибка">
+                        </span>
+
+                <span class="edit-error__text">
+                            {{ answerError }}
+                        </span>
+            </div>
+        </ng-container>
+
+        <div class="section__wrapper">
+            <div class="section">
+                <div class="section__title">
+                    Вариант
+                </div>
+
+                <ul class="section__list section-list">
+                    <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index">
+                        <li class="section-list__item">
+                            <input
+                                    class="section-list__input"
+                                    type="radio"
+                                    name="variant"
+                                    [id]="'var' + i"
+                                    [value]="item"
+                                    [formControl]="editForm.controls.variant"
+                            >
+                            <label class="section-list__label" [for]="'var' + i">
+                                <ng-container *ngIf="editForm.controls.variant.value !== item">
+                                    {{ item }}
+                                </ng-container>
+                            </label>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section__content">
+                <div class="section__title">
+                    ID
+                </div>
+
+                <ul class="section__list section-list">
+                    <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index">
+                        <li class="section-list__item">
+                            <input
+                                    class="section-list__input"
+                                    type="radio"
+                                    name="idFirst"
+                                    [id]="'idFirst' + i"
+                                    [value]="i"
+                                    [formControl]="editForm.controls.id.controls.idFirst"
+                            >
+                            <label class="section-list__label" [for]="'idFirst' + i">
+                                <ng-container *ngIf="editForm.controls.id.controls.idFirst.value !== i">
+                                    {{ i }}
+                                </ng-container>
+                            </label>
+                        </li>
+                    </ng-container>
+                </ul>
+
+                <ul class="section__list section-list">
+                    <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; let i = index">
+                        <li class="section-list__item">
+                            <input
+                                    class="section-list__input"
+                                    type="radio"
+                                    name="idSecond"
+                                    [id]="'idSecond' + i"
+                                    [value]="i"
+                                    [formControl]="editForm.controls.id.controls.idSecond"
+                                    [checked]="editForm.controls.id.controls.idSecond.value === i"
+                            >
+                            <label class="section-list__label" [for]="'idSecond' + i">
+                                <ng-container *ngIf="editForm.controls.id.controls.idSecond.value !== i">
+                                    {{ i }}
+                                </ng-container>
+                            </label>
+                        </li>
+                    </ng-container>
+                </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="edit__buttons">
+            <div class="edit__button">
+                <app-button
+                        (clickEvent)="cancel()"
+                >
+                    Отмена
+                </app-button>
+            </div>
+
+            <div class="edit__button">
+                <app-button
+                        mode="filled"
+                        (clickEvent)="save()"
+                >
+                    Сохранить
+                </app-button>
+            </div>
+        </div>
+    </div>
+</ng-container>

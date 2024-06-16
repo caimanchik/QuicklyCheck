@@ -2,18 +2,22 @@
     <div class="view" @appear>
         <div class="view__wrapper">
 
-            <div class="view__main view-main">
+            <div class="view__main view-main" [ngClass]="{ isLogged: view.isLogged }">
 
                 <ng-container>
                     <div class="view-main__wrong view-main-wrong">
-                        <div class="view-main-wrong__text">
-                            результат не верный?
-                        </div>
+                        <button
+                                type="button"
+                                class="view-main-wrong__text"
+                                (click)="enableEditMod()"
+                        >
+                            результат неверный<span>?</span>
+                        </button>
                         <div class="view-main-wrong__info">
                             <img src="assets/images/icons/info.svg" alt="Информация">
 
                             <div class="view-main-wrong__modal">
-                                Если система не правильно оценила работу, вы можете изменить её вручную.
+                                Если система неправильно оценила работу, вы можете изменить результат вручную.
                             </div>
                         </div>
                     </div>
@@ -72,6 +76,7 @@
 
                         <div class="view-main__show">
 
+                            <ng-container *ngIf="!isEdit">
                                 <ng-container *ngIf="!view.showDetail; else hideText">
                                     <app-button
                                             (clickEvent)="toggleShow()"
@@ -84,12 +89,13 @@
                                 <ng-template #hideText>
                                     <app-button
                                             (clickEvent)="toggleShow()"
-                                            mode="filled"
                                             @opacityIn
                                     >
                                         свернуть результат
                                     </app-button>
                                 </ng-template>
+                            </ng-container>
+
                         </div>
 
                     </div>
@@ -103,41 +109,21 @@
 
             </div>
 
-            <ng-container *ngIf="view.showDetail">
-                <div class="view__answers view-answers" @appear>
-                    <div class="view-answers__title">
-                        Вариант {{ view.blank.var + 1 }}
-                        <button type="button" class="view-answers__edit-icon">
-                            <img src="assets/images/icons/pencil.svg" alt="Редактировать">
-                            <img src="assets/images/icons/pencil-pink.svg" alt="">
-                        </button>
-                    </div>
+            <ng-container *ngIf="view.showDetail && !isEdit">
+                <app-answers-view
+                        @appear
+                        [view]="view"
+                        [resultView]="resultView"
+                        (editEvent)="enableEditMod()"
+                ></app-answers-view>
+            </ng-container>
 
-                    <div class="view-answers__results">
-                        <ul class="view-answers__list view-answers-list">
-                            <ng-container *ngFor="let answer of view.blank.answers; let i = index">
-                                <div class="view-answers-list__item">
-                                    <div class="view-answers-list__number">
-                                        {{ i + 1 }}.
-                                    </div>
-                                    <div
-                                            class="view-answers-list__answer"
-                                            [ngClass]="{wrong: !answer.isRight}"
-                                    >
-                                        {{ answer.actual }}
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </ul>
-                    </div>
-
-                    <div class="view-answers__summary">
-                        <span class="view-answers__itogo">
-                            Итого:
-                        </span>
-                        &nbsp;правильно {{ resultView.actual }} из {{ resultView.right }}
-                    </div>
-                </div>
+            <ng-container *ngIf="isEdit">
+                <app-blank-edit
+                        @appear
+                        [view]="view"
+                        (closeEvent)="closeEditForm($event)"
+                ></app-blank-edit>
             </ng-container>
 
         </div>
