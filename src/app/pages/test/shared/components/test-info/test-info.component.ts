@@ -137,22 +137,22 @@ export class TestInfoComponent implements OnInit {
       })
   }
 
-  protected deleteWrongBlank(i: number) {
-    const blank = this.test.wrongBlanks[i]
+  protected deleteInvalidBlank(i: number) {
+    const blank = this.test.invalidBlanks[i]
     this._confirmService.createConfirm({
       message: `Вы действительно хотите удалить бланк от ${
-        (blank.createdAt.getDate() < 10 ? '0' : '') + blank.createdAt.getDate()}.${
-        (blank.createdAt.getMonth() + 1 < 10 ? '0' : '') + (blank.createdAt.getMonth() + 1)}.${
-        blank.createdAt.getFullYear()}?`,
+        (blank.created_at.getDate() < 10 ? '0' : '') + blank.created_at.getDate()}.${
+        (blank.created_at.getMonth() + 1 < 10 ? '0' : '') + (blank.created_at.getMonth() + 1)}.${
+        blank.created_at.getFullYear()}?`,
       buttonText: 'удалить'
     })
       .subscribe(confirmed => {
         if (!confirmed)
           return
 
-        this._blankService.deleteWrongBlank(blank.pk)
+        this._blankService.deleteInvalidBlank(blank.pk)
           .subscribe(() => {
-            this.test.wrongBlanks.splice(i, 1)
+            this.test.invalidBlanks.splice(i, 1)
             this._cd.markForCheck()
           })
       })
@@ -169,11 +169,28 @@ export class TestInfoComponent implements OnInit {
     this._router.navigate(['blank', pkBlank], extras)
   }
 
-  protected showWrongBlank(pkBlank: number) {
+  protected showInvalidBlank(pkBlank: number) {
     // todo
   }
 
   protected navigateClass() {
     this._router.navigate(['/', 'class', this.classInfo.pk])
+  }
+
+  protected deleteAllInvalid() {
+    this._confirmService.createConfirm({
+      message: `Вы действительно хотите удалить все непроверенные бланки?`,
+      buttonText: 'удалить'
+    })
+      .subscribe(confirmed => {
+        if (!confirmed)
+          return
+
+        this._blankService.deleteInvalidBlanks(this.test.invalidBlanks)
+          .subscribe(() => {
+            this.test.invalidBlanks = []
+            this._cd.markForCheck()
+          })
+      })
   }
 }

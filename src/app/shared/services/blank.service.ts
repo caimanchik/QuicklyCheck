@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
-import { delay, forkJoin, map, Observable, of, switchMap, take } from "rxjs";
+import { forkJoin, map, Observable, of, switchMap, take, zip } from "rxjs";
 import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
 import { environment } from "../../../environments/environment";
 import { IBlankWithAuthor } from "../interfaces/Tests/Blanks/IBlankWithAuthor";
@@ -10,8 +10,9 @@ import { StudentService } from "./student.service";
 import { PatternService } from "./pattern.service";
 import { sortStrings } from "../functions/application/sortStrings";
 import { IBlankInvalidParsed } from "../interfaces/Tests/Blanks/IBlankInvalidParsed";
-import { translateWrongBlanksFromRequest } from "../functions/blanks/translateWrongBlanksFromRequest";
+import { translateInvalidBlanksFromRequest } from "../functions/blanks/translateInvalidBlanksFromRequest";
 import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
+import { IBlankInvalidRequest } from "../interfaces/Tests/Blanks/IBlankInvalidRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class BlankService {
     private _pattern: PatternService
   ) { }
 
-  public deleteBlank(blankPk: number): Observable<void> {
-    return this._http.Delete<void>(`blank/${blankPk}`)
+  public deleteBlank(pkBlank: number): Observable<void> {
+    return this._http.Delete<void>(`blank/${pkBlank}`)
       .pipe(take(1))
   }
 
@@ -39,38 +40,26 @@ export class BlankService {
       )
   }
 
-  public getWrongBlanks(pkTest: number): Observable<IBlankInvalidParsed[]> {
-    return of([
-      {
-        pk: 1,
-        createdAt: Date.now(),
-        image: "",
-      },
-      {
-        pk: 1,
-        createdAt: new Date().setDate(new Date().getDate() - 7),
-        image: "",
-      },
-      {
-        pk: 1,
-        createdAt: new Date().setDate(new Date().getDate() - 14),
-        image: "",
-      },
-      {
-        pk: 1,
-        createdAt: new Date().setDate(new Date().getDate() - 21),
-        image: "",
-      }])
+  public getInvalidBlanks(pkTest: number, temporary = false): Observable<IBlankInvalidParsed[]> {
+    return this._http.Get<IBlankInvalidRequest[]>(
+      (temporary ? "temp/" : "") + `test/${pkTest}/invalid_blanks`,
+      { withCredentials: !temporary }
+    )
       .pipe(
-        map(blanks => translateWrongBlanksFromRequest(blanks)),
-        take(1),
+        map(blanks => translateInvalidBlanksFromRequest(blanks)),
+        take(1)
       )
   }
 
-  public deleteWrongBlank(pkBlank: number): Observable<any> {
-    return of({})
+  public deleteInvalidBlank(pkBlank: number): Observable<void> {
+    return this._http.Delete<void>(`invalid_blank/${pkBlank}`)
+      .pipe(take(1))
+  }
+
+  public deleteInvalidBlanks(blanks: IBlankInvalidParsed[]): Observable<void> {
+    return zip(...blanks.map(blank => this.deleteInvalidBlank(blank.pk)))
       .pipe(
-        delay(100),
+        map(() => undefined),
         take(1)
       )
   }

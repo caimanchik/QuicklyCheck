@@ -44,6 +44,6 @@ export class TestResultComponent implements OnInit {
   }
 
   protected navigateTest() {
-    this._router.navigate(['/', 'test', this.blanks[0].test])
+    this._router.navigate(['/', 'test', getParamFromRoute(this._route)])
   }
 }
