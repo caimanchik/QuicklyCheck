@@ -28,6 +28,18 @@
             </div>
         </div>
 
+        <ng-container *ngIf="answerError">
+            <div class="edit__error edit-error" @appear>
+                        <span class="edit-error__image">
+                            <img src="assets/images/icons/attention.svg" alt="Ошибка">
+                        </span>
+
+                <span class="edit-error__text">
+                            {{ answerError }}
+                        </span>
+            </div>
+        </ng-container>
+
         <div class="section__wrapper">
             <div class="section">
                 <div class="section__title">
@@ -104,7 +116,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="edit__buttons">
             <div class="edit__button">

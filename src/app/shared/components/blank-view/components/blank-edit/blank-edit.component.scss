@@ -176,9 +176,56 @@
   }
 
   &__button {
-    &:last-child {
+    &:nth-child(2) {
       margin-left: 1rem;
     }
   }
+
+  &__error {
+  }
 }
 
+.edit-error {
+  font-size: 1.3rem;
+  display: flex;
+  color: $red;
+  align-items: center;
+  margin-top: 1rem;
+  line-height: 1.1em;
+
+  @media(max-width:760px){
+    width: 32rem;
+  }
+
+  @media(max-width:480px){
+    width: auto;
+  }
+
+  &__image {
+    height: 1.6rem;
+    width: 1.6rem;
+    position: relative;
+
+    @media(max-width:760px){
+      width: 3rem;
+    }
+
+    @media(max-width:407px){
+      align-self: flex-start;
+    }
+
+    & img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: translateY(-.1rem);
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+  }
+
+  &__text {
+    margin-left: .6rem;
+  }
+}

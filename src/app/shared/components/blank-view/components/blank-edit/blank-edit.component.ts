@@ -17,6 +17,10 @@ import { DestroyService } from "../../../../services/infrastructure/destroy.serv
 import { IBlankParsed } from "../../../../interfaces/Tests/Blanks/IBlankParsed";
 import { Observable } from "rxjs";
 import { ConfirmService } from "../../../../services/infrastructure/confirm.service";
+import { answersValidator } from "../../../../validators/answersValidator";
+import { transition, trigger, useAnimation } from "@angular/animations";
+import { animateIn } from "../../../../animations/animateIn";
+import { animateOut } from "../../../../animations/animateOut";
 
 @Component({
   selector: 'app-blank-edit',
@@ -26,7 +30,12 @@ import { ConfirmService } from "../../../../services/infrastructure/confirm.serv
     '../../styles/answers.scss'
   ],
   providers: [DestroyService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('appear', [
+      transition(':enter', useAnimation(animateIn)),
+      transition(':leave', useAnimation(animateOut)),
+  ])]
 })
 export class BlankEditComponent implements OnChanges {
   @Input() public view!: IBlankView
@@ -34,6 +43,7 @@ export class BlankEditComponent implements OnChanges {
   @Output() public closeEvent = new EventEmitter<IBlankParsed | void>()
 
   protected editForm!: FormGroup<IEditForm>
+  protected answerError!: string
 
   constructor(
     private _confirmService: ConfirmService,
@@ -54,14 +64,15 @@ export class BlankEditComponent implements OnChanges {
     return new FormGroup<IEditForm>({
       answers: new FormArray<FormControl<number | string>>([
         ...this.view.blank.answers.map((answer, i) => new FormControl<number | string>(
-            answer.actual === -1 ? 'X' : answer.actual,
-            {
-              nonNullable: true,
-              validators: [
-                answerValidator(`Ошибка в номере ${i + 1}. Диапазон ответов от 1 до 5. X: ответа на данный вопрос не дано`)
-              ]
-            }))
-      ]),
+          answer.actual === -1 ? 'X' : answer.actual,
+          {
+            nonNullable: true,
+            validators: [
+              answerValidator(`Ошибка в номере ${i + 1}. Диапазон ответов от 1 до 5. X: ответа на данный вопрос не дано`)
+            ]}))
+      ], {
+        validators: answersValidator()
+      }),
       variant: new FormControl<number>(this.view.blank.var, {
         nonNullable: true
       }),
@@ -92,6 +103,18 @@ export class BlankEditComponent implements OnChanges {
 
           this._cd.markForCheck()
         })
+      })
+
+    form.controls.answers.valueChanges
+      .pipe(this._destroy.takeUntilDestroy)
+      .subscribe(() => {
+        this.answerError = ''
+        console.log(form.controls.answers.errors?.['error'])
+
+        if (form.controls.answers.invalid)
+          this.answerError = form.controls.answers.errors?.['error']
+
+        this._cd.markForCheck()
       })
   }
 
