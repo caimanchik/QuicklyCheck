@@ -33,15 +33,6 @@
 
 
             <div class="test__list-wrap">
-                <div class="test__column">
-                    <div class="test__block">
-                        <div class="test__remember test-remember">
-                            <div class="test-remember__title">
-                                <span>Памятка</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="test__column">
                     <div class="test__block">
@@ -83,7 +74,10 @@
 
                         <ng-container *ngIf="showCheckButton">
                             <div class="test__check">
-                                <app-button (clickEvent)="checkMore()">проверить работу</app-button>
+                                <app-button
+                                        mode="filled"
+                                        (clickEvent)="checkMore()"
+                                >проверить работу</app-button>
                             </div>
                         </ng-container>
                     </div>

@@ -18,31 +18,76 @@
   }
 
   &__list-wrap {
-    margin-top: 2.5rem;
+    //margin-top: 2.5rem;
     display: flex;
     flex-wrap: wrap;
   }
 
   &__column {
+    //&:nth-child(1) {
+    //  flex: 0 0 100%;
+    //
+    //  @media(max-width:880px){
+    //    flex: 0 0 calc(100% - 23.5rem);
+    //    order: 1;
+    //    display: flex;
+    //
+    //    & .test__block {
+    //      flex-grow: 1;
+    //    }
+    //  }
+    //
+    //  @media(max-width:700px){
+    //    flex: 0 0 100%;
+    //  }
+    //}
+    //
+    //&:nth-child(2) {
+    //  margin-top: 2rem;
+    //  flex: 0 0 calc(100% - 23.5rem);
+    //
+    //  @media(max-width:880px){
+    //    flex: 0 0 100%;
+    //    order: 3;
+    //  }
+    //}
+    //
+    //&:nth-child(3) {
+    //  margin-top: 2rem;
+    //  padding-left: 2rem;
+    //  flex: 0 0 23.5rem;
+    //
+    //  @media(max-width:880px){
+    //    order: 2;
+    //    margin-top: 0;
+    //  }
+    //
+    //  @media(max-width:700px){
+    //    padding-left: 0;
+    //    flex: 0 0 21.5rem;
+    //    margin-top: 2rem;
+    //  }
+    //}
+
+    //&:nth-child(1) {
+    //  flex: 0 0 100%;
+    //
+    //  @media(max-width:880px){
+    //    flex: 0 0 calc(100% - 23.5rem);
+    //    order: 1;
+    //    display: flex;
+    //
+    //    & .test__block {
+    //      flex-grow: 1;
+    //    }
+    //  }
+    //
+    //  @media(max-width:700px){
+    //    flex: 0 0 100%;
+    //  }
+    //}
+
     &:nth-child(1) {
-      flex: 0 0 100%;
-
-      @media(max-width:880px){
-        flex: 0 0 calc(100% - 23.5rem);
-        order: 1;
-        display: flex;
-
-        & .test__block {
-          flex-grow: 1;
-        }
-      }
-
-      @media(max-width:700px){
-        flex: 0 0 100%;
-      }
-    }
-
-    &:nth-child(2) {
       margin-top: 2rem;
       flex: 0 0 calc(100% - 23.5rem);
 
@@ -52,20 +97,19 @@
       }
     }
 
-    &:nth-child(3) {
+    &:nth-child(2) {
       margin-top: 2rem;
       padding-left: 2rem;
       flex: 0 0 23.5rem;
 
       @media(max-width:880px){
         order: 2;
-        margin-top: 0;
+        padding-left: 0;
       }
 
       @media(max-width:700px){
         padding-left: 0;
         flex: 0 0 21.5rem;
-        margin-top: 2rem;
       }
     }
   }
