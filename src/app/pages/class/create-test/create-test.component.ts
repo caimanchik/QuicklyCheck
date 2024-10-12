@@ -51,6 +51,7 @@ export class CreateTestComponent implements OnInit {
   }
 
   protected create(values: string[]) {
+    console.log(true)
     this._test.createTest({
       name: capitalizeFirstLetter(values[0]),
       grade: getParamFromRoute(this._route)

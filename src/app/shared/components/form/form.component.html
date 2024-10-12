@@ -10,7 +10,7 @@
                 <span>{{ buildForm.title }}</span>
             </div>
 
-            <form [formGroup]="formGroup" action="" (ngSubmit)="submit()" class="form__form">
+            <form [formGroup]="formGroup" action="" class="form__form">
                 <ng-container *ngIf="error">
                     <div @appear class="form__wrong form-wrong">
                         <div class="form-wrong__wrapper">
