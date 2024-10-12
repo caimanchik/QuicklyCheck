@@ -28,7 +28,7 @@ export class TestService {
         switchMap(test => {
           return forkJoin({
             blanks: this._blank.getBlanks(pkTest),
-            wrongBlanks: this._blank.getWrongBlanks(pkTest),
+            invalidBlanks: this._blank.getInvalidBlanks(pkTest),
           })
             .pipe(
               map(blanksAll => ({

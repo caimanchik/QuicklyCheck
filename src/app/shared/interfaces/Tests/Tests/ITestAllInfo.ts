@@ -4,5 +4,5 @@ import { IBlankInvalidParsed } from "../Blanks/IBlankInvalidParsed";
 
 export interface ITestAllInfo extends ITest {
   blanks: IBlankParsed[]
-  wrongBlanks: IBlankInvalidParsed[]
+  invalidBlanks: IBlankInvalidParsed[]
 }

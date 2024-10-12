@@ -48,6 +48,7 @@ export class BlankViewComponent implements OnChanges {
     if (!changes?.['view']?.currentValue)
       return
 
+    console.log(this.view)
     this.resultView = calculateResult(changes?.['view']?.currentValue.blank)
   }
 
