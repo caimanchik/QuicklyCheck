@@ -3,13 +3,13 @@ import { StudentService } from "../../../shared/services/student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
 import { forkJoin, map, of, switchMap, tap, zip } from "rxjs";
-import { ClassesService } from "../../../shared/services/classes.service";
 import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
 import { BlankService } from "../../../shared/services/blank.service";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../shared/animations/appear";
 import { ConfirmService } from "../../../shared/services/infrastructure/confirm.service";
 import { IClass } from "../../../shared/interfaces/Classes/IClass";
+import { ClassService } from "../../../shared/services/class.service";
 
 @Component({
   selector: 'app-student-info',
@@ -28,7 +28,7 @@ export class StudentInfoComponent implements OnInit {
 
   constructor(
     private _studentService: StudentService,
-    private _classesService: ClassesService,
+    private _classService: ClassService,
     private _blankService: BlankService,
     private _confirm: ConfirmService,
     private _router: Router,
@@ -41,7 +41,7 @@ export class StudentInfoComponent implements OnInit {
       .pipe(
         switchMap(student => {
           return forkJoin({
-            classInfo: this._classesService.getClassInfo(student.grade)
+            classInfo: this._classService.getById(student.grade)
               .pipe(
                 map(classInfo => ({
                   ...classInfo,

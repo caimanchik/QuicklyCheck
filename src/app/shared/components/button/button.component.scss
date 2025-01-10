@@ -13,32 +13,32 @@
   &__wrap {
     border-radius: 100px;
     background-color: $bgcolor;
-    padding: .5rem 3rem;
+    padding: .5rem 2.7rem;
     
     @media(max-width:1200px){
-      padding: .5rem 2.8rem;
+      padding: .5rem 2.35rem;
     }
 
     @media(max-width:1000px){
-      padding: .5rem 2.6rem;
+      padding: .5rem 2rem;
     }
   }
   
   &__button {
     @extend %grad;
     font-family: $futura;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     letter-spacing: .03em;
     text-transform: uppercase;
     white-space: nowrap;
 
     @media(max-width:1200px){
-      font-size: 1.4rem;
+      font-size: 1.2rem;
     }
 
     @media(max-width:1000px){
-      font-size: 1.3rem;
+      font-size: 1.1rem;
     }
   }
 

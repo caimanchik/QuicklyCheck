@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { TestService } from "../../../../../shared/services/test.service";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITestAllInfo";
 import { transition, trigger, useAnimation } from "@angular/animations";
@@ -10,9 +9,10 @@ import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { appear } from "../../../../../shared/animations/appear";
 import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
-import { ClassesService } from "../../../../../shared/services/classes.service";
 import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
 import { animateOut } from "../../../../../shared/animations/animateOut";
+import { ClassService } from "../../../../../shared/services/class.service";
+import { TestService } from "../../../../../shared/services/test.service";
 
 @Component({
   selector: 'app-test-info',
@@ -62,7 +62,7 @@ export class TestInfoComponent implements OnInit {
     private _patternService: PatternService,
     private _confirmService: ConfirmService,
     private _errorService: ErrorService,
-    private _classesService: ClassesService,
+    private _classService: ClassService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _cd: ChangeDetectorRef,
@@ -70,13 +70,13 @@ export class TestInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     const testId = +(this._route.snapshot.paramMap.get('id') ?? 0)
-    this._testService.getTestAllInfo(testId)
+    this._testService.getById(testId)
       .pipe(this._errorService.passErrorWithMessage("Тест не найден"))
       .subscribe(test => {
         this.test = test
         this._cd.markForCheck()
 
-        this._classesService.getClassInfo(test.grade)
+        this._classService.getById(test.grade)
           .subscribe(classInfo => {
             this.classInfo = classInfo
             this._cd.markForCheck()

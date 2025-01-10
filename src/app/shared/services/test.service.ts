@@ -3,9 +3,9 @@ import { HttpService } from "./infrastructure/http.service";
 import { forkJoin, map, Observable, switchMap, take } from "rxjs";
 import { ITest } from "../interfaces/Tests/Tests/ITest";
 import { ITestCreate } from "../interfaces/Tests/Tests/ITestCreate";
+import { BlankService } from "./blank.service";
 import { ITestAllInfo } from "../interfaces/Tests/Tests/ITestAllInfo";
 import { ITempTest } from "../interfaces/Tests/Tests/ITempTest";
-import { BlankService } from "./blank.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +14,16 @@ export class TestService {
 
   constructor(
     private _http: HttpService,
-    private _blank: BlankService
+    private _blankService: BlankService,
   ) { }
 
-  public getTest(pk: number): Observable<ITest> {
-    return this._http.Get<ITest>(`test/${pk}`)
-      .pipe(take(1))
-  }
-
-  public getTestAllInfo(pkTest: number): Observable<ITestAllInfo> {
-    return this.getTest(pkTest)
+  public getById(id: number): Observable<ITestAllInfo> {
+    return this._http.Get<ITest>(`test/${id}`)
       .pipe(
         switchMap(test => {
           return forkJoin({
-            blanks: this._blank.getBlanks(pkTest),
-            wrongBlanks: this._blank.getWrongBlanks(pkTest),
+            blanks: this._blankService.getBlanks(id),
+            wrongBlanks: this._blankService.getWrongBlanks(id),
           })
             .pipe(
               map(blanksAll => ({
@@ -39,15 +34,16 @@ export class TestService {
         }),
         take(1)
       )
+      .pipe(take(1))
   }
 
   public createTest(test: ITestCreate) {
-    return this._http.Post<ITestCreate, ITest>(`class/${test.grade}/tests/`, test)
+    return this._http.Post<ITestCreate & {teacher: number}, ITest>(`class/${test.grade}/tests/`, {...test, teacher: 1})
       .pipe(take(1))
   }
 
   public createTempTest(): Observable<ITempTest> {
-    return this._http.Post<any, ITest>(
+    return this._http.Post<{}, ITest>(
       'temp/tests/',
       {},
       {withCredentials: false})

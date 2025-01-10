@@ -3,6 +3,7 @@ import { ScrollService } from "./shared/services/infrastructure/scroll.service";
 import { AuthService } from "./shared/services/auth.service";
 import { AuthToken, UrlToken } from "./app.module";
 import { UrlService } from "./shared/services/infrastructure/url.service";
+import { Chart, registerables } from "chart.js";
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,8 @@ export class AppComponent implements OnInit {
   public ngOnInit() {
     this._auth.refresh()
       .subscribe()
+
+    Chart.register(...registerables)
   }
 
   @HostListener('document:scroll', ['$event'])

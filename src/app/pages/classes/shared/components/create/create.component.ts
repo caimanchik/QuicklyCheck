@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { FormControl } from "@angular/forms";
-import { ClassesService } from "../../../../../shared/services/classes.service";
 import { Router } from "@angular/router";
 import { appear } from "../../../../../shared/animations/appear";
 import { IBuildForm } from "../../../../../shared/interfaces/Forms/IBuildForm";
 import { classNumberValidator } from "../../../../../shared/validators/classNumberValidator";
 import { classCharValidator } from "../../../../../shared/validators/classCharValidator";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
+import { ClassService } from "../../../../../shared/services/class.service";
 
 @Component({
   selector: 'app-create',
@@ -25,7 +25,7 @@ export class CreateComponent implements OnInit {
 
   constructor(
     private _error: ErrorService,
-    private _classes: ClassesService,
+    private _classService: ClassService,
     private _cd: ChangeDetectorRef,
     private _router: Router
   ) { }
@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
   }
 
   protected create(values: string[]) {
-    this._classes.createClass({
+    this._classService.createClass({
       number: values[0],
       letter: values[1].toUpperCase()
     })
