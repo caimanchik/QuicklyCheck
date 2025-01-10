@@ -26,143 +26,154 @@
                 </div>
             </div>
 
+            <div class="class__columns first class-stats">
+                <div class="class__column small">
+                    <div class="class__stats stats-box">
+
+                        <div class="stats-box__wrapper">
+                            <div class="stats-box__container">
+                                <div class="stats-box__content">
+                                    <div class="class__block">
+                                        <h2 class="stats-box__title">
+                                            Средний балл
+                                        </h2>
+                                        <div class="class-stats__text stats-box__text">
+                                            85%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stats-box__wrapper">
+                            <div class="stats-box__container">
+                                <div class="stats-box__content">
+                                    <div class="class__block">
+                                        <h2 class=" stats-box__title">
+                                            Худший средний балл
+                                        </h2>
+                                        <div class="class-stats__text stats-box__text">
+                                            30%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="class__column big class-stats">
+                    <div class="class__block">
+                        <div class="stats-line">
+                            <div class="stats-line__bar stats-line-bar">
+                                <div class="stats-line-bar__wrapper">
+                                    <button type="button"
+                                            class="stats-line-bar__item active"
+                                            #timelineChanger
+                                            #month
+                                            (click)="changeTimeline(Timelines.Month, month)">
+                                        <div class="stats-line-bar__text">
+                                            Месяц
+                                        </div>
+                                    </button>
+                                    <button type="button"
+                                            class="stats-line-bar__item common"
+                                            #timelineChanger
+                                            #year
+                                            (click)="changeTimeline(Timelines.Year, year)">
+                                        <div class="stats-line-bar__text">
+                                            Учебный год
+                                        </div>
+                                    </button>
+                                    <button type="button"
+                                            class="stats-line-bar__item common"
+                                            #timelineChanger
+                                            #all
+                                            (click)="changeTimeline(Timelines.AllTime, all)">
+                                        <div class="stats-line-bar__text">
+                                            Все время
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="stats-line__chart stats-line-chart">
+                                <div #chartWrapper class="stats-line-chart__wrapper">
+                                    <canvas #lineChart>
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="class__columns">
-                <div class="class__column">
+                <div class="class__column regular">
 
                     <div class="class__block">
-                        <div class="class__remember class-remember">
-
-                            <h2 class="class-remember__title subtitle">
-                                <span>Памятка</span>
-                                <button
-                                        type="button"
-                                        class="class-remember__hide"
-                                        (click)="toggleHide({studentsHidden: true})"
-                                >
-                                    <img src="assets/images/icons/hide.svg" alt="Скрыть памятку">
-                                </button>
+                        <div class="class__items class-items">
+                            <h2 class="class-items__title subtitle">
+                                <span>Ученики</span>
                             </h2>
 
-                            <ng-container *ngIf="rememberInfo.studentsHidden">
-                                <ul class="class-remember__list" @appear @leave>
-                                    <li class="class-remember__item">
-                                        <div class="class-remember__number">
-                                            1.
-                                        </div>
-                                        <div class="class-remember__text">
-                                            Нажмите на ученика, чтобы увидеть его личные работы.
-                                        </div>
+                            <ul class="class-items__list">
+                                <ng-container *ngFor="let student of classInfo.students; let i = index">
+                                    <li class="class-items__item">
+                                        <a href="#" (click)="openStudent($event, student.pk)" class="class-items__link">
+                                            <span class="class-items__number">
+                                                <span>{{ i + 1 }}</span>
+                                            </span>
+                                            <span class="class-items__content">
+                                                {{ student.name }}
+                                            </span>
+                                        </a>
                                     </li>
-                                    <li class="class-remember__item">
-                                        <div class="class-remember__number">
-                                            2.
-                                        </div>
-                                        <div class="class-remember__text">
-                                            Номер ученика - это личный ID  в этом классе. Нужен, чтобы идентифицировать бланк.
-                                        </div>
-                                    </li>
-                                </ul>
-                            </ng-container>
+                                </ng-container>
+                            </ul>
 
-                        </div>
-                    </div>
-
-                    <div class="class__separator">
-
-                    </div>
-
-                    <div class="class__block">
-                        <div class="class__list class-list">
-                            <h2 class="class-list__title subtitle">
-                                <span>Ученики</span>
+                            <div class="class-items__button">
                                 <app-button
                                         (clickEvent)="createStudent()"
                                 >Добавить</app-button>
-                            </h2>
-                            <ul class="class-list__list">
-                                <ng-container
-                                        *ngFor="let student of classInfo.students; let i = index"
-                                >
-                                    <li class="class-list__item">
-                                        <div class="class-list__number">
-                                            <span>{{ i + 1 }}.</span>
-                                        </div>
-                                        <a href="#" (click)="openStudent($event, student.pk)" class="class-list__student">
-                                            {{ student.name }}
-                                        </a>
-                                    </li>
-                                </ng-container>
-                            </ul>
+                            </div>
                         </div>
                     </div>
 
                 </div>
 
-                <div class="class__column">
+                <div class="class__column regular">
 
                     <div class="class__block">
-                        <div class="class__remember class-remember">
-
-                            <h2 class="class-remember__title subtitle">
-                                <span>Памятка</span>
-                                <button
-                                        type="button"
-                                        class="class-remember__hide"
-                                        (click)="toggleHide({worksHidden: true})"
-                                >
-                                    <img src="assets/images/icons/hide.svg" alt="Сркыть памятку">
-                                </button>
-                            </h2>
-
-                            <ng-container *ngIf="rememberInfo.worksHidden">
-                                <ul class="class-remember__list" @appear @leave>
-                                    <li class="class-remember__item">
-                                        <div class="class-remember__number">
-                                            1.
-                                        </div>
-                                        <div class="class-remember__text">
-                                            Нажмите на работу, чтобы увидеть результаты.
-                                        </div>
-                                    </li>
-                                </ul>
-                            </ng-container>
-
-                        </div>
-                    </div>
-
-                    <div class="class__separator">
-
-                    </div>
-
-                    <div class="class__block">
-                        <div class="class__list class-list">
-                            <h2 class="class-list__title subtitle">
+                        <div class="class__items class-items">
+                            <h2 class="class-items__title subtitle separate">
                                 <span>Тесты</span>
                                 <app-button (clickEvent)="createTest()">Добавить</app-button>
                             </h2>
-                            <ul class="class-list__list">
-                                <ng-container
-                                        *ngFor="let test of classInfo.tests; let i = index"
-                                >
-                                    <li class="class-list__item">
-                                        <div class="class-list__number">
-                                            <span>{{ i + 1 }}.</span>
-                                        </div>
-                                        <a
-                                                (click)="openTest(test.pk)"
-                                                class="class-list__student"
-                                        >
-                                            {{ test.name }}
+
+                            <ul class="class-items__list">
+                                <ng-container *ngFor="let test of classInfo.quizzes; let i = index">
+                                    <li class="class-items__item">
+                                        <a href="#" (click)="openTest($event, test.pk)" class="class-items__link">
+                                            <span class="class-items__number">
+                                                <span>{{ i + 1 }}</span>
+                                            </span>
+                                            <span class="class-items__content">
+                                                {{ test.name | slice: 0:30 }}
+                                            </span>
                                         </a>
                                     </li>
                                 </ng-container>
                             </ul>
+
                         </div>
                     </div>
 
                 </div>
 
-                <div class="class__column">
+                <div class="class__column regular">
                     <div class="class__delete">
                         <app-button
                                 mode="red"

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { FormControl, Validators } from "@angular/forms";
-import { TestService } from "../../../shared/services/test.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { appear } from "../../../shared/animations/appear";
 import { IBuildForm } from "../../../shared/interfaces/Forms/IBuildForm";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
 import { capitalizeFirstLetter } from "../../../shared/functions/application/capitalizeFirstLetter";
+import { TestService } from "../../../shared/services/test.service";
 
 @Component({
   selector: 'app-create-test',
@@ -51,7 +51,6 @@ export class CreateTestComponent implements OnInit {
   }
 
   protected create(values: string[]) {
-    console.log(true)
     this._test.createTest({
       name: capitalizeFirstLetter(values[0]),
       grade: getParamFromRoute(this._route)

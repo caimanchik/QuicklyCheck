@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { IClass } from "../../../shared/interfaces/Classes/IClass";
-import { ClassesService } from "../../../shared/services/classes.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { IBuildForm } from "../../../shared/interfaces/Forms/IBuildForm";
 import { classCharValidator } from "../../../shared/validators/classCharValidator";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
 import { classNumberValidator } from "../../../shared/validators/classNumberValidator";
+import { ClassService } from "../../../shared/services/class.service";
 
 @Component({
   selector: 'app-rename-class',
@@ -22,7 +22,7 @@ export class RenameClassComponent implements OnInit {
   private classId!: number
 
   constructor(
-    private _classes: ClassesService,
+    private _classService: ClassService,
     private _error: ErrorService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
@@ -31,7 +31,7 @@ export class RenameClassComponent implements OnInit {
 
   public ngOnInit(): void {
     this.classId = getParamFromRoute(this._route)
-    this._classes.getClassInfo(this.classId)
+    this._classService.getById(this.classId)
       .pipe(this._error.passErrorWithMessage("", ["class", this.classId]))
       .subscribe((clasInfo) => {
         this.classInfo = clasInfo
@@ -64,7 +64,7 @@ export class RenameClassComponent implements OnInit {
   }
 
   protected rename(values: string[]) {
-    this._classes.renameClass({
+    this._classService.renameClass({
       ...this.classInfo,
       number: values[0],
       letter: values[1].toUpperCase()

@@ -249,7 +249,7 @@
     width: 18px;
     height: 18px;
     border-radius: 5px;
-    border: 2.151px solid rgba(70, 83, 210, 0.75);
+    border: 2.151px solid $grey;
     box-shadow: 0px 1.434248924255371px 4.302746772766113px 0px rgba(0, 0, 0, 0.02);
     display: inline-block;
     position: relative;
@@ -276,7 +276,7 @@
   }
 
   &__text {
-    color: $blue;
+    color: $grey;
     font-size: 1rem;
     cursor: pointer;
   }
@@ -293,15 +293,15 @@
       bottom: -2px;
       width: 100%;
       height: 1px;
-      background-color: $blue;
+      background-color: $grey;
       transition: all ease .3s;
     }
 
     &:hover {
-      color: darken($blue, 20%);
+      color: darken($grey, 20%);
 
       &::after {
-        background-color: darken($blue, 20%);
+        background-color: darken($grey, 20%);
       }
     }
   }

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { Router } from "@angular/router";
-import { TestService } from "../../../../../shared/services/test.service";
 import { appear } from "../../../../../shared/animations/appear";
+import { TestService } from "../../../../../shared/services/test.service";
 
 @Component({
   selector: 'app-check',
@@ -20,7 +20,7 @@ export class MainCheckComponent {
 
   constructor(
     private _router: Router,
-    private _temp: TestService
+    private _testService: TestService
   ) {
   }
 
@@ -29,7 +29,7 @@ export class MainCheckComponent {
       return
 
     this._clicked = true
-    this._temp.createTempTest()
+    this._testService.createTempTest()
       .subscribe((test) => {
         localStorage.setItem("temp", test.pk.toString())
         this._router.navigate(['check', 'fill'])

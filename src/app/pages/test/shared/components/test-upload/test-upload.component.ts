@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { UrlService } from "../../../../../shared/services/infrastructure/url.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
-import { TestService } from "../../../../../shared/services/test.service";
 import { UrlToken } from "../../../../../app.module";
 import { appear } from "../../../../../shared/animations/appear";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
+import { TestService } from "../../../../../shared/services/test.service";
 
 @Component({
   selector: 'app-test-upload',
@@ -38,7 +38,7 @@ export class TestUploadComponent implements OnDestroy, OnInit {
 
   public ngOnInit(): void {
     this.testId = getParamFromRoute(this._route)
-    this._test.getTest(this.testId)
+    this._test.getById(this.testId)
       .pipe(this._error.passErrorWithMessage("Не удалось открыть страницу загрузки"))
       .subscribe()
   }
