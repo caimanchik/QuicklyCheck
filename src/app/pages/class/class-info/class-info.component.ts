@@ -7,7 +7,7 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import { transition, trigger, useAnimation } from "@angular/animations";
+import { animate, style, transition, trigger, useAnimation } from "@angular/animations";
 import { IClassAllInfo } from "../../../shared/interfaces/Classes/IClassAllInfo";
 import { IRememberInfo } from "../../../shared/interfaces/Application/IRememberInfo";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
@@ -32,7 +32,20 @@ import { Timelines } from "../../../shared/enums/Timelines";
     ]),
     trigger('leave', [
       transition(':leave', useAnimation(leaveTransform))
-    ])
+    ]),
+    trigger('leaveWait', [
+      transition(':leave', [
+        style({
+          opacity: '1',
+        }),
+        animate(
+          '100ms 200ms',
+          style({
+            opacity: '0',
+          })
+        )
+      ])
+    ]),
   ],
 })
 export class ClassInfoComponent implements OnInit {
@@ -119,7 +132,7 @@ export class ClassInfoComponent implements OnInit {
       this._chart = createLineChart(this._chartElement, this.dimensions,
         ['', '5.12', '', '10.12', '15.12', '20.12', '25.12', '31.12'],
         [10, 5, 2, 20, 30, 45, 90, 20],
-        ['5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
+        ['', '5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
         ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
     })
   }

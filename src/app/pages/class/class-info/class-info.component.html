@@ -117,7 +117,47 @@
                         <div class="class__items class-items">
                             <h2 class="class-items__title subtitle">
                                 <span>Ученики</span>
+                                <div class="subtitle__info subtitle-info">
+                                    <button (click)="toggleHide({studentsHidden: true})">
+                                        <img src="assets/images/icons/info.svg" alt="Info icon">
+                                    </button>
+                                    <ng-container *ngIf="rememberInfo.studentsHidden">
+                                        <div class="subtitle-info__wrapper" @leaveWait>
+                                            <div class="subtitle-info__triangle">
+                                            </div>
+                                        </div>
+
+                                    </ng-container>
+                                </div>
                             </h2>
+
+                            <ng-container *ngIf="rememberInfo.studentsHidden">
+                                <div class="class__remember class-remember" @appear @leave>
+                                    <button class="class-remember__close" (click)="toggleHide({studentsHidden: true})">
+                                        <span></span>
+                                        <span></span>
+                                    </button>
+                                    <ul class="class-remember__items">
+                                        <li class="class-remember__item">
+                                            <div class="class-remember__icon">
+                                                <img src="assets/images/icons/cursor.svg" alt="cursor icon">
+                                            </div>
+                                            <div class="class-remember__text">
+                                                Нажмите на ученика, чтобы перейти на страницу с его личными работами.
+                                            </div>
+                                        </li>
+                                        <li class="class-remember__item">
+                                            <div class="class-remember__icon">
+                                                <img src="assets/images/icons/ID.svg" alt="cursor icon">
+                                            </div>
+                                            <div class="class-remember__text">
+                                                <span>Номер ученика - это личный ID  в этом классе.</span>
+                                                <span>Он нужен, чтобы идентифицировать бланк.</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ng-container>
 
                             <ul class="class-items__list">
                                 <ng-container *ngFor="let student of classInfo.students; let i = index">
