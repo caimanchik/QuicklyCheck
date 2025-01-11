@@ -4,9 +4,9 @@ import { BlankUpdate } from "../../interfaces/Tests/Blanks/BlankUpdate";
 export function translateBlankToRequest(blank: IBlankParsed): BlankUpdate {
   return {
     pk: blank.pk,
-    answers: blank.answers.map(answer => answer.actual).join(','),
+    answers: blank.answers.map(answer => answer.actual.toString()),
     var: blank.var,
     id_blank: blank.id_blank,
-    test: blank.test
+    quiz: blank.quiz
   }
 }

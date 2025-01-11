@@ -1,6 +1,6 @@
 export interface IBlank {
   pk: number;
-  test: number;
+  quiz: number;
   var: number;
   id_blank: string;
   testName: string

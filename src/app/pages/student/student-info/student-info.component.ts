@@ -2,14 +2,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { StudentService } from "../../../shared/services/student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
-import { forkJoin, map, of, switchMap, tap, zip } from "rxjs";
-import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
-import { BlankService } from "../../../shared/services/blank.service";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../shared/animations/appear";
 import { ConfirmService } from "../../../shared/services/infrastructure/confirm.service";
-import { IClass } from "../../../shared/interfaces/Classes/IClass";
-import { ClassService } from "../../../shared/services/class.service";
+import { ErrorService } from "../../../shared/services/infrastructure/error.service";
+import { IStudentAllInfoRequest } from "../../../shared/interfaces/Students/IStudentAllInfoRequest";
+import { Timelines } from "../../../shared/enums/Timelines";
 
 @Component({
   selector: 'app-student-info',
@@ -23,13 +21,11 @@ import { ClassService } from "../../../shared/services/class.service";
   ]
 })
 export class StudentInfoComponent implements OnInit {
-  protected student!: IStudentAllInfo
-  protected classInfo!: IClass
+  protected student!: IStudentAllInfoRequest
 
   constructor(
     private _studentService: StudentService,
-    private _classService: ClassService,
-    private _blankService: BlankService,
+    private _errorService: ErrorService,
     private _confirm: ConfirmService,
     private _router: Router,
     private _route: ActivatedRoute,
@@ -37,38 +33,8 @@ export class StudentInfoComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._studentService.getStudent(getParamFromRoute(this._route))
-      .pipe(
-        switchMap(student => {
-          return forkJoin({
-            classInfo: this._classService.getById(student.grade)
-              .pipe(
-                map(classInfo => ({
-                  ...classInfo,
-                  letter: classInfo.letter.toUpperCase()
-                })),
-                tap(classInfo => this.classInfo = classInfo)
-              ),
-            works: student.works.length > 0
-              ? zip(...student.works.map(work => this._blankService.parseBlanks([work]).pipe(map(w => w[0]))))
-              : of([])
-          })
-            .pipe(
-              map(infos => {
-                return {
-                  ...student,
-                  classInfo: infos.classInfo,
-                  works: infos.works.reverse().map(work => ({
-                    right: work.correctCount,
-                    actual: work.answers.length,
-                    percentage: Math.round(work.correctCount / work.answers.length * 100),
-                    ...work,
-                  })),
-                }
-              })
-            )
-        })
-      )
+    this._studentService.getById(getParamFromRoute(this._route))
+      .pipe(this._errorService.passErrorWithMessage("Не удалось загрузить студента"))
       .subscribe(student => {
         this.student = {
           ...student,
@@ -106,6 +72,8 @@ export class StudentInfoComponent implements OnInit {
   }
 
   protected navigateClass() {
-    this._router.navigate(['/', 'class', this.classInfo.pk])
+    this._router.navigate(['/', 'class', this.student.gradeDetail.pk])
   }
+
+  protected readonly Timelines = Timelines;
 }

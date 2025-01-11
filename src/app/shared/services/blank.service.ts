@@ -102,7 +102,7 @@ export class BlankService {
       .pipe(
         switchMap((blanks: IBlankWithAuthor[]) => {
           return blanks.length > 0
-            ? this._pattern.getPatterns(blanks[0].test, temporary)
+            ? this._pattern.getPatterns(blanks[0].quiz, temporary)
               .pipe(
                 map(patterns => translateBlanksFromRequest(blanks, patterns)
                   .sort((a, b) => sortStrings(a.author, b.author))))

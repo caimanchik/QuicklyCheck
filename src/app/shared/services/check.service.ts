@@ -4,6 +4,7 @@ import { HttpService } from "./infrastructure/http.service";
 import { BlankService } from "./blank.service";
 import { IBlanksCheck } from "../interfaces/Tests/Blanks/IBlanksCheck";
 import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
+import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
 
 @Injectable()
 export class CheckService {
@@ -67,14 +68,14 @@ export class CheckService {
 
     this.blanks.forEach(blank => data.append("images", blank, blank.name))
 
-    return this._http.Post<FormData, IBlanksCheck>(
+    return this._http.Post<FormData, IBlankRequest[]>( //todo IBlankCheck
       (temporary ? "temp/" : "") + `test/${pkTest}/blanks/`,
       data,
       {withCredentials: !temporary}
     )
       .pipe(
         tap(() => this.clearBlanks()),
-        switchMap(blanks => this._blank.parseBlanks(blanks.validBlanks, temporary)),
+        switchMap(blanks => this._blank.parseBlanks(blanks, temporary)),
         take(1)
       )
   }

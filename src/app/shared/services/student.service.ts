@@ -4,6 +4,7 @@ import { IStudent } from "../interfaces/Students/IStudent";
 import { HttpService } from "./infrastructure/http.service";
 import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
 import { IStudentRename } from "../interfaces/Students/IStudentRename";
+import { IStudentAllInfoRequest } from "../interfaces/Students/IStudentAllInfoRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class StudentService {
     private _http: HttpService,
   ) { }
 
-  public getClassStudents(id: number): Observable<IStudent[]> {
-    return this._http.Get<IStudent[]>(`class/${id}/students`)
+  public getById(pk: number) {
+    return this._http.Get<IStudentAllInfoRequest>(`student/${pk}`)
       .pipe(take(1))
   }
 

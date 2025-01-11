@@ -70,7 +70,7 @@ export class BlankInfoComponent implements OnInit {
   protected navigatePrevious() {
     this._router.navigate(this._previousUrl
       ? [this._previousUrl]
-      : ['/', 'test', this.blanks[0].test])
+      : ['/', 'test', this.blanks[0].quiz])
   }
 
   protected saveBlank(blank: IBlankParsed) {

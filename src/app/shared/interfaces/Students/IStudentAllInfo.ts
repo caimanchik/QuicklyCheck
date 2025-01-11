@@ -4,6 +4,6 @@ import { IResultView } from "../Views/IResultView";
 import { IBlankParsed } from "../Tests/Blanks/IBlankParsed";
 
 export interface IStudentAllInfo extends Omit<IStudent, "works"> {
-  classInfo: IClass,
+  gradeDetail: IClass,
   works: (IResultView & IBlankParsed)[]
 }
