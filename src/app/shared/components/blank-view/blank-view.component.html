@@ -57,7 +57,7 @@
                     <div class="view-main__column">
 
                         <div class="view-main__author">
-                            <span>{{ view.blank.author }}</span>
+                            <span>{{ view.blank.authorInfo.name }}</span>
                         </div>
                         <div class="view-main__result">
                             <div class="view-main__progress view-main-progress">
@@ -113,7 +113,6 @@
                 <app-answers-view
                         @appear
                         [view]="view"
-                        [resultView]="resultView"
                         (editEvent)="enableEditMod()"
                 ></app-answers-view>
             </ng-container>

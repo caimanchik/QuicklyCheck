@@ -7,9 +7,7 @@ import {
 } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { IBlankView } from "../../interfaces/Views/IBlankView";
-import { IResultView } from "../../interfaces/Views/IResultView";
 import { appear } from "../../animations/appear";
-import { calculateResult } from "../../functions/blanks/calculateResult";
 import { opacityIn } from "../../animations/opacityIn";
 import { IBlankValid } from "../../interfaces/Tests/Blanks/IBlankValid";
 
@@ -37,7 +35,6 @@ export class BlankViewComponent implements OnChanges {
   @Output() public swipeEvent = new EventEmitter<number>()
   @Output() public saveEvent = new EventEmitter<IBlankValid>()
 
-  protected resultView!: IResultView
   protected isEdit: boolean = false
 
   constructor(
@@ -47,8 +44,6 @@ export class BlankViewComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (!changes?.['view']?.currentValue)
       return
-
-    this.resultView = calculateResult(changes?.['view']?.currentValue.blank)
   }
 
   protected toggleShow() {

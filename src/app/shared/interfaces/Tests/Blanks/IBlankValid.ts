@@ -3,7 +3,7 @@ import { IBlankStudent } from "./IBlankStudent";
 import { IBlankScore } from "./IBlankScore";
 
 export interface IBlankValid extends IBlank {
-  author: IBlankStudent
+  authorInfo: IBlankStudent
   answers: string[]
   blankScore: IBlankScore
 }
