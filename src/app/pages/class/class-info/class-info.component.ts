@@ -20,6 +20,8 @@ import { ClassService } from "../../../shared/services/class.service";
 import { createLineChart } from "../../../shared/functions/charts/createLineChart";
 import { Chart } from "chart.js";
 import { Timelines } from "../../../shared/enums/Timelines";
+import { StatsService } from "../../../shared/services/stats.service";
+import { IStats } from "../../../shared/interfaces/Stats/IStats";
 
 @Component({
   selector: 'app-class-info',
@@ -66,6 +68,7 @@ export class ClassInfoComponent implements OnInit {
 
   constructor(
     private _classService: ClassService,
+    private _statsService: StatsService,
     private _errorService: ErrorService,
     private _confirmService: ConfirmService,
     private _route: ActivatedRoute,
@@ -74,18 +77,13 @@ export class ClassInfoComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._classService.getById(getParamFromRoute(this._route))
+    const classPk = getParamFromRoute(this._route)
+    this._classService.getById(classPk)
       .pipe(this._errorService.passErrorWithMessage("Данного класса не существует", ["error"]))
       .subscribe(classInfo => {
         this.classInfo = classInfo
-        this.classInfo.students = this.classInfo.students.map(s => ({
-          ...s,
-          name: s.name.split(" ").length >= 3
-            ? s.name.split(" ").slice(0, -1).join(" ")
-            : s.name
-        }))
         this._cd.markForCheck()
-        this.changeTimeline(Timelines.Month)
+        this.changeTimeline(Timelines.Month, undefined, classPk)
       })
 
     this.toggleHideForElement("studentsHidden")
@@ -112,10 +110,11 @@ export class ClassInfoComponent implements OnInit {
     this._cd.markForCheck()
   }
 
-  protected changeTimeline(timeline: Timelines, element?: HTMLElement) {
-    if (timeline == this.selectedTimeline) return
-
+  protected changeTimeline(timeline: Timelines, element?: HTMLElement, classPk?: number) {
+    if (timeline == this.selectedTimeline)
+      return
     this.selectedTimeline = timeline
+
     if (element) {
       this._timelineChangers.forEach(e => {
         e.nativeElement.classList.remove("active")
@@ -126,15 +125,37 @@ export class ClassInfoComponent implements OnInit {
       element.classList.add("active")
     }
 
-    setTimeout(() => {
-      this._chart?.destroy()
-      this.dimensions ??= this._chartWrapper.nativeElement.getBoundingClientRect()
-      this._chart = createLineChart(this._chartElement, this.dimensions,
-        ['', '5.12', '', '10.12', '15.12', '20.12', '25.12', '31.12'],
-        [10, 5, 2, 20, 30, 45, 90, 20],
-        ['', '5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
-        ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
-    })
+    this._statsService.getClassStats(classPk ?? this.classInfo.pk, timeline)
+      .pipe(this._errorService.passErrorWithMessage("Не удалось загрузить статистику", [], false))
+      .subscribe(stats => {
+        console.log(stats)
+        setTimeout(() => {
+          this._chart?.destroy()
+          this.dimensions ??= this._chartWrapper.nativeElement.getBoundingClientRect()
+
+          this._chart = createLineChart(this._chartElement, this.dimensions,
+            stats.stats.map(_ => ' '),
+            stats.stats.map(s => +s.avg.toFixed(0)),
+            [...this.getElementsWithStep(stats.stats.map(s => s.date))],
+            ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
+        })
+      })
+  }
+
+  private getElementsWithStep<T>(source: T[], count: number = 6) {
+    if (source.length <= count) {
+      return source;
+    }
+
+    const result = [];
+    const step = (source.length - 1) / (count - 1);
+
+    for (let i = 0; i < count; i++) {
+      const index = Math.round(i * step);
+      result.push(source[index]);
+    }
+
+    return result;
   }
 
   private toggleHideForElement(key: keyof IRememberInfo) {

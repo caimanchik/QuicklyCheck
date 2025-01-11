@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { Observable, take } from "rxjs";
+import { map, Observable, take } from "rxjs";
 import { IClass } from "../interfaces/Classes/IClass";
 import { IClassAllInfo } from "../interfaces/Classes/IClassAllInfo";
 import { IClassBase } from "../interfaces/Classes/IClassBase";
@@ -21,7 +21,17 @@ export class ClassService {
 
   public getById(id: number) : Observable<IClassAllInfo> {
     return this._http.Get<IClassAllInfo>(`class/${id}`)
-      .pipe(take(1));
+      .pipe(
+        map(c => ({
+          ...c,
+          students: c.students.map(s => ({
+            ...s,
+            name: s.name.split(" ").length >= 3
+              ? s.name.split(" ").slice(0, -1).join(" ")
+              : s.name
+          }))
+        })),
+        take(1));
   }
 
   public createClass(classInfo: IClassBase): Observable<IClass> {

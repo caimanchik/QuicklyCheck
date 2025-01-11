@@ -38,7 +38,7 @@
                                             Средний балл
                                         </h2>
                                         <div class="class-stats__text stats-box__text">
-                                            85%
+                                            {{ classInfo.stats.avgScore | number : ".0" }}%
                                         </div>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                             Худший средний балл
                                         </h2>
                                         <div class="class-stats__text stats-box__text">
-                                            30%
+                                            {{ classInfo.stats.worstAvg | number : ".0" }}%
                                         </div>
                                     </div>
                                 </div>
