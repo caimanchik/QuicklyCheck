@@ -7,9 +7,8 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
-import { IBlankParsed } from "../../../../../shared/interfaces/Tests/Blanks/IBlankParsed";
-import { translateBlankToRequest } from "../../../../../shared/functions/blanks/translateBlankToRequest";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
+import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankValid";
 
 @Component({
   selector: 'app-blank-info',
@@ -18,7 +17,7 @@ import { getParamFromRoute } from "../../../../../shared/functions/application/g
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlankInfoComponent implements OnInit {
-  protected blanks!: IBlankParsed[]
+  protected blanks!: IBlankValid[]
   protected showIndex!: number
   protected readyToShow!: boolean;
 
@@ -40,13 +39,13 @@ export class BlankInfoComponent implements OnInit {
 
     if (this.blanks)
       this.prepareBlanksForView(blankPk)
-    else
-      this._blankService.getBlank(blankPk)
-        .pipe(this._errorService.passErrorWithMessage("Бланк не найден"))
-        .subscribe(blank => {
-          this.blanks = [blank]
-          this.prepareBlanksForView(blankPk)
-        })
+    // else
+    //   this._blankService.getBlank(blankPk)
+    //     .pipe(this._errorService.passErrorWithMessage("Бланк не найден"))
+    //     .subscribe(blank => {
+    //       this.blanks = [blank]
+    //       this.prepareBlanksForView(blankPk)
+    //     })
   }
 
   private prepareBlanksForView(blankPk: number) {
@@ -73,8 +72,8 @@ export class BlankInfoComponent implements OnInit {
       : ['/', 'test', this.blanks[0].quiz])
   }
 
-  protected saveBlank(blank: IBlankParsed) {
-    this._blankService.updateBlank(translateBlankToRequest(blank))
+  protected saveBlank(blank: IBlankValid) {
+    this._blankService.updateBlank(blank)
       .subscribe(blankParsed => {
         const index = this.findIndex(blankParsed.pk)
         this.blanks = [
@@ -83,7 +82,7 @@ export class BlankInfoComponent implements OnInit {
           ...this.blanks.slice(index + 1)
         ]
 
-        // this.prepareBlanksForView(blankParsed.pk)
+        this.prepareBlanksForView(blankParsed.pk)
 
         this._cd.detectChanges()
       })

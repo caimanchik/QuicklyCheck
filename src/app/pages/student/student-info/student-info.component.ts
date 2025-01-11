@@ -17,8 +17,6 @@ import { ErrorService } from "../../../shared/services/infrastructure/error.serv
 import { Timelines } from "../../../shared/enums/Timelines";
 import { createLineChart } from "../../../shared/functions/charts/createLineChart";
 import { Chart } from "chart.js";
-import { map, switchMap } from "rxjs";
-import { BlankService } from "../../../shared/services/blank.service";
 import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
 
 @Component({
@@ -47,7 +45,6 @@ export class StudentInfoComponent implements OnInit {
 
   constructor(
     private _studentService: StudentService,
-    private _blankService: BlankService,
     private _errorService: ErrorService,
     private _confirm: ConfirmService,
     private _router: Router,
@@ -58,13 +55,6 @@ export class StudentInfoComponent implements OnInit {
   public ngOnInit(): void {
     this._studentService.getById(getParamFromRoute(this._route))
       .pipe(this._errorService.passErrorWithMessage("Не удалось загрузить студента"))
-      .pipe(switchMap(student => {
-        return this._blankService.parseBlanks(student.works, false, student)
-          .pipe(map(blanks => ({
-            ...student,
-            works: blanks
-          })))
-      }))
       .subscribe(student => {
         this.student = {
           ...student,
@@ -93,14 +83,15 @@ export class StudentInfoComponent implements OnInit {
       this._chart?.destroy()
       this.dimensions ??= this._chartWrapper.nativeElement.getBoundingClientRect()
       this._chart = createLineChart(this._chartElement, this.dimensions,
-        ['', '5.12', '', '10.12', '15.12', '20.12', '25.12', '31.12'],
-        [10, 5, 2, 20, 30, 45, 90, 20],
+        ['', '5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
+        [NaN, NaN, NaN, NaN, 70, 100, 90, 70],
         ['', '5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
         ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
     })
   }
 
-  protected showBlank(blankPk: number) {
+  protected showBlank(event: MouseEvent, blankPk: number) {
+    event.preventDefault()
     this._router.navigate(['/', 'blank', blankPk], {
       state: {
         blanks: this.student.works,
@@ -119,7 +110,7 @@ export class StudentInfoComponent implements OnInit {
           return
 
         this._studentService.deleteStudent(this.student.pk)
-          .subscribe(() => this._router.navigate(['class', this.student.grade]))
+          .subscribe(() => this._router.navigate(['class', this.student.gradeDetail.pk]))
       })
   }
 

@@ -13,7 +13,7 @@
 
     <div class="answers__results">
         <ul class="answers__list answers-list">
-            <ng-container *ngFor="let answer of view.blank.answers; let i = index">
+            <ng-container *ngFor="let answer of view.blank.blankScore.checkedAnswers; let i = index">
                 <div class="answers-list__item">
                     <div class="answers-list__number">
                         {{ i + 1 }}.

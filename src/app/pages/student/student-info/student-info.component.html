@@ -42,7 +42,7 @@
                                                 Средний балл
                                             </h2>
                                             <div class="stats-box__text">
-                                                85%
+                                                82%
                                             </div>
                                         </div>
                                     </div>
@@ -54,10 +54,10 @@
                                     <div class="stats-box__content">
                                         <div class="student__block">
                                             <h2 class="stats-box__title">
-                                                Худший средний балл
+                                                Худший балл
                                             </h2>
                                             <div class="stats-box__text">
-                                                30%
+                                                70%
                                             </div>
                                         </div>
                                     </div>
@@ -115,45 +115,64 @@
                 </div>
 
                 <div class="student__works student-works">
-                    <div class="student__block">
 
+                    <div class="student-works__title-wrap">
                         <h2 class="student-works__title">
                             Список тестовых работ
                         </h2>
+                    </div>
 
-                        <ul class="student-works__list student-works-list">
+                    <div class="student__block student__top">
+                        <ul class="works__bar works-bar">
+                            <li class="works-bar__item number">
+                                Номер
+                            </li>
+                            <li class="works-bar__item name">
+                                Название работы
+                            </li>
+                            <li class="works-bar__item score">
+                                Балл
+                            </li>
+                            <li class="works-bar__item date">
+                                Дата загрузки
+                            </li>
+                        </ul>
+
+                        <ul class="works__list works-list">
                             <ng-container *ngFor="let work of student.works; let i = index">
-                                <li class="student-works-list__item">
-                                    <div class="student-works-list__number">
-                                        <span>{{ i + 1 }}.</span>
-                                    </div>
+                                <li class="works-list works-list__item">
+                                    <a href="#" (click)="showBlank($event, work.pk)" class="works-list__link">
+                                        <span class="works-list__item number">
+                                            {{ i + 1 }}
+                                        </span>
 
-                                    <button
-                                            type="button"
-                                            class="student-works-list__name"
-                                            (click)="showBlank(work.pk)"
-                                    >
-                                        <span>{{ work.testName }}</span>
-                                    </button>
+                                        <span class="works-list__item name">
+                                            <span>{{ work.testName }}</span>
+                                        </span>
 
-                                    <div class="student-works-list__score">
-<!--                                        <span class="student-works-list__percent">{{ work.percentage }}%</span>-->
-<!--                                        <span>{{ work.right }}/{{ work.actual }}</span>-->
-                                    </div>
+                                        <span class="works-list__item score">
+                                            {{ work.blankScore.percentage | number : ".0" }}
+                                        </span>
+
+                                        <span class="works-list__item date">
+                                            {{ work.createdAt | date: "dd.MM.YYYY" }}
+                                        </span>
+                                    </a>
                                 </li>
                             </ng-container>
                         </ul>
-                    </div>
 
-                    <div class="student__delete">
-                        <app-button
-                                mode="red"
-                                (clickEvent)="deleteStudent()"
-                        >
-                            Удалить ученика
-                        </app-button>
                     </div>
                 </div>
+
+                <div class="student__delete">
+                    <app-button
+                            mode="red"
+                            (clickEvent)="deleteStudent()">
+                        Удалить ученика
+                    </app-button>
+                </div>
+
             </div>
 
         </div>

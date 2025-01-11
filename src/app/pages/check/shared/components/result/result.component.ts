@@ -70,20 +70,20 @@ export class ResultComponent implements AfterViewInit {
   }
 
   private createView() {
-    this._viewContext = {
-      blank: this.blanks[this._nowIndex],
-      arrows: {
-        prev: true,
-        next: true,
-      },
-      showDetail: this._show,
-      isLogged: true
-    }
-
-    this._blankContainer.clear()
-    this._view = this._blankContainer.createEmbeddedView(this._blankTemplate, {
-      view: this._viewContext
-    })
+    // this._viewContext = {
+    //   blank: this.blanks[this._nowIndex],
+    //   arrows: {
+    //     prev: true,
+    //     next: true,
+    //   },
+    //   showDetail: this._show,
+    //   isLogged: true
+    // }
+    //
+    // this._blankContainer.clear()
+    // this._view = this._blankContainer.createEmbeddedView(this._blankTemplate, {
+    //   view: this._viewContext
+    // })
 
     this._cd.markForCheck()
   }
