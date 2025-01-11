@@ -1,8 +1,10 @@
 import { ITest } from "./ITest";
-import { IBlankParsed } from "../Blanks/IBlankParsed";
 import { IBlankInvalidParsed } from "../Blanks/IBlankInvalidParsed";
+import { IClass } from "../../Classes/IClass";
+import { IBlankValid } from "../Blanks/IBlankValid";
 
-export interface ITestAllInfo extends ITest {
-  blanks: IBlankParsed[]
-  wrongBlanks: IBlankInvalidParsed[]
+export interface ITestAllInfo extends Omit<ITest, 'grade'> {
+  grade: IClass
+  blanks: IBlankValid[]
+  invalidBlanks: IBlankInvalidParsed[]
 }

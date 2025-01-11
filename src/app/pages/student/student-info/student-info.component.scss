@@ -125,19 +125,6 @@
 .student {
   &__works {
     @extend %works;
-
-    & .name {
-      position: relative;
-      overflow: hidden;
-      margin-right: 1rem;
-
-      & span {
-        position: absolute;
-        display: block;
-        left: 0;
-        top: 0;
-      }
-    }
   }
 
   &__block {

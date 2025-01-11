@@ -128,7 +128,6 @@ export class ClassInfoComponent implements OnInit {
     this._statsService.getClassStats(classPk ?? this.classInfo.pk, timeline)
       .pipe(this._errorService.passErrorWithMessage("Не удалось загрузить статистику", [], false))
       .subscribe(stats => {
-        console.log(stats)
         setTimeout(() => {
           this._chart?.destroy()
           this.dimensions ??= this._chartWrapper.nativeElement.getBoundingClientRect()

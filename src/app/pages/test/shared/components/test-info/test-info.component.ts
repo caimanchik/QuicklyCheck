@@ -9,9 +9,7 @@ import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { appear } from "../../../../../shared/animations/appear";
 import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
-import { IClass } from "../../../../../shared/interfaces/Classes/IClass";
 import { animateOut } from "../../../../../shared/animations/animateOut";
-import { ClassService } from "../../../../../shared/services/class.service";
 import { TestService } from "../../../../../shared/services/test.service";
 
 @Component({
@@ -31,7 +29,6 @@ import { TestService } from "../../../../../shared/services/test.service";
 export class TestInfoComponent implements OnInit {
   protected test!: ITestAllInfo
   protected showCheckButton = false;
-  protected classInfo!: IClass
 
   protected assessment: IGrad[] = [
     {
@@ -62,7 +59,6 @@ export class TestInfoComponent implements OnInit {
     private _patternService: PatternService,
     private _confirmService: ConfirmService,
     private _errorService: ErrorService,
-    private _classService: ClassService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _cd: ChangeDetectorRef,
@@ -75,12 +71,6 @@ export class TestInfoComponent implements OnInit {
       .subscribe(test => {
         this.test = test
         this._cd.markForCheck()
-
-        this._classService.getById(test.grade)
-          .subscribe(classInfo => {
-            this.classInfo = classInfo
-            this._cd.markForCheck()
-          })
       })
 
     this._patternService.getPatterns(testId)
@@ -98,7 +88,7 @@ export class TestInfoComponent implements OnInit {
           return
 
         this._testService.deleteTest(this.test.pk)
-          .subscribe(() => this._router.navigate(['class', this.test.grade]))
+          .subscribe(() => this._router.navigate(['class', this.test.grade.pk]))
       })
   }
 
@@ -119,10 +109,13 @@ export class TestInfoComponent implements OnInit {
     this._router.navigate(['/', 'test', this.test.pk, 'upload'])
   }
 
-  protected deleteBlank(i: number) {
+  protected deleteBlank($event: MouseEvent, i: number) {
+    $event.preventDefault()
+    $event.stopPropagation()
+
     const blank = this.test.blanks[i]
     this._confirmService.createConfirm({
-      message: `Вы действительно хотите удалить бланк ученика "${blank.author}"?`,
+      message: `Вы действительно хотите удалить бланк ученика "${blank.authorInfo.name}"?`,
       buttonText: 'удалить'
     })
       .subscribe(confirmed => {
@@ -138,7 +131,7 @@ export class TestInfoComponent implements OnInit {
   }
 
   protected deleteWrongBlank(i: number) {
-    const blank = this.test.wrongBlanks[i]
+    const blank = this.test.invalidBlanks[i]
     this._confirmService.createConfirm({
       message: `Вы действительно хотите удалить бланк от ${
         (blank.createdAt.getDate() < 10 ? '0' : '') + blank.createdAt.getDate()}.${
@@ -152,13 +145,14 @@ export class TestInfoComponent implements OnInit {
 
         this._blankService.deleteWrongBlank(blank.pk)
           .subscribe(() => {
-            this.test.wrongBlanks.splice(i, 1)
+            this.test.invalidBlanks.splice(i, 1)
             this._cd.markForCheck()
           })
       })
   }
 
-  protected showBlank(pkBlank: number) {
+  protected showBlank($event: MouseEvent, pkBlank: number) {
+    $event.preventDefault()
     const extras: NavigationExtras = {
       state: {
         blanks: this.test.blanks,
@@ -174,6 +168,6 @@ export class TestInfoComponent implements OnInit {
   }
 
   protected navigateClass() {
-    this._router.navigate(['/', 'class', this.classInfo.pk])
+    this._router.navigate(['/', 'class', this.test.grade.pk])
   }
 }
