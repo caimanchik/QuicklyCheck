@@ -4,11 +4,10 @@ import {
   Component, EventEmitter,
   Input,
   OnChanges,
-  OnInit, Output,
+  Output,
   SimpleChanges
 } from '@angular/core';
 import { IBlankView } from "../../../../interfaces/Views/IBlankView";
-import { IResultView } from "../../../../interfaces/Views/IResultView";
 
 @Component({
   selector: 'app-answers-view',
@@ -21,7 +20,6 @@ import { IResultView } from "../../../../interfaces/Views/IResultView";
 })
 export class AnswersViewComponent implements OnChanges {
   @Input() public view!: IBlankView
-  @Input() public resultView!: IResultView
 
   @Output() public editEvent = new EventEmitter<void>()
 

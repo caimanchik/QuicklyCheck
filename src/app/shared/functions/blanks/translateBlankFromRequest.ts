@@ -4,7 +4,6 @@ import { IBlankWithAuthor } from "../../interfaces/Tests/Blanks/IBlankWithAuthor
 
 export function translateBlankFromRequest(blank: IBlankWithAuthor, pattern: IPatternParsed): IBlankParsed {
   let answers = blank.answers
-    .split(',')
     .filter((e, i) => i < pattern.pattern.length)
     .map(e => e !== '' ? parseInt(e) : -1)
     .map((answer, i) => {

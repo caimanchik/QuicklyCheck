@@ -1,7 +1,7 @@
-import { IBlankParsed } from "../Tests/Blanks/IBlankParsed";
+import { IBlankValid } from "../Tests/Blanks/IBlankValid";
 
 export interface IBlankView {
-  blank: IBlankParsed,
+  blank: IBlankValid,
   arrows: {
     prev: boolean,
     next: boolean

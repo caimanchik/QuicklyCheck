@@ -1,7 +1,9 @@
 export interface IBlank {
   pk: number;
-  test: number;
+  quiz: number;
+  testName: string,
+  image: string,
   var: number;
-  id_blank: string;
-  testName: string
+  idBlank: string;
+  createdAt: Date
 }

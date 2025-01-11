@@ -57,20 +57,20 @@
                     <div class="view-main__column">
 
                         <div class="view-main__author">
-                            <span>{{ view.blank.author }}</span>
+                            <span>{{ view.blank.authorInfo.name }}</span>
                         </div>
                         <div class="view-main__result">
                             <div class="view-main__progress view-main-progress">
                                 <div class="view-main-progress__percent">
-                                    <span>{{ resultView.percentage }}%</span>
+                                    <span>{{ view.blank.blankScore.percentage }}%</span>
                                 </div>
                                 <div class="view-main-progress__decor">
                                     <span></span>
-                                    <span [ngStyle]="{width: resultView.percentage + '%'}"></span>
+                                    <span [ngStyle]="{width: view.blank.blankScore.percentage + '%'}"></span>
                                 </div>
                             </div>
                             <div class="view-main__numbers">
-                                {{ resultView.actual }}/{{ resultView.right }}
+                                {{ view.blank.blankScore.right }}/{{ view.blank.blankScore.total }}
                             </div>
                         </div>
 
@@ -113,7 +113,6 @@
                 <app-answers-view
                         @appear
                         [view]="view"
-                        [resultView]="resultView"
                         (editEvent)="enableEditMod()"
                 ></app-answers-view>
             </ng-container>

@@ -12,13 +12,13 @@
                 <app-return
                         (returnEvent)="navigateClass()"
                 >
-                    Класс {{ classInfo.number }}{{ classInfo.letter }}
+                    Класс {{ student.gradeDetail.number }}{{ student.gradeDetail.letter }}
                 </app-return>
                 <div class="student__header">
                     <div class="student__title">
                         <div>
                             <span>{{ student.name }},</span>
-                            <span>{{ student.classInfo.number }}{{ student.classInfo.letter }} класс</span>
+                            <span>{{ student.gradeDetail.number }}{{ student.gradeDetail.letter }} класс</span>
                         </div>
                         <div>
                             <app-button (clickEvent)="rename()">
@@ -30,46 +30,149 @@
             </div>
 
             <div class="student__content">
-                <div class="student__works student-works">
-                    <div class="student__block">
+                <div class="student__columns first student-stats">
+                    <div class="student__column small">
+                        <div class="student__stats stats-box">
 
+                            <div class="stats-box__wrapper">
+                                <div class="stats-box__container">
+                                    <div class="stats-box__content">
+                                        <div class="student__block">
+                                            <h2 class="stats-box__title">
+                                                Средний балл
+                                            </h2>
+                                            <div class="stats-box__text">
+                                                82%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stats-box__wrapper">
+                                <div class="stats-box__container">
+                                    <div class="stats-box__content">
+                                        <div class="student__block">
+                                            <h2 class="stats-box__title">
+                                                Худший балл
+                                            </h2>
+                                            <div class="stats-box__text">
+                                                70%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="student__column big">
+                        <div class="student__block">
+                            <div class="stats-line">
+                                <div class="stats-line__bar stats-line-bar">
+                                    <div class="stats-line-bar__wrapper">
+                                        <button type="button"
+                                                class="stats-line-bar__item active"
+                                                #timelineChanger
+                                                #month
+                                                (click)="changeTimeline(Timelines.Month, month)">
+                                            <div class="stats-line-bar__text">
+                                                Месяц
+                                            </div>
+                                        </button>
+                                        <button type="button"
+                                                class="stats-line-bar__item common"
+                                                #timelineChanger
+                                                #year
+                                                (click)="changeTimeline(Timelines.Year, year)">
+                                            <div class="stats-line-bar__text">
+                                                Учебный год
+                                            </div>
+                                        </button>
+                                        <button type="button"
+                                                class="stats-line-bar__item common"
+                                                #timelineChanger
+                                                #all
+                                                (click)="changeTimeline(Timelines.AllTime, all)">
+                                            <div class="stats-line-bar__text">
+                                                Все время
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="stats-line__chart stats-line-chart">
+                                    <div #chartWrapper class="stats-line-chart__wrapper">
+                                        <canvas #lineChart>
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="student__works student-works">
+
+                    <div class="student-works__title-wrap">
                         <h2 class="student-works__title">
                             Список тестовых работ
                         </h2>
+                    </div>
 
-                        <ul class="student-works__list student-works-list">
+                    <div class="student__block student__top">
+                        <ul class="works__bar works-bar">
+                            <li class="works-bar__item number">
+                                Номер
+                            </li>
+                            <li class="works-bar__item name">
+                                Название работы
+                            </li>
+                            <li class="works-bar__item score">
+                                Балл
+                            </li>
+                            <li class="works-bar__item date">
+                                Дата загрузки
+                            </li>
+                        </ul>
+
+                        <ul class="works__list works-list">
                             <ng-container *ngFor="let work of student.works; let i = index">
-                                <li class="student-works-list__item">
-                                    <div class="student-works-list__number">
-                                        <span>{{ i + 1 }}.</span>
-                                    </div>
+                                <li class="works-list works-list__item">
+                                    <a href="#" (click)="showBlank($event, work.pk)" class="works-list__link">
+                                        <span class="works-list__item number">
+                                            {{ i + 1 }}
+                                        </span>
 
-                                    <button
-                                            type="button"
-                                            class="student-works-list__name"
-                                            (click)="showBlank(work.pk)"
-                                    >
-                                        <span>{{ work.testName }}</span>
-                                    </button>
+                                        <span class="works-list__item name">
+                                            <span>{{ work.testName }}</span>
+                                        </span>
 
-                                    <div class="student-works-list__score">
-                                        <span class="student-works-list__percent">{{ work.percentage }}%</span>
-                                        <span>{{ work.right }}/{{ work.actual }}</span>
-                                    </div>
+                                        <span class="works-list__item score">
+                                            {{ work.blankScore.percentage | number : ".0" }}
+                                        </span>
+
+                                        <span class="works-list__item date">
+                                            {{ work.createdAt | date: "dd.MM.YYYY" }}
+                                        </span>
+                                    </a>
                                 </li>
                             </ng-container>
                         </ul>
-                    </div>
 
-                    <div class="student__delete">
-                        <app-button
-                                mode="red"
-                                (clickEvent)="deleteStudent()"
-                        >
-                            Удалить ученика
-                        </app-button>
                     </div>
                 </div>
+
+                <div class="student__delete">
+                    <app-button
+                            mode="red"
+                            (clickEvent)="deleteStudent()">
+                        Удалить ученика
+                    </app-button>
+                </div>
+
             </div>
 
         </div>

@@ -7,10 +7,10 @@ import {
   TemplateRef,
   ViewChild, ViewContainerRef
 } from '@angular/core';
-import { IBlankParsed } from "../../interfaces/Tests/Blanks/IBlankParsed";
 import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../animations/appear";
+import { IBlankValid } from "../../interfaces/Tests/Blanks/IBlankValid";
 
 @Component({
   selector: 'app-blanks-view',
@@ -27,11 +27,11 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
   @ViewChild('blankContainer', {read: ViewContainerRef}) private _blankContainer!: ViewContainerRef
   @ViewChild('blank', {read: TemplateRef, static: true}) private _blankTemplate!: TemplateRef<{ view: IBlankView }>
 
-  @Input() public blanks!: IBlankParsed[]
+  @Input() public blanks!: IBlankValid[]
   @Input() public showIndex = 0
 
   @Output() public previousClickEvent = new EventEmitter<void>()
-  @Output() public saveEvent = new EventEmitter<IBlankParsed>()
+  @Output() public saveEvent = new EventEmitter<IBlankValid>()
 
   private _viewContext!: IBlankView
   private _view!: EmbeddedViewRef<{view: IBlankView}>
@@ -52,7 +52,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     this.createView(this.blanks[this.showIndex])
   }
 
-  private createView(blank: IBlankParsed, showDetail: boolean = false) {
+  private createView(blank: IBlankValid, showDetail: boolean = false) {
     this._viewContext = {
       blank: blank,
       arrows: {
@@ -97,7 +97,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     this.previousClickEvent.emit()
   }
 
-  protected save(blank: IBlankParsed) {
+  protected save(blank: IBlankValid) {
     this.saveEvent.next(blank)
   }
 }

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, take } from "rxjs";
+import { map, Observable, take } from "rxjs";
 import { IStudent } from "../interfaces/Students/IStudent";
 import { HttpService } from "./infrastructure/http.service";
 import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
 import { IStudentRename } from "../interfaces/Students/IStudentRename";
+import { IStudentAllInfo } from "../interfaces/Students/IStudentAllInfo";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,15 @@ export class StudentService {
     private _http: HttpService,
   ) { }
 
-  public getClassStudents(id: number): Observable<IStudent[]> {
-    return this._http.Get<IStudent[]>(`class/${id}/students`)
+  public getById(pk: number) {
+    return this._http.Get<IStudentAllInfo>(`student/${pk}`)
+      .pipe(map(student => ({
+        ...student,
+        works: student.works.map(w => ({
+          ...w,
+          image: environment.backendUrl + w.image
+        }))
+      })))
       .pipe(take(1))
   }
 

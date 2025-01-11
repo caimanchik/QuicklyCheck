@@ -14,13 +14,13 @@ import { IEditForm, IIdEditForm } from "../../../../interfaces/Forms/IEditForm";
 import { answerValidator } from "../../../../validators/answerValidator";
 import { idValidator } from "../../../../validators/idValidator";
 import { DestroyService } from "../../../../services/infrastructure/destroy.service";
-import { IBlankParsed } from "../../../../interfaces/Tests/Blanks/IBlankParsed";
 import { Observable } from "rxjs";
 import { ConfirmService } from "../../../../services/infrastructure/confirm.service";
 import { answersValidator } from "../../../../validators/answersValidator";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { animateIn } from "../../../../animations/animateIn";
 import { animateOut } from "../../../../animations/animateOut";
+import { IBlankValid } from "../../../../interfaces/Tests/Blanks/IBlankValid";
 
 @Component({
   selector: 'app-blank-edit',
@@ -40,7 +40,7 @@ import { animateOut } from "../../../../animations/animateOut";
 export class BlankEditComponent implements OnChanges {
   @Input() public view!: IBlankView
 
-  @Output() public closeEvent = new EventEmitter<IBlankParsed | void>()
+  @Output() public closeEvent = new EventEmitter<IBlankValid | void>()
 
   protected editForm!: FormGroup<IEditForm>
   protected answerError!: string
@@ -63,7 +63,7 @@ export class BlankEditComponent implements OnChanges {
   private getEditForm(): FormGroup<IEditForm> {
     return new FormGroup<IEditForm>({
       answers: new FormArray<FormControl<number | string>>([
-        ...this.view.blank.answers.map((answer, i) => new FormControl<number | string>(
+        ...this.view.blank.blankScore.checkedAnswers.map((answer, i) => new FormControl<number | string>(
           answer.actual === -1 ? 'X' : answer.actual,
           {
             nonNullable: true,
@@ -77,10 +77,10 @@ export class BlankEditComponent implements OnChanges {
         nonNullable: true
       }),
       id: new FormGroup<IIdEditForm>({
-        idFirst: new FormControl<number>(Math.floor(+this.view.blank.id_blank / 10), {
+        idFirst: new FormControl<number>(Math.floor(+this.view.blank.idBlank / 10), {
           nonNullable: true
         }),
-        idSecond: new FormControl<number>(+this.view.blank.id_blank % 10, {
+        idSecond: new FormControl<number>(+this.view.blank.idBlank % 10, {
           nonNullable: true
         })
       }, {
@@ -109,7 +109,6 @@ export class BlankEditComponent implements OnChanges {
       .pipe(this._destroy.takeUntilDestroy)
       .subscribe(() => {
         this.answerError = ''
-        console.log(form.controls.answers.errors?.['error'])
 
         if (form.controls.answers.invalid)
           this.answerError = form.controls.answers.errors?.['error']
@@ -122,18 +121,15 @@ export class BlankEditComponent implements OnChanges {
     if (this.editForm.invalid)
       return
 
-    const blank: IBlankParsed = {
+    const blank: IBlankValid = {
       ...this.view.blank,
-      answers: this.editForm.controls.answers.controls.map((control, i) => {
-        return {
-          ...this.view.blank.answers[i],
-          actual: isNaN(+control.value)
-            ? -1
-            : +control.value
-        }
+      answers: this.editForm.controls.answers.controls.map(control => {
+        return isNaN(+control.value)
+          ? ""
+          : control.value.toString()
       }),
       var: this.editForm.controls.variant.value,
-      author: (
+      idBlank: (
         this.editForm.controls.id.controls.idFirst.value * 10
         + this.editForm.controls.id.controls.idSecond.value).toString()
     }

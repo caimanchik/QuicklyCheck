@@ -12,6 +12,8 @@ import { sortStrings } from "../functions/application/sortStrings";
 import { IBlankInvalidParsed } from "../interfaces/Tests/Blanks/IBlankInvalidParsed";
 import { translateWrongBlanksFromRequest } from "../functions/blanks/translateWrongBlanksFromRequest";
 import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
+import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
+import { IBlankValid } from "../interfaces/Tests/Blanks/IBlankValid";
 
 @Injectable({
   providedIn: 'root'
@@ -85,24 +87,31 @@ export class BlankService {
       )
   }
 
-  public parseBlanks(blanksReq: IBlankRequest[], temporary: boolean = false) : Observable<IBlankParsed[]> {
+  public parseBlanks(blanksReq: IBlankRequest[], temporary: boolean = false, student?: IStudentCreate) : Observable<IBlankParsed[]> {
     return (blanksReq.length > 0
         ? forkJoin(blanksReq
           .map(blank => {
-            return !temporary ? this._student.getStudent(blank.author)
-              .pipe(
-                map(student => ({
+            return !temporary
+              ? student
+                ? of({
                   ...blank,
                   image: environment.backendUrl + blank.image,
                   author: student.name
-                }))
-              ) : of({...blank, image: environment.backendUrl + blank.image, author: blank.id_blank})}))
+                })
+                : this._student.getStudent(blank.author)
+                .pipe(
+                  map(student => ({
+                    ...blank,
+                    image: environment.backendUrl + blank.image,
+                    author: student.name
+                  })))
+              : of({...blank, image: environment.backendUrl + blank.image, author: blank.idBlank})}))
         : of([])
     )
       .pipe(
         switchMap((blanks: IBlankWithAuthor[]) => {
           return blanks.length > 0
-            ? this._pattern.getPatterns(blanks[0].test, temporary)
+            ? this._pattern.getPatterns(blanks[0].quiz, temporary)
               .pipe(
                 map(patterns => translateBlanksFromRequest(blanks, patterns)
                   .sort((a, b) => sortStrings(a.author, b.author))))
@@ -112,16 +121,12 @@ export class BlankService {
       )
   }
 
-  public updateBlank(blank: BlankUpdate, temporary = false): Observable<IBlankParsed> {
-    return this._http.Put<BlankUpdate, IBlankRequest>(
+  public updateBlank(blank: BlankUpdate, temporary = false): Observable<IBlankValid> {
+    return this._http.Put<BlankUpdate, IBlankValid>(
       (temporary ? "temp/" : "") + `blank/${blank.pk}/`,
       blank,
       { withCredentials: !temporary }
     )
-      .pipe(
-        switchMap(blankRequest => this.parseBlanks([blankRequest], temporary)),
-        map(blanks => blanks[0]),
-        take(1)
-      )
+      .pipe(take(1))
   }
 }

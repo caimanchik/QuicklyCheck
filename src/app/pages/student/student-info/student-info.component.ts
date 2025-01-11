@@ -1,15 +1,23 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { StudentService } from "../../../shared/services/student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
-import { forkJoin, map, of, switchMap, tap, zip } from "rxjs";
-import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
-import { BlankService } from "../../../shared/services/blank.service";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../shared/animations/appear";
 import { ConfirmService } from "../../../shared/services/infrastructure/confirm.service";
-import { IClass } from "../../../shared/interfaces/Classes/IClass";
-import { ClassService } from "../../../shared/services/class.service";
+import { ErrorService } from "../../../shared/services/infrastructure/error.service";
+import { Timelines } from "../../../shared/enums/Timelines";
+import { createLineChart } from "../../../shared/functions/charts/createLineChart";
+import { Chart } from "chart.js";
+import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
 
 @Component({
   selector: 'app-student-info',
@@ -23,13 +31,21 @@ import { ClassService } from "../../../shared/services/class.service";
   ]
 })
 export class StudentInfoComponent implements OnInit {
+
   protected student!: IStudentAllInfo
-  protected classInfo!: IClass
+
+  @ViewChild('lineChart', { read: ElementRef }) private _chartElement!: ElementRef
+  @ViewChild('chartWrapper', { read: ElementRef }) private _chartWrapper!: ElementRef
+  private _chart!: Chart
+  private dimensions!: { width: number, height: number }
+
+  @ViewChildren("timelineChanger") private _timelineChangers!: { nativeElement: any }[]
+  private selectedTimeline!: Timelines;
+  protected readonly Timelines = Timelines;
 
   constructor(
     private _studentService: StudentService,
-    private _classService: ClassService,
-    private _blankService: BlankService,
+    private _errorService: ErrorService,
     private _confirm: ConfirmService,
     private _router: Router,
     private _route: ActivatedRoute,
@@ -37,48 +53,45 @@ export class StudentInfoComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._studentService.getStudent(getParamFromRoute(this._route))
-      .pipe(
-        switchMap(student => {
-          return forkJoin({
-            classInfo: this._classService.getById(student.grade)
-              .pipe(
-                map(classInfo => ({
-                  ...classInfo,
-                  letter: classInfo.letter.toUpperCase()
-                })),
-                tap(classInfo => this.classInfo = classInfo)
-              ),
-            works: student.works.length > 0
-              ? zip(...student.works.map(work => this._blankService.parseBlanks([work]).pipe(map(w => w[0]))))
-              : of([])
-          })
-            .pipe(
-              map(infos => {
-                return {
-                  ...student,
-                  classInfo: infos.classInfo,
-                  works: infos.works.reverse().map(work => ({
-                    right: work.correctCount,
-                    actual: work.answers.length,
-                    percentage: Math.round(work.correctCount / work.answers.length * 100),
-                    ...work,
-                  })),
-                }
-              })
-            )
-        })
-      )
+    this._studentService.getById(getParamFromRoute(this._route))
+      .pipe(this._errorService.passErrorWithMessage("Не удалось загрузить студента"))
       .subscribe(student => {
         this.student = {
           ...student,
           name: student.name.split(' ').slice(0, 2).join(' ')
         }
         this._cd.markForCheck()
+        this.changeTimeline(Timelines.Month)
       })
   }
 
-  protected showBlank(blankPk: number) {
+  protected changeTimeline(timeline: Timelines, element?: HTMLElement) {
+    if (timeline == this.selectedTimeline) return
+
+    this.selectedTimeline = timeline
+    if (element) {
+      this._timelineChangers.forEach(e => {
+        e.nativeElement.classList.remove("active")
+        e.nativeElement.classList.add("common")
+      })
+
+      element.classList.remove("common")
+      element.classList.add("active")
+    }
+
+    setTimeout(() => {
+      this._chart?.destroy()
+      this.dimensions ??= this._chartWrapper.nativeElement.getBoundingClientRect()
+      this._chart = createLineChart(this._chartElement, this.dimensions,
+        ['', '5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
+        [NaN, NaN, NaN, NaN, 70, 100, 90, 70],
+        ['', '5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
+        ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
+    })
+  }
+
+  protected showBlank(event: MouseEvent, blankPk: number) {
+    event.preventDefault()
     this._router.navigate(['/', 'blank', blankPk], {
       state: {
         blanks: this.student.works,
@@ -97,7 +110,7 @@ export class StudentInfoComponent implements OnInit {
           return
 
         this._studentService.deleteStudent(this.student.pk)
-          .subscribe(() => this._router.navigate(['class', this.student.grade]))
+          .subscribe(() => this._router.navigate(['class', this.student.gradeDetail.pk]))
       })
   }
 
@@ -106,6 +119,6 @@ export class StudentInfoComponent implements OnInit {
   }
 
   protected navigateClass() {
-    this._router.navigate(['/', 'class', this.classInfo.pk])
+    this._router.navigate(['/', 'class', this.student.gradeDetail.pk])
   }
 }
