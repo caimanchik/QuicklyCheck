@@ -6,7 +6,7 @@ export function translateBlankToRequest(blank: IBlankParsed): BlankUpdate {
     pk: blank.pk,
     answers: blank.answers.map(answer => answer.actual.toString()),
     var: blank.var,
-    id_blank: blank.id_blank,
+    idBlank: blank.idBlank,
     quiz: blank.quiz
   }
 }

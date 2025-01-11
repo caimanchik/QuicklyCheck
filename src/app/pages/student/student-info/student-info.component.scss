@@ -9,6 +9,7 @@
   &__block {
     @extend %block;
     position: relative;
+    height: 100%;
   }
 
   &__header {
@@ -45,16 +46,10 @@
   }
 
   &__content {
-    margin-top: 2.4rem;
-    display: flex;
   }
 
   &__works {
-    flex: 0 0 75%;
-
-    @media(max-width:1100px){
-      flex: 0 0 100%;
-    }
+    margin-top: .65rem;
   }
 
   &__delete {
@@ -172,73 +167,61 @@
 
 .student {
   &__columns {
+    margin: 0 -0.65rem;
+    display: flex;
+    flex-wrap: wrap;
+
+    @media(max-width:630px) {
+      flex-wrap: wrap;
+    }
+
+    &.first {
+      margin-top: 0.65rem;
+      flex-wrap: nowrap;
+
+      @media(max-width:630px) {
+        flex-wrap: nowrap;
+      }
+
+      @media(max-width:560px) {
+        flex-wrap: wrap;
+      }
+    }
   }
 
   &__column {
-  }
+    padding: 0.65rem;
 
-  &__stats {
-  }
+    &.regular {
+      flex: 0 0 50%;
 
-  &__block {
-  }
-}
+      @media(max-width:630px){
+        flex: 0 0 100%;
+      }
+    }
 
-.first {
+    &.small {
+      flex: 0 0 28%;
+
+      @media(max-width:560px) {
+        flex: 0 0 100%;
+      }
+    }
+
+    &.big {
+      flex-grow: 1;
+
+      & .class__block {
+        height: 100%;
+      }
+
+      @media(max-width:560px) {
+        flex: 0 0 100%;
+      }
+    }
+  }
 }
 
 .student-stats {
-}
-
-.small {
-}
-
-.stats-box {
-  &__wrapper {
-  }
-
-  &__container {
-  }
-
-  &__content {
-  }
-
-  &__title {
-  }
-
-  &__text {
-  }
-}
-
-.big {
-}
-
-.stats-line {
-  &__bar {
-  }
-
-  &__chart {
-  }
-}
-
-.stats-line-bar {
-  &__wrapper {
-  }
-
-  &__item {
-  }
-
-  &__text {
-  }
-}
-
-.active {
-}
-
-.common {
-}
-
-.stats-line-chart {
-  &__wrapper {
-  }
+  @extend %stats;
 }

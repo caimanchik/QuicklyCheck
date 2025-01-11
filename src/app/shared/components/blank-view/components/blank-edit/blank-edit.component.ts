@@ -77,10 +77,10 @@ export class BlankEditComponent implements OnChanges {
         nonNullable: true
       }),
       id: new FormGroup<IIdEditForm>({
-        idFirst: new FormControl<number>(Math.floor(+this.view.blank.id_blank / 10), {
+        idFirst: new FormControl<number>(Math.floor(+this.view.blank.idBlank / 10), {
           nonNullable: true
         }),
-        idSecond: new FormControl<number>(+this.view.blank.id_blank % 10, {
+        idSecond: new FormControl<number>(+this.view.blank.idBlank % 10, {
           nonNullable: true
         })
       }, {
@@ -109,7 +109,6 @@ export class BlankEditComponent implements OnChanges {
       .pipe(this._destroy.takeUntilDestroy)
       .subscribe(() => {
         this.answerError = ''
-        console.log(form.controls.answers.errors?.['error'])
 
         if (form.controls.answers.invalid)
           this.answerError = form.controls.answers.errors?.['error']

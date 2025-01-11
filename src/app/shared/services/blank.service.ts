@@ -12,6 +12,8 @@ import { sortStrings } from "../functions/application/sortStrings";
 import { IBlankInvalidParsed } from "../interfaces/Tests/Blanks/IBlankInvalidParsed";
 import { translateWrongBlanksFromRequest } from "../functions/blanks/translateWrongBlanksFromRequest";
 import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
+import { IStudent } from "../interfaces/Students/IStudent";
+import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
 
 @Injectable({
   providedIn: 'root'
@@ -85,18 +87,25 @@ export class BlankService {
       )
   }
 
-  public parseBlanks(blanksReq: IBlankRequest[], temporary: boolean = false) : Observable<IBlankParsed[]> {
+  public parseBlanks(blanksReq: IBlankRequest[], temporary: boolean = false, student?: IStudentCreate) : Observable<IBlankParsed[]> {
     return (blanksReq.length > 0
         ? forkJoin(blanksReq
           .map(blank => {
-            return !temporary ? this._student.getStudent(blank.author)
-              .pipe(
-                map(student => ({
+            return !temporary
+              ? student
+                ? of({
                   ...blank,
                   image: environment.backendUrl + blank.image,
                   author: student.name
-                }))
-              ) : of({...blank, image: environment.backendUrl + blank.image, author: blank.id_blank})}))
+                })
+                : this._student.getStudent(blank.author)
+                .pipe(
+                  map(student => ({
+                    ...blank,
+                    image: environment.backendUrl + blank.image,
+                    author: student.name
+                  })))
+              : of({...blank, image: environment.backendUrl + blank.image, author: blank.idBlank})}))
         : of([])
     )
       .pipe(

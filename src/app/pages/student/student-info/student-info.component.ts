@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { StudentService } from "../../../shared/services/student.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getParamFromRoute } from "../../../shared/functions/application/getParamFromRoute";
@@ -6,8 +14,12 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../shared/animations/appear";
 import { ConfirmService } from "../../../shared/services/infrastructure/confirm.service";
 import { ErrorService } from "../../../shared/services/infrastructure/error.service";
-import { IStudentAllInfoRequest } from "../../../shared/interfaces/Students/IStudentAllInfoRequest";
 import { Timelines } from "../../../shared/enums/Timelines";
+import { createLineChart } from "../../../shared/functions/charts/createLineChart";
+import { Chart } from "chart.js";
+import { map, switchMap } from "rxjs";
+import { BlankService } from "../../../shared/services/blank.service";
+import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
 
 @Component({
   selector: 'app-student-info',
@@ -21,10 +33,21 @@ import { Timelines } from "../../../shared/enums/Timelines";
   ]
 })
 export class StudentInfoComponent implements OnInit {
-  protected student!: IStudentAllInfoRequest
+
+  protected student!: IStudentAllInfo
+
+  @ViewChild('lineChart', { read: ElementRef }) private _chartElement!: ElementRef
+  @ViewChild('chartWrapper', { read: ElementRef }) private _chartWrapper!: ElementRef
+  private _chart!: Chart
+  private dimensions!: { width: number, height: number }
+
+  @ViewChildren("timelineChanger") private _timelineChangers!: { nativeElement: any }[]
+  private selectedTimeline!: Timelines;
+  protected readonly Timelines = Timelines;
 
   constructor(
     private _studentService: StudentService,
+    private _blankService: BlankService,
     private _errorService: ErrorService,
     private _confirm: ConfirmService,
     private _router: Router,
@@ -35,13 +58,46 @@ export class StudentInfoComponent implements OnInit {
   public ngOnInit(): void {
     this._studentService.getById(getParamFromRoute(this._route))
       .pipe(this._errorService.passErrorWithMessage("Не удалось загрузить студента"))
+      .pipe(switchMap(student => {
+        return this._blankService.parseBlanks(student.works, false, student)
+          .pipe(map(blanks => ({
+            ...student,
+            works: blanks
+          })))
+      }))
       .subscribe(student => {
         this.student = {
           ...student,
           name: student.name.split(' ').slice(0, 2).join(' ')
         }
         this._cd.markForCheck()
+        this.changeTimeline(Timelines.Month)
       })
+  }
+
+  protected changeTimeline(timeline: Timelines, element?: HTMLElement) {
+    if (timeline == this.selectedTimeline) return
+
+    this.selectedTimeline = timeline
+    if (element) {
+      this._timelineChangers.forEach(e => {
+        e.nativeElement.classList.remove("active")
+        e.nativeElement.classList.add("common")
+      })
+
+      element.classList.remove("common")
+      element.classList.add("active")
+    }
+
+    setTimeout(() => {
+      this._chart?.destroy()
+      this.dimensions ??= this._chartWrapper.nativeElement.getBoundingClientRect()
+      this._chart = createLineChart(this._chartElement, this.dimensions,
+        ['', '5.12', '', '10.12', '15.12', '20.12', '25.12', '31.12'],
+        [10, 5, 2, 20, 30, 45, 90, 20],
+        ['', '5.12', '10.12', '15.12', '20.12', '25.12', '31.12'],
+        ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
+    })
   }
 
   protected showBlank(blankPk: number) {
@@ -74,6 +130,4 @@ export class StudentInfoComponent implements OnInit {
   protected navigateClass() {
     this._router.navigate(['/', 'class', this.student.gradeDetail.pk])
   }
-
-  protected readonly Timelines = Timelines;
 }
