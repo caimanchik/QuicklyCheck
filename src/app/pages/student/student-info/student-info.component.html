@@ -42,7 +42,7 @@
                                                 Средний балл
                                             </h2>
                                             <div class="stats-box__text">
-                                                82%
+                                                {{ student.stats.bestWork | number : ".0" }}%
                                             </div>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                                 Худший балл
                                             </h2>
                                             <div class="stats-box__text">
-                                                70%
+                                                {{ student.stats.worstWork | number : ".0" }}%
                                             </div>
                                         </div>
                                     </div>
