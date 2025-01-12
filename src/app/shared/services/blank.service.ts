@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { delay, map, Observable, of, take } from "rxjs";
 import { environment } from "../../../environments/environment";
-import { StudentService } from "./student.service";
-import { PatternService } from "./pattern.service";
 import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
 import { IBlankValid } from "../interfaces/Tests/Blanks/IBlankValid";
+import { IBlanksCheck } from "../interfaces/Tests/Blanks/IBlanksCheck";
+import { IBlankInvalid } from "../interfaces/Tests/Blanks/IBlankInvalid";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,6 @@ import { IBlankValid } from "../interfaces/Tests/Blanks/IBlankValid";
 export class BlankService {
   constructor(
     private _http: HttpService,
-    private _student: StudentService,
-    private _pattern: PatternService
   ) { }
 
   public deleteBlank(blankPk: number): Observable<void> {
@@ -74,5 +72,9 @@ export class BlankService {
           image: environment.backendUrl + blank.image
         })),
         take(1))
+  }
+
+  public getInvalidBlank(pk: number): Observable<IBlankInvalid> {
+    return this._http.Get<IBlankInvalid>(`invalidblank/${pk}`)
   }
 }
