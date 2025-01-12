@@ -42,7 +42,7 @@
                                                 Средний балл
                                             </h2>
                                             <div class="stats-box__text">
-                                                {{ student.stats.bestWork | number : ".0" }}%
+                                                {{ student.stats.bestWork | number : ".0-0" }}%
                                             </div>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                                 Худший балл
                                             </h2>
                                             <div class="stats-box__text">
-                                                {{ student.stats.worstWork | number : ".0" }}%
+                                                {{ student.stats.worstWork | number : ".0-0" }}%
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +87,7 @@
                                                 #year
                                                 (click)="changeTimeline(Timelines.Year, year)">
                                             <div class="stats-line-bar__text">
-                                                Учебный год
+                                                Год
                                             </div>
                                         </button>
                                         <button type="button"

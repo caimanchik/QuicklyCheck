@@ -105,8 +105,11 @@ export class TestInfoComponent implements OnInit {
       })
   }
 
-  protected checkMore() {
-    this._router.navigate(['/', 'test', this.test.pk, 'upload'])
+  protected navigateBlankButton() {
+    if (this.showCheckButton)
+      this._router.navigate(['/', 'test', this.test.pk, 'upload'])
+    else
+      this.fillTest()
   }
 
   protected deleteBlank($event: MouseEvent, i: number) {

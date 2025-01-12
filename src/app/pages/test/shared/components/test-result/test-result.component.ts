@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../../../shared/animations/appear";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
+import { IBlanksCheck } from "../../../../../shared/interfaces/Tests/Blanks/IBlanksCheck";
 import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankValid";
+import { BlankService } from "../../../../../shared/services/blank.service";
 
 @Component({
   selector: 'app-test-result',
@@ -18,10 +20,11 @@ import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlan
   ]
 })
 export class TestResultComponent implements OnInit {
-  protected blanks!: IBlankValid[]
+  protected blanks!: IBlanksCheck
 
   constructor(
     private _checkService: CheckService,
+    private _blankService: BlankService,
     private _route: ActivatedRoute,
     private _cd: ChangeDetectorRef,
     private _router: Router
@@ -44,6 +47,31 @@ export class TestResultComponent implements OnInit {
   }
 
   protected navigateTest() {
-    this._router.navigate(['/', 'test', this.blanks[0].quiz])
+    this._router.navigate(['/', 'test', this.blanks.blanks[0].quiz])
+  }
+
+  protected saveBlank(blank: IBlankValid) {
+    this._blankService.updateBlank(blank)
+      .subscribe(blankParsed => {
+        const index = this.findIndex(blankParsed.pk)
+        this.blanks.blanks = [
+          ...this.blanks.blanks.slice(0, index),
+          blankParsed,
+          ...this.blanks.blanks.slice(index + 1)
+        ]
+
+        this._cd.detectChanges()
+      })
+  }
+
+  private findIndex(blankPk: number): number {
+    let index = 0
+
+    this.blanks.blanks.forEach((blank, i) => {
+      if (blank.pk === blankPk)
+        index = i
+    })
+
+    return index
   }
 }

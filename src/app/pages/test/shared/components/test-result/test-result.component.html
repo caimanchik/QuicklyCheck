@@ -6,7 +6,8 @@
 
 <ng-container *ngIf="blanks">
     <app-blanks-view
-            [blanks]="blanks"
+            [blanks]="blanks.blanks"
             (previousClickEvent)="navigateTest()"
+            (saveEvent)="saveBlank($event)"
     ></app-blanks-view>
 </ng-container>
