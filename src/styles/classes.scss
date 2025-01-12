@@ -10,7 +10,7 @@
 }
 
 %nograd {
-  background: #fff;
+  background: transparent;
   background-clip: initial;
   -webkit-background-clip: initial;
   -webkit-text-fill-color: initial;
@@ -273,6 +273,7 @@
     flex-grow: 1;
     width: 100%;
     margin-left: 4rem;
+    transition: all ease .3s;
 
     @media(max-width:700px){
       margin-left: 2rem;
@@ -404,6 +405,11 @@
       &:hover {
         & .name {
           @extend %grad;
+
+          &.wrong {
+            @extend %nograd;
+            color: $red;
+          }
         }
       }
     }

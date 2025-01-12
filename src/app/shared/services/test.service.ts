@@ -17,6 +17,7 @@ export class TestService {
   ) { }
 
   public getById(id: number): Observable<ITestAllInfo> {
+    // @ts-ignore
     return this._http.Get<ITestAllInfo>(`test/${id}`)
       .pipe(
         map(test => ({
@@ -27,6 +28,8 @@ export class TestService {
           })),
           invalidBlanks: test.invalidBlanks.map(blank => ({
             ...blank,
+            // @ts-ignore
+            createdAt: new Date(Date.parse(blank.createdAt)),
             image: environment.backendUrl + blank.image
           }))
         })),

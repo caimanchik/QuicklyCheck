@@ -130,7 +130,10 @@ export class TestInfoComponent implements OnInit {
       })
   }
 
-  protected deleteWrongBlank(i: number) {
+  protected deleteWrongBlank($event: MouseEvent, i: number) {
+    $event.preventDefault()
+    $event.stopPropagation()
+
     const blank = this.test.invalidBlanks[i]
     this._confirmService.createConfirm({
       message: `Вы действительно хотите удалить бланк от ${

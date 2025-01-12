@@ -28,16 +28,6 @@
 
   &__column {
 
-    //&:nth-child(1) {
-    //  margin-top: 2rem;
-    //  flex: 0 0 calc(100% - 23.5rem);
-    //
-    //  @media(max-width:880px){
-    //    flex: 0 0 100%;
-    //    order: 3;
-    //  }
-    //}
-
     &:nth-child(1) {
       margin-top: 2rem;
       //padding-left: 2rem;
@@ -62,6 +52,13 @@
 
       @media(max-width:700px) {
         font-size: 2rem;
+      }
+    }
+
+    &.wrong {
+      & span {
+        @extend %nograd;
+        color: $red;
       }
     }
   }
@@ -155,5 +152,6 @@
   }
 
   &__delete {
+    margin-top: 2rem;
   }
 }

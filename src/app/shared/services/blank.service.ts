@@ -9,8 +9,6 @@ import { translateBlanksFromRequest } from "../functions/blanks/translateBlanksF
 import { StudentService } from "./student.service";
 import { PatternService } from "./pattern.service";
 import { sortStrings } from "../functions/application/sortStrings";
-import { IBlankInvalidParsed } from "../interfaces/Tests/Blanks/IBlankInvalidParsed";
-import { translateWrongBlanksFromRequest } from "../functions/blanks/translateWrongBlanksFromRequest";
 import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
 import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
 import { IBlankValid } from "../interfaces/Tests/Blanks/IBlankValid";
@@ -38,34 +36,6 @@ export class BlankService {
       .pipe(
         switchMap(blanks => this.parseBlanks(blanks, temporary)),
         take(1)
-      )
-  }
-
-  public getWrongBlanks(pkTest: number): Observable<IBlankInvalidParsed[]> {
-    return of([
-      {
-        pk: 1,
-        createdAt: Date.now(),
-        image: "",
-      },
-      {
-        pk: 1,
-        createdAt: new Date().setDate(new Date().getDate() - 7),
-        image: "",
-      },
-      {
-        pk: 1,
-        createdAt: new Date().setDate(new Date().getDate() - 14),
-        image: "",
-      },
-      {
-        pk: 1,
-        createdAt: new Date().setDate(new Date().getDate() - 21),
-        image: "",
-      }])
-      .pipe(
-        map(blanks => translateWrongBlanksFromRequest(blanks)),
-        take(1),
       )
   }
 
