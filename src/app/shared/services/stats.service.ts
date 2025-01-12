@@ -25,6 +25,16 @@ export class StatsService {
       )
   }
 
+  public getStudentStats(pk: number, timeline: Timelines): Observable<IStats> {
+    return this._http.Get<IStats>(`stats/student/${pk}`, {
+      params: new HttpParams().set("period", timeline)
+    })
+      .pipe(
+        map(s => this.normalize(s, timeline)),
+        take(1)
+      )
+  }
+
   private normalize(stats: IStats, timeline: Timelines) {
     if (timeline === Timelines.Month)
       return this.normalizeMonth(stats)

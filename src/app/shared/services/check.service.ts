@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of, take, tap, zip } from "rxjs";
 import { HttpService } from "./infrastructure/http.service";
 import { BlankService } from "./blank.service";
-import { IBlankValid } from "../interfaces/Tests/Blanks/IBlankValid";
 import { environment } from "../../../environments/environment";
+import { IBlanksCheck } from "../interfaces/Tests/Blanks/IBlanksCheck";
 
 @Injectable()
 export class CheckService {
@@ -62,23 +62,29 @@ export class CheckService {
     return this.blanks.length > 0;
   }
 
-  public checkBlanks(pkTest: number, temporary: boolean = false): Observable<IBlankValid[]> {
+  public checkBlanks(pkTest: number, temporary: boolean = false): Observable<IBlanksCheck> {
     const data = new FormData()
 
     this.blanks.forEach(blank => data.append("images", blank, blank.name))
 
-    return this._http.Post<FormData, { blanks: IBlankValid[] }>( //todo IBlankCheck
+    return this._http.Post<FormData, IBlanksCheck>( //todo IBlankCheck
       (temporary ? "temp/" : "") + `test/${pkTest}/blanks/`,
       data,
       {withCredentials: !temporary}
     )
       .pipe(
         tap(() => this.clearBlanks()),
-        map(blanks => blanks.blanks),
-        map(blanks => blanks.map(b => ({
-          ...b,
-          image: environment.backendUrl + b.image
-        }))),
+        map(blanks => ({
+          ...blanks,
+          blanks: blanks.blanks.map(b => ({
+            ...b,
+            image: environment.backendUrl +  b.image
+          })),
+          invalidBlanks: blanks.invalidBlanks?.map(b => ({
+            ...b,
+            image: environment.backendUrl +  b.image
+          }))
+        })),
         take(1)
       )
   }

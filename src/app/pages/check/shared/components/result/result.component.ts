@@ -14,7 +14,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { appear } from "../../../../../shared/animations/appear";
-import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankValid";
+import { IBlanksCheck } from "../../../../../shared/interfaces/Tests/Blanks/IBlanksCheck";
 
 @Component({
   selector: 'app-result',
@@ -31,7 +31,7 @@ export class ResultComponent implements AfterViewInit {
   @ViewChild('blankContainer', {read: ViewContainerRef}) private _blankContainer!: ViewContainerRef
   @ViewChild('blank', {read: TemplateRef, static: true}) private _blankTemplate!: TemplateRef<{ view: IBlankView }>
 
-  protected blanks!: IBlankValid[]
+  protected blanks!: IBlanksCheck
 
   private _viewContext!: IBlankView
   private _view!: EmbeddedViewRef<{view: IBlankView}>
@@ -71,7 +71,7 @@ export class ResultComponent implements AfterViewInit {
 
   private createView() {
     this._viewContext = {
-      blank: this.blanks[this._nowIndex],
+      blank: this.blanks.blanks[this._nowIndex],
       arrows: {
         prev: true,
         next: true,
@@ -89,7 +89,7 @@ export class ResultComponent implements AfterViewInit {
   }
 
   protected swipe(delta: number) {
-    if (this._nowIndex + delta < 0 || this._nowIndex + delta === this.blanks.length)
+    if (this._nowIndex + delta < 0 || this._nowIndex + delta === this.blanks.blanks.length)
       return
 
     this._nowIndex += delta

@@ -145,6 +145,7 @@
   }
 
   &__item {
+
     & span {
       @extend %title;
     }
@@ -154,6 +155,7 @@
       font-size: 2.5rem;
       font-weight: 700;
       text-align: center;
+      overflow: hidden;
     }
 
     &:last-child {
