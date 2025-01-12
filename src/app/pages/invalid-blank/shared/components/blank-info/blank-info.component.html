@@ -1,0 +1,14 @@
+<ng-container *ngIf="readyToShow; else loader">
+    <app-blanks-view
+            [blanks]="blanks"
+            [showIndex]="showIndex"
+            (previousClickEvent)="navigatePrevious()"
+    >
+    </app-blanks-view>
+</ng-container>
+
+<ng-template #loader>
+    <app-loader>
+        Загружаем бланки
+    </app-loader>
+</ng-template>

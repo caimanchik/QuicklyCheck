@@ -1,5 +1,4 @@
 import { IStudentCreate } from "./IStudentCreate";
-import { IBlankRequest } from "../Tests/Blanks/IBlankRequest";
 import { IClass } from "../Classes/IClass";
 
 export interface IStudent extends IStudentCreate {
@@ -7,5 +6,4 @@ export interface IStudent extends IStudentCreate {
   pk: number,
   grade: number,
   gradeDetail: IClass
-  works: IBlankRequest[]
 }

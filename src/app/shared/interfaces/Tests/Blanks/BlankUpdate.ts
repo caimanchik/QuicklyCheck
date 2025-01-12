@@ -1,3 +1,3 @@
-import { IBlankRequest } from "./IBlankRequest";
+import { IBlankValid } from "./IBlankValid";
 
-export type BlankUpdate = Pick<IBlankRequest, 'pk' | 'answers' | 'var' | 'idBlank' | 'quiz'>
+export type BlankUpdate = Pick<IBlankValid, 'pk' | 'answers' | 'var' | 'idBlank' | 'quiz'>

@@ -54,6 +54,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'invalid-blank',
+    loadChildren: () => import('./pages/invalid-blank/invalid-blank.module').then(m => m.InvalidBlankModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: "**",
     loadChildren: () => import('./pages/error/error.module').then(m => m.ErrorModule),
   }

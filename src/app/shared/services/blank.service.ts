@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { IBlankRequest } from "../interfaces/Tests/Blanks/IBlankRequest";
-import { delay, forkJoin, map, Observable, of, switchMap, take } from "rxjs";
-import { IBlankParsed } from "../interfaces/Tests/Blanks/IBlankParsed";
+import { delay, map, Observable, of, take } from "rxjs";
 import { environment } from "../../../environments/environment";
-import { IBlankWithAuthor } from "../interfaces/Tests/Blanks/IBlankWithAuthor";
-import { translateBlanksFromRequest } from "../functions/blanks/translateBlanksFromRequest";
 import { StudentService } from "./student.service";
 import { PatternService } from "./pattern.service";
-import { sortStrings } from "../functions/application/sortStrings";
 import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
-import { IStudentCreate } from "../interfaces/Students/IStudentCreate";
 import { IBlankValid } from "../interfaces/Tests/Blanks/IBlankValid";
+import { IBlankInvalid } from "../interfaces/Tests/Blanks/IBlankInvalid";
 
 @Injectable({
   providedIn: 'root'
@@ -28,18 +23,15 @@ export class BlankService {
       .pipe(take(1))
   }
 
-  public getBlanks(pkTest: number, temporary = false): Observable<IBlankParsed[]> {
-    return this._http.Get<IBlankRequest[]>(
+  public getBlanks(pkTest: number, temporary = false): Observable<IBlankValid[]> {
+    return this._http.Get<IBlankValid[]>(
       (temporary ? "temp/" : "") + `test/${pkTest}/blanks`,
       {withCredentials: !temporary}
     )
-      .pipe(
-        switchMap(blanks => this.parseBlanks(blanks, temporary)),
-        take(1)
-      )
+      .pipe(take(1))
   }
 
-  public deleteWrongBlank(pkBlank: number): Observable<any> {
+  public deleteInvalidBlank(pkBlank: number): Observable<any> {
     return of({})
       .pipe(
         delay(100),
@@ -47,46 +39,24 @@ export class BlankService {
       )
   }
 
-  public getBlank(pk: number): Observable<IBlankParsed> {
-    return this._http.Get<IBlankRequest>(`blank/${pk}`)
+  public getBlank(pk: number): Observable<IBlankValid> {
+    return this._http.Get<IBlankValid>(`blank/${pk}`)
       .pipe(
-        map(e => [e]),
-        switchMap(blanks => this.parseBlanks(blanks)),
-        map(blanks => blanks[0]),
+        map(blank => ({
+          ...blank,
+          image: environment.backendUrl + blank.image
+        })),
         take(1)
       )
   }
-
-  public parseBlanks(blanksReq: IBlankRequest[], temporary: boolean = false, student?: IStudentCreate) : Observable<IBlankParsed[]> {
-    return (blanksReq.length > 0
-        ? forkJoin(blanksReq
-          .map(blank => {
-            return !temporary
-              ? student
-                ? of({
-                  ...blank,
-                  image: environment.backendUrl + blank.image,
-                  author: student.name
-                })
-                : this._student.getStudent(blank.author)
-                .pipe(
-                  map(student => ({
-                    ...blank,
-                    image: environment.backendUrl + blank.image,
-                    author: student.name
-                  })))
-              : of({...blank, image: environment.backendUrl + blank.image, author: blank.idBlank})}))
-        : of([])
-    )
+  
+  public getInvalidBlank(pk: number): Observable<IBlankInvalid> {
+    return this._http.Get<IBlankInvalid>(`invalidblank/${pk}`)
       .pipe(
-        switchMap((blanks: IBlankWithAuthor[]) => {
-          return blanks.length > 0
-            ? this._pattern.getPatterns(blanks[0].quiz, temporary)
-              .pipe(
-                map(patterns => translateBlanksFromRequest(blanks, patterns)
-                  .sort((a, b) => sortStrings(a.author, b.author))))
-            : of([])
-        }),
+        map(blank => ({
+          ...blank,
+          image: environment.backendUrl + blank.image
+        })),
         take(1)
       )
   }
@@ -97,6 +67,11 @@ export class BlankService {
       blank,
       { withCredentials: !temporary }
     )
-      .pipe(take(1))
+      .pipe(
+        map(blank => ({
+          ...blank,
+          image: environment.backendUrl + blank.image
+        })),
+        take(1))
   }
 }

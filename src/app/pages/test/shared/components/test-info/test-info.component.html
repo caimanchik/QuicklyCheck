@@ -189,7 +189,7 @@
                         <ul class="works__list works-list">
                             <ng-container *ngFor="let work of test.invalidBlanks; let i = index">
                                 <li class="works-list works-list__item">
-                                    <a href="#" (click)="showBlank($event, work.pk)" class="works-list__link">
+                                    <a href="#" (click)="showInvalidBlank($event, work.pk)" class="works-list__link">
                                         <span class="works-list__item number">
                                             {{ i + 1 }}
                                         </span>
