@@ -50,17 +50,17 @@ export class ProfileMainComponent implements OnInit {
       .subscribe(userMainInfo => {
         this.userMainInfo = userMainInfo;
         this.profileForm = this.getProfileForm()
-        this._cd.markForCheck()
+        this._cd.detectChanges()
       })
   }
 
   private getProfileForm(): FormGroup<IProfileForm> {
     const form = new FormGroup<IProfileForm>({
-      name: new FormControl<string>(this.userMainInfo.profile.first_name, {
+      name: new FormControl<string>(this.userMainInfo.profile.firstName, {
         validators: Validators.required,
         nonNullable: true,
       }),
-      surname: new FormControl<string>(this.userMainInfo.profile.last_name, {
+      surname: new FormControl<string>(this.userMainInfo.profile.lastName, {
         validators: Validators.required,
         nonNullable: true,
       }),
@@ -73,10 +73,11 @@ export class ProfileMainComponent implements OnInit {
     form.valueChanges
       .pipe(this._destroy.takeUntilDestroy)
       .subscribe(() => {
-        this.showSave = (form.controls.name.value !== this.userMainInfo.profile.first_name
-            || form.controls.surname.value !== this.userMainInfo.profile.last_name
+        this.showSave = (form.controls.name.value !== this.userMainInfo.profile.firstName
+            || form.controls.surname.value !== this.userMainInfo.profile.lastName
             || form.controls.patronymic.value !== this.userMainInfo.profile.patronymic)
           && form.valid;
+        console.log(this.showSave)
       })
 
     return form
@@ -104,8 +105,8 @@ export class ProfileMainComponent implements OnInit {
     this.showSave = false
 
     this._userService.saveProfile({
-      first_name: this.profileForm.controls.name.value,
-      last_name: this.profileForm.controls.surname.value,
+      firstName: this.profileForm.controls.name.value,
+      lastName: this.profileForm.controls.surname.value,
       patronymic: this.profileForm.controls.patronymic.value,
     })
       .subscribe(profile => {
