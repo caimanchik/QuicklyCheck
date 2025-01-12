@@ -98,70 +98,71 @@
             </div>
 
             <div class="test__works">
+
                 <h2 class="test__subtitle">
                     <span>Проверенные бланки</span>
                 </h2>
 
-                <ng-container *ngIf="test.blanks.length > 0">
+                <div class="test__block">
+                    <ul class="works__bar works-bar">
+                        <li class="works-bar__item number">
+                            Номер
+                        </li>
+                        <li class="works-bar__item name">
+                            Фамилия Имя
+                        </li>
+                        <li class="works-bar__item score">
+                            Балл
+                        </li>
+                        <li class="works-bar__item date">
+                            Дата загрузки
+                        </li>
+                        <li class="works-bar__item delete">
 
-                    <div class="test__block">
-                        <ul class="works__bar works-bar">
-                            <li class="works-bar__item number">
-                                Номер
-                            </li>
-                            <li class="works-bar__item name">
-                                Фамилия Имя
-                            </li>
-                            <li class="works-bar__item score">
-                                Балл
-                            </li>
-                            <li class="works-bar__item date">
-                                Дата загрузки
-                            </li>
-                            <li class="works-bar__item delete">
+                        </li>
+                    </ul>
 
+                    <ul class="works__list works-list">
+                        <ng-container *ngFor="let work of test.blanks; let i = index">
+                            <li class="works-list works-list__item">
+                                <a href="#" (click)="showBlank($event, work.pk)" class="works-list__link">
+                                    <span class="works-list__item number">
+                                        {{ i + 1 }}
+                                    </span>
+                                    <span class="works-list__item name">
+                                        <span>{{ work.authorInfo.name }}</span>
+                                    </span>
+                                    <span class="works-list__item score">
+                                        {{ work.blankScore.percentage | number : ".0" }}
+                                    </span>
+                                    <span class="works-list__item date">
+                                        {{ work.createdAt | date: "dd.MM.YYYY" }}
+                                    </span>
+                                    <span class="works-list__item delete">
+                                        <a href="#" class="delete__button" (click)="deleteBlank($event, i)">
+                                            <img src="assets/images/icons/deleteGrey.svg" alt="">
+                                            <img src="assets/images/icons/delete.svg" alt="">
+                                        </a>
+                                    </span>
+                                </a>
                             </li>
-                        </ul>
-
-                        <ul class="works__list works-list">
-                            <ng-container *ngFor="let work of test.blanks; let i = index">
-                                <li class="works-list works-list__item">
-                                    <a href="#" (click)="showBlank($event, work.pk)" class="works-list__link">
-                                        <span class="works-list__item number">
-                                            {{ i + 1 }}
-                                        </span>
-                                        <span class="works-list__item name">
-                                            <span>{{ work.authorInfo.name }}</span>
-                                        </span>
-                                        <span class="works-list__item score">
-                                            {{ work.blankScore.percentage | number : ".0" }}
-                                        </span>
-                                        <span class="works-list__item date">
-                                            {{ work.createdAt | date: "dd.MM.YYYY" }}
-                                        </span>
-                                        <span class="works-list__item delete">
-                                            <a href="#" class="delete__button" (click)="deleteBlank($event, i)">
-                                                <img src="assets/images/icons/deleteGrey.svg" alt="">
-                                                <img src="assets/images/icons/delete.svg" alt="">
-                                            </a>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ng-container>
-                        </ul>
-
-                        <ng-container *ngIf="showCheckButton">
-                            <div class="test__check">
-                                <app-button
-                                        mode="filled"
-                                        (clickEvent)="checkMore()"
-                                >проверить работу
-                                </app-button>
-                            </div>
                         </ng-container>
-
+                    </ul>
+                    <div class="test__check">
+                        <app-button
+                                mode="filled"
+                                (clickEvent)="navigateBlankButton()"
+                        >
+                            <ng-container *ngIf="showCheckButton; else fillVarsText">
+                                проверить работу
+                            </ng-container>
+                            <ng-template #fillVarsText>
+                                добавить варианты
+                            </ng-template>
+                        </app-button>
                     </div>
-                </ng-container>
+
+                </div>
             </div>
 
             <ng-container *ngIf="test.blanks.length > 0">
