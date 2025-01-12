@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { forkJoin, map, Observable, switchMap, take } from "rxjs";
+import { map, Observable, take } from "rxjs";
 import { ITest } from "../interfaces/Tests/Tests/ITest";
 import { ITestCreate } from "../interfaces/Tests/Tests/ITestCreate";
-import { BlankService } from "./blank.service";
 import { ITestAllInfo } from "../interfaces/Tests/Tests/ITestAllInfo";
 import { ITempTest } from "../interfaces/Tests/Tests/ITempTest";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -14,27 +14,27 @@ export class TestService {
 
   constructor(
     private _http: HttpService,
-    private _blankService: BlankService,
   ) { }
 
   public getById(id: number): Observable<ITestAllInfo> {
-    return this._http.Get<ITest>(`test/${id}`)
+    // @ts-ignore
+    return this._http.Get<ITestAllInfo>(`test/${id}`)
       .pipe(
-        switchMap(test => {
-          return forkJoin({
-            blanks: this._blankService.getBlanks(id),
-            wrongBlanks: this._blankService.getWrongBlanks(id),
-          })
-            .pipe(
-              map(blanksAll => ({
-                ...blanksAll,
-                ...test
-              }))
-            )
-        }),
+        map(test => ({
+          ...test,
+          blanks: test.blanks.map(blank => ({
+            ...blank,
+            image: environment.backendUrl + blank.image
+          })),
+          invalidBlanks: test.invalidBlanks.map(blank => ({
+            ...blank,
+            // @ts-ignore
+            createdAt: new Date(Date.parse(blank.createdAt)),
+            image: environment.backendUrl + blank.image
+          }))
+        })),
         take(1)
       )
-      .pipe(take(1))
   }
 
   public createTest(test: ITestCreate) {

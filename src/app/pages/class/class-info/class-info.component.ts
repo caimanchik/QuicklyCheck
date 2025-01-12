@@ -21,7 +21,6 @@ import { createLineChart } from "../../../shared/functions/charts/createLineChar
 import { Chart } from "chart.js";
 import { Timelines } from "../../../shared/enums/Timelines";
 import { StatsService } from "../../../shared/services/stats.service";
-import { IStats } from "../../../shared/interfaces/Stats/IStats";
 
 @Component({
   selector: 'app-class-info',
@@ -128,7 +127,6 @@ export class ClassInfoComponent implements OnInit {
     this._statsService.getClassStats(classPk ?? this.classInfo.pk, timeline)
       .pipe(this._errorService.passErrorWithMessage("Не удалось загрузить статистику", [], false))
       .subscribe(stats => {
-        console.log(stats)
         setTimeout(() => {
           this._chart?.destroy()
           this.dimensions ??= this._chartWrapper.nativeElement.getBoundingClientRect()
