@@ -21,7 +21,6 @@ import { createLineChart } from "../../../shared/functions/charts/createLineChar
 import { Chart } from "chart.js";
 import { Timelines } from "../../../shared/enums/Timelines";
 import { StatsService } from "../../../shared/services/stats.service";
-import { IStats } from "../../../shared/interfaces/Stats/IStats";
 
 @Component({
   selector: 'app-class-info',

@@ -57,6 +57,44 @@
 
                     </div>
                 </div>
+
+                <div class="test__column">
+                    <div class="test__stats">
+                        <div class="stats-box">
+
+                            <div class="stats-box__wrapper">
+                                <div class="stats-box__container">
+                                    <div class="stats-box__content">
+                                        <div class="test__block stats-box__flex">
+                                            <h2 class="stats-box__title">
+                                                Средний балл
+                                            </h2>
+                                            <div class="stats-box__text">
+                                                {{ test.stats.avgScore | number : ".0" }}%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stats-box__wrapper">
+                                <div class="stats-box__container">
+                                    <div class="stats-box__content">
+                                        <div class="test__block stats-box__flex">
+                                            <h2 class="stats-box__title">
+                                                Самый сложный вопрос
+                                            </h2>
+                                            <div class="stats-box__text">
+                                                №{{ test.stats.worstWork | number : ".0" }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="test__works">
