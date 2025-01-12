@@ -1,7 +1,7 @@
-import { IBlankRequest } from "./IBlankRequest";
-import { IBlankInvalidRequest } from "./IBlankInvalidRequest";
+import { IBlankValid } from "./IBlankValid";
+import { IBlankInvalid } from "./IBlankInvalid";
 
 export interface IBlanksCheck {
-  validBlanks: IBlankRequest[]
-  invalidBlanks: IBlankInvalidRequest[]
+  validBlanks: IBlankValid[]
+  invalidBlanks: IBlankInvalid[]
 }

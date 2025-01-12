@@ -146,7 +146,7 @@ export class TestInfoComponent implements OnInit {
         if (!confirmed)
           return
 
-        this._blankService.deleteWrongBlank(blank.pk)
+        this._blankService.deleteInvalidBlank(blank.pk)
           .subscribe(() => {
             this.test.invalidBlanks.splice(i, 1)
             this._cd.markForCheck()
@@ -166,8 +166,18 @@ export class TestInfoComponent implements OnInit {
     this._router.navigate(['blank', pkBlank], extras)
   }
 
-  protected showWrongBlank(pkBlank: number) {
-    // todo
+  protected showInvalidBlank($event: MouseEvent, pkBlank: number) {
+    $event.preventDefault()
+    $event.stopPropagation()
+
+    const extras: NavigationExtras = {
+      state: {
+        invalidBlanks: this.test.invalidBlanks,
+        previousUrl: this._router.url
+      }
+    }
+
+    this._router.navigate(['invalid-blank', pkBlank], extras)
   }
 
   protected navigateClass() {

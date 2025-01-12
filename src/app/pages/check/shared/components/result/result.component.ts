@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import { CheckService } from "../../../../../shared/services/check.service";
 import { IBlankView } from "../../../../../shared/interfaces/Views/IBlankView";
-import { IBlankParsed } from "../../../../../shared/interfaces/Tests/Blanks/IBlankParsed";
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { appear } from "../../../../../shared/animations/appear";
+import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankValid";
 
 @Component({
   selector: 'app-result',
@@ -31,7 +31,7 @@ export class ResultComponent implements AfterViewInit {
   @ViewChild('blankContainer', {read: ViewContainerRef}) private _blankContainer!: ViewContainerRef
   @ViewChild('blank', {read: TemplateRef, static: true}) private _blankTemplate!: TemplateRef<{ view: IBlankView }>
 
-  protected blanks!: IBlankParsed[]
+  protected blanks!: IBlankValid[]
 
   private _viewContext!: IBlankView
   private _view!: EmbeddedViewRef<{view: IBlankView}>
@@ -70,20 +70,20 @@ export class ResultComponent implements AfterViewInit {
   }
 
   private createView() {
-    // this._viewContext = {
-    //   blank: this.blanks[this._nowIndex],
-    //   arrows: {
-    //     prev: true,
-    //     next: true,
-    //   },
-    //   showDetail: this._show,
-    //   isLogged: true
-    // }
-    //
-    // this._blankContainer.clear()
-    // this._view = this._blankContainer.createEmbeddedView(this._blankTemplate, {
-    //   view: this._viewContext
-    // })
+    this._viewContext = {
+      blank: this.blanks[this._nowIndex],
+      arrows: {
+        prev: true,
+        next: true,
+      },
+      showDetail: this._show,
+      isLogged: true
+    }
+
+    this._blankContainer.clear()
+    this._view = this._blankContainer.createEmbeddedView(this._blankTemplate, {
+      view: this._viewContext
+    })
 
     this._cd.markForCheck()
   }

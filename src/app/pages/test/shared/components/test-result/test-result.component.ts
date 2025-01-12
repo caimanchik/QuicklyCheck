@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { CheckService } from "../../../../../shared/services/check.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { IBlankParsed } from "../../../../../shared/interfaces/Tests/Blanks/IBlankParsed";
 import { appear } from "../../../../../shared/animations/appear";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
+import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankValid";
 
 @Component({
   selector: 'app-test-result',
@@ -18,7 +18,7 @@ import { getParamFromRoute } from "../../../../../shared/functions/application/g
   ]
 })
 export class TestResultComponent implements OnInit {
-  protected blanks!: IBlankParsed[]
+  protected blanks!: IBlankValid[]
 
   constructor(
     private _checkService: CheckService,

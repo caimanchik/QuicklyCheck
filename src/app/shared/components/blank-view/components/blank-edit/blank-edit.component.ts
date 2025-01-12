@@ -21,6 +21,7 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { animateIn } from "../../../../animations/animateIn";
 import { animateOut } from "../../../../animations/animateOut";
 import { IBlankValid } from "../../../../interfaces/Tests/Blanks/IBlankValid";
+import { IBlankValidView } from "../../../../interfaces/Views/IBlankValidView";
 
 @Component({
   selector: 'app-blank-edit',
@@ -38,7 +39,7 @@ import { IBlankValid } from "../../../../interfaces/Tests/Blanks/IBlankValid";
   ])]
 })
 export class BlankEditComponent implements OnChanges {
-  @Input() public view!: IBlankView
+  @Input() public view!: IBlankValidView
 
   @Output() public closeEvent = new EventEmitter<IBlankValid | void>()
 

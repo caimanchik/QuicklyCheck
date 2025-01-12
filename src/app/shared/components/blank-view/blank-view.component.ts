@@ -10,6 +10,9 @@ import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { appear } from "../../animations/appear";
 import { opacityIn } from "../../animations/opacityIn";
 import { IBlankValid } from "../../interfaces/Tests/Blanks/IBlankValid";
+import { IBlankInvalid } from "../../interfaces/Tests/Blanks/IBlankInvalid";
+import { isValidBlank } from "../../type-guards/isValidBlank";
+import { IBlankValidView } from "../../interfaces/Views/IBlankValidView";
 
 @Component({
   selector: 'app-blank-view',
@@ -37,6 +40,9 @@ export class BlankViewComponent implements OnChanges {
 
   protected isEdit: boolean = false
 
+  protected validBlankView!: IBlankValidView
+  protected invalidBlank!: IBlankInvalid
+
   constructor(
     private _cd: ChangeDetectorRef
   ) { }
@@ -44,6 +50,11 @@ export class BlankViewComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (!changes?.['view']?.currentValue)
       return
+
+    if (isValidBlank(this.view.blank))
+      this.validBlankView = this.view as IBlankValidView
+    else
+      this.invalidBlank = this.view.blank
   }
 
   protected toggleShow() {

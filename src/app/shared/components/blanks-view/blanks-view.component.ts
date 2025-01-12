@@ -11,6 +11,7 @@ import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../animations/appear";
 import { IBlankValid } from "../../interfaces/Tests/Blanks/IBlankValid";
+import { IBlankInvalid } from "../../interfaces/Tests/Blanks/IBlankInvalid";
 
 @Component({
   selector: 'app-blanks-view',
@@ -27,7 +28,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
   @ViewChild('blankContainer', {read: ViewContainerRef}) private _blankContainer!: ViewContainerRef
   @ViewChild('blank', {read: TemplateRef, static: true}) private _blankTemplate!: TemplateRef<{ view: IBlankView }>
 
-  @Input() public blanks!: IBlankValid[]
+  @Input() public blanks!: (IBlankValid | IBlankInvalid)[]
   @Input() public showIndex = 0
 
   @Output() public previousClickEvent = new EventEmitter<void>()
@@ -52,7 +53,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     this.createView(this.blanks[this.showIndex])
   }
 
-  private createView(blank: IBlankValid, showDetail: boolean = false) {
+  private createView(blank: IBlankValid | IBlankInvalid, showDetail: boolean = false) {
     this._viewContext = {
       blank: blank,
       arrows: {
