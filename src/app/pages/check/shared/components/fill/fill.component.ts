@@ -6,11 +6,13 @@ import { ErrorService } from "../../../../../shared/services/infrastructure/erro
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { PatternService } from "../../../../../shared/services/pattern.service";
 import { appear } from "../../../../../shared/animations/appear";
+import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 
 @Component({
   selector: 'app-fill',
   templateUrl: './fill.component.html',
   styleUrls: ['./fill.component.scss'],
+  providers: [DestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('appear', [
@@ -27,7 +29,8 @@ export class FillComponent implements OnInit {
     private _pattern: PatternService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
-    private _error: ErrorService
+    private _error: ErrorService,
+    private _destroy: DestroyService,
   ) {
   }
 
@@ -35,6 +38,7 @@ export class FillComponent implements OnInit {
     this.pkTest = +(localStorage.getItem('temp') ?? 0)
 
     this._pattern.getPatterns(this.pkTest, true)
+      .pipe(this._destroy.takeUntilDestroy)
       .subscribe(patterns => {
         this.patterns = patterns
         this._cd.markForCheck()
@@ -51,6 +55,7 @@ export class FillComponent implements OnInit {
 
   protected updatePattern(pattern: IPatternParsed) {
     this._pattern.updatePattern(pattern, true)
+      .pipe(this._destroy.takeUntilDestroy)
       .subscribe(newPattern => {
         this.patterns[newPattern.num - 1] = newPattern
         this._cd.markForCheck()

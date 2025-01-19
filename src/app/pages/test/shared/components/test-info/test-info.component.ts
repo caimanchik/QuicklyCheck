@@ -11,6 +11,7 @@ import { appear } from "../../../../../shared/animations/appear";
 import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
 import { animateOut } from "../../../../../shared/animations/animateOut";
 import { TestService } from "../../../../../shared/services/test.service";
+import { IBreadCrumbItem } from "../../../../../shared/interfaces/Application/IBreadCrumbItem";
 
 @Component({
   selector: 'app-test-info',
@@ -53,6 +54,8 @@ export class TestInfoComponent implements OnInit {
     }
   ]
 
+  protected crumbs!: IBreadCrumbItem[]
+
   constructor(
     private _testService: TestService,
     private _blankService: BlankService,
@@ -70,6 +73,7 @@ export class TestInfoComponent implements OnInit {
       .pipe(this._errorService.passErrorWithMessage("Тест не найден"))
       .subscribe(test => {
         this.test = test
+        this.createCrumbs()
         this._cd.markForCheck()
       })
 
@@ -183,7 +187,20 @@ export class TestInfoComponent implements OnInit {
     this._router.navigate(['invalid-blank', pkBlank], extras)
   }
 
-  protected navigateClass() {
-    this._router.navigate(['/', 'class', this.test.grade.pk])
+  private createCrumbs() {
+    this.crumbs = [
+      {
+        text: 'Все классы',
+        link: ['/', 'classes']
+      },
+      {
+        text: `${this.test.grade.number}${this.test.grade.letter} класс`,
+        link: ['class', this.test.grade.pk.toString()]
+      },
+      {
+        text: this.test.name,
+        link: ['/', 'test', this.test.pk.toString()]
+      }
+    ]
   }
 }

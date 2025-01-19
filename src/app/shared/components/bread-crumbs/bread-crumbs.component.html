@@ -1,0 +1,20 @@
+<ng-container *ngIf="crumbs && crumbs.length > 0">
+    <div class="crumbs" [ngClass]="{center: center}">
+        <div class="crumbs__wrapper">
+            <ul class="crumbs__list">
+                <ng-container *ngFor="let crumb of crumbs; let i = index">
+                    <li class="crumbs__item">
+                        <a href="#" (click)="crumbClicked($event, crumb)" class="crumbs__link">
+                            {{ crumb.text }}
+                        </a>
+                        <ng-container *ngIf="i !== crumbs.length - 1">
+                            <div class="crumbs__decor">
+                                >
+                            </div>
+                        </ng-container>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</ng-container>

@@ -46,12 +46,12 @@ export class PatternService {
           {withCredentials: !temporary}
         )
           .pipe(
-            map(() => getEmptyPattern(pattern.test, pattern.num)),
+            map(() => getEmptyPattern(pattern.quiz, pattern.num)),
             take(1))
     }
 
     return this._http.Post<IPatternResponse, IPatternResponse>(
-      startUri + `test/${pattern.test}/patterns/`,
+      startUri + `test/${pattern.quiz}/patterns/`,
       translatePatternToResponse(pattern),
       {withCredentials: !temporary}
     )

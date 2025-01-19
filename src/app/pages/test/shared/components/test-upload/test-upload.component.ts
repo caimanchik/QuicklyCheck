@@ -8,12 +8,16 @@ import { UrlToken } from "../../../../../app.module";
 import { appear } from "../../../../../shared/animations/appear";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
 import { TestService } from "../../../../../shared/services/test.service";
+import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
+import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITestAllInfo";
+import { IBreadCrumbItem } from "../../../../../shared/interfaces/Application/IBreadCrumbItem";
 
 @Component({
   selector: 'app-test-upload',
   templateUrl: './test-upload.component.html',
   styleUrls: ['./test-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DestroyService],
   animations: [
     trigger('appear', [
       transition(':enter', useAnimation(appear))
@@ -22,25 +26,37 @@ import { TestService } from "../../../../../shared/services/test.service";
 })
 export class TestUploadComponent implements OnDestroy, OnInit {
   protected previews!: string[]
+  protected crumbs!: IBreadCrumbItem[]
 
   private needsClear = true
   private testId!: number
+  private _test!: ITestAllInfo
 
   constructor(
     @Inject(UrlToken) private _url: UrlService,
     private _checkService: CheckService,
-    private _test: TestService,
+    private _testService: TestService,
     private _error: ErrorService,
     private _cd: ChangeDetectorRef,
     private _router: Router,
     private _route: ActivatedRoute,
+    private _destroy: DestroyService,
   ) { }
 
   public ngOnInit(): void {
     this.testId = getParamFromRoute(this._route)
-    this._test.getById(this.testId)
+    this._testService.getById(this.testId)
       .pipe(this._error.passErrorWithMessage("Не удалось открыть страницу загрузки"))
+      .pipe(this._destroy.takeUntilDestroy)
       .subscribe()
+
+    this._testService.getById(this.testId)
+      .pipe(this._destroy.takeUntilDestroy)
+      .subscribe(test => {
+        this._test = test
+        this.createCrumbs()
+        this._cd.markForCheck()
+      })
   }
 
   public ngOnDestroy(): void {
@@ -69,5 +85,26 @@ export class TestUploadComponent implements OnDestroy, OnInit {
   protected goToFill() {
     this.needsClear = true
     this._router.navigate(['/', 'test', this.testId, 'fill'])
+  }
+
+  private createCrumbs() {
+    this.crumbs = [
+      {
+        text: 'Все классы',
+        link: ['/', 'classes']
+      },
+      {
+        text: `${this._test.grade.number}${this._test.grade.letter} класс`,
+        link: ['class', this._test.grade.pk.toString()]
+      },
+      {
+        text: this._test.name,
+        link: ['/', 'test', this._test.pk.toString()]
+      },
+      {
+        text: 'Проверка',
+        link: ['/', 'test', this._test.pk.toString(), 'upload']
+      }
+    ]
   }
 }

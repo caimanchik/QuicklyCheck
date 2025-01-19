@@ -1,5 +1,6 @@
 <div class="upload" @appear>
     <div class="upload__wrapper">
+        <app-bread-crumbs [crumbs]="crumbs" [center]="true"></app-bread-crumbs>
         <app-photo
                 (uploadEvent)="uploadImages($event)"
                 (checkEvent)="check()"

@@ -10,13 +10,9 @@
 
             <div class="test__title-wrap">
                 <div class="test__block">
-
-                    <app-return
-                            (returnEvent)="navigateClass()"
-                    >
-                        Класс {{ test.grade.number }}{{ test.grade.letter }}
-                    </app-return>
-
+                    <app-bread-crumbs
+                            [crumbs]="crumbs">
+                    </app-bread-crumbs>
                     <div class="test__title test-title">
                         <h1 class="test-title__item">
                             <span>
