@@ -8,7 +8,6 @@ import { UrlToken } from "../../../../../app.module";
 import { appear } from "../../../../../shared/animations/appear";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
 import { TestService } from "../../../../../shared/services/test.service";
-import { DestroyService } from "../../../../../shared/services/infrastructure/destroy.service";
 import { ITestAllInfo } from "../../../../../shared/interfaces/Tests/Tests/ITestAllInfo";
 import { IBreadCrumbItem } from "../../../../../shared/interfaces/Application/IBreadCrumbItem";
 
@@ -17,7 +16,6 @@ import { IBreadCrumbItem } from "../../../../../shared/interfaces/Application/IB
   templateUrl: './test-upload.component.html',
   styleUrls: ['./test-upload.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DestroyService],
   animations: [
     trigger('appear', [
       transition(':enter', useAnimation(appear))
@@ -40,18 +38,15 @@ export class TestUploadComponent implements OnDestroy, OnInit {
     private _cd: ChangeDetectorRef,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _destroy: DestroyService,
   ) { }
 
   public ngOnInit(): void {
     this.testId = getParamFromRoute(this._route)
     this._testService.getById(this.testId)
       .pipe(this._error.passErrorWithMessage("Не удалось открыть страницу загрузки"))
-      .pipe(this._destroy.takeUntilDestroy)
       .subscribe()
 
     this._testService.getById(this.testId)
-      .pipe(this._destroy.takeUntilDestroy)
       .subscribe(test => {
         this._test = test
         this.createCrumbs()

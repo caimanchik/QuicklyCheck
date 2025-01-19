@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { DestroyService } from "../../services/infrastructure/destroy.service";
 import { IBreadCrumbItem } from "../../interfaces/Application/IBreadCrumbItem";
 import { Router } from "@angular/router";
 
@@ -7,7 +6,6 @@ import { Router } from "@angular/router";
   selector: 'app-bread-crumbs',
   templateUrl: './bread-crumbs.component.html',
   styleUrls: ['./bread-crumbs.component.scss'],
-  providers: [DestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BreadCrumbsComponent {

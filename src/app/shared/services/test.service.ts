@@ -17,7 +17,6 @@ export class TestService {
   ) { }
 
   public getById(id: number): Observable<ITestAllInfo> {
-    // @ts-ignore
     return this._http.Get<ITestAllInfo>(`test/${id}`)
       .pipe(
         map(test => ({
