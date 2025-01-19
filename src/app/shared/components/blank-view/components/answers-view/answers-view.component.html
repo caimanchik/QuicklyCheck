@@ -22,7 +22,7 @@
                             class="answers-list__answer"
                             [ngClass]="{wrong: !answer.isRight}"
                     >
-                        {{ answer.actual === -1 ? 'X' : answer.actual }}
+                        {{ answer.actual === '' ? 'X' : answer.actual }}
                     </div>
                 </div>
             </ng-container>

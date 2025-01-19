@@ -1,5 +1,5 @@
 export interface IAnswer {
-  actual: number
-  correct: number
+  actual: string
+  correct: string
   isRight: boolean
 }

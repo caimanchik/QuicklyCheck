@@ -25,7 +25,7 @@
 
   &__columns {
     display: flex;
-    margin-top: 2rem;
+    margin-top: 1.14rem;
 
     @media(max-width:505px){
       flex-wrap: wrap;
@@ -223,5 +223,133 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 2rem;
+  }
+}
+
+.test-bars {
+  margin-top: 1.14rem;
+
+  &__wrapper {
+  }
+
+  &__title {
+    color: $darkGrey;
+    font-weight: 500;
+    font-size: 1.14rem;
+  }
+
+  &__container {
+    margin-top: 2rem;
+
+    @media(max-width:768px) {
+      margin-top: 1rem;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    padding-left: .7rem;
+    width: 2.5%;
+
+    &:first-child {
+      padding-left: 0;
+      width: calc(2.5% - 0.7rem);
+    }
+
+    @media(max-width:960px){
+      padding-left: .5rem;
+
+      &:first-child {
+        padding-left: 0;
+        width: calc(2.5% - .5rem);
+      }
+    }
+
+    @media(max-width:768px){
+      padding-left: .7rem;
+      width: 5%;
+
+      &:first-child {
+        padding-left: 0;
+        width: calc(5% - .7rem);
+      }
+
+      &:nth-child(21) {
+        padding-left: 0;
+        width: calc(5% - .7rem);
+      }
+    }
+
+    @media(max-width:580px){
+      padding-left: .5rem;
+
+      &:first-child {
+        padding-left: 0;
+        width: calc(5% - .5rem);
+      }
+
+      &:nth-child(21) {
+        padding-left: 0;
+        width: calc(5% - .5rem);
+      }
+    }
+
+    @media(max-width:450px){
+      padding-left: .35rem;
+
+      &:first-child {
+        padding-left: 0;
+        width: calc(5% - .35rem);
+      }
+
+      &:nth-child(21) {
+        padding-left: 0;
+        width: calc(5% - .35rem);
+      }
+    }
+  }
+
+  &__bar {
+    height: 8.5rem;
+    position: relative;
+    background: #D9D9D9;
+    border-radius: 4px;
+
+    @media(max-width:768px){
+      height: 6rem;
+    }
+
+    @media(max-width:450px){
+      height: 4rem;
+    }
+
+    & > span {
+      position: absolute;
+      display: block;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      background: lighten($pink, 7%);
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    @media(max-width:768px){
+      margin-top: 1rem;
+    }
+  }
+
+  &__number {
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+
+    @media(max-width:450px){
+      font-size: .85rem;
+    }
   }
 }

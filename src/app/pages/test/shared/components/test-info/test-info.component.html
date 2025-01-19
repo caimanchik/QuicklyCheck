@@ -81,7 +81,9 @@
                                                 Самый сложный вопрос
                                             </h2>
                                             <div class="stats-box__text">
-                                                №{{ test.stats.worstWork | number : ".0" }}
+                                                <ng-container *ngIf="stats">
+                                                    №{{ stats.stats.mostHardQuestion! | number : ".0" }}
+                                                </ng-container>
                                             </div>
                                         </div>
                                     </div>
@@ -92,6 +94,34 @@
                     </div>
                 </div>
             </div>
+
+            <ng-container *ngIf="stats !== null && Object.keys(stats.stats.questions).length > 0">
+                <div class="test__bars test-bars">
+                    <div class="test__block">
+                        <div class="test-bars__wrapper">
+                            <h2 class="test-bars__title">
+                                Ответы на вопросы
+                            </h2>
+
+                            <div class="test-bars__container">
+                                <ul class="test-bars__list">
+                                    <ng-container *ngFor="let questionStatKey of Object.keys(stats.stats.questions)">
+                                        <li class="test-bars__item">
+                                            <div class="test-bars__bar">
+                                                <span style="height:{{ stats.stats.questions[questionStatKey] }}%">
+                                                </span>
+                                            </div>
+                                            <div class="test-bars__number">
+                                                {{ questionStatKey }}
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
 
             <div class="test__works">
 

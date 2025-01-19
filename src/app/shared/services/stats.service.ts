@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { map, Observable, take } from "rxjs";
-import { IStats } from "../interfaces/Stats/IStats";
+import { IPeriodStats } from "../interfaces/Stats/IPeriodStats";
 import { Timelines } from "../enums/Timelines";
 import { IStatsItemRequest } from "../interfaces/Stats/IStatsItemRequest";
 import { HttpParams } from "@angular/common/http";
+import { IQuestionStats } from "../interfaces/Stats/IQuestionStats";
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,10 @@ export class StatsService {
     private _http: HttpService
   ) { }
 
-  public getClassStats(pk: number, timeline: Timelines): Observable<IStats> {
-    return this._http.Get<IStats>(`stats/class/${pk}`, {
-      params: new HttpParams().set("period", timeline)
+  public getClassStats(pk: number, timeline: Timelines): Observable<IPeriodStats> {
+    return this._http.Get<IPeriodStats>(`stats/class/${pk}`, {
+      params: new HttpParams().set("period", timeline),
+      withCredentials: true
     })
       .pipe(
         map(s => this.normalize(s, timeline)),
@@ -25,9 +27,10 @@ export class StatsService {
       )
   }
 
-  public getStudentStats(pk: number, timeline: Timelines): Observable<IStats> {
-    return this._http.Get<IStats>(`stats/student/${pk}`, {
-      params: new HttpParams().set("period", timeline)
+  public getStudentStats(pk: number, timeline: Timelines): Observable<IPeriodStats> {
+    return this._http.Get<IPeriodStats>(`stats/student/${pk}`, {
+      params: new HttpParams().set("period", timeline),
+      withCredentials: true
     })
       .pipe(
         map(s => this.normalize(s, timeline)),
@@ -35,41 +38,88 @@ export class StatsService {
       )
   }
 
-  private normalize(stats: IStats, timeline: Timelines) {
-    if (timeline === Timelines.Month)
-      return this.normalizeMonth(stats)
-
-    return stats
+  public getTestStats(pk: number) {
+    return this._http.Get<IQuestionStats>(`stats/quiz/${pk}`)
+      .pipe(take(1))
   }
 
-  private normalizeMonth(stats: IStats) {
+  private normalize(stats: IPeriodStats, timeline: Timelines) {
+    switch (timeline) {
+      case Timelines.Month:
+        return this.normalizeMonth(stats)
+      case Timelines.Year:
+        return this.normalizeYear(stats)
+      default:
+        return stats
+    }
+  }
+
+  private normalizeMonth(stats: IPeriodStats) {
     if (stats.stats.length === 0)
       return stats
 
     const prev = new Date()
     const now = new Date()
 
+    now.setDate(now.getDate() + 1)
+    prev.setMonth(prev.getMonth() - 1)
+
+    return this.normalizeUniversal(
+      stats, now, prev,
+      (first, second) => first.getDate() !== second.getDate() || first.getMonth() !== second.getMonth(),
+      (statsItem) => {
+        const [statsDay, statsMonth, statsYear] = statsItem.date.split(".").map(e => +e)
+        return new Date(statsYear, statsMonth - 1, statsDay)
+      },
+      (statsDate, currentDate) => statsDate && statsDate.getDate() === currentDate.getDate() && statsDate.getMonth() === currentDate.getMonth(),
+      (date) => `${date.getDate()}.${date.getMonth() + 1}`,
+      (date) => date.setDate(date.getDate() + 1)
+    )
+  }
+
+  private normalizeYear(stats: IPeriodStats) {
+    if (stats.stats.length === 0)
+      return stats
+
+    const prev = new Date()
+    const now = new Date()
+
+    now.setMonth(now.getMonth() + 1)
+    prev.setFullYear(prev.getFullYear() - 1)
+
+    return this.normalizeUniversal(
+      stats, now, prev,
+      (first, second) => first.getMonth() !== second.getMonth() || first.getFullYear() !== second.getFullYear(),
+      (statsItem) => {
+        const [statsMonth, statsYear] = statsItem.date.split(".").map(e => +e)
+        return new Date(statsYear + 2000, statsMonth - 1)
+      },
+      (statsDate, currentDate) => statsDate && statsDate.getMonth() === currentDate.getMonth() && statsDate.getFullYear() === currentDate.getFullYear(),
+      (date) => `${date.getMonth() + 1}.${date.getFullYear() - 2000}`,
+      (date) => date.setMonth(date.getMonth() + 1)
+    )
+  }
+
+  private normalizeUniversal(stats: IPeriodStats, now: Date, prev: Date,
+                             isSuitableDate: (first: Date, second: Date) => boolean,
+                             getStatsDate: (date: IStatsItemRequest) => Date | undefined,
+                             isDateGiven: (statsDate: Date, currentDate: Date) => boolean,
+                             convertToViewDate: (date: Date) => string,
+                             increaseDate: (date: Date) => void) {
     let prevAvg = NaN
     let prevStats: (Omit<IStatsItemRequest, "date"> & { date: Date })[] = []
 
-    const result: IStats = {
+    const result: IPeriodStats = {
       stats: []
     }
     let i = 0
 
-    now.setDate(now.getDate() + 1)
-    prev.setMonth(prev.getMonth() - 1)
-
-    while(prev.getDate() !== now.getDate() + 1 || prev.getMonth() !== now.getMonth()) {
-      const [statsDay, statsMonth, statsYear] = i < stats.stats.length
-        ? stats.stats[i].date.split(".").map(e => +e)
-        : [undefined, undefined, undefined]
-
-      const statsDate = statsDay && statsMonth && statsYear
-        ? new Date(statsYear, statsMonth - 1, statsDay)
+    while(isSuitableDate(prev, now)) {
+      const statsDate = i < stats.stats.length
+        ? getStatsDate(stats.stats[i])
         : undefined
 
-      if (statsDate && statsDate.getDate() === prev.getDate() && statsDate.getMonth() === prev.getMonth())
+      if (statsDate && isDateGiven(statsDate, prev))
       {
         if (prevStats.length > 0) {
           const step = (stats.stats[i].avg - prevAvg) / (prevStats.length + 1)
@@ -77,24 +127,23 @@ export class StatsService {
             ...s,
             avg: prevAvg += step
           }))
-          result.stats.push(...prevStats.map(e => ({...e, date: `${e.date.getDate()}.${e.date.getMonth() + 1}`})))
+          result.stats.push(...prevStats.map(e => ({...e, date: convertToViewDate(e.date)})))
           prevStats = []
         }
 
         prevAvg = stats.stats[i].avg
-        result.stats.push({...stats.stats[i], date: `${statsDate.getDate()}.${statsDate.getMonth() + 1}`})
-        prev.setDate(prev.getDate() + 1)
+        result.stats.push({...stats.stats[i], date: convertToViewDate(statsDate)})
+        increaseDate(prev)
         i++
         continue
       }
 
-      if (isNaN(prevAvg))
-      {
+      if (isNaN(prevAvg)) {
         result.stats.push({
-          date: `${prev.getDate()}.${prev.getMonth() + 1}`,
+          date: convertToViewDate(prev),
           avg: 0
         })
-        prev.setDate(prev.getDate() + 1)
+        increaseDate(prev)
         continue
       }
 
@@ -102,8 +151,10 @@ export class StatsService {
         date: new Date(prev),
         avg: NaN
       })
-      prev.setDate(prev.getDate() + 1)
+      increaseDate(prev)
     }
+
+    result.stats.push(...prevStats.map(e => ({...e, date: convertToViewDate(e.date)})))
 
     return result
   }
