@@ -21,6 +21,7 @@ import { createLineChart } from "../../../shared/functions/charts/createLineChar
 import { Chart } from "chart.js";
 import { Timelines } from "../../../shared/enums/Timelines";
 import { StatsService } from "../../../shared/services/stats.service";
+import { IBreadCrumbItem } from "../../../shared/interfaces/Application/IBreadCrumbItem";
 
 @Component({
   selector: 'app-class-info',
@@ -65,6 +66,8 @@ export class ClassInfoComponent implements OnInit {
     worksHidden: false
   }
 
+  protected crumbs!: IBreadCrumbItem[]
+
   constructor(
     private _classService: ClassService,
     private _statsService: StatsService,
@@ -81,6 +84,7 @@ export class ClassInfoComponent implements OnInit {
       .pipe(this._errorService.passErrorWithMessage("Данного класса не существует", ["error"]))
       .subscribe(classInfo => {
         this.classInfo = classInfo
+        this.createCrumbs()
         this._cd.markForCheck()
         this.changeTimeline(Timelines.Month, undefined, classPk)
       })
@@ -140,6 +144,19 @@ export class ClassInfoComponent implements OnInit {
       })
   }
 
+  private createCrumbs() {
+    this.crumbs = [
+      {
+        text: 'Все классы',
+        link: ['/', 'classes']
+      },
+      {
+        text: `${this.classInfo.number}${this.classInfo.letter} класс`,
+        link: ['class', this.classInfo.pk.toString()]
+      }
+    ]
+  }
+
   private getElementsWithStep<T>(source: T[], count: number = 6) {
     if (source.length <= count) {
       return source;
@@ -190,9 +207,5 @@ export class ClassInfoComponent implements OnInit {
             this._router.navigate(['/', 'classes'])
           })
       })
-  }
-
-  protected navigateClasses() {
-    this._router.navigate(['/', 'classes'])
   }
 }

@@ -8,7 +8,6 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import { IBlankView } from "../../../../interfaces/Views/IBlankView";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { IEditForm, IIdEditForm } from "../../../../interfaces/Forms/IEditForm";
 import { answerValidator } from "../../../../validators/answerValidator";

@@ -15,11 +15,11 @@ import { EscapeDirective } from './directives/escape.directive';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { LoaderComponent } from './components/loader/loader.component';
-import { ReturnComponent } from './components/return/return.component';
 import { BlanksViewComponent } from './components/blanks-view/blanks-view.component';
 import { BlankEditComponent } from './components/blank-view/components/blank-edit/blank-edit.component';
 import { AnswersViewComponent } from './components/blank-view/components/answers-view/answers-view.component';
 import { ValidDirective } from './directives/valid.directive';
+import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.component';
 
 
 @NgModule({
@@ -36,11 +36,11 @@ import { ValidDirective } from './directives/valid.directive';
     EscapeDirective,
     FormComponent,
     LoaderComponent,
-    ReturnComponent,
     BlanksViewComponent,
     BlankEditComponent,
     AnswersViewComponent,
     ValidDirective,
+    BreadCrumbsComponent,
   ],
   exports: [
     FooterComponent,
@@ -54,8 +54,8 @@ import { ValidDirective } from './directives/valid.directive';
     BlankViewComponent,
     FormComponent,
     LoaderComponent,
-    ReturnComponent,
     BlanksViewComponent,
+    BreadCrumbsComponent,
   ],
   imports: [
     CommonModule,

@@ -42,7 +42,7 @@ export class PatternComponent implements AfterViewChecked {
         this.patterns.push({
           pattern: Array<number>(40).fill(-1),
           num: i + 1,
-          test: 3,
+          quiz: 3,
           pk: 2
         })
       }

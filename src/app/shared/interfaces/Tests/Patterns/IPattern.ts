@@ -1,5 +1,5 @@
 export interface IPattern {
-  test: number
+  quiz: number
   num: number
   pk?: number
 }

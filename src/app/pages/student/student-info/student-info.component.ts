@@ -19,6 +19,7 @@ import { createLineChart } from "../../../shared/functions/charts/createLineChar
 import { Chart } from "chart.js";
 import { IStudentAllInfo } from "../../../shared/interfaces/Students/IStudentAllInfo";
 import { StatsService } from "../../../shared/services/stats.service";
+import { IBreadCrumbItem } from "../../../shared/interfaces/Application/IBreadCrumbItem";
 
 @Component({
   selector: 'app-student-info',
@@ -44,6 +45,8 @@ export class StudentInfoComponent implements OnInit {
   private selectedTimeline!: Timelines;
   protected readonly Timelines = Timelines;
 
+  protected crumbs!: IBreadCrumbItem[]
+
   constructor(
     private _studentService: StudentService,
     private _errorService: ErrorService,
@@ -63,6 +66,7 @@ export class StudentInfoComponent implements OnInit {
           ...student,
           name: student.name.split(' ').slice(0, 2).join(' ')
         }
+        this.createCrumbs()
         this._cd.markForCheck()
         this.changeTimeline(Timelines.Month, undefined, studentPk)
       })
@@ -97,6 +101,23 @@ export class StudentInfoComponent implements OnInit {
             ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
         })
       })
+  }
+
+  private createCrumbs() {
+    this.crumbs = [
+      {
+        text: 'Все классы',
+        link: ['/', 'classes']
+      },
+      {
+        text: `${this.student.gradeDetail.number}${this.student.gradeDetail.letter} класс`,
+        link: ['class', this.student.gradeDetail.pk.toString()]
+      },
+      {
+        text: this.student.name,
+        link: ['/', 'student', this.student.pk.toString()]
+      }
+    ]
   }
 
   private getElementsWithStep<T>(source: T[], count: number = 6) {
@@ -141,9 +162,5 @@ export class StudentInfoComponent implements OnInit {
 
   protected rename() {
     this._router.navigate(['student', this.student.pk, 'rename'])
-  }
-
-  protected navigateClass() {
-    this._router.navigate(['/', 'class', this.student.gradeDetail.pk])
   }
 }
