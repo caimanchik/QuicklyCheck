@@ -13,12 +13,17 @@
   &.center {
     width: 100%;
     top: -1.4rem;
+
+    & .crumbs {
+      &__wrapper {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
   }
 
   &__wrapper {
     width: 100%;
-    display: flex;
-    justify-content: space-around;
   }
 
   @media(max-width:400px){
