@@ -98,7 +98,7 @@ export class StudentInfoComponent implements OnInit {
             stats.stats.map(_ => ' '),
             stats.stats.map(s => +s.avg.toFixed(0)),
             [...this.getElementsWithStep(stats.stats.map(s => s.date))],
-            ['100%', '90%', '80%', '70%', '60%', '50%', '40%', '30%', '20%', '10%', '0%'])
+            ['100%', '80%', '60%', '40%', '20%', ''])
         })
       })
   }

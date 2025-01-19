@@ -64,7 +64,7 @@ export class BlankEditComponent implements OnChanges {
     return new FormGroup<IEditForm>({
       answers: new FormArray<FormControl<number | string>>([
         ...this.view.blank.blankScore.checkedAnswers.map((answer, i) => new FormControl<number | string>(
-          answer.actual === -1 ? 'X' : answer.actual,
+          answer.actual === '' ? 'X' : answer.actual,
           {
             nonNullable: true,
             validators: [
