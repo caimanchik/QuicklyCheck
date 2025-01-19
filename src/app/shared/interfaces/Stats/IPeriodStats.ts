@@ -1,5 +1,5 @@
 import { IStatsItemRequest } from "./IStatsItemRequest";
 
-export interface IStats {
+export interface IPeriodStats {
   stats: IStatsItemRequest[]
 }

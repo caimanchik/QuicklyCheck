@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
 import { map, Observable, take } from "rxjs";
-import { IStats } from "../interfaces/Stats/IStats";
+import { IPeriodStats } from "../interfaces/Stats/IPeriodStats";
 import { Timelines } from "../enums/Timelines";
 import { IStatsItemRequest } from "../interfaces/Stats/IStatsItemRequest";
 import { HttpParams } from "@angular/common/http";
+import { IQuestionStats } from "../interfaces/Stats/IQuestionStats";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class StatsService {
     private _http: HttpService
   ) { }
 
-  public getClassStats(pk: number, timeline: Timelines): Observable<IStats> {
-    return this._http.Get<IStats>(`stats/class/${pk}`, {
+  public getClassStats(pk: number, timeline: Timelines): Observable<IPeriodStats> {
+    return this._http.Get<IPeriodStats>(`stats/class/${pk}`, {
       params: new HttpParams().set("period", timeline),
       withCredentials: true
     })
@@ -26,8 +27,8 @@ export class StatsService {
       )
   }
 
-  public getStudentStats(pk: number, timeline: Timelines): Observable<IStats> {
-    return this._http.Get<IStats>(`stats/student/${pk}`, {
+  public getStudentStats(pk: number, timeline: Timelines): Observable<IPeriodStats> {
+    return this._http.Get<IPeriodStats>(`stats/student/${pk}`, {
       params: new HttpParams().set("period", timeline),
       withCredentials: true
     })
@@ -37,16 +38,23 @@ export class StatsService {
       )
   }
 
-  private normalize(stats: IStats, timeline: Timelines) {
-    if (timeline === Timelines.Month)
-      return this.normalizeMonth(stats)
-    else if (timeline === Timelines.Year)
-      return this.normalizeYear(stats)
-
-    return stats
+  public getTestStats(pk: number) {
+    return this._http.Get<IQuestionStats>(`stats/quiz/${pk}`)
+      .pipe(take(1))
   }
 
-  private normalizeMonth(stats: IStats) {
+  private normalize(stats: IPeriodStats, timeline: Timelines) {
+    switch (timeline) {
+      case Timelines.Month:
+        return this.normalizeMonth(stats)
+      case Timelines.Year:
+        return this.normalizeYear(stats)
+      default:
+        return stats
+    }
+  }
+
+  private normalizeMonth(stats: IPeriodStats) {
     if (stats.stats.length === 0)
       return stats
 
@@ -69,7 +77,7 @@ export class StatsService {
     )
   }
 
-  private normalizeYear(stats: IStats) {
+  private normalizeYear(stats: IPeriodStats) {
     if (stats.stats.length === 0)
       return stats
 
@@ -92,7 +100,7 @@ export class StatsService {
     )
   }
 
-  private normalizeUniversal(stats: IStats, now: Date, prev: Date,
+  private normalizeUniversal(stats: IPeriodStats, now: Date, prev: Date,
                              isSuitableDate: (first: Date, second: Date) => boolean,
                              getStatsDate: (date: IStatsItemRequest) => Date | undefined,
                              isDateGiven: (statsDate: Date, currentDate: Date) => boolean,
@@ -101,7 +109,7 @@ export class StatsService {
     let prevAvg = NaN
     let prevStats: (Omit<IStatsItemRequest, "date"> & { date: Date })[] = []
 
-    const result: IStats = {
+    const result: IPeriodStats = {
       stats: []
     }
     let i = 0

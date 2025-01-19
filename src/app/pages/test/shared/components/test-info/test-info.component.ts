@@ -12,6 +12,9 @@ import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
 import { animateOut } from "../../../../../shared/animations/animateOut";
 import { TestService } from "../../../../../shared/services/test.service";
 import { IBreadCrumbItem } from "../../../../../shared/interfaces/Application/IBreadCrumbItem";
+import { catchError, forkJoin, of, take } from "rxjs";
+import { StatsService } from "../../../../../shared/services/stats.service";
+import { IQuestionStats } from "../../../../../shared/interfaces/Stats/IQuestionStats";
 
 @Component({
   selector: 'app-test-info',
@@ -55,11 +58,13 @@ export class TestInfoComponent implements OnInit {
   ]
 
   protected crumbs!: IBreadCrumbItem[]
+  protected stats!: IQuestionStats | null
 
   constructor(
     private _testService: TestService,
     private _blankService: BlankService,
     private _patternService: PatternService,
+    private _statsService: StatsService,
     private _confirmService: ConfirmService,
     private _errorService: ErrorService,
     private _route: ActivatedRoute,
@@ -69,10 +74,18 @@ export class TestInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     const testId = +(this._route.snapshot.paramMap.get('id') ?? 0)
-    this._testService.getById(testId)
-      .pipe(this._errorService.passErrorWithMessage("Тест не найден"))
-      .subscribe(test => {
-        this.test = test
+    forkJoin({
+      test: this._testService.getById(testId)
+        .pipe(this._errorService.passErrorWithMessage("Тест не найден")),
+      stats: this._statsService.getTestStats(testId)
+        .pipe(
+          this._errorService.passErrorWithMessage("Не удалось загрузить статистику", [], false),
+          catchError(_ => of(null)))
+    })
+      .pipe(take(1))
+      .subscribe(result => {
+        this.test = result.test
+        this.stats = result.stats
         this.createCrumbs()
         this._cd.markForCheck()
       })
@@ -203,4 +216,6 @@ export class TestInfoComponent implements OnInit {
       }
     ]
   }
+
+  protected readonly Object = Object;
 }
