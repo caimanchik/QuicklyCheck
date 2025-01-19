@@ -46,11 +46,13 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     if (!changes?.['blanks'].currentValue || changes?.['blanks'].firstChange)
       return
 
-    this.createView(this.blanks[this.showIndex], this._showDetail)
+    if (this.blanks.length > 0)
+      this.createView(this.blanks[this.showIndex], this._showDetail)
   }
 
   public ngAfterViewInit(): void {
-    this.createView(this.blanks[this.showIndex])
+    if (this.blanks.length > 0)
+      this.createView(this.blanks[this.showIndex])
   }
 
   private createView(blank: IBlankValid | IBlankInvalid, showDetail: boolean = false) {

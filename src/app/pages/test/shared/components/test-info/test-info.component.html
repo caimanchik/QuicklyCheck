@@ -161,7 +161,7 @@
                 </div>
             </div>
 
-            <ng-container *ngIf="test.blanks.length > 0">
+            <ng-container *ngIf="test.invalidBlanks.length > 0">
                 <div class="test__works">
                     <h2 class="test__subtitle wrong">
                         <span>Несчитанные бланки</span>
@@ -197,7 +197,7 @@
                                             {{ work.createdAt | date: "dd.MM.YYYY" }}
                                         </span>
                                         <span class="works-list__item delete">
-                                            <a href="#" class="delete__button" (click)="deleteWrongBlank($event, i)">
+                                            <a href="#" class="delete__button" (click)="deleteInvalidBlank($event, i)">
                                                 <img src="assets/images/icons/deleteGrey.svg" alt="">
                                                 <img src="assets/images/icons/delete-red.svg" alt="">
                                             </a>

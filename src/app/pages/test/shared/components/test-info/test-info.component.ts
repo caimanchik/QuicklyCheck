@@ -137,7 +137,7 @@ export class TestInfoComponent implements OnInit {
       })
   }
 
-  protected deleteWrongBlank($event: MouseEvent, i: number) {
+  protected deleteInvalidBlank($event: MouseEvent, i: number) {
     $event.preventDefault()
     $event.stopPropagation()
 

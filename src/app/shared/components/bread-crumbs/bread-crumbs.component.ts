@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { DestroyService } from "../../services/infrastructure/destroy.service";
 import { IBreadCrumbItem } from "../../interfaces/Application/IBreadCrumbItem";
 import { Router } from "@angular/router";
@@ -10,17 +10,13 @@ import { Router } from "@angular/router";
   providers: [DestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BreadCrumbsComponent implements OnInit {
+export class BreadCrumbsComponent {
   @Input() public crumbs: IBreadCrumbItem[] = []
   @Input() public center = false
 
   constructor(
     private readonly _router: Router
   ) {
-  }
-
-  public ngOnInit(): void {
-
   }
 
   protected crumbClicked($event: MouseEvent, crumb: IBreadCrumbItem) {

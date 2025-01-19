@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { delay, map, Observable, of, take } from "rxjs";
+import { map, Observable, take } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { BlankUpdate } from "../interfaces/Tests/Blanks/BlankUpdate";
 import { IBlankValid } from "../interfaces/Tests/Blanks/IBlankValid";
@@ -42,11 +42,8 @@ export class BlankService {
   }
 
   public deleteInvalidBlank(pkBlank: number): Observable<any> {
-    return of({})
-      .pipe(
-        delay(100),
-        take(1)
-      )
+    return this._http.Delete<void>(`invalidblank/${pkBlank}`)
+      .pipe(take(1))
   }
 
   public getBlank(pk: number): Observable<IBlankValid> {

@@ -9,7 +9,8 @@ export class EscapeDirective {
 
   constructor() { }
 
-  @HostListener("document:keydown.escape", ["$event"]) EscapeHandler(event: KeyboardEvent) {
+  @HostListener("document:keydown.escape", ["$event"])
+  private EscapeHandler(event: KeyboardEvent) {
     this.escapeEvent.emit();
   }
 }

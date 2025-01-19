@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { opacityIn } from "../../animations/opacityIn";
 import { opacityOut } from "../../animations/opacityOut";
@@ -15,11 +15,7 @@ import { opacityOut } from "../../animations/opacityOut";
     ])
   ]
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
 
   constructor() { }
-
-  public ngOnInit(): void {
-  }
-
 }
