@@ -20,6 +20,7 @@ import { BlankEditComponent } from './components/blank-view/components/blank-edi
 import { AnswersViewComponent } from './components/blank-view/components/answers-view/answers-view.component';
 import { ValidDirective } from './directives/valid.directive';
 import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.component';
+import { AssessmentComponent } from './components/assessment/assessment.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
     AnswersViewComponent,
     ValidDirective,
     BreadCrumbsComponent,
+    AssessmentComponent,
   ],
   exports: [
     FooterComponent,

@@ -103,6 +103,7 @@
       color: $darkGrey;
       font-size: 1.14rem;
       font-weight: 500;
+      flex-grow: 1;
 
       @media(max-width:560px) {
         flex-grow: 1;
@@ -182,7 +183,7 @@
 
     &__text {
       color: $pink;
-      font-size: 7.17rem;
+      font-size: 6.5rem;
       font-family: $futura;
       margin-top: 2.4rem;
 

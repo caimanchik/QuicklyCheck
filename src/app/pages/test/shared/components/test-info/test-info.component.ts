@@ -8,13 +8,14 @@ import { PatternService } from "../../../../../shared/services/pattern.service";
 import { isFilled } from "../../../../../shared/functions/patterns/isFilled";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { appear } from "../../../../../shared/animations/appear";
-import { IGrad } from "../../../../../shared/interfaces/Tests/Assessment/IGrad";
 import { animateOut } from "../../../../../shared/animations/animateOut";
 import { TestService } from "../../../../../shared/services/test.service";
 import { IBreadCrumbItem } from "../../../../../shared/interfaces/Application/IBreadCrumbItem";
 import { catchError, forkJoin, of, take } from "rxjs";
 import { StatsService } from "../../../../../shared/services/stats.service";
 import { IQuestionStats } from "../../../../../shared/interfaces/Stats/IQuestionStats";
+import { IAssessment } from "../../../../../shared/interfaces/Tests/Assessment/IAssessment";
+import { isKeyOf } from "../../../../../shared/type-guards/isKeyOf";
 
 @Component({
   selector: 'app-test-info',
@@ -31,31 +32,11 @@ import { IQuestionStats } from "../../../../../shared/interfaces/Stats/IQuestion
   ]
 })
 export class TestInfoComponent implements OnInit {
+
+  protected readonly Object = Object;
+
   protected test!: ITestAllInfo
   protected showCheckButton = false;
-
-  protected assessment: IGrad[] = [
-    {
-      from: 80,
-      to: 100,
-      point: 5
-    },
-    {
-      from: 60,
-      to: 80,
-      point: 4
-    },
-    {
-      from: 40,
-      to: 60,
-      point: 3
-    },
-    {
-      from: 0,
-      to: 40,
-      point: 2
-    }
-  ]
 
   protected crumbs!: IBreadCrumbItem[]
   protected stats!: IQuestionStats | null
@@ -200,6 +181,15 @@ export class TestInfoComponent implements OnInit {
     this._router.navigate(['invalid-blank', pkBlank], extras)
   }
 
+  protected getValuesForColumn(value: string) {
+    return this.test.assessments.map(e => {
+      if (isKeyOf(e, value as keyof IAssessment))
+        return e[value as keyof IAssessment]
+
+      return value
+    })
+  }
+
   private createCrumbs() {
     this.crumbs = [
       {
@@ -216,6 +206,4 @@ export class TestInfoComponent implements OnInit {
       }
     ]
   }
-
-  protected readonly Object = Object;
 }
