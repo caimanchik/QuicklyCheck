@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="assessment__form-wrapper">
-                    <form action="" class="assessment__form assessment-form">
+                    <form action="" class="assessment__form assessment-form" (ngSubmit)="save()">
                         <ul class="assessment-form__controls">
                             <ng-container *ngFor="let control of assessmentsForm.controls; let i = index">
                                 <li class="assessment-form__control" @animation>
@@ -73,7 +73,7 @@
                         </ul>
 
                         <div class="assessment-form__save">
-                            <app-button>
+                            <app-button (clickEvent)="save()">
                                 Сохранить
                             </app-button>
                         </div>

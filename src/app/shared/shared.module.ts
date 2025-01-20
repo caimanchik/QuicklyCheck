@@ -13,7 +13,7 @@ import { ActiveDirective } from "./directives/active.directive";
 import { BlankViewComponent } from './components/blank-view/blank-view.component';
 import { EscapeDirective } from './directives/escape.directive';
 import { FormComponent } from './components/form/form.component';
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoaderComponent } from './components/loader/loader.component';
 import { BlanksViewComponent } from './components/blanks-view/blanks-view.component';
 import { BlankEditComponent } from './components/blank-view/components/blank-edit/blank-edit.component';
@@ -66,6 +66,7 @@ import { AssessmentComponent } from './components/assessment/assessment.componen
     NgOptimizedImage,
     ActiveDirective,
     ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class SharedModule { }

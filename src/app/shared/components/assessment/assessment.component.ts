@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges
 } from '@angular/core';
@@ -18,6 +17,9 @@ import { opacityIn } from "../../animations/opacityIn";
 import { opacityOut } from "../../animations/opacityOut";
 import { animateOut } from "../../animations/animateOut";
 import { DestroyService } from "../../services/infrastructure/destroy.service";
+import { AssessmentService } from "../../services/assessment.service";
+import { ErrorService } from "../../services/infrastructure/error.service";
+import { catchError } from "rxjs";
 
 @Component({
   selector: 'app-assessment',
@@ -35,7 +37,7 @@ import { DestroyService } from "../../services/infrastructure/destroy.service";
     ])
   ]
 })
-export class AssessmentComponent implements OnInit, OnChanges {
+export class AssessmentComponent implements OnChanges {
   @Input() public assessments!: Assessments
 
   @Input() public isOpened = false
@@ -43,10 +45,13 @@ export class AssessmentComponent implements OnInit, OnChanges {
 
   protected assessmentsForm!: FormArray<FormGroup<IAssessmentControl>>
 
-  private isConfirmOpened = false;
+  private isConfirmOpened = false
+  private isSaveClicked = false
 
   constructor(
+    private readonly _assessmentService: AssessmentService,
     private readonly _confirmService: ConfirmService,
+    private readonly _errorService: ErrorService,
     private readonly _destroy: DestroyService,
   ) {
   }
@@ -70,16 +75,13 @@ export class AssessmentComponent implements OnInit, OnChanges {
     this.initFormValidators()
   }
 
-  public ngOnInit(): void {
-
-  }
-
   protected close(askConfirm = false) {
     if (this.isConfirmOpened)
       return
 
     if (!askConfirm) {
       this.isOpenedChange.emit(false)
+      return;
     }
 
     this.isConfirmOpened = true
@@ -111,6 +113,33 @@ export class AssessmentComponent implements OnInit, OnChanges {
 
   protected stopPropagation($event: MouseEvent) {
     $event.stopPropagation()
+  }
+
+  protected save() {
+    if (this.assessmentsForm.invalid || this.isSaveClicked)
+      return
+
+    this.isSaveClicked = true
+
+    const assessments: Assessments = this.assessmentsForm.controls.map((control, i) => {
+      return {
+        name: control.controls.name.value,
+        minPr: i === 0 ? 0 : +this.assessmentsForm.controls[i - 1].controls.to,
+        maxPr: +control.controls.to,
+        color: ""
+      }
+    })
+
+    this._assessmentService.saveAssessment(assessments)
+      .pipe(this._errorService.passErrorWithMessage("Не удалось сохранить оценки", [], false))
+      .pipe(catchError(e => {
+        this.isSaveClicked = false
+        throw e;
+      }))
+      .subscribe(() => {
+        this.isSaveClicked = false
+        this.close()
+      })
   }
 
   private getForm() {
