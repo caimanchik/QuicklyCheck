@@ -168,7 +168,7 @@
                             Фамилия Имя
                         </li>
                         <li class="works-bar__item score">
-                            Балл
+                            Балл/Оц.
                         </li>
                         <li class="works-bar__item date">
                             Дата загрузки
@@ -189,7 +189,7 @@
                                         <span>{{ work.authorInfo.name }}</span>
                                     </span>
                                     <span class="works-list__item score">
-                                        {{ work.blankScore.percentage | number : ".0-0" }}
+                                        {{ work.blankScore.percentage | number : ".0-0" }}/{{ work.assessment | slice : 0:4 }}
                                     </span>
                                     <span class="works-list__item date">
                                         {{ work.createdAt | date: "dd.MM.YYYY" }}

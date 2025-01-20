@@ -119,8 +119,8 @@
                             <li class="works-bar__item name">
                                 Название работы
                             </li>
-                            <li class="works-bar__item score">
-                                Балл
+                            <li class="works-bar__item score score-alone">
+                                Балл/Оц.
                             </li>
                             <li class="works-bar__item date">
                                 Дата загрузки
@@ -139,8 +139,8 @@
                                             <span>{{ work.testName }}</span>
                                         </span>
 
-                                        <span class="works-list__item score">
-                                            {{ work.blankScore.percentage | number : ".0-0" }}
+                                        <span class="works-list__item score score-alone">
+                                            {{ work.blankScore.percentage | number : ".0-0" }}/{{ work.assessment | slice : 0:4 }}
                                         </span>
 
                                         <span class="works-list__item date">

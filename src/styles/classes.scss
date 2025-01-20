@@ -312,7 +312,7 @@
   }
 
   & .score {
-    flex: 0 0 3rem;
+    flex: 0 0 7rem;
     margin-right: 4rem;
     text-align: center;
 
@@ -322,10 +322,17 @@
 
     @media(max-width:550px) {
       margin-right: 1rem;
+      flex: 0 0 5rem;
     }
 
     @media(max-width:450px){
       margin-right: 0.5rem;
+    }
+
+    &-alone {
+      @media(max-width:600px){
+        margin-right: 0;
+      }
     }
   }
 
@@ -334,6 +341,10 @@
 
     @media(max-width:550px){
       flex: 0 0 8rem;
+    }
+    
+    @media(max-width:600px){
+      display: none;
     }
   }
 
