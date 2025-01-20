@@ -60,22 +60,48 @@
   &__text {
     font-size: 1.7rem;
 
+    @media(max-width:475px){
+      font-size: 1.3rem;
+    }
+
     &_from {
       margin-right: .85rem;
+      @media(max-width:600px) {
+        margin-right: .5rem;
+      }
     }
 
     &_to {
       margin-right: .85rem;
       margin-left: .85rem;
+
+      @media(max-width:600px){
+        margin-right: .5rem;
+        margin-left: .5rem;
+      }
     }
 
     &_separator {
       margin-left: 2.5rem;
       margin-right: 2.5rem;
+
+      @media(max-width:600px){
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+
+      @media(max-width:475px){
+        margin-left: .6rem;
+        margin-right: .6rem;
+      }
     }
 
     &_grad {
       margin-right: 1.5rem;
+
+      @media(max-width:600px) {
+        margin-right: .8rem;
+      }
     }
   }
 
@@ -95,6 +121,15 @@
     color: $grey;
     transition: all ease .3s;
     border: 2px solid transparent;
+
+    @media(max-width:475px) {
+      height: 2rem;
+      width: 3rem;
+    }
+
+    @media(max-width:475px){
+      font-size: 1.3rem;
+    }
   }
 
   &__input {
@@ -103,6 +138,10 @@
 
     &_big {
       width: 7rem;
+
+      @media(max-width:475px){
+        width: 5rem;
+      }
     }
 
     &:focus {
@@ -123,6 +162,17 @@
     transition: all ease .3s;
     opacity: 0;
     pointer-events: none;
+
+    @media(max-width:600px){
+      margin-left: 1rem;
+    }
+
+    @media(max-width:475px){
+      height: 1.5rem;
+      width: 1.5rem;
+      margin-left: .7rem;
+      flex: 0 0 1.5rem;
+    }
 
     &.show {
       opacity: 1;
@@ -162,6 +212,13 @@
     height: 2rem;
     width: 1.5rem;
     position: relative;
+
+    @media(max-width:475px){
+      height: 1.4rem;
+      width: 1rem;
+      margin-left: .6rem;
+      flex: 0 0 1rem;
+    }
 
     & img {
       position: absolute;
