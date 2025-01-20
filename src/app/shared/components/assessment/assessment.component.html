@@ -1,1 +1,85 @@
-<p>assessment works!</p>
+<ng-container *ngIf="assessmentsForm && isOpened">
+    <div class="assessment"
+         appEscape
+         (escapeEvent)="close(true)"
+         (click)="close(true)"
+         @animation
+    >
+        <div class="assessment__container" (click)="stopPropagation($event)">
+            <div class="assessment__wrapper">
+                <div class="assessment__title">
+                    Оценивание
+                </div>
+
+                <div class="assessment__form-wrapper">
+                    <form action="" class="assessment__form assessment-form">
+                        <ul class="assessment-form__controls">
+                            <ng-container *ngFor="let control of assessmentsForm.controls; let i = index">
+                                <li class="assessment-form__control" @animation>
+                                    <div class="assessment-form__row">
+                                        <div class="assessment-form__text assessment-form__text_from">
+                                            от
+                                        </div>
+                                        <div class="assessment-form__value">
+                                            <div class="assessment-form__field">
+                                                {{ i !== 0 ? assessmentsForm.controls[i - 1].controls.to.value : 0 }}
+                                            </div>
+                                        </div>
+                                        <div class="assessment-form__text assessment-form__text_to">
+                                            до
+                                        </div>
+                                        <div class="assessment-form__value">
+                                            <input
+                                                    type="text"
+                                                    class="assessment-form__field assessment-form__input"
+                                                    [formControl]="control.controls.to"
+                                                    [ngClass]="{ invalid: control.controls.to.invalid }"
+                                            >
+                                        </div>
+                                        <div class="assessment-form__text assessment-form__text_separator">
+                                            —
+                                        </div>
+                                        <div class="assessment-form__text assessment-form__text_grad">
+                                            оценка
+                                        </div>
+                                        <div class="assessment-form__value">
+                                            <input
+                                                    type="text"
+                                                    class="assessment-form__field assessment-form__input assessment-form__input_big"
+                                                    [formControl]="control.controls.name"
+                                                    [ngClass]="{ invalid: control.controls.name.invalid && control.controls.name.touched }"
+                                            >
+                                        </div>
+                                        <button
+                                                type="button"
+                                                class="assessment-form__create"
+                                                [ngClass]="{ show: control.controls.to.valid && i < assessmentsForm.controls.length - 1 || assessmentsForm.controls.length === 1 }"
+                                                (click)="insertControl(i)"
+                                        >
+                                            <img src="assets/images/icons/create-grey.svg" alt="">
+                                            <img src="assets/images/icons/create.svg" alt="">
+                                        </button>
+                                        <button
+                                                type="button"
+                                                class="assessment-form__delete"
+                                                (click)="deleteControl(i)"
+                                        >
+                                            <img src="assets/images/icons/deleteGrey.svg" alt="">
+                                            <img src="assets/images/icons/delete-red.svg" alt="">
+                                        </button>
+                                    </div>
+                                </li>
+                            </ng-container>
+                        </ul>
+
+                        <div class="assessment-form__save">
+                            <app-button>
+                                Сохранить
+                            </app-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

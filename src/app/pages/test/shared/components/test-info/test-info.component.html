@@ -32,7 +32,7 @@
 
                         <h3 class="test-assessment__title">
                             <span>Оценивание</span>
-                            <button type="button" class="test-assessment__edit">
+                            <button (click)="openAssessment()" type="button" class="test-assessment__edit">
                                 <img src="assets/images/icons/pencil.svg" alt="">
                                 <img src="assets/images/icons/pencil-pink.svg" alt="">
                             </button>
@@ -282,4 +282,10 @@
 
         </div>
     </div>
+
+    <app-assessment
+            [assessments]="test.assessments"
+            [(isOpened)]="isAssessmentOpened"
+    >
+    </app-assessment>
 </ng-container>

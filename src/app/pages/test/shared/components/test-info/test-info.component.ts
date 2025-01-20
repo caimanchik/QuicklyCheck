@@ -41,6 +41,8 @@ export class TestInfoComponent implements OnInit {
   protected crumbs!: IBreadCrumbItem[]
   protected stats!: IQuestionStats | null
 
+  protected isAssessmentOpened = false
+
   constructor(
     private _testService: TestService,
     private _blankService: BlankService,
@@ -188,6 +190,10 @@ export class TestInfoComponent implements OnInit {
 
       return value
     })
+  }
+
+  protected openAssessment() {
+    this.isAssessmentOpened = true
   }
 
   private createCrumbs() {

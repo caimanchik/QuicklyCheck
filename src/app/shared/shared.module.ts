@@ -58,6 +58,7 @@ import { AssessmentComponent } from './components/assessment/assessment.componen
     LoaderComponent,
     BlanksViewComponent,
     BreadCrumbsComponent,
+    AssessmentComponent,
   ],
   imports: [
     CommonModule,
