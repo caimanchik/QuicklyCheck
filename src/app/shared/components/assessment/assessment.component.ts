@@ -20,6 +20,7 @@ import { DestroyService } from "../../services/infrastructure/destroy.service";
 import { AssessmentService } from "../../services/assessment.service";
 import { ErrorService } from "../../services/infrastructure/error.service";
 import { catchError } from "rxjs";
+import { IAssessments } from "../../interfaces/Tests/Assessment/IAssessments";
 
 @Component({
   selector: 'app-assessment',
@@ -39,9 +40,12 @@ import { catchError } from "rxjs";
 })
 export class AssessmentComponent implements OnChanges {
   @Input() public assessments!: Assessments
+  @Input() public testPk!: number
 
   @Input() public isOpened = false
   @Output() public isOpenedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output() public assessmentsChanged: EventEmitter<IAssessments> = new EventEmitter<IAssessments>()
 
   protected assessmentsForm!: FormArray<FormGroup<IAssessmentControl>>
 
@@ -116,28 +120,31 @@ export class AssessmentComponent implements OnChanges {
   }
 
   protected save() {
-    if (this.assessmentsForm.invalid || this.isSaveClicked)
+    if (this.assessmentsForm.invalid || this.isSaveClicked) {
+      this.markControlsTouched()
       return
+    }
 
     this.isSaveClicked = true
 
     const assessments: Assessments = this.assessmentsForm.controls.map((control, i) => {
       return {
         name: control.controls.name.value,
-        minPr: i === 0 ? 0 : +this.assessmentsForm.controls[i - 1].controls.to,
-        maxPr: +control.controls.to,
+        minPr: i === 0 ? 0 : +this.assessmentsForm.controls[i - 1].controls.to.value,
+        maxPr: +control.controls.to.value,
         color: ""
       }
     })
 
-    this._assessmentService.saveAssessment(assessments)
+    this._assessmentService.saveAssessment({ assessments }, this.testPk)
       .pipe(this._errorService.passErrorWithMessage("Не удалось сохранить оценки", [], false))
       .pipe(catchError(e => {
         this.isSaveClicked = false
         throw e;
       }))
-      .subscribe(() => {
+      .subscribe(assessments => {
         this.isSaveClicked = false
+        this.assessmentsChanged.emit(assessments)
         this.close()
       })
   }
@@ -197,9 +204,17 @@ export class AssessmentComponent implements OnChanges {
             return
           }
 
-          if (this.assessmentsForm.controls[i - 1].controls.to.value >= control.controls.to.value) {
+          if (+this.assessmentsForm.controls[i - 1].controls.to.value >= +control.controls.to.value) {
             control.controls.to.setErrors({
               error: 'Значение должно быть больше предыдущего'
+            }, { emitEvent: false })
+
+            return;
+          }
+
+          if (i === this.assessmentsForm.controls.length - 1 && (+control.controls.to.value < 100)) {
+            control.controls.to.setErrors({
+              error: 'Значение должно быть равно 100'
             }, { emitEvent: false })
 
             return;
@@ -208,5 +223,9 @@ export class AssessmentComponent implements OnChanges {
           control.controls.to.setErrors(null, { emitEvent: false })
         })
       })
+  }
+
+  private markControlsTouched() {
+    this.assessmentsForm.controls.forEach(control => control.controls.name.markAsTouched())
   }
 }

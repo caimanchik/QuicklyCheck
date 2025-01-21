@@ -16,6 +16,7 @@ import { StatsService } from "../../../../../shared/services/stats.service";
 import { IQuestionStats } from "../../../../../shared/interfaces/Stats/IQuestionStats";
 import { IAssessment } from "../../../../../shared/interfaces/Tests/Assessment/IAssessment";
 import { isKeyOf } from "../../../../../shared/type-guards/isKeyOf";
+import { IAssessments } from "../../../../../shared/interfaces/Tests/Assessment/IAssessments";
 
 @Component({
   selector: 'app-test-info',
@@ -194,6 +195,11 @@ export class TestInfoComponent implements OnInit {
 
   protected openAssessment() {
     this.isAssessmentOpened = true
+  }
+
+  protected updateAssessments($event: IAssessments) {
+    this.test.assessments = $event.assessments
+
   }
 
   private createCrumbs() {

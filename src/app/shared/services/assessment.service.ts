@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "./infrastructure/http.service";
-import { Assessments } from "../interfaces/Tests/Assessment/Assessments";
-import { of, take } from "rxjs";
+import { take } from "rxjs";
+import { IAssessments } from "../interfaces/Tests/Assessment/IAssessments";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class AssessmentService {
     private readonly _http: HttpService
   ) { }
 
-  public saveAssessment(assessment: Assessments) {
-    return of(undefined)
+  public saveAssessment(assessments: IAssessments, testPk: number) {
+    return this._http.Post<IAssessments, IAssessments>(`test/${testPk}/assessments/`, assessments)
       .pipe(take(1),)
   }
 }
