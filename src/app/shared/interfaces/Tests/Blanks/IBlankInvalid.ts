@@ -5,4 +5,5 @@ export interface IBlankInvalid {
   quiz: IClass
   createdAt: Date
   image: string
+  imageName: string
 }

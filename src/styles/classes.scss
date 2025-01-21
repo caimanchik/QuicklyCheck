@@ -336,6 +336,15 @@
     }
   }
 
+  & .id {
+    flex: 0 0 1.5rem;
+    text-align: center;
+
+    @media(max-width:700px) {
+      flex: 0 0 1.2rem;
+    }
+  }
+
   & .date {
     flex: 0 0 9rem;
 

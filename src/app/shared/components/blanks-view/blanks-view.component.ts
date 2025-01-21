@@ -12,7 +12,6 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../animations/appear";
 import { IBlankValid } from "../../interfaces/Tests/Blanks/IBlankValid";
 import { IBlankInvalid } from "../../interfaces/Tests/Blanks/IBlankInvalid";
-import { IBlankWithoutPattern } from "../../interfaces/Tests/Blanks/IBlankWithoutPattern";
 import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { IBlankUpdate } from "../../interfaces/Tests/Blanks/IBlankUpdate";
 import { IBlanksCheck } from "../../interfaces/Tests/Blanks/IBlanksCheck";
@@ -91,7 +90,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     this.saveEvent.next(blank)
   }
 
-  private createView(blank: IBlankValid | IBlankInvalid | IBlankWithoutPattern, showDetail: boolean = false) {
+  private createView(blank: IBlankValid | IBlankInvalid, showDetail: boolean = false) {
     const blankView = this.getBlankView(blank)
 
     this._viewContext = {
@@ -112,7 +111,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     this._cd.detectChanges()
   }
 
-  private getBlankView(blank: IBlankValid | IBlankInvalid | IBlankWithoutPattern): IBlankView {
+  private getBlankView(blank: IBlankValid | IBlankInvalid): IBlankView {
     const result: IBlankView = {
       pk: blank.pk,
       quiz: typeof (blank.quiz) === 'number' ? blank.quiz : blank.quiz.pk,
