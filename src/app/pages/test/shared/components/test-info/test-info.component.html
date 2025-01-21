@@ -111,9 +111,12 @@
                                                 Самый сложный вопрос
                                             </h2>
                                             <div class="stats-box__text">
-                                                <ng-container *ngIf="stats !== null && Object.keys(stats.stats.questions).length > 0">
+                                                <ng-container *ngIf="stats !== null && Object.keys(stats.stats.questions).length > 0; else na">
                                                     №{{ stats.stats.mostHardQuestion! | number : ".0" }}
                                                 </ng-container>
+                                                <ng-template #na>
+                                                    NA
+                                                </ng-template>
                                             </div>
                                         </div>
                                     </div>

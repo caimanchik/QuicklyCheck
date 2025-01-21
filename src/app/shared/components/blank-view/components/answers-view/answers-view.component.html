@@ -1,19 +1,21 @@
 <div class="block section">
     <div class="section__title">
-        Вариант {{ view.blank.var }}
-        <button
-                type="button"
-                class="answers__edit-icon"
-                (click)="startEdit()"
-        >
-            <img src="assets/images/icons/pencil.svg" alt="Редактировать">
-            <img src="assets/images/icons/pencil-pink.svg" alt="">
-        </button>
+        Вариант {{ view.var }}
+        <ng-container *ngIf="view.blankScore?.isChecked">
+            <button
+                    type="button"
+                    class="answers__edit-icon"
+                    (click)="startEdit()"
+            >
+                <img src="assets/images/icons/pencil.svg" alt="Редактировать">
+                <img src="assets/images/icons/pencil-pink.svg" alt="">
+            </button>
+        </ng-container>
     </div>
 
     <div class="answers__results">
         <ul class="answers__list answers-list">
-            <ng-container *ngFor="let answer of view.blank.blankScore.checkedAnswers; let i = index">
+            <ng-container *ngFor="let answer of view.blankScore!.checkedAnswers; let i = index">
                 <div class="answers-list__item">
                     <div class="answers-list__number">
                         {{ i + 1 }}.
@@ -33,6 +35,6 @@
                         <span class="answers__itogo">
                             Итого:
                         </span>
-        &nbsp;правильно {{ view.blank.blankScore.right }} из {{ view.blank.blankScore.total }}
+        &nbsp;правильно {{ view.blankScore!.right }} из {{ view.blankScore!.total }}
     </div>
 </div>

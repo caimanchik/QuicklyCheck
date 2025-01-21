@@ -9,6 +9,8 @@ import { BlankService } from "../../../../../shared/services/blank.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
 import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankValid";
+import { IBlankUpdate } from "../../../../../shared/interfaces/Tests/Blanks/IBlankUpdate";
+import { IBlanksCheck } from "../../../../../shared/interfaces/Tests/Blanks/IBlanksCheck";
 
 @Component({
   selector: 'app-blank-info',
@@ -17,10 +19,11 @@ import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlan
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlankInfoComponent implements OnInit {
-  protected blanks!: IBlankValid[]
   protected showIndex!: number
   protected readyToShow!: boolean;
+  protected blanksCheck!: IBlanksCheck
 
+  private blanks!: IBlankValid[]
   private readonly _previousUrl!: any[]
 
   constructor(
@@ -50,6 +53,11 @@ export class BlankInfoComponent implements OnInit {
 
   private prepareBlanksForView(blankPk: number) {
     this.showIndex = this.findIndex(blankPk)
+    this.blanksCheck = {
+      blanks: this.blanks,
+      invalidBlanks: [],
+      withoutPattern: []
+    }
 
     this.readyToShow = true
     this._cd.markForCheck()
@@ -69,10 +77,10 @@ export class BlankInfoComponent implements OnInit {
   protected navigatePrevious() {
     this._router.navigate(this._previousUrl
       ? [this._previousUrl]
-      : ['/', 'test', this.blanks[0].quiz])
+      : ['/', 'test', this.blanksCheck.blanks[0].quiz])
   }
 
-  protected saveBlank(blank: IBlankValid) {
+  protected saveBlank(blank: IBlankUpdate) {
     this._blankService.updateBlank(blank)
       .subscribe(blankParsed => {
         const index = this.findIndex(blankParsed.pk)

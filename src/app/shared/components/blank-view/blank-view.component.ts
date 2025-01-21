@@ -6,13 +6,11 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { transition, trigger, useAnimation } from "@angular/animations";
-import { IBlankView } from "../../interfaces/Views/IBlankView";
+import { IBlankViewContext } from "../../interfaces/Views/IBlankViewContext";
 import { appear } from "../../animations/appear";
 import { opacityIn } from "../../animations/opacityIn";
-import { IBlankValid } from "../../interfaces/Tests/Blanks/IBlankValid";
-import { IBlankInvalid } from "../../interfaces/Tests/Blanks/IBlankInvalid";
-import { isValidBlank } from "../../type-guards/isValidBlank";
-import { IBlankValidView } from "../../interfaces/Views/IBlankValidView";
+import { IBlankView } from "../../interfaces/Views/IBlankView";
+import { IBlankUpdate } from "../../interfaces/Tests/Blanks/IBlankUpdate";
 
 @Component({
   selector: 'app-blank-view',
@@ -32,16 +30,15 @@ import { IBlankValidView } from "../../interfaces/Views/IBlankValidView";
   ]
 })
 export class BlankViewComponent implements OnChanges {
-  @Input() public view!: IBlankView
+  @Input() public view!: IBlankViewContext
 
   @Output() public showClick = new EventEmitter<void>()
   @Output() public swipeEvent = new EventEmitter<number>()
-  @Output() public saveEvent = new EventEmitter<IBlankValid>()
+  @Output() public saveEvent = new EventEmitter<IBlankUpdate>()
 
   protected isEdit: boolean = false
 
-  protected validBlankView!: IBlankValidView
-  protected invalidBlank!: IBlankInvalid
+  protected blankView!: IBlankView
 
   constructor(
     private _cd: ChangeDetectorRef
@@ -51,10 +48,7 @@ export class BlankViewComponent implements OnChanges {
     if (!changes?.['view']?.currentValue)
       return
 
-    if (isValidBlank(this.view.blank))
-      this.validBlankView = this.view as IBlankValidView
-    else
-      this.invalidBlank = this.view.blank
+    this.blankView = this.view.blank
   }
 
   protected toggleShow() {
@@ -70,7 +64,7 @@ export class BlankViewComponent implements OnChanges {
     this._cd.markForCheck()
   }
 
-  protected closeEditForm(blank: IBlankValid | void) {
+  protected closeEditForm(blank: IBlankUpdate | void) {
     if (blank) {
       this.saveEvent.next(blank)
     }
