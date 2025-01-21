@@ -20,6 +20,7 @@ import { IBlankView } from "../../../../interfaces/Views/IBlankView";
 })
 export class AnswersViewComponent implements OnChanges {
   @Input() public view!: IBlankView
+  @Input() public isLogged!: boolean
 
   @Output() public editEvent = new EventEmitter<void>()
 

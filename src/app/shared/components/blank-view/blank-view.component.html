@@ -4,7 +4,7 @@
 
             <div class="view__main view-main" [ngClass]="{ isLogged: view.isLogged }">
 
-                <ng-container *ngIf="blankView.blankScore?.isChecked">
+                <ng-container *ngIf="blankView.blankScore?.isChecked && view.isLogged">
                     <div class="view-main__wrong view-main-wrong">
                         <button
                                 type="button"
@@ -124,6 +124,7 @@
                 <app-answers-view
                         @appear
                         [view]="blankView"
+                        [isLogged]="view.isLogged"
                         (editEvent)="enableEditMod()"
                 ></app-answers-view>
             </ng-container>

@@ -1,7 +1,7 @@
 <div class="block section">
     <div class="section__title">
         Вариант {{ view.var }}
-        <ng-container *ngIf="view.blankScore?.isChecked">
+        <ng-container *ngIf="view.blankScore?.isChecked && isLogged">
             <button
                     type="button"
                     class="answers__edit-icon"

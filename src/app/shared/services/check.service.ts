@@ -82,10 +82,12 @@ export class CheckService {
             ...b,
             image: environment.backendUrl +  b.image
           })),
-          invalidBlanks: blanks.invalidBlanks.map(b => ({
-            ...b,
-            image: environment.backendUrl +  b.image
-          })),
+          invalidBlanks: !temporary
+            ? blanks.invalidBlanks.map(b => ({
+              ...b,
+              image: environment.backendUrl +  b.image
+            }))
+            : [],
         })),
         take(1)
       )

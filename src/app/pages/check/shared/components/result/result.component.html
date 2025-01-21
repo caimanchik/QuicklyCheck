@@ -4,27 +4,13 @@
     </app-loader>
 </ng-container>
 
-<div class="result">
-    <div class="result__wrapper">
-
-        <ng-container #blankContainer>
-
-        </ng-container>
-
-    </div>
-</div>
-
 <ng-container *ngIf="blanks">
-    <div class="result__button" @appear>
-        <app-button (clickEvent)="checkNew()">проверить другой тест</app-button>
-    </div>
+    <app-blanks-view
+            [blanks]="blanks"
+            [buttonText]="'проверить другой тест'"
+            [isLogged]="false"
+            (previousClickEvent)="checkNew()"
+    >
+    </app-blanks-view>
 </ng-container>
-
-<ng-template #blank let-view='view'>
-    <app-blank-view
-            [view]="view"
-            (showClick)="toggleShow()"
-            (swipeEvent)="swipe($event)"
-    ></app-blank-view>
-</ng-template>
 
