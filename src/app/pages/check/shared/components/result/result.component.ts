@@ -1,14 +1,5 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
-  EmbeddedViewRef,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, } from '@angular/core';
 import { CheckService } from "../../../../../shared/services/check.service";
-import { IBlankViewContext } from "../../../../../shared/interfaces/Views/IBlankViewContext";
 import { Router } from "@angular/router";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { ConfirmService } from "../../../../../shared/services/infrastructure/confirm.service";
@@ -28,15 +19,8 @@ import { IBlanksCheck } from "../../../../../shared/interfaces/Tests/Blanks/IBla
   ]
 })
 export class ResultComponent implements AfterViewInit {
-  @ViewChild('blankContainer', {read: ViewContainerRef}) private _blankContainer!: ViewContainerRef
-  @ViewChild('blank', {read: TemplateRef, static: true}) private _blankTemplate!: TemplateRef<{ view: IBlankViewContext }>
 
   protected blanks!: IBlanksCheck
-
-  private _viewContext!: IBlankViewContext
-  private _view!: EmbeddedViewRef<{view: IBlankViewContext}>
-  private _nowIndex = 0
-  private _show = false
 
   constructor(
     private _cd: ChangeDetectorRef,
@@ -51,7 +35,7 @@ export class ResultComponent implements AfterViewInit {
       this._blankService.getBlanks(+(localStorage.getItem('temp') ?? 0), true)
         .subscribe(blanks => {
           this.blanks = blanks
-          this.createView()
+          this._cd.detectChanges()
         })
       return
     }
@@ -60,54 +44,13 @@ export class ResultComponent implements AfterViewInit {
         .subscribe(blanks => {
           this.blanks = blanks
           localStorage.setItem('checked', '1')
-          this.createView()
+          this._cd.detectChanges()
         })
 
       return;
     }
     else
       this._router.navigate(['/', 'check', 'upload'])
-  }
-
-  private createView() {
-    // this._viewContext = {
-    //   blank: this.blanks.blanks[this._nowIndex],
-    //   arrows: {
-    //     prev: true,
-    //     next: true,
-    //   },
-    //   showDetail: this._show,
-    //   isLogged: true
-    // }
-    //
-    // this._blankContainer.clear()
-    // this._view = this._blankContainer.createEmbeddedView(this._blankTemplate, {
-    //   view: this._viewContext
-    // })
-
-    this._cd.markForCheck()
-  }
-
-  protected swipe(delta: number) {
-    if (this._nowIndex + delta < 0 || this._nowIndex + delta === this.blanks.blanks.length)
-      return
-
-    this._nowIndex += delta
-    this.createView()
-  }
-
-  protected toggleShow() {
-    this._show = !this._show
-    this._viewContext = {
-      ...this._viewContext,
-      showDetail: this._show
-    }
-
-    this._view.context = {
-      view: this._viewContext
-    }
-
-    this._view.markForCheck()
   }
 
   protected checkNew() {

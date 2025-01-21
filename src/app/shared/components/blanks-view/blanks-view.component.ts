@@ -15,6 +15,7 @@ import { IBlankInvalid } from "../../interfaces/Tests/Blanks/IBlankInvalid";
 import { IBlankView } from "../../interfaces/Views/IBlankView";
 import { IBlankUpdate } from "../../interfaces/Tests/Blanks/IBlankUpdate";
 import { IBlanksCheck } from "../../interfaces/Tests/Blanks/IBlanksCheck";
+import { ITempBlankValid } from "../../interfaces/Tests/Blanks/ITempBlankValid";
 
 @Component({
   selector: 'app-blanks-view',
@@ -28,11 +29,14 @@ import { IBlanksCheck } from "../../interfaces/Tests/Blanks/IBlanksCheck";
   ]
 })
 export class BlanksViewComponent implements AfterViewInit, OnChanges {
+
   @ViewChild('blankContainer', {read: ViewContainerRef}) private _blankContainer!: ViewContainerRef
   @ViewChild('blank', {read: TemplateRef, static: true}) private _blankTemplate!: TemplateRef<{ view: IBlankViewContext }>
 
   @Input() public blanks!: IBlanksCheck
   @Input() public showIndex = 0
+  @Input() public buttonText = "назад"
+  @Input() public isLogged = true
 
   @Output() public previousClickEvent = new EventEmitter<void>()
   @Output() public saveEvent = new EventEmitter<IBlankUpdate>()
@@ -90,7 +94,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     this.saveEvent.next(blank)
   }
 
-  private createView(blank: IBlankValid | IBlankInvalid, showDetail: boolean = false) {
+  private createView(blank: IBlankValid | IBlankInvalid | ITempBlankValid, showDetail: boolean = false) {
     const blankView = this.getBlankView(blank)
 
     this._viewContext = {
@@ -100,7 +104,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
         next: this.showIndex < this.blanksLength - 1
       },
       showDetail: showDetail,
-      isLogged: true
+      isLogged: this.isLogged
     }
 
     this._blankContainer.clear()
@@ -111,7 +115,7 @@ export class BlanksViewComponent implements AfterViewInit, OnChanges {
     this._cd.detectChanges()
   }
 
-  private getBlankView(blank: IBlankValid | IBlankInvalid): IBlankView {
+  private getBlankView(blank: IBlankValid | IBlankInvalid | ITempBlankValid): IBlankView {
     const result: IBlankView = {
       pk: blank.pk,
       quiz: typeof (blank.quiz) === 'number' ? blank.quiz : blank.quiz.pk,
