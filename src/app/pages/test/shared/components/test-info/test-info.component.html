@@ -164,8 +164,8 @@
 
                 <div class="test__block">
                     <ul class="works__bar works-bar">
-                        <li class="works-bar__item number">
-                            Номер
+                        <li class="works-bar__item id">
+                            ID
                         </li>
                         <li class="works-bar__item name">
                             Фамилия Имя
@@ -185,8 +185,8 @@
                         <ng-container *ngFor="let work of test.blanks; let i = index">
                             <li class="works-list works-list__item">
                                 <a href="#" (click)="showBlank($event, work.pk)" class="works-list__link">
-                                    <span class="works-list__item number">
-                                        {{ i + 1 }}
+                                    <span class="works-list__item id">
+                                        {{ work.idBlank }}
                                     </span>
                                     <span class="works-list__item name">
                                         <span>{{ work.authorInfo.name }}</span>
@@ -233,8 +233,8 @@
 
                     <div class="test__block">
                         <ul class="works__bar works-bar">
-                            <li class="works-bar__item number">
-                                Номер
+                            <li class="works-bar__item id">
+                                ID
                             </li>
                             <li class="works-bar__item name">
                                 Фамилия Имя
@@ -254,8 +254,8 @@
                             <ng-container *ngFor="let work of test.withoutPattern; let i = index">
                                 <li class="works-list works-list__item">
                                     <a href="#" (click)="showBlank($event, work.pk)" class="works-list__link">
-                                        <span class="works-list__item number">
-                                            {{ i + 1 }}
+                                        <span class="works-list__item id">
+                                            {{ work.idBlank }}
                                         </span>
                                         <span class="works-list__item name">
                                             <span>{{ work.authorInfo.name }}</span>
