@@ -25,6 +25,10 @@ export class TestService {
             ...blank,
             image: environment.backendUrl + blank.image
           })),
+          withoutPattern: test.withoutPattern.map(blank => ({
+            ...blank,
+            image: environment.backendUrl + blank.image
+          })),
           invalidBlanks: test.invalidBlanks.map(blank => ({
             ...blank,
             // @ts-ignore

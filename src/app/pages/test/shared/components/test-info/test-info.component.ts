@@ -115,11 +115,11 @@ export class TestInfoComponent implements OnInit {
       this.fillTest()
   }
 
-  protected deleteBlank($event: MouseEvent, i: number) {
+  protected deleteBlank($event: MouseEvent, i: number, withPattern = true) {
     $event.preventDefault()
     $event.stopPropagation()
 
-    const blank = this.test.blanks[i]
+    const blank = withPattern ? this.test.blanks[i] : this.test.withoutPattern[i]
     this._confirmService.createConfirm({
       message: `Вы действительно хотите удалить бланк ученика "${blank.authorInfo.name}"?`,
       buttonText: 'удалить'
@@ -130,7 +130,10 @@ export class TestInfoComponent implements OnInit {
 
         this._blankService.deleteBlank(blank.pk)
           .subscribe(() => {
-            this.test.blanks.splice(i, 1)
+            if (withPattern)
+              this.test.blanks.splice(i, 1)
+            else
+              this.test.withoutPattern.splice(i, 1)
             this._cd.markForCheck()
           })
       })
@@ -164,7 +167,7 @@ export class TestInfoComponent implements OnInit {
     $event.preventDefault()
     const extras: NavigationExtras = {
       state: {
-        blanks: this.test.blanks,
+        blanks: this.test.blanks.concat(this.test.withoutPattern),
         previousUrl: this._router.url
       }
     }
