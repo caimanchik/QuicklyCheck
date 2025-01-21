@@ -32,23 +32,53 @@
 
                         <h3 class="test-assessment__title">
                             <span>Оценивание</span>
+                            <button (click)="openAssessment()" type="button" class="test-assessment__edit">
+                                <img src="assets/images/icons/pencil.svg" alt="">
+                                <img src="assets/images/icons/pencil-pink.svg" alt="">
+                            </button>
                         </h3>
 
-                        <ul class="test-assessment__list">
-                            <ng-container *ngFor="let grad of assessment; let i = index">
-                                <li class="test-assessment__grad-item">
-                                    от
-                                    &nbsp;
-                                    <div class="test-assessment__justify">
-                                    <span><ng-container *ngIf="i === assessment.length - 1">&nbsp;&nbsp;</ng-container>
-                                        {{ grad.from }}%</span>
-                                        <span>до</span>
-                                        <span>{{ grad.to }}% <ng-container *ngIf="i !== 0">&nbsp;</ng-container></span>
-                                    </div>
-                                    &nbsp;
-                                    — {{ grad.point }}
-                                </li>
+                        <ul class="test-assessment__columns">
+
+                            <ng-container *ngTemplateOutlet="
+                                assessmentColumn;
+                                context: { 'content': getValuesForColumn('от'), 'cssClass': 'from-text' }">
                             </ng-container>
+
+                            <ng-container *ngTemplateOutlet="
+                                assessmentColumn;
+                                context: { 'content': getValuesForColumn('minPr'), 'cssClass': 'from' }">
+                            </ng-container>
+
+                            <ng-container *ngTemplateOutlet="
+                                assessmentColumn;
+                                context: { 'content': getValuesForColumn('до'), 'cssClass': 'to-text' }">
+                            </ng-container>
+
+                            <ng-container *ngTemplateOutlet="
+                                assessmentColumn;
+                                context: { 'content': getValuesForColumn('maxPr'), 'cssClass': 'to' }">
+                            </ng-container>
+
+                            <ng-container *ngTemplateOutlet="
+                                assessmentColumn;
+                                context: { 'content': getValuesForColumn('—'), 'cssClass': 'separator' }">
+                            </ng-container>
+
+                            <ng-container *ngTemplateOutlet="
+                                assessmentColumn;
+                                context: { 'content': getValuesForColumn('name'), 'cssClass': 'grad' }">
+                            </ng-container>
+
+                            <ng-template #assessmentColumn let-content="content" let-cssClass="cssClass">
+                                <ul class="test-assessment__column test-assessment__column_{{ cssClass }}">
+                                    <ng-container *ngFor="let e of content">
+                                        <li class="test-assessment__item test-assessment__item_{{ cssClass }}">
+                                            {{ e }}
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </ng-template>
                         </ul>
 
                     </div>
@@ -81,7 +111,7 @@
                                                 Самый сложный вопрос
                                             </h2>
                                             <div class="stats-box__text">
-                                                <ng-container *ngIf="stats">
+                                                <ng-container *ngIf="stats !== null && Object.keys(stats.stats.questions).length > 0">
                                                     №{{ stats.stats.mostHardQuestion! | number : ".0" }}
                                                 </ng-container>
                                             </div>
@@ -138,7 +168,7 @@
                             Фамилия Имя
                         </li>
                         <li class="works-bar__item score">
-                            Балл
+                            Балл/Оц.
                         </li>
                         <li class="works-bar__item date">
                             Дата загрузки
@@ -159,7 +189,7 @@
                                         <span>{{ work.authorInfo.name }}</span>
                                     </span>
                                     <span class="works-list__item score">
-                                        {{ work.blankScore.percentage | number : ".0" }}
+                                        {{ work.blankScore.percentage | number : ".0-0" }}/{{ work.assessment | slice : 0:4 }}
                                     </span>
                                     <span class="works-list__item date">
                                         {{ work.createdAt | date: "dd.MM.YYYY" }}
@@ -252,4 +282,12 @@
 
         </div>
     </div>
+
+    <app-assessment
+            [assessments]="test.assessments"
+            [testPk]="test.pk"
+            [(isOpened)]="isAssessmentOpened"
+            (assessmentsChanged)="updateAssessments($event)"
+    >
+    </app-assessment>
 </ng-container>

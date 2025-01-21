@@ -13,13 +13,14 @@ import { ActiveDirective } from "./directives/active.directive";
 import { BlankViewComponent } from './components/blank-view/blank-view.component';
 import { EscapeDirective } from './directives/escape.directive';
 import { FormComponent } from './components/form/form.component';
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoaderComponent } from './components/loader/loader.component';
 import { BlanksViewComponent } from './components/blanks-view/blanks-view.component';
 import { BlankEditComponent } from './components/blank-view/components/blank-edit/blank-edit.component';
 import { AnswersViewComponent } from './components/blank-view/components/answers-view/answers-view.component';
 import { ValidDirective } from './directives/valid.directive';
 import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.component';
+import { AssessmentComponent } from './components/assessment/assessment.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
     AnswersViewComponent,
     ValidDirective,
     BreadCrumbsComponent,
+    AssessmentComponent,
   ],
   exports: [
     FooterComponent,
@@ -56,6 +58,7 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
     LoaderComponent,
     BlanksViewComponent,
     BreadCrumbsComponent,
+    AssessmentComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +66,7 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
     NgOptimizedImage,
     ActiveDirective,
     ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class SharedModule { }

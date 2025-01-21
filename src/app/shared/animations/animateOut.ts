@@ -2,7 +2,7 @@ import { animate, animation, style } from "@angular/animations";
 
 export const animateOut = animation([
   style({
-    'max-height': '1000px',
+    'max-height': '500px',
     overflow: 'hidden',
   }),
 
