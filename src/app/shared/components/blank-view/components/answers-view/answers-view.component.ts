@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import { IBlankValidView } from "../../../../interfaces/Views/IBlankValidView";
+import { IBlankView } from "../../../../interfaces/Views/IBlankView";
 
 @Component({
   selector: 'app-answers-view',
@@ -19,7 +19,7 @@ import { IBlankValidView } from "../../../../interfaces/Views/IBlankValidView";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnswersViewComponent implements OnChanges {
-  @Input() public view!: IBlankValidView
+  @Input() public view!: IBlankView
 
   @Output() public editEvent = new EventEmitter<void>()
 

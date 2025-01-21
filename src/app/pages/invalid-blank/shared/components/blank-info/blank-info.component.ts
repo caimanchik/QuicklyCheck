@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { IBlankInvalid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankInvalid";
 import { BlankService } from "../../../../../shared/services/blank.service";
 import { ErrorService } from "../../../../../shared/services/infrastructure/error.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
+import { IBlanksCheck } from "../../../../../shared/interfaces/Tests/Blanks/IBlanksCheck";
+import { IBlankInvalid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankInvalid";
 
 @Component({
   selector: 'app-blank-info',
@@ -13,10 +14,11 @@ import { getParamFromRoute } from "../../../../../shared/functions/application/g
 })
 export class BlankInfoComponent implements OnInit {
 
-  protected blanks!: IBlankInvalid[]
   protected showIndex!: number
   protected readyToShow!: boolean;
+  protected blanksCheck!: IBlanksCheck
 
+  private blanks!: IBlankInvalid[]
   private readonly _previousUrl!: any[]
 
   constructor(
@@ -46,6 +48,11 @@ export class BlankInfoComponent implements OnInit {
 
   private prepareBlanksForView(blankPk: number) {
     this.showIndex = this.findIndex(blankPk)
+    this.blanksCheck = {
+      blanks: [],
+      invalidBlanks: this.blanks,
+      withoutPattern: []
+    }
 
     this.readyToShow = true
     this._cd.markForCheck()

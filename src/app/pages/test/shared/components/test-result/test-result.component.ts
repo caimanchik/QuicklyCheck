@@ -5,8 +5,8 @@ import { transition, trigger, useAnimation } from "@angular/animations";
 import { appear } from "../../../../../shared/animations/appear";
 import { getParamFromRoute } from "../../../../../shared/functions/application/getParamFromRoute";
 import { IBlanksCheck } from "../../../../../shared/interfaces/Tests/Blanks/IBlanksCheck";
-import { IBlankValid } from "../../../../../shared/interfaces/Tests/Blanks/IBlankValid";
 import { BlankService } from "../../../../../shared/services/blank.service";
+import { IBlankUpdate } from "../../../../../shared/interfaces/Tests/Blanks/IBlankUpdate";
 
 @Component({
   selector: 'app-test-result',
@@ -22,6 +22,8 @@ import { BlankService } from "../../../../../shared/services/blank.service";
 export class TestResultComponent implements OnInit {
   protected blanks!: IBlanksCheck
 
+  private pkTest!: number
+
   constructor(
     private _checkService: CheckService,
     private _blankService: BlankService,
@@ -31,14 +33,14 @@ export class TestResultComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    const pkTest = getParamFromRoute(this._route)
+    this.pkTest = getParamFromRoute(this._route)
 
     if (!this._checkService.canCheck()) {
-      this._router.navigate(['/', 'test', pkTest])
+      this._router.navigate(['/', 'test', this.pkTest])
       return
     }
 
-    this._checkService.checkBlanks(pkTest)
+    this._checkService.checkBlanks(this.pkTest)
       .subscribe(blanks => {
         this.blanks = blanks
         this._checkService.clearBlanks()
@@ -47,10 +49,10 @@ export class TestResultComponent implements OnInit {
   }
 
   protected navigateTest() {
-    this._router.navigate(['/', 'test', this.blanks.blanks[0].quiz])
+    this._router.navigate(['/', 'test', this.pkTest])
   }
 
-  protected saveBlank(blank: IBlankValid) {
+  protected saveBlank(blank: IBlankUpdate) {
     this._blankService.updateBlank(blank)
       .subscribe(blankParsed => {
         const index = this.findIndex(blankParsed.pk)

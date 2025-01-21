@@ -19,8 +19,8 @@ import { answersValidator } from "../../../../validators/answersValidator";
 import { transition, trigger, useAnimation } from "@angular/animations";
 import { animateIn } from "../../../../animations/animateIn";
 import { animateOut } from "../../../../animations/animateOut";
-import { IBlankValid } from "../../../../interfaces/Tests/Blanks/IBlankValid";
-import { IBlankValidView } from "../../../../interfaces/Views/IBlankValidView";
+import { IBlankView } from "../../../../interfaces/Views/IBlankView";
+import { IBlankUpdate } from "../../../../interfaces/Tests/Blanks/IBlankUpdate";
 
 @Component({
   selector: 'app-blank-edit',
@@ -38,9 +38,9 @@ import { IBlankValidView } from "../../../../interfaces/Views/IBlankValidView";
   ])]
 })
 export class BlankEditComponent implements OnChanges {
-  @Input() public view!: IBlankValidView
+  @Input() public view!: IBlankView
 
-  @Output() public closeEvent = new EventEmitter<IBlankValid | void>()
+  @Output() public closeEvent = new EventEmitter<IBlankUpdate | void>()
 
   protected editForm!: FormGroup<IEditForm>
   protected answerError!: string
@@ -63,7 +63,7 @@ export class BlankEditComponent implements OnChanges {
   private getEditForm(): FormGroup<IEditForm> {
     return new FormGroup<IEditForm>({
       answers: new FormArray<FormControl<number | string>>([
-        ...this.view.blank.blankScore.checkedAnswers.map((answer, i) => new FormControl<number | string>(
+        ...this.view.blankScore!.checkedAnswers.map((answer, i) => new FormControl<number | string>(
           answer.actual === '' ? 'X' : answer.actual,
           {
             nonNullable: true,
@@ -73,14 +73,14 @@ export class BlankEditComponent implements OnChanges {
       ], {
         validators: answersValidator()
       }),
-      variant: new FormControl<number>(this.view.blank.var, {
+      variant: new FormControl<number>(this.view.var!, {
         nonNullable: true
       }),
       id: new FormGroup<IIdEditForm>({
-        idFirst: new FormControl<number>(Math.floor(+this.view.blank.idBlank / 10), {
+        idFirst: new FormControl<number>(Math.floor(+this.view.idBlank! / 10), {
           nonNullable: true
         }),
-        idSecond: new FormControl<number>(+this.view.blank.idBlank % 10, {
+        idSecond: new FormControl<number>(+this.view.idBlank! % 10, {
           nonNullable: true
         })
       }, {
@@ -121,17 +121,18 @@ export class BlankEditComponent implements OnChanges {
     if (this.editForm.invalid)
       return
 
-    const blank: IBlankValid = {
-      ...this.view.blank,
+    const idBlank = this.editForm.controls.id.controls.idFirst.value * 10
+      + this.editForm.controls.id.controls.idSecond.value
+
+    const blank: IBlankUpdate = {
+      ...(this.view as Required<IBlankView>),
       answers: this.editForm.controls.answers.controls.map(control => {
         return isNaN(+control.value)
           ? ""
           : control.value.toString()
       }),
       var: this.editForm.controls.variant.value,
-      idBlank: (
-        this.editForm.controls.id.controls.idFirst.value * 10
-        + this.editForm.controls.id.controls.idSecond.value).toString()
+      idBlank: idBlank < 10 ? `0${idBlank}` : idBlank.toString()
     }
 
     this.closeEvent.next(blank)

@@ -1,6 +1,6 @@
 <ng-container *ngIf="readyToShow; else loader">
     <app-blanks-view
-            [blanks]="blanks"
+            [blanks]="blanksCheck"
             [showIndex]="showIndex"
             (previousClickEvent)="navigatePrevious()"
     >

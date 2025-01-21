@@ -4,7 +4,7 @@
 
             <div class="view__main view-main" [ngClass]="{ isLogged: view.isLogged }">
 
-                <ng-container *ngIf="validBlankView">
+                <ng-container *ngIf="blankView.blankScore?.isChecked">
                     <div class="view-main__wrong view-main-wrong">
                         <button
                                 type="button"
@@ -42,9 +42,9 @@
                     <h1 class="view-main-title__title">
                         <span>Результаты проверки</span>
                     </h1>
-                    <ng-container *ngIf="validBlankView">
+                    <ng-container *ngIf="blankView.testName">
                         <div class="view-main-title__test">
-                            {{ validBlankView.blank.testName }}
+                            {{ blankView.testName }}
                         </div>
                     </ng-container>
                 </div>
@@ -60,34 +60,34 @@
 
                         <div class="view-main__author">
                             <span>
-                                <ng-container *ngIf="validBlankView; else invalidAuthor">
-                                    {{ validBlankView.blank.authorInfo.name }}
+                                <ng-container *ngIf="blankView.authorInfo; else invalidAuthor">
+                                    {{ blankView.authorInfo }}
                                 </ng-container>
                                 <ng-template #invalidAuthor>
                                     Неизвестно
                                 </ng-template>
                             </span>
                         </div>
-                        <ng-container *ngIf="validBlankView">
+                        <ng-container *ngIf="blankView.blankScore">
                             <div class="view-main__result">
                                 <div class="view-main__progress view-main-progress">
                                     <div class="view-main-progress__percent">
-                                        <span>{{ validBlankView.blank.blankScore.percentage | number : ".0-0" }}%</span>
+                                        <span>{{ blankView.blankScore.percentage | number : ".0-0" }}%</span>
                                     </div>
                                     <div class="view-main-progress__decor">
                                         <span></span>
-                                        <span [ngStyle]="{width: validBlankView.blank.blankScore.percentage + '%'}"></span>
+                                        <span [ngStyle]="{width: blankView.blankScore.percentage + '%'}"></span>
                                     </div>
                                 </div>
                                 <div class="view-main__numbers">
-                                    {{ validBlankView.blank.blankScore.right }}/{{ validBlankView.blank.blankScore.total }}
+                                    {{ blankView.blankScore.right }}/{{ blankView.blankScore.total }}
                                 </div>
                             </div>
                         </ng-container>
 
                         <div class="view-main__show">
 
-                            <ng-container *ngIf="!isEdit && validBlankView">
+                            <ng-container *ngIf="!isEdit && blankView.answers">
                                 <ng-container *ngIf="!view.showDetail; else hideText">
                                     <app-button
                                             (clickEvent)="toggleShow()"
@@ -120,10 +120,10 @@
 
             </div>
 
-            <ng-container *ngIf="view.showDetail && !isEdit && validBlankView">
+            <ng-container *ngIf="view.showDetail && !isEdit && blankView.blankScore">
                 <app-answers-view
                         @appear
-                        [view]="validBlankView"
+                        [view]="blankView"
                         (editEvent)="enableEditMod()"
                 ></app-answers-view>
             </ng-container>
@@ -131,7 +131,7 @@
             <ng-container *ngIf="isEdit">
                 <app-blank-edit
                         @appear
-                        [view]="validBlankView"
+                        [view]="blankView"
                         (closeEvent)="closeEditForm($event)"
                 ></app-blank-edit>
             </ng-container>
