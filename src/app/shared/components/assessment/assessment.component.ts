@@ -17,9 +17,6 @@ import { opacityIn } from "../../animations/opacityIn";
 import { opacityOut } from "../../animations/opacityOut";
 import { animateOut } from "../../animations/animateOut";
 import { DestroyService } from "../../services/infrastructure/destroy.service";
-import { AssessmentService } from "../../services/assessment.service";
-import { ErrorService } from "../../services/infrastructure/error.service";
-import { catchError } from "rxjs";
 import { IAssessments } from "../../interfaces/Tests/Assessment/IAssessments";
 
 @Component({
@@ -40,7 +37,6 @@ import { IAssessments } from "../../interfaces/Tests/Assessment/IAssessments";
 })
 export class AssessmentComponent implements OnChanges {
   @Input() public assessments!: Assessments
-  @Input() public testPk!: number
 
   @Input() public isOpened = false
   @Output() public isOpenedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -53,14 +49,13 @@ export class AssessmentComponent implements OnChanges {
   private isSaveClicked = false
 
   constructor(
-    private readonly _assessmentService: AssessmentService,
     private readonly _confirmService: ConfirmService,
-    private readonly _errorService: ErrorService,
     private readonly _destroy: DestroyService,
   ) {
   }
 
   public ngOnChanges(changes: SimpleChanges) {
+    this.isSaveClicked = false
     if (changes?.['isOpened']?.currentValue === undefined)
       return
 
@@ -136,17 +131,7 @@ export class AssessmentComponent implements OnChanges {
       }
     })
 
-    this._assessmentService.saveAssessment({ assessments }, this.testPk)
-      .pipe(this._errorService.passErrorWithMessage("Не удалось сохранить оценки", [], false))
-      .pipe(catchError(e => {
-        this.isSaveClicked = false
-        throw e;
-      }))
-      .subscribe(assessments => {
-        this.isSaveClicked = false
-        this.assessmentsChanged.emit(assessments)
-        this.close()
-      })
+    this.assessmentsChanged.emit({ assessments })
   }
 
   private getForm() {

@@ -17,6 +17,7 @@ import { IQuestionStats } from "../../../../../shared/interfaces/Stats/IQuestion
 import { IAssessment } from "../../../../../shared/interfaces/Tests/Assessment/IAssessment";
 import { isKeyOf } from "../../../../../shared/type-guards/isKeyOf";
 import { IAssessments } from "../../../../../shared/interfaces/Tests/Assessment/IAssessments";
+import { AssessmentService } from "../../../../../shared/services/assessment.service";
 
 @Component({
   selector: 'app-test-info',
@@ -49,6 +50,7 @@ export class TestInfoComponent implements OnInit {
     private _blankService: BlankService,
     private _patternService: PatternService,
     private _statsService: StatsService,
+    private _assessmentService: AssessmentService,
     private _confirmService: ConfirmService,
     private _errorService: ErrorService,
     private _route: ActivatedRoute,
@@ -198,8 +200,13 @@ export class TestInfoComponent implements OnInit {
   }
 
   protected updateAssessments($event: IAssessments) {
-    this.test.assessments = $event.assessments
-
+    this._assessmentService.saveAssessment($event, this.test.pk)
+      .pipe(this._errorService.passErrorWithMessage("Не удалось сохранить оценки", [], false))
+      .subscribe(testInfo => {
+        this.test = testInfo
+        this.isAssessmentOpened = false
+        this._cd.markForCheck()
+      })
   }
 
   private createCrumbs() {
